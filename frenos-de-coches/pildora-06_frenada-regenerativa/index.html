@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Píldora 06 — Frenada regenerativa</title>
+<style>
+  :root { --bg: #F8F4EC; --bg-card: #FBF7EC; --ink: #2A2A2A; --ink-soft: #555; --ink-faint: #888; --line: #E5DFCF; --orange: #E07A3C; --orange-deep: #B8480F; --green: #5A8050; --max-content: 680px; --serif: "Iowan Old Style", "Apple Garamond", "Georgia", "Times New Roman", serif; --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--ink); font-family: var(--serif); font-size: 18px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+  .progress-bar { position: fixed; top: 0; left: 0; width: 0%; height: 3px; background: var(--orange); z-index: 100; transition: width 0.05s linear; }
+  .layout { max-width: 1200px; margin: 0 auto; padding: 80px 32px 96px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 0; }
+  @media (min-width: 1024px) { .layout { grid-template-columns: minmax(0, var(--max-content)) minmax(220px, 280px); gap: 56px; padding: 80px 48px 96px; } }
+  .main { max-width: var(--max-content); }
+  .aside { font-family: var(--sans); font-size: 0.85em; color: var(--ink-soft); line-height: 1.55; }
+  .aside .note { border-left: 2px solid var(--orange); padding: 4px 0 4px 14px; margin-bottom: 28px; }
+  .aside .note-label { display: block; text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.78em; color: var(--orange-deep); font-weight: 600; margin-bottom: 4px; }
+  @media (max-width: 1023px) { .aside { margin-top: 32px; } .aside .note { background: var(--bg-card); border: 1px solid var(--line); border-left: 3px solid var(--orange); border-radius: 0 8px 8px 0; padding: 12px 16px; } }
+  .breadcrumb { font-family: var(--sans); font-size: 0.82em; color: var(--ink-faint); margin-bottom: 24px; letter-spacing: 0.02em; }
+  .breadcrumb a { color: var(--ink-soft); text-decoration: none; } .breadcrumb a:hover { color: var(--orange-deep); }
+  h1 { font-family: var(--sans); font-weight: 700; font-size: 2.1em; line-height: 1.2; color: var(--ink); margin: 0 0 12px; letter-spacing: -0.01em; }
+  .meta { font-family: var(--sans); font-size: 0.85em; color: var(--ink-faint); margin-bottom: 36px; display: flex; gap: 16px; }
+  .meta .pill { background: var(--bg-card); border: 1px solid var(--line); padding: 3px 12px; border-radius: 12px; }
+  h2 { font-family: var(--sans); font-weight: 600; font-size: 1.35em; color: var(--ink); margin: 48px 0 16px; letter-spacing: -0.005em; }
+  p { margin: 0 0 1.1em; }
+  .lead { font-size: 1.12em; color: var(--ink); line-height: 1.55; margin-bottom: 1.4em; }
+  em { font-style: italic; } strong { font-weight: 600; color: var(--ink); }
+  .pull { border-left: 3px solid var(--orange); padding: 4px 0 4px 20px; margin: 28px 0; color: var(--ink); font-style: italic; font-size: 1.05em; line-height: 1.5; }
+  .diagram { margin: 36px 0 12px; } .diagram img { width: 100%; height: auto; border-radius: 8px; display: block; }
+  .diagram-caption { font-family: var(--sans); font-size: 0.82em; color: var(--ink-faint); text-align: center; margin-top: 10px; line-height: 1.5; }
+  .next { margin-top: 56px; padding: 22px 24px; background: var(--bg-card); border: 1px solid var(--line); border-radius: 10px; font-family: var(--sans); font-size: 0.95em; }
+  .next-label { text-transform: uppercase; letter-spacing: 0.07em; font-size: 0.78em; color: var(--orange-deep); font-weight: 600; margin-bottom: 6px; }
+  .next a { color: var(--ink); text-decoration: none; font-weight: 600; } .next a:hover { color: var(--orange-deep); }
+  .types { font-family: var(--sans); font-size: 0.95em; margin: 28px 0; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+  .type-row { display: grid; grid-template-columns: 110px 1fr; padding: 14px 18px; border-bottom: 1px solid var(--line); align-items: start; }
+  .type-row:last-child { border-bottom: 0; }
+  .type-name { font-weight: 700; color: var(--orange-deep); font-size: 0.92em; }
+  .type-desc { color: var(--ink-soft); }
+  .type-desc strong { color: var(--ink); }
+  /* Regen interactive */
+  .ie-regen { background: var(--bg-card); border: 1px solid var(--line); border-radius: 10px; padding: 26px; margin: 36px 0; font-family: var(--sans); }
+  .ie-regen-title { font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+  .ie-regen-hint { font-size: 0.85em; color: var(--ink-faint); font-style: italic; margin-bottom: 18px; }
+  .ie-regen-slider-wrap { margin-bottom: 22px; }
+  .ie-regen-slider-wrap label { display: block; color: var(--ink-soft); font-size: 0.92em; margin-bottom: 8px; }
+  .ie-regen-slider-wrap input { width: 100%; accent-color: var(--orange); cursor: pointer; }
+  .ie-regen-level-name { font-weight: 600; color: var(--ink); }
+  .ie-regen-bars { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 18px; }
+  .ie-regen-bar-wrap { padding: 14px 16px; background: #FFFEFA; border: 1px solid var(--line); border-radius: 8px; }
+  .ie-regen-bar-label { font-size: 0.8em; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-faint); margin-bottom: 6px; }
+  .ie-regen-bar-val { font-weight: 700; color: var(--ink); margin-bottom: 8px; font-size: 1.1em; }
+  .ie-regen-bar { height: 8px; background: #EFEAD8; border-radius: 4px; overflow: hidden; }
+  .ie-regen-bar-fill { height: 100%; transition: width 0.25s ease; }
+  .ie-regen-bar.regen .ie-regen-bar-fill { background: linear-gradient(to right, var(--green), #4A7048); }
+  .ie-regen-bar.heat .ie-regen-bar-fill { background: linear-gradient(to right, var(--orange), var(--orange-deep)); }
+  .ie-regen-feel { padding: 14px 18px; background: #F4EDDC; border-radius: 8px; font-size: 0.95em; color: var(--ink); }
+  .ie-regen-feel-label { font-size: 0.8em; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-faint); margin-bottom: 4px; }
+  .ie-regen-feel-text { color: var(--ink-soft); line-height: 1.55; }
+  .ie-regen-feel-text strong { color: var(--ink); }
+  .exercises { margin: 56px 0 32px; padding-top: 36px; border-top: 1px solid var(--line); }
+  .ex-title { font-family: var(--sans); font-size: 1.25em; color: var(--ink); margin-bottom: 20px; font-weight: 600; }
+  .ex-card { background: var(--bg-card); border: 1px solid var(--line); border-radius: 8px; padding: 16px 20px; margin-bottom: 14px; font-family: var(--sans); font-size: 0.95em; }
+  .ex-card summary { cursor: pointer; list-style: none; display: flex; gap: 12px; align-items: flex-start; color: var(--ink); }
+  .ex-card summary::-webkit-details-marker { display: none; }
+  .ex-card summary::before { content: "▸"; color: var(--orange); font-size: 0.9em; transition: transform 0.2s; flex-shrink: 0; margin-top: 2px; }
+  .ex-card[open] summary::before { transform: rotate(90deg); }
+  .ex-tag { display: inline-block; font-size: 0.72em; font-weight: 600; padding: 2px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.04em; flex-shrink: 0; margin-top: 1px; }
+  .ex-tag-easy { background: #E6EDD8; color: #5A6E36; }
+  .ex-tag-medium { background: #F4E4CC; color: #8C5E1F; }
+  .ex-tag-hard { background: #F0D8CB; color: #A23215; }
+  .ex-q { line-height: 1.45; }
+  .ex-answer { margin: 16px 0 4px 32px; padding: 14px 18px; background: #FFFEFA; border-left: 3px solid var(--orange); color: #444; line-height: 1.6; border-radius: 0 6px 6px 0; }
+  .ex-answer p { margin: 0 0 10px; } .ex-answer p:last-child { margin-bottom: 0; } .ex-answer strong { color: var(--ink); }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress-bar"></div>
+
+<div class="layout">
+  <main class="main">
+    <div class="breadcrumb"><a href="../indice.html">Curso · Frenos de coches</a> &nbsp;/&nbsp; Píldora 06</div>
+
+    <h1>Frenada regenerativa: cuando el calor se convierte en electricidad</h1>
+    <div class="meta"><span class="pill">⏱ 10 min</span><span class="pill">Píldora 6 de 8</span></div>
+
+    <p class="lead">Hasta aquí, todo el curso ha estado contando la misma historia: frenar es convertir movimiento en calor por fricción y disipar ese calor al aire. Toca subvertirla. En coches eléctricos e híbridos existe una segunda forma de frenar que no genera calor — recupera la energía como electricidad y la guarda en la batería. Es la frenada regenerativa, y cambia la experiencia de conducir bastante más de lo que parece.</p>
+
+    <h2>El truco: el motor que se vuelve generador</h2>
+    <p>Un motor eléctrico tiene una propiedad mágica: puede funcionar al revés. Si le metes electricidad, mueve la rueda — eso es ser <em>motor</em>. Pero si la rueda lo hace girar a él (porque el coche está en marcha y el motor está conectado), y tú interrumpes la corriente que lo alimenta, el motor empieza a producir electricidad. Se convierte en <em>generador</em>.</p>
+    <p>Y aquí está el truco: producir electricidad <em>cuesta esfuerzo</em>. Cualquiera que haya intentado encender una bombilla con una dinamo de bicicleta lo sabe — la rueda gira más dura, hay que pedalear más fuerte. Esa resistencia, en un coche, se siente como una frenada. El motor "frena" porque genera, y la energía cinética del coche se convierte en electricidad que va a la batería.</p>
+
+    <div class="diagram">
+      <img src="pildora-06_diagrama-1.png" alt="Flujo de energía regenerativa: rueda decelerando, motor en modo generador, batería cargándose">
+      <div class="diagram-caption">El recorrido inverso de la energía: la rueda mueve el motor, el motor genera electricidad, la batería la recibe. La pastilla y el disco no intervienen — apenas se tocan.</div>
+    </div>
+
+    <h2>Por qué es elegante</h2>
+    <p>Compáralo con la frenada de fricción tradicional. Allí, toda la energía cinética se convertía en calor y se tiraba al aire. Energía perdida, sin más. La frenada regenerativa hace algo muy distinto: convierte buena parte de esa energía en electricidad y la guarda. La próxima vez que aceleres, esa energía vuelve a mover el coche.</p>
+
+    <p>El resultado es que un coche eléctrico "rinde" más en ciudad que en autopista. Suena contraintuitivo viniendo del mundo de la combustión, pero tiene sentido: en ciudad frenas y aceleras constantemente, y cada frenada recupera energía que vuelve a usar. En autopista vas a velocidad casi constante, hay poca regeneración, y gana el rozamiento aerodinámico. El opuesto exacto del consumo en gasolina.</p>
+
+    <p>Y hay un efecto secundario llamativo: las pastillas y discos de un eléctrico <em>apenas se gastan</em> en uso normal. La regenerativa hace casi toda la frenada cotidiana; los frenos mecánicos solo entran cuando frenas fuerte de verdad o cuando ya estás casi parado (porque la regenerativa pierde eficacia a velocidad muy baja).</p>
+
+    <h2>Frenada mixta: la orquesta</h2>
+    <p>En la mayoría de situaciones, la regenerativa sola no basta. Si necesitas detenerte rápido o desde alta velocidad, lo que el motor puede recuperar como electricidad tiene un techo (la batería no admite más allá de cierto ritmo de carga). Por eso los coches eléctricos modernos hacen <strong>frenada mixta</strong>: el sistema decide en cada milisegundo cuánto puede absorber la regenerativa y, si hace falta más, mete los frenos mecánicos a completar.</p>
+
+    <div class="pull">El ABS coordina todo esto. Cuando pisas el pedal en un eléctrico, el sistema decide: "esto se lo come la regenerativa", o "esto necesita además frenos mecánicos", o "esto es una emergencia, mete todo a la vez". Tú solo pisas; la decisión de mezcla la toma el coche.</div>
+
+    <p>Esto explica algo que sorprende a los técnicos de taller: en el cuadro de un eléctrico, no hay forma de saber si una frenada concreta usó frenos o regen. El conductor no lo distingue tampoco — solo siente que el coche desacelera.</p>
+
+    <h2>Niveles de regeneración: del coast al one-pedal</h2>
+    <p>Aquí viene un concepto nuevo que cambia cómo se conduce un eléctrico. Un coche con regenerativa puede configurarse con distintos niveles de "intensidad" de regeneración cuando levantas el acelerador. Cuanto más alto el nivel, más frena el coche solo de levantar el pie.</p>
+
+    <div class="types">
+      <div class="type-row">
+        <div class="type-name">Coast</div>
+        <div class="type-desc">Casi nula regeneración. Al levantar el pie, el coche se desliza con poca resistencia, parecido a un coche de combustión en punto muerto. Útil en autopista para no perder inercia.</div>
+      </div>
+      <div class="type-row">
+        <div class="type-name">B / nivel medio</div>
+        <div class="type-desc">Regeneración moderada. Al levantar el pie hay una desaceleración perceptible pero suave. Para muchos clientes es el punto cómodo: no obliga a aprender un patrón nuevo y devuelve buena parte de la energía.</div>
+      </div>
+      <div class="type-row">
+        <div class="type-name">One-pedal</div>
+        <div class="type-desc">Regeneración máxima. Al levantar el pie, el coche frena enérgicamente, casi hasta detenerse. Conduces el 90% del tiempo solo con el acelerador. El pedal de freno apenas se toca.</div>
+      </div>
+    </div>
+
+    <div class="ie-regen">
+      <div class="ie-regen-title">Niveles de regeneración: dónde va la energía</div>
+      <div class="ie-regen-hint">Mueve el slider para ver cómo cambia la mezcla entre energía recuperada y calor disipado, y qué siente el conductor.</div>
+
+      <div class="ie-regen-slider-wrap">
+        <label>Nivel: <span class="ie-regen-level-name" id="regen-level-name">Coast</span></label>
+        <input type="range" id="regen-level" min="0" max="3" value="1" step="1">
+      </div>
+
+      <div class="ie-regen-bars">
+        <div class="ie-regen-bar-wrap">
+          <div class="ie-regen-bar-label">Energía recuperada (regen)</div>
+          <div class="ie-regen-bar-val"><span id="regen-pct">40</span>%</div>
+          <div class="ie-regen-bar regen"><div class="ie-regen-bar-fill" id="regen-fill" style="width: 40%"></div></div>
+        </div>
+        <div class="ie-regen-bar-wrap">
+          <div class="ie-regen-bar-label">Calor disipado (frenos)</div>
+          <div class="ie-regen-bar-val"><span id="heat-pct">60</span>%</div>
+          <div class="ie-regen-bar heat"><div class="ie-regen-bar-fill" id="heat-fill" style="width: 60%"></div></div>
+        </div>
+      </div>
+
+      <div class="ie-regen-feel">
+        <div class="ie-regen-feel-label">Lo que siente el conductor</div>
+        <div class="ie-regen-feel-text" id="regen-feel">Al levantar el pie, el coche se desliza casi sin frenar. Sensación parecida a un coche de combustión en punto muerto.</div>
+      </div>
+    </div>
+
+    <h2>El caso CUPRA Born</h2>
+    <p>Tu propio terreno. El CUPRA Born ofrece varios niveles de regeneración, configurables desde el coche, y por defecto viene en un modo intermedio. Pero ofrece también el modo <em>B</em> en la palanca, que sube la regeneración al nivel alto, y un modo de máxima recuperación accesible desde la conducción dinámica.</p>
+    <p>Lo que ocurre con muchos clientes que vienen del mundo de la combustión es esto: en la primera prueba, perciben la frenada regenerativa por defecto como "muy agresiva" o "demasiado fuerte al levantar el pie". No es agresividad: es una sensación nueva que su cuerpo no esperaba. Tras una semana, la mayoría se adapta, y muchos pasan a preferir un nivel <em>más alto</em> aún porque conducir con un solo pedal acaba siendo cómodo.</p>
+    <p>El comportamiento opuesto también existe: clientes que la primera vez piensan "qué raro, no frena al levantar el pie como mi anterior eléctrico" — viniendo de un Tesla con one-pedal por defecto.</p>
+
+    <h2>La paradoja del freno oxidado</h2>
+    <p>Una consecuencia llamativa de todo esto: en un eléctrico, los discos de freno trabajan tan poco que <em>se oxidan</em>. Una capa fina de óxido superficial aparece en la cara del disco si el coche está parado al exterior unos días. Cuando el cliente vuelve a frenar con cierta firmeza un par de veces, las pastillas raspan ese óxido y todo vuelve a estar limpio. Pero la primera frenada o dos pueden notarse "raras" o "rugosas".</p>
+    <p>SEAT/CUPRA y otros fabricantes <em>ya saben</em> de esto: lo cubren explícitamente en manuales y en formaciones de concesionario. La acción CX correcta es anticiparlo al cliente — "es normal que después de unos días sin usar mucho los frenos veas un poco de óxido en los discos; con un par de frenadas se va solo" — para que cuando lo descubra ya tenga la explicación. Convertir un posible motivo de queja en información que le hace sentirse cuidado.</p>
+
+    <h2>La frase que te llevas</h2>
+    <p class="lead"><strong>La regenerativa convierte la energía cinética en electricidad usando el motor como generador. No reemplaza al freno mecánico — lo complementa. La frenada mixta orquesta ambos. Y la consecuencia para el cliente es una experiencia de conducción nueva (one-pedal), una eficiencia mejor en ciudad, y unos frenos mecánicos que pueden oxidarse por desuso. Todo eso es coherente, no defectuoso.</strong></p>
+    <p>Con esta píldora cerramos el lado técnico del curso. Quedan dos puntas: el mantenimiento y las señales de alerta (cuándo te tienes que mover), y el cierre desde la lente CX, que es donde tu trabajo arranca.</p>
+
+    <section class="exercises">
+      <div class="ex-title">Práctica activa</div>
+
+      <details class="ex-card">
+        <summary>
+          <span class="ex-tag ex-tag-easy">fácil</span>
+          <span class="ex-q">¿Por qué un coche eléctrico consume <em>menos</em> en ciudad que en autopista, mientras que uno de combustión hace lo opuesto?</span>
+        </summary>
+        <div class="ex-answer">
+          Porque en ciudad frenas y aceleras constantemente, y cada frenada recupera energía vía regenerativa que vuelve a usarse al acelerar. La energía no se tira como calor: se recicla. En autopista vas a velocidad constante, no hay frenadas que reciclar, y solo gana el rozamiento del aire (que crece mucho a velocidad alta). En combustión es al revés: en ciudad gastas combustible cada vez que aceleras desde parado, en autopista aprovechas la inercia y consumes menos.
+        </div>
+      </details>
+
+      <details class="ex-card">
+        <summary>
+          <span class="ex-tag ex-tag-medium">medio</span>
+          <span class="ex-q">¿Por qué el freno mecánico no desaparece en un eléctrico, si la regenerativa hace casi todo el trabajo?</span>
+        </summary>
+        <div class="ex-answer">
+          <p>Por tres razones que se complementan:</p>
+          <p>1) La regenerativa <strong>tiene techo</strong>: la batería no puede absorber energía a un ritmo ilimitado. En frenadas muy fuertes, lo que la regen no puede absorber lo tiene que parar el freno mecánico.</p>
+          <p>2) La regenerativa <strong>pierde eficacia a velocidad baja</strong>. Cuando el coche está casi parado, el motor genera muy poco. El freno mecánico es quien acaba de detenerlo y quien lo mantiene quieto.</p>
+          <p>3) Si la batería <strong>está llena</strong>, no puede aceptar más carga, y la regenerativa se desactiva. En esa situación todo lo frena el freno mecánico. Por eso un eléctrico recién enchufado al 100% en una mañana fría puede sentirse "raro" durante el primer kilómetro.</p>
+          <p>La regenerativa es elegante y eficiente, pero no autosuficiente. Por eso ningún eléctrico se diseña sin frenos mecánicos — los necesita.</p>
+        </div>
+      </details>
+
+      <details class="ex-card">
+        <summary>
+          <span class="ex-tag ex-tag-hard">reto</span>
+          <span class="ex-q">Un cliente CUPRA Born te dice: "El primer día que la conduje me asustó cómo frenaba sola al levantar el pie. ¿No es peligroso? ¿No deberían ponerla más suave por defecto?". ¿Cómo le respondes?</span>
+        </summary>
+        <div class="ex-answer">
+          <p>Una respuesta posible:</p>
+          <p><em>"Lo que sentiste tiene una explicación clara y es totalmente normal. Tu Born usa <strong>frenada regenerativa</strong>: cuando levantas el pie del acelerador, el motor eléctrico se convierte en generador y frena el coche mientras recarga un poco la batería. Esa sensación de 'frenar sin tocar el freno' es lo que da la regenerativa. No es peligroso — al contrario, te alarga la autonomía y te ahorra desgaste de pastillas."</em></p>
+          <p><em>"¿Por qué viene así por defecto? Porque la mayoría de clientes que conducen un eléctrico una semana acaban prefiriéndolo así, e incluso muchos suben el nivel a one-pedal: conducir solo con un pedal acaba siendo más cómodo y eficiente. Pero si a ti te resulta brusco al principio, podemos ajustar el nivel a uno más suave: tienes opciones desde el menú del coche o moviendo la palanca a B y a D. Te lo enseño en dos minutos. Y dale unos días: muchos clientes después de una semana ya no quieren volver."</em></p>
+          <p>La clave CX: nombrar el fenómeno (regenerativa), explicar el porqué (eficiencia, autonomía), reconocer la sensación (es legítimo que extrañe), ofrecer agencia (puedes ajustarlo) y terminar con un patrón conocido ("a la mayoría les pasa al principio"). Eso convierte una queja en una conversación pedagógica sin paternalismo.</p>
+        </div>
+      </details>
+    </section>
+
+    <div class="next">
+      <div class="next-label">Siguiente píldora</div>
+      <a href="../pildora-07_mantenimiento-y-alertas/index.html">Píldora 07 — Mantenimiento y señales de alerta →</a>
+    </div>
+  </main>
+
+  <aside class="aside">
+    <div class="note">
+      <span class="note-label">Motor → generador</span>
+      Mismo aparato físico, dos funciones invertidas. Le metes electricidad y mueve la rueda; le haces girar la rueda y produce electricidad. La diferencia está en el sentido del flujo eléctrico.
+    </div>
+
+    <div class="note">
+      <span class="note-label">Híbridos vs eléctricos</span>
+      Los HEV (híbrido suave) regeneran un poco. Los PHEV (híbrido enchufable) bastante. Los BEV (eléctrico puro) regeneran al máximo posible. Cuanto más grande la batería, más capacidad para absorber energía recuperada.
+    </div>
+
+    <div class="note">
+      <span class="note-label">Discos oxidados</span>
+      Si los frenos mecánicos apenas se usan, una capa fina de óxido aparece sobre el disco. Es estética, no estructural. Un par de frenadas firmes lo limpian. Anticiparlo al cliente convierte sorpresa en confianza.
+    </div>
+
+    <div class="note">
+      <span class="note-label">Tope de regen</span>
+      A batería 100% no se regenera (no hay sitio donde meter la energía). Por eso muchos eléctricos recomiendan no cargar siempre al 100% si vas a empezar bajando un puerto: bajarías frenando solo con frenos mecánicos.
+    </div>
+
+    <div class="note">
+      <span class="note-label">One-pedal driving</span>
+      Conducir el 90% del tiempo solo con el acelerador. Levantar = frenar; pisar = acelerar. Tras la curva de aprendizaje (1-2 semanas), la mayoría de clientes lo prefiere.
+    </div>
+  </aside>
+</div>
+
+<script>
+(function() { var bar = document.getElementById('progress-bar'); function upd() { var d = document.documentElement.scrollHeight - window.innerHeight; var s = window.scrollY; bar.style.width = (d > 0 ? Math.min(100, (s / d) * 100) : 0) + '%'; } window.addEventListener('scroll', upd, { passive: true }); window.addEventListener('resize', upd); upd(); })();
+
+(function() {
+  var slider = document.getElementById('regen-level');
+  var nameEl = document.getElementById('regen-level-name');
+  var regenPct = document.getElementById('regen-pct');
+  var heatPct = document.getElementById('heat-pct');
+  var regenFill = document.getElementById('regen-fill');
+  var heatFill = document.getElementById('heat-fill');
+  var feel = document.getElementById('regen-feel');
+
+  var levels = [
+    { name: 'Coast (D)', regen: 15, feel: 'Al levantar el pie, el coche se desliza casi sin frenar. Sensación parecida a un coche de combustión en punto muerto. Útil en autopista para no perder inercia.' },
+    { name: 'Medio (B)', regen: 40, feel: 'Al levantar el pie hay una desaceleración perceptible y suave. Punto cómodo para muchos clientes: no exige aprender un patrón nuevo y ya devuelve buena parte de la energía.' },
+    { name: 'Alto', regen: 65, feel: 'Frenada notable solo levantando el pie. Empiezas a usar menos el pedal del freno y a anticipar más la carretera. Mayor recuperación, mayor autonomía.' },
+    { name: 'One-pedal', regen: 85, feel: 'El coche frena enérgicamente al levantar el pie, casi hasta detenerse. Conduces el 90% del tiempo solo con el acelerador. El pedal del freno apenas se toca, salvo emergencia o a velocidad muy baja.' }
+  ];
+
+  function update() {
+    var i = parseInt(slider.value, 10);
+    var lvl = levels[i];
+    nameEl.textContent = lvl.name;
+    regenPct.textContent = lvl.regen;
+    heatPct.textContent = 100 - lvl.regen;
+    regenFill.style.width = lvl.regen + '%';
+    heatFill.style.width = (100 - lvl.regen) + '%';
+    feel.textContent = lvl.feel;
+  }
+  slider.addEventListener('input', update);
+  update();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Evaluación final — Frenos de coches</title>
+<style>
+  :root { --bg: #F8F4EC; --bg-card: #FBF7EC; --ink: #2A2A2A; --ink-soft: #555; --ink-faint: #888; --line: #E5DFCF; --orange: #E07A3C; --orange-deep: #B8480F; --max-content: 720px; --serif: "Iowan Old Style", "Apple Garamond", "Georgia", "Times New Roman", serif; --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--ink); font-family: var(--serif); font-size: 18px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+  .progress-bar { position: fixed; top: 0; left: 0; width: 0%; height: 3px; background: var(--orange); z-index: 100; transition: width 0.05s linear; }
+  .container { max-width: var(--max-content); margin: 0 auto; padding: 80px 32px 96px; }
+  .breadcrumb { font-family: var(--sans); font-size: 0.82em; color: var(--ink-faint); margin-bottom: 24px; letter-spacing: 0.02em; }
+  .breadcrumb a { color: var(--ink-soft); text-decoration: none; } .breadcrumb a:hover { color: var(--orange-deep); }
+  h1 { font-family: var(--sans); font-weight: 700; font-size: 2.2em; line-height: 1.2; color: var(--ink); margin: 0 0 12px; letter-spacing: -0.01em; }
+  .meta { font-family: var(--sans); font-size: 0.85em; color: var(--ink-faint); margin-bottom: 36px; display: flex; gap: 16px; }
+  .meta .pill { background: var(--bg-card); border: 1px solid var(--line); padding: 3px 12px; border-radius: 12px; }
+  .lead { font-size: 1.12em; color: var(--ink); line-height: 1.6; margin-bottom: 32px; }
+  .lead em { font-style: italic; }
+  .ex-card { background: var(--bg-card); border: 1px solid var(--line); border-radius: 8px; padding: 18px 22px; margin-bottom: 16px; font-family: var(--sans); font-size: 0.96em; }
+  .ex-card summary { cursor: pointer; list-style: none; display: flex; gap: 14px; align-items: flex-start; color: var(--ink); }
+  .ex-card summary::-webkit-details-marker { display: none; }
+  .ex-card summary::before { content: "▸"; color: var(--orange); font-size: 0.95em; transition: transform 0.2s; flex-shrink: 0; margin-top: 4px; }
+  .ex-card[open] summary::before { transform: rotate(90deg); }
+  .ex-tag { display: inline-block; font-size: 0.72em; font-weight: 600; padding: 3px 9px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.05em; flex-shrink: 0; margin-top: 2px; }
+  .ex-tag-easy { background: #E6EDD8; color: #5A6E36; }
+  .ex-tag-medium { background: #F4E4CC; color: #8C5E1F; }
+  .ex-tag-hard { background: #F0D8CB; color: #A23215; }
+  .ex-num { color: var(--orange); font-weight: 700; flex-shrink: 0; margin-top: 2px; min-width: 20px; }
+  .ex-q { line-height: 1.5; }
+  .ex-options { margin: 18px 0 12px 38px; color: var(--ink-soft); line-height: 1.85; }
+  .ex-answer { margin: 18px 0 4px 38px; padding: 16px 20px; background: #FFFEFA; border-left: 3px solid var(--orange); color: #444; line-height: 1.6; border-radius: 0 6px 6px 0; }
+  .ex-answer p { margin: 0 0 10px; } .ex-answer p:last-child { margin-bottom: 0; }
+  .ex-answer strong { color: var(--ink); } .ex-answer em { font-style: italic; }
+  .closing { margin-top: 56px; padding: 28px 32px; background: var(--bg-card); border: 1px solid var(--line); border-radius: 12px; font-family: var(--sans); }
+  .closing-label { text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.78em; color: var(--orange-deep); font-weight: 700; margin-bottom: 10px; }
+  .closing p { color: var(--ink-soft); line-height: 1.65; margin: 0 0 12px; }
+  .closing p:last-child { margin: 0; }
+  .closing a { color: var(--orange-deep); text-decoration: underline; font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress-bar"></div>
+
+<div class="container">
+  <div class="breadcrumb"><a href="indice.html">← Volver al curso</a></div>
+
+  <h1>Evaluación final del curso</h1>
+  <div class="meta"><span class="pill">7 preguntas</span><span class="pill">~15 min</span></div>
+
+  <p class="lead">Siete preguntas que recorren las ocho píldoras. Mezcla comprensión, aplicación y traducción a CX. Las respuestas están plegadas — intenta contestar primero, después confirma. <em>Si te quedas en blanco en alguna, vuelve a su píldora y léela en diagonal: vas a fijar mejor el concepto que si lees la respuesta en frío.</em></p>
+
+  <details class="ex-card">
+    <summary>
+      <span class="ex-num">1.</span>
+      <span class="ex-tag ex-tag-easy">fácil</span>
+      <span class="ex-q">Resume en una sola frase qué hace un freno y por qué necesita disipar calor al aire.</span>
+    </summary>
+    <div class="ex-answer">
+      <p>Un freno convierte la energía cinética del coche en calor mediante fricción controlada (pastilla contra disco) y disipa ese calor al aire para que el sistema no se sature. Si el calor se acumula sin poder salir, el sistema entra en <em>fading</em> y pierde mordida — exactamente lo contrario de lo que necesitas.</p>
+    </div>
+  </details>
+
+  <details class="ex-card">
+    <summary>
+      <span class="ex-num">2.</span>
+      <span class="ex-tag ex-tag-medium">medio</span>
+      <span class="ex-q">Si el coche pasa de 50 km/h a 100 km/h, ¿cuánto más cuesta detenerlo en términos de energía? Y, ¿por qué la masa influye distinto que la velocidad?</span>
+    </summary>
+    <div class="ex-answer">
+      <p>Cuesta <strong>cuatro veces más</strong>. La energía cinética crece con el cuadrado de la velocidad (E = ½ × masa × velocidad²). Doblar la velocidad cuadruplica la energía a disipar. La masa influye de forma lineal: el doble de masa, el doble de energía. La velocidad influye de forma cuadrática.</p>
+      <p>Aplicación práctica: un choque a 100 km/h no es "el doble de grave" que a 50; es <strong>cuatro veces peor</strong> en términos energéticos. Por eso los frenos, la carrocería y los airbags se diseñan pensando en la velocidad, no en la masa.</p>
+    </div>
+  </details>
+
+  <details class="ex-card">
+    <summary>
+      <span class="ex-num">3.</span>
+      <span class="ex-tag ex-tag-medium">medio</span>
+      <span class="ex-q">Un cliente describe el síntoma como "el pedal me dio un golpe rarísimo cuando pisé fuerte para esquivar". ¿Qué le ha pasado, qué debería haber hecho, y cómo se lo explicas?</span>
+    </summary>
+    <div class="ex-answer">
+      <p><strong>Qué le ha pasado:</strong> el ABS se ha activado. La centralita ha cicleado la presión hidráulica a unos 15 ciclos por segundo para evitar que las ruedas se bloqueasen. Esa "vibración" o "golpe" en el pedal es exactamente esa pulsación.</p>
+      <p><strong>Qué debería haber hecho:</strong> seguir pisando firme y dirigir el coche con el volante hacia donde quería ir. El ABS no acorta la frenada — promete que pueda seguir dirigiendo mientras frena a fondo. Levantar el pie por instinto es lo contrario de lo que el sistema necesita.</p>
+      <p><strong>Cómo se lo explicas:</strong> "Lo que sentiste es el ABS funcionando. Tu coche te acaba de proteger: estaba liberando la rueda momentáneamente para que tu volante siguiera dirigiendo el coche. La próxima vez, sigue pisando con firmeza y mueve el volante hacia donde quieras ir. El coche se ocupa del resto." Y, si quiere quedarse tranquilo, lo revisas — casi siempre todo está perfecto, pero la revisión tiene valor CX por sí sola.</p>
+    </div>
+  </details>
+
+  <details class="ex-card">
+    <summary>
+      <span class="ex-num">4.</span>
+      <span class="ex-tag ex-tag-medium">medio</span>
+      <span class="ex-q">Explica con una analogía cotidiana por qué hay que cambiar el líquido de frenos cada dos años aunque el coche no haya frenado mucho.</span>
+    </summary>
+    <div class="ex-answer">
+      <p>El líquido de frenos es <em>higroscópico</em>: absorbe humedad del aire poco a poco, incluso a través de los latiguillos. Es como una sal mal cerrada en un armario costero — se humedece sin que tú la veas. Con la humedad, el punto al que el líquido empieza a hervir baja: si un día frenas mucho seguido (un puerto, una emergencia), esas burbujas hacen que el pedal se vuelva blando justo cuando lo necesitas firme.</p>
+      <p>Cambio cada dos años no es marketing: es química rutinaria. Lo cambias antes de que falle, no después. Como un detector de humo.</p>
+    </div>
+  </details>
+
+  <details class="ex-card">
+    <summary>
+      <span class="ex-num">5.</span>
+      <span class="ex-tag ex-tag-medium">medio</span>
+      <span class="ex-q">Un cliente CUPRA Born te dice: "El coche frena solo cuando levanto el pie. Antes nunca había sentido esto, ¿es normal?". Compón una respuesta corta que (a) le dé el nombre del fenómeno, (b) le quite preocupación, y (c) le ofrezca agencia.</span>
+    </summary>
+    <div class="ex-answer">
+      <p>Una versión posible:</p>
+      <p><em>"Lo que sientes se llama <strong>frenada regenerativa</strong>. Cuando levantas el acelerador, el motor eléctrico se vuelve generador y frena el coche mientras recarga un poco la batería. Es totalmente normal y, además, te alarga autonomía y te ahorra desgaste de pastillas. Si la sensación te resulta fuerte al principio, podemos ajustar la intensidad: tienes opciones desde el menú del coche o moviendo la palanca a B y a D — te lo enseño en dos minutos. Dale unos días: muchos clientes después de una semana ya prefieren conducir así."</em></p>
+      <p>Estructura: nombre del fenómeno (regenerativa), beneficio (autonomía + ahorro de frenos), reconocimiento (es legítimo que extrañe), agencia (puedes ajustarlo) y patrón conocido (a la mayoría les pasa). Convierte una posible queja en una conversación pedagógica.</p>
+    </div>
+  </details>
+
+  <details class="ex-card">
+    <summary>
+      <span class="ex-num">6.</span>
+      <span class="ex-tag ex-tag-medium">medio</span>
+      <span class="ex-q">Nombra las cinco dimensiones perceptibles de la frenada y, para cada una, da la queja-tipo más frecuente que un cliente trae al concesionario.</span>
+    </summary>
+    <div class="ex-answer">
+      <p><strong>1) Tacto</strong> — "El pedal está blando" o "se hunde" o "duro como un ladrillo".</p>
+      <p><strong>2) Sonido</strong> — "Chirría al frenar" o "ruido metálico continuo".</p>
+      <p><strong>3) Vibración</strong> — "El volante tiembla al frenar a velocidad media".</p>
+      <p><strong>4) Olor</strong> — "Olía a quemado al bajar el puerto" o "huele a quemado en plano".</p>
+      <p><strong>5) Polvo / visual</strong> — "Las llantas se me ponen negras" o "los discos están oxidados".</p>
+      <p>Toda queja entra por una de estas cinco dimensiones. Conocer el catálogo te da la mitad del trabajo CX hecho.</p>
+    </div>
+  </details>
+
+  <details class="ex-card">
+    <summary>
+      <span class="ex-num">7.</span>
+      <span class="ex-tag ex-tag-hard">reto</span>
+      <span class="ex-q">Diseña una "tarjeta de bienvenida CX" para un cliente que recoge su primer coche eléctrico (CUPRA Born). Cuatro mensajes de máximo dos frases cada uno, anticipando las dudas que sabes que vendrán en las primeras semanas.</span>
+    </summary>
+    <div class="ex-answer">
+      <p>Una versión posible:</p>
+      <p><strong>1) Tu coche frena al levantar el pie del acelerador.</strong> Es la frenada regenerativa: el motor recupera energía mientras te frena. Si te resulta fuerte al principio, podemos ajustar la intensidad — tienes el control desde el menú o la palanca.</p>
+      <p><strong>2) Es normal ver óxido superficial en los discos si el coche pasa días parado.</strong> Como los frenos mecánicos apenas se usan en eléctricos, el disco coge una capa fina que se quita sola con un par de frenadas firmes. No es un defecto — es una consecuencia de que la regen hace casi todo.</p>
+      <p><strong>3) Tienes Auto Hold: el botón "A" cerca del freno de mano.</strong> Cuando estás parado, el coche se mantiene quieto sin pisar. En atascos vas a agradecerlo. Te lo enseño en la entrega para que lo tengas localizado.</p>
+      <p><strong>4) Cualquier cosa rara en las primeras semanas, llámanos antes de buscar en internet.</strong> Hay tres o cuatro sensaciones que sorprenden a clientes que vienen de combustión y todas tienen explicación. Te ahorramos la incertidumbre.</p>
+      <p>Lógica: anticipar las dos quejas-tipo (regenerativa, óxido en discos), regalar una asistencia útil (Auto Hold) y bajar el umbral de contacto antes de que la duda se convierta en frustración. Diez minutos en la entrega ahorran semanas de tickets de servicio.</p>
+    </div>
+  </details>
+
+  <div class="closing">
+    <div class="closing-label">Curso completado</div>
+    <p>Ya tienes la idea raíz, los componentes, la electrónica, la regenerativa, el mantenimiento y el diccionario operativo de quejas. Suficiente para hablar de tú a tú con cualquier técnico, traducir una queja a su causa, y diseñar una experiencia de cliente con criterio.</p>
+    <p>Si quieres revisar alguna píldora concreta, vuelve al <a href="indice.html">índice del curso</a>.</p>
+  </div>
+</div>
+
+<script>
+(function() { var bar = document.getElementById('progress-bar'); function upd() { var d = document.documentElement.scrollHeight - window.innerHeight; var s = window.scrollY; bar.style.width = (d > 0 ? Math.min(100, (s / d) * 100) : 0) + '%'; } window.addEventListener('scroll', upd, { passive: true }); window.addEventListener('resize', upd); upd(); })();
+</script>
+</body>
+</html>

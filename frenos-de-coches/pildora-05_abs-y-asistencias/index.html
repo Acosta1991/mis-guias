@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Píldora 05 — ABS y asistencias modernas</title>
+<style>
+  :root { --bg: #F8F4EC; --bg-card: #FBF7EC; --ink: #2A2A2A; --ink-soft: #555; --ink-faint: #888; --line: #E5DFCF; --orange: #E07A3C; --orange-deep: #B8480F; --max-content: 680px; --serif: "Iowan Old Style", "Apple Garamond", "Georgia", "Times New Roman", serif; --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--ink); font-family: var(--serif); font-size: 18px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+  .progress-bar { position: fixed; top: 0; left: 0; width: 0%; height: 3px; background: var(--orange); z-index: 100; transition: width 0.05s linear; }
+  .layout { max-width: 1200px; margin: 0 auto; padding: 80px 32px 96px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 0; }
+  @media (min-width: 1024px) { .layout { grid-template-columns: minmax(0, var(--max-content)) minmax(220px, 280px); gap: 56px; padding: 80px 48px 96px; } }
+  .main { max-width: var(--max-content); }
+  .aside { font-family: var(--sans); font-size: 0.85em; color: var(--ink-soft); line-height: 1.55; }
+  .aside .note { border-left: 2px solid var(--orange); padding: 4px 0 4px 14px; margin-bottom: 28px; }
+  .aside .note-label { display: block; text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.78em; color: var(--orange-deep); font-weight: 600; margin-bottom: 4px; }
+  @media (max-width: 1023px) { .aside { margin-top: 32px; } .aside .note { background: var(--bg-card); border: 1px solid var(--line); border-left: 3px solid var(--orange); border-radius: 0 8px 8px 0; padding: 12px 16px; } }
+  .breadcrumb { font-family: var(--sans); font-size: 0.82em; color: var(--ink-faint); margin-bottom: 24px; letter-spacing: 0.02em; }
+  .breadcrumb a { color: var(--ink-soft); text-decoration: none; } .breadcrumb a:hover { color: var(--orange-deep); }
+  h1 { font-family: var(--sans); font-weight: 700; font-size: 2.1em; line-height: 1.2; color: var(--ink); margin: 0 0 12px; letter-spacing: -0.01em; }
+  .meta { font-family: var(--sans); font-size: 0.85em; color: var(--ink-faint); margin-bottom: 36px; display: flex; gap: 16px; }
+  .meta .pill { background: var(--bg-card); border: 1px solid var(--line); padding: 3px 12px; border-radius: 12px; }
+  h2 { font-family: var(--sans); font-weight: 600; font-size: 1.35em; color: var(--ink); margin: 48px 0 16px; letter-spacing: -0.005em; }
+  p { margin: 0 0 1.1em; }
+  .lead { font-size: 1.12em; color: var(--ink); line-height: 1.55; margin-bottom: 1.4em; }
+  em { font-style: italic; } strong { font-weight: 600; color: var(--ink); }
+  .pull { border-left: 3px solid var(--orange); padding: 4px 0 4px 20px; margin: 28px 0; color: var(--ink); font-style: italic; font-size: 1.05em; line-height: 1.5; }
+  .diagram { margin: 36px 0 12px; } .diagram img { width: 100%; height: auto; border-radius: 8px; display: block; }
+  .diagram-caption { font-family: var(--sans); font-size: 0.82em; color: var(--ink-faint); text-align: center; margin-top: 10px; line-height: 1.5; }
+  .next { margin-top: 56px; padding: 22px 24px; background: var(--bg-card); border: 1px solid var(--line); border-radius: 10px; font-family: var(--sans); font-size: 0.95em; }
+  .next-label { text-transform: uppercase; letter-spacing: 0.07em; font-size: 0.78em; color: var(--orange-deep); font-weight: 600; margin-bottom: 6px; }
+  .next a { color: var(--ink); text-decoration: none; font-weight: 600; } .next a:hover { color: var(--orange-deep); }
+  .cx-box { background: var(--bg-card); border: 1px solid var(--line); border-radius: 10px; padding: 22px 26px; margin: 32px 0; font-family: var(--sans); font-size: 0.95em; }
+  .cx-label { text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.74em; color: var(--orange-deep); font-weight: 700; margin-bottom: 8px; }
+  .cx-title { font-size: 1.05em; font-weight: 600; color: var(--ink); margin-bottom: 14px; }
+  .cx-quote { color: var(--ink); font-style: italic; line-height: 1.55; padding-left: 14px; border-left: 2px solid var(--orange); }
+  .helpers { font-family: var(--sans); font-size: 0.95em; margin: 28px 0; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+  .helper-row { display: grid; grid-template-columns: 60px 1fr; padding: 14px 18px; border-bottom: 1px solid var(--line); align-items: start; }
+  .helper-row:last-child { border-bottom: 0; }
+  .helper-acron { font-weight: 700; color: var(--orange-deep); font-size: 0.9em; letter-spacing: 0.04em; }
+  .helper-desc { color: var(--ink-soft); }
+  .helper-desc strong { color: var(--ink); }
+
+  /* ABS interactive */
+  .ie-abs { background: var(--bg-card); border: 1px solid var(--line); border-radius: 10px; padding: 26px; margin: 36px 0; font-family: var(--sans); }
+  .ie-abs-title { font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+  .ie-abs-hint { font-size: 0.85em; color: var(--ink-faint); font-style: italic; margin-bottom: 18px; }
+  .ie-abs-toggle { display: flex; gap: 0; margin-bottom: 18px; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+  .ie-abs-toggle button { flex: 1; padding: 10px 14px; background: transparent; border: 0; cursor: pointer; font-family: var(--sans); font-size: 0.9em; color: var(--ink-soft); transition: all 0.15s; }
+  .ie-abs-toggle button.active { background: var(--orange); color: white; font-weight: 600; }
+  .ie-abs-stage { background: #FFFEFA; border: 1px solid var(--line); border-radius: 8px; padding: 18px; margin-bottom: 14px; }
+  .ie-abs-svg { width: 100%; height: 180px; display: block; }
+  .ie-abs-meters { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 0.88em; color: var(--ink-soft); }
+  .ie-abs-meter { padding: 10px 14px; background: #FFFEFA; border: 1px solid var(--line); border-radius: 6px; }
+  .ie-abs-meter-label { font-size: 0.78em; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-faint); margin-bottom: 4px; }
+  .ie-abs-meter-val { font-weight: 600; color: var(--ink); font-size: 1em; }
+  .ie-abs-meter.alert .ie-abs-meter-val { color: var(--orange-deep); }
+  .ie-abs-meter.ok .ie-abs-meter-val { color: #5A6E36; }
+
+  .exercises { margin: 56px 0 32px; padding-top: 36px; border-top: 1px solid var(--line); }
+  .ex-title { font-family: var(--sans); font-size: 1.25em; color: var(--ink); margin-bottom: 20px; font-weight: 600; }
+  .ex-card { background: var(--bg-card); border: 1px solid var(--line); border-radius: 8px; padding: 16px 20px; margin-bottom: 14px; font-family: var(--sans); font-size: 0.95em; }
+  .ex-card summary { cursor: pointer; list-style: none; display: flex; gap: 12px; align-items: flex-start; color: var(--ink); }
+  .ex-card summary::-webkit-details-marker { display: none; }
+  .ex-card summary::before { content: "▸"; color: var(--orange); font-size: 0.9em; transition: transform 0.2s; flex-shrink: 0; margin-top: 2px; }
+  .ex-card[open] summary::before { transform: rotate(90deg); }
+  .ex-tag { display: inline-block; font-size: 0.72em; font-weight: 600; padding: 2px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.04em; flex-shrink: 0; margin-top: 1px; }
+  .ex-tag-easy { background: #E6EDD8; color: #5A6E36; }
+  .ex-tag-medium { background: #F4E4CC; color: #8C5E1F; }
+  .ex-tag-hard { background: #F0D8CB; color: #A23215; }
+  .ex-q { line-height: 1.45; }
+  .ex-answer { margin: 16px 0 4px 32px; padding: 14px 18px; background: #FFFEFA; border-left: 3px solid var(--orange); color: #444; line-height: 1.6; border-radius: 0 6px 6px 0; }
+  .ex-answer p { margin: 0 0 10px; } .ex-answer p:last-child { margin-bottom: 0; } .ex-answer strong { color: var(--ink); }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress-bar"></div>
+
+<div class="layout">
+  <main class="main">
+    <div class="breadcrumb"><a href="../indice.html">Curso · Frenos de coches</a> &nbsp;/&nbsp; Píldora 05</div>
+
+    <h1>ABS y asistencias modernas: la electrónica que supervisa</h1>
+    <div class="meta"><span class="pill">⏱ 10 min</span><span class="pill">Píldora 5 de 8</span></div>
+
+    <p class="lead">Hasta aquí, todo lo que has visto es <em>mecánica</em>: hidráulica, geometría, materiales. La frenada moderna añade una capa más, una capa que no aprieta nada por sí misma pero decide <em>cuándo y cuánto</em> apretar cada rueda. Es la electrónica de seguridad. Y la pieza fundadora — la abuela de todo lo que vino después — es el ABS.</p>
+
+    <h2>El problema que vino a resolver</h2>
+    <p>Antes del ABS, frenar muy fuerte tenía un riesgo conocido: <strong>bloquear las ruedas</strong>. Una rueda bloqueada deja de girar y empieza a deslizar como un patín sobre el asfalto. Y aquí está la sorpresa: una rueda que desliza no se detiene mejor que una que rueda. De hecho, generalmente <em>peor</em>, porque la fricción dinámica del deslizamiento es menor que la estática del rodaje. Pero el problema gordo es otro:</p>
+    <p><strong>Una rueda bloqueada no responde a la dirección.</strong> Si las ruedas delanteras están bloqueadas, mover el volante no sirve: el coche sigue recto, deslizando, hasta que pare. Esto es lo que mataba a la gente en frenadas de emergencia: chocaban contra lo que intentaban esquivar porque ya no podían dirigir.</p>
+
+    <p>El ABS resuelve precisamente eso. No promete que frenes en menos metros (a veces frena en más). Promete algo mucho más valioso: <strong>que puedas seguir esquivando</strong> mientras frenas a fondo.</p>
+
+    <h2>Cómo lo hace</h2>
+    <p>El ABS (Sistema Antibloqueo de Frenos) tiene tres ingredientes:</p>
+    <p>1) Un <strong>sensor de velocidad</strong> en cada rueda. Mide la rotación a 1.000 veces por segundo.</p>
+    <p>2) Una <strong>centralita</strong> que vigila esos cuatro sensores. Si detecta que una rueda está a punto de bloquearse — gira mucho más lento que las demás — toma una decisión rápida.</p>
+    <p>3) Una <strong>válvula hidráulica</strong> en cada rueda que puede <em>cortar</em> momentáneamente la presión hidráulica que tú mandas con el pedal.</p>
+
+    <div class="diagram">
+      <img src="pildora-05_diagrama-1.png" alt="Comparativa: arriba, rueda bloqueada con derrape recto; abajo, rueda con ABS, cicleando, sin derrape, trayectoria curva">
+      <div class="diagram-caption">Arriba: sin ABS, la rueda se bloquea y el coche sigue recto a pesar del volante girado. Abajo: con ABS, la rueda alterna agarre y suelta varias veces por segundo y el coche puede esquivar.</div>
+    </div>
+
+    <p>El ciclo es brutal de simple: si una rueda va a bloquearse, la válvula <em>suelta</em> presión durante una fracción de segundo. La rueda vuelve a girar. Inmediatamente la válvula <em>vuelve a aplicar</em> presión. Frena, suelta, frena, suelta. Hasta 15 veces por segundo. Tan rápido que tú no puedes hacerlo con el pie ni queriendo.</p>
+
+    <p>Lo que el conductor siente — el pedal vibrando, un zumbido — es <em>exactamente</em> esa pulsación. La centralita está moviendo válvulas a alta frecuencia y eso se transmite a la columna del pedal.</p>
+
+    <div class="ie-abs">
+      <div class="ie-abs-title">Frenazo a fondo, mismo coche</div>
+      <div class="ie-abs-hint">Pulsa los botones para alternar entre los dos modos y ver qué pasa con la rueda y la dirección.</div>
+
+      <div class="ie-abs-toggle">
+        <button id="abs-off" type="button">Sin ABS</button>
+        <button id="abs-on" type="button" class="active">Con ABS</button>
+      </div>
+
+      <div class="ie-abs-stage">
+        <svg viewBox="0 0 460 180" class="ie-abs-svg" id="abs-svg" preserveAspectRatio="xMidYMid meet">
+          <line x1="20" y1="140" x2="440" y2="140" stroke="#666" stroke-width="1" stroke-dasharray="4 6"/>
+          <g id="abs-skid"></g>
+          <g transform="translate(230 120)">
+            <g id="abs-wheel-rotation">
+              <circle r="32" fill="none" stroke="#666" stroke-width="2"/>
+              <circle r="6" fill="#666"/>
+              <line x1="-26" y1="0" x2="26" y2="0" stroke="#666" stroke-width="1.5"/>
+              <line x1="0" y1="-26" x2="0" y2="26" stroke="#666" stroke-width="1.5"/>
+            </g>
+          </g>
+          <g transform="translate(230 60)">
+            <rect x="-46" y="-22" width="92" height="32" rx="6" fill="none" stroke="#666" stroke-width="1.6"/>
+            <line x1="-32" y1="-22" x2="-32" y2="-2" stroke="#666" stroke-width="1.4"/>
+            <line x1="32" y1="-22" x2="32" y2="-2" stroke="#666" stroke-width="1.4"/>
+          </g>
+          <g id="abs-arrow"></g>
+        </svg>
+      </div>
+
+      <div class="ie-abs-meters">
+        <div class="ie-abs-meter" id="meter-wheel">
+          <div class="ie-abs-meter-label">Rueda</div>
+          <div class="ie-abs-meter-val" id="wheel-state">cicleando 15 Hz</div>
+        </div>
+        <div class="ie-abs-meter" id="meter-steer">
+          <div class="ie-abs-meter-label">Dirección</div>
+          <div class="ie-abs-meter-val" id="steer-state">responde</div>
+        </div>
+      </div>
+    </div>
+
+    <h2>Más allá del ABS: la familia de asistencias</h2>
+    <p>El ABS abrió el camino. Sobre los mismos sensores y la misma centralita, los fabricantes fueron añadiendo más capas de inteligencia. Hoy un coche moderno tiene varias asistencias trabajando en silencio:</p>
+
+    <div class="helpers">
+      <div class="helper-row">
+        <div class="helper-acron">ABS</div>
+        <div class="helper-desc"><strong>Antibloqueo de frenos.</strong> Evita que las ruedas se bloqueen en frenadas fuertes. Te permite seguir dirigiendo.</div>
+      </div>
+      <div class="helper-row">
+        <div class="helper-acron">EBD</div>
+        <div class="helper-desc"><strong>Reparto electrónico de frenada.</strong> Decide cuánto frena cada rueda según el peso, la inclinación del coche y la carga. Antes el reparto era fijo; ahora es dinámico.</div>
+      </div>
+      <div class="helper-row">
+        <div class="helper-acron">ESP</div>
+        <div class="helper-desc"><strong>Control de estabilidad.</strong> Si el coche derrapa o hace algo distinto a lo que el volante pide, la centralita frena <em>una rueda concreta</em> (no las cuatro) para corregir la trayectoria. Salva muchas vidas en curvas mojadas.</div>
+      </div>
+      <div class="helper-row">
+        <div class="helper-acron">BAS</div>
+        <div class="helper-desc"><strong>Asistencia de frenada de emergencia.</strong> Si detecta una pisada brusca pero corta, asume que es una emergencia y aplica frenada total aunque tú no llegues a pisar a fondo. Compensa el reflejo humano de "soltar y volver".</div>
+      </div>
+      <div class="helper-row">
+        <div class="helper-acron">Hill Holder</div>
+        <div class="helper-desc"><strong>Mantenimiento en pendiente.</strong> Cuando paras en cuesta y sueltas el freno, mantiene la presión durante 1-2 segundos para que el coche no ruede mientras pasas el pie al acelerador.</div>
+      </div>
+      <div class="helper-row">
+        <div class="helper-acron">AEB</div>
+        <div class="helper-desc"><strong>Frenada autónoma de emergencia.</strong> Cámaras y radar detectan un obstáculo, y si el conductor no reacciona, el sistema frena solo. Puede evitar el choque o reducir mucho el impacto.</div>
+      </div>
+    </div>
+
+    <p>Todas estas asistencias usan los <em>mismos</em> sensores de rueda del ABS. La inversión inicial fue la grande; añadir capas encima salió relativamente barato. Por eso un coche moderno medio lleva todo lo de arriba aunque su ficha técnica solo destaque dos o tres siglas.</p>
+
+    <div class="cx-box">
+      <div class="cx-label">🎯 Microcápsula CX — La primera vez que un cliente activa el ABS</div>
+      <div class="cx-title">"De repente el pedal vibró rarísimo y oí un zumbido"</div>
+      <div class="cx-quote">"Pisé fuerte porque se cruzó algo y de repente el pedal me empezó a vibrar como si hubiera un martillo dentro, y el coche hacía un ruido raro. ¿Está roto?"</div>
+      <p style="margin-top: 14px; color: var(--ink-soft); font-size: 0.95em; font-family: var(--sans);">Esa vibración es el ABS funcionando exactamente como debe. La centralita está abriendo y cerrando válvulas hidráulicas a alta frecuencia, y eso se transmite al pedal. <strong>No es un defecto, es la señal de que el sistema te ha protegido.</strong></p>
+      <p style="color: var(--ink-soft); font-size: 0.95em; font-family: var(--sans);">El instinto natural del cliente al sentirlo por primera vez es <em>levantar el pie</em>. Es exactamente lo contrario de lo que debe hacer: hay que <strong>seguir pisando a fondo</strong> y dirigir el coche a donde quiere ir. La explicación que mejor funciona: "el coche está cicleando los frenos a quince veces por segundo para que tú puedas seguir esquivando con el volante. Tú pisa y dirige, el coche se ocupa del resto."</p>
+    </div>
+
+    <h2>La frase que te llevas</h2>
+    <p class="lead"><strong>El ABS no acorta la frenada: te deja seguir dirigiendo cuando frenas a fondo. Sus primos (ESP, EBD, BAS, Hill Holder, AEB) usan los mismos sensores para resolver problemas distintos. Y la vibración del pedal es la señal de que están trabajando — no de que algo está mal.</strong></p>
+    <p>Hasta aquí, toda nuestra frenada ha terminado en calor disipado al aire. Pero hay un mundo donde esa energía no se quema: se <em>recupera</em>. Eso es la regenerativa, y le toca su píldora.</p>
+
+    <section class="exercises">
+      <div class="ex-title">Práctica activa</div>
+
+      <details class="ex-card">
+        <summary>
+          <span class="ex-tag ex-tag-easy">fácil</span>
+          <span class="ex-q">¿Qué prometía el ABS exactamente cuando se inventó? ¿Y qué NO prometía?</span>
+        </summary>
+        <div class="ex-answer">
+          <p><strong>Promete:</strong> que las ruedas no se bloqueen al frenar a fondo, y por tanto que puedas seguir dirigiendo el coche con el volante mientras frenas.</p>
+          <p><strong>NO promete:</strong> que frenes en menos metros. De hecho, en algunas superficies (tierra suelta, nieve profunda) el ABS puede alargar ligeramente la distancia de frenada — porque una rueda bloqueada apila tierra delante y "ayuda" a parar. Pero a cambio te deja la dirección operativa, y eso casi siempre vale más que unos metros menos.</p>
+        </div>
+      </details>
+
+      <details class="ex-card">
+        <summary>
+          <span class="ex-tag ex-tag-medium">medio</span>
+          <span class="ex-q">El ABS y el ESP usan los mismos sensores. ¿Cuál es la diferencia funcional entre uno y otro?</span>
+        </summary>
+        <div class="ex-answer">
+          <p>Los sensores son los mismos (uno por rueda, midiendo velocidad de rotación), pero responden a problemas distintos:</p>
+          <p><strong>ABS</strong> actúa cuando una rueda está a punto de bloquearse en frenada. La solución es ciclear la presión: frenar-soltar-frenar-soltar, decenas de veces por segundo, en esa rueda.</p>
+          <p><strong>ESP</strong> actúa cuando el coche derrapa, hace una trayectoria distinta a la que pide el volante (por ejemplo, sobreviraje en curva mojada). La solución no es soltar, sino al contrario: <em>frenar</em> una rueda específica (típicamente la de fuera de la curva) para reorientar el coche y devolverlo a su trayectoria.</p>
+          <p>El ABS gestiona <em>frenada vs bloqueo</em>. El ESP gestiona <em>trayectoria vs deriva</em>. Mismas piezas, problemas distintos.</p>
+        </div>
+      </details>
+
+      <details class="ex-card">
+        <summary>
+          <span class="ex-tag ex-tag-hard">reto</span>
+          <span class="ex-q">Un cliente con coche reciente entra al concesionario diciendo: "Frené a fondo en una rotonda, el pedal me dio un golpe rarísimo y casi suelto. ¿Lo reviso?". ¿Cómo le explicas?</span>
+        </summary>
+        <div class="ex-answer">
+          <p>Lo primero: tranquilizarle sin minimizar. Lo que sintió tiene nombre y es <strong>el ABS activándose</strong>. La sensación de "golpe" en el pedal es el sistema cicleando la presión hidráulica para que sus ruedas no se bloqueen. Eso significa que el sistema le acaba de proteger.</p>
+          <p>Lo segundo: el aprendizaje útil. Si vuelve a pasar — y le va a pasar antes o después en mojado — la respuesta correcta no es soltar, es <strong>seguir pisando con firmeza y mover el volante hacia donde quiera ir</strong>. El coche está liberando la rueda momentáneamente para que él pueda esquivar. "Pise y dirija; el resto lo hace el coche."</p>
+          <p>Lo tercero: la oferta. Si quiere quedarse tranquilo, lo revisamos sin coste para confirmar que todo está perfecto. Casi siempre lo está. Pero esa revisión tiene valor CX por sí sola: el cliente se va sintiendo cuidado, no despachado. Y la próxima vez que sienta el ABS, ya no se asusta — lo reconoce.</p>
+        </div>
+      </details>
+    </section>
+
+    <div class="next">
+      <div class="next-label">Siguiente píldora</div>
+      <a href="../pildora-06_frenada-regenerativa/index.html">Píldora 06 — Frenada regenerativa →</a>
+    </div>
+  </main>
+
+  <aside class="aside">
+    <div class="note">
+      <span class="note-label">Frecuencia del ABS</span>
+      Hasta 15 ciclos por segundo. Tan rápido que el conductor no puede replicarlo con el pie. Por eso el viejo consejo de "bombear el pedal" ya no aplica desde 1985: tú pisa firme y constante, deja que el ABS bombee por ti.
+    </div>
+
+    <div class="note">
+      <span class="note-label">¿Cuándo NO quieres ABS?</span>
+      En tierra suelta o nieve profunda con un coche todoterreno experimentado, el bloqueo apila material delante de la rueda y ayuda a frenar antes. Algunos 4x4 tienen un botón para desactivar el ABS off-road. En asfalto, siempre lo quieres encendido.
+    </div>
+
+    <div class="note">
+      <span class="note-label">Testigo del ABS</span>
+      Si se enciende el testigo amarillo del ABS en el cuadro, el sistema está deshabilitado pero los frenos normales siguen funcionando. No es emergencia, pero hay que llevarlo al taller pronto: estás conduciendo sin esa red de seguridad.
+    </div>
+
+    <div class="note">
+      <span class="note-label">El reflejo humano</span>
+      Por instinto, una pisada de emergencia tiende a aflojar a mitad ("susto, suelto, vuelvo a pisar"). El BAS detecta ese patrón y mantiene la frenada total aunque tú aflojes. Es una corrección al hardware humano, no al coche.
+    </div>
+
+    <div class="note">
+      <span class="note-label">AEB y los nuevos coches</span>
+      Desde 2024, la frenada autónoma de emergencia es obligatoria en todos los coches nuevos vendidos en Europa. En tu CUPRA o SEAT actual, está activa salvo que la apagues explícitamente.
+    </div>
+  </aside>
+</div>
+
+<script>
+(function() {
+  var bar = document.getElementById('progress-bar');
+  function upd() { var d = document.documentElement.scrollHeight - window.innerHeight; var s = window.scrollY; bar.style.width = (d > 0 ? Math.min(100, (s / d) * 100) : 0) + '%'; }
+  window.addEventListener('scroll', upd, { passive: true });
+  window.addEventListener('resize', upd);
+  upd();
+})();
+
+(function() {
+  var btnOff = document.getElementById('abs-off');
+  var btnOn = document.getElementById('abs-on');
+  var rotG = document.getElementById('abs-wheel-rotation');
+  var skidG = document.getElementById('abs-skid');
+  var arrG = document.getElementById('abs-arrow');
+  var wheelState = document.getElementById('wheel-state');
+  var steerState = document.getElementById('steer-state');
+  var meterWheel = document.getElementById('meter-wheel');
+  var meterSteer = document.getElementById('meter-steer');
+
+  var ABS_ON = true;
+  var t0 = performance.now();
+
+  function setMode(on) {
+    ABS_ON = on;
+    btnOff.classList.toggle('active', !on);
+    btnOn.classList.toggle('active', on);
+    if (on) {
+      meterWheel.classList.remove('alert'); meterWheel.classList.add('ok');
+      meterSteer.classList.remove('alert'); meterSteer.classList.add('ok');
+      wheelState.textContent = 'cicleando ~15 Hz';
+      steerState.textContent = 'responde al volante';
+    } else {
+      meterWheel.classList.remove('ok'); meterWheel.classList.add('alert');
+      meterSteer.classList.remove('ok'); meterSteer.classList.add('alert');
+      wheelState.textContent = 'bloqueada (deslizando)';
+      steerState.textContent = 'no responde';
+    }
+    skidG.innerHTML = '';
+    if (!on) {
+      var skid = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      skid.setAttribute('x1', '40'); skid.setAttribute('y1', '140');
+      skid.setAttribute('x2', '198'); skid.setAttribute('y2', '140');
+      skid.setAttribute('stroke', '#444'); skid.setAttribute('stroke-width', '4'); skid.setAttribute('stroke-linecap', 'round');
+      skidG.appendChild(skid);
+    }
+    arrG.innerHTML = '';
+    if (on) {
+      for (var i = 0; i < 4; i++) {
+        var a = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        var ang = -90 + i * 90;
+        a.setAttribute('d', 'M 0 -42 A 42 42 0 0 1 18 -38');
+        a.setAttribute('fill', 'none'); a.setAttribute('stroke', '#E07A3C'); a.setAttribute('stroke-width', '2'); a.setAttribute('stroke-linecap', 'round');
+        a.setAttribute('transform', 'translate(230 120) rotate(' + ang + ')');
+        arrG.appendChild(a);
+      }
+    }
+  }
+
+  btnOff.addEventListener('click', function() { setMode(false); });
+  btnOn.addEventListener('click', function() { setMode(true); });
+
+  function tick(now) {
+    var t = (now - t0) / 1000;
+    if (ABS_ON) {
+      var pulse = Math.sin(t * 18) * 8;
+      rotG.setAttribute('transform', 'rotate(' + (t * 60 + pulse) + ')');
+    } else {
+      rotG.setAttribute('transform', 'rotate(0)');
+    }
+    requestAnimationFrame(tick);
+  }
+  setMode(true);
+  requestAnimationFrame(tick);
+})();
+</script>
+</body>
+</html>

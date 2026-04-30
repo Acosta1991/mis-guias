@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Píldora 02 — El truco hidráulico</title>
+<style>
+  :root {
+    --bg: #F8F4EC; --bg-card: #FBF7EC; --ink: #2A2A2A; --ink-soft: #555; --ink-faint: #888;
+    --line: #E5DFCF; --orange: #E07A3C; --orange-deep: #B8480F;
+    --max-content: 680px;
+    --serif: "Iowan Old Style", "Apple Garamond", "Georgia", "Times New Roman", serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--ink); font-family: var(--serif); font-size: 18px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+  .progress-bar { position: fixed; top: 0; left: 0; width: 0%; height: 3px; background: var(--orange); z-index: 100; transition: width 0.05s linear; }
+  .layout { max-width: 1200px; margin: 0 auto; padding: 80px 32px 96px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 0; }
+  @media (min-width: 1024px) { .layout { grid-template-columns: minmax(0, var(--max-content)) minmax(220px, 280px); gap: 56px; padding: 80px 48px 96px; } }
+  .main { max-width: var(--max-content); }
+  .aside { font-family: var(--sans); font-size: 0.85em; color: var(--ink-soft); line-height: 1.55; }
+  .aside .note { border-left: 2px solid var(--orange); padding: 4px 0 4px 14px; margin-bottom: 28px; }
+  .aside .note-label { display: block; text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.78em; color: var(--orange-deep); font-weight: 600; margin-bottom: 4px; }
+  @media (max-width: 1023px) { .aside { margin-top: 32px; } .aside .note { background: var(--bg-card); border: 1px solid var(--line); border-left: 3px solid var(--orange); border-radius: 0 8px 8px 0; padding: 12px 16px; } }
+  .breadcrumb { font-family: var(--sans); font-size: 0.82em; color: var(--ink-faint); margin-bottom: 24px; letter-spacing: 0.02em; }
+  .breadcrumb a { color: var(--ink-soft); text-decoration: none; }
+  .breadcrumb a:hover { color: var(--orange-deep); }
+  h1 { font-family: var(--sans); font-weight: 700; font-size: 2.1em; line-height: 1.2; color: var(--ink); margin: 0 0 12px; letter-spacing: -0.01em; }
+  .meta { font-family: var(--sans); font-size: 0.85em; color: var(--ink-faint); margin-bottom: 36px; display: flex; gap: 16px; }
+  .meta .pill { background: var(--bg-card); border: 1px solid var(--line); padding: 3px 12px; border-radius: 12px; }
+  h2 { font-family: var(--sans); font-weight: 600; font-size: 1.35em; color: var(--ink); margin: 48px 0 16px; letter-spacing: -0.005em; }
+  p { margin: 0 0 1.1em; }
+  .lead { font-size: 1.12em; color: var(--ink); line-height: 1.55; margin-bottom: 1.4em; }
+  em { font-style: italic; }
+  strong { font-weight: 600; color: var(--ink); }
+  .pull { border-left: 3px solid var(--orange); padding: 4px 0 4px 20px; margin: 28px 0; color: var(--ink); font-style: italic; font-size: 1.05em; line-height: 1.5; }
+  .diagram { margin: 36px 0 12px; }
+  .diagram img { width: 100%; height: auto; border-radius: 8px; display: block; }
+  .diagram-caption { font-family: var(--sans); font-size: 0.82em; color: var(--ink-faint); text-align: center; margin-top: 10px; line-height: 1.5; }
+  .next { margin-top: 56px; padding: 22px 24px; background: var(--bg-card); border: 1px solid var(--line); border-radius: 10px; font-family: var(--sans); font-size: 0.95em; }
+  .next-label { text-transform: uppercase; letter-spacing: 0.07em; font-size: 0.78em; color: var(--orange-deep); font-weight: 600; margin-bottom: 6px; }
+  .next a { color: var(--ink); text-decoration: none; font-weight: 600; }
+  .next a:hover { color: var(--orange-deep); }
+  .cx-box { background: var(--bg-card); border: 1px solid var(--line); border-radius: 10px; padding: 22px 26px; margin: 32px 0; font-family: var(--sans); font-size: 0.95em; }
+  .cx-label { text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.74em; color: var(--orange-deep); font-weight: 700; margin-bottom: 8px; }
+  .cx-title { font-size: 1.1em; font-weight: 600; color: var(--ink); margin-bottom: 14px; }
+  .cx-table { display: grid; grid-template-columns: 1fr 2fr; gap: 10px 18px; }
+  .cx-table .cx-key { font-weight: 600; color: var(--orange-deep); }
+  .cx-table .cx-val { color: var(--ink-soft); }
+  .exercises { margin: 56px 0 32px; padding-top: 36px; border-top: 1px solid var(--line); }
+  .ex-title { font-family: var(--sans); font-size: 1.25em; color: var(--ink); margin-bottom: 20px; font-weight: 600; }
+  .ex-card { background: var(--bg-card); border: 1px solid var(--line); border-radius: 8px; padding: 16px 20px; margin-bottom: 14px; font-family: var(--sans); font-size: 0.95em; }
+  .ex-card summary { cursor: pointer; list-style: none; display: flex; gap: 12px; align-items: flex-start; color: var(--ink); }
+  .ex-card summary::-webkit-details-marker { display: none; }
+  .ex-card summary::before { content: "▸"; color: var(--orange); font-size: 0.9em; transition: transform 0.2s; flex-shrink: 0; margin-top: 2px; }
+  .ex-card[open] summary::before { transform: rotate(90deg); }
+  .ex-tag { display: inline-block; font-size: 0.72em; font-weight: 600; padding: 2px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.04em; flex-shrink: 0; margin-top: 1px; }
+  .ex-tag-easy { background: #E6EDD8; color: #5A6E36; }
+  .ex-tag-medium { background: #F4E4CC; color: #8C5E1F; }
+  .ex-tag-hard { background: #F0D8CB; color: #A23215; }
+  .ex-q { line-height: 1.45; }
+  .ex-options { margin: 16px 0 12px 32px; color: var(--ink-soft); line-height: 1.8; }
+  .ex-answer { margin: 16px 0 4px 32px; padding: 14px 18px; background: #FFFEFA; border-left: 3px solid var(--orange); color: #444; line-height: 1.6; border-radius: 0 6px 6px 0; }
+  .ex-answer p { margin: 0 0 10px; }
+  .ex-answer p:last-child { margin-bottom: 0; }
+  .ex-answer strong { color: var(--ink); }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress-bar"></div>
+
+<div class="layout">
+  <main class="main">
+    <div class="breadcrumb"><a href="../indice.html">Curso · Frenos de coches</a> &nbsp;/&nbsp; Píldora 02</div>
+
+    <h1>El truco hidráulico: cómo el pedal mueve 1.500 kg</h1>
+    <div class="meta">
+      <span class="pill">⏱ 10 min</span>
+      <span class="pill">Píldora 2 de 8</span>
+    </div>
+
+    <p class="lead">En la píldora anterior dejamos claro qué hacen los frenos: convertir movimiento en calor por fricción. Pero queda un puzzle inquietante. La pastilla tiene que <em>apretar</em> el disco con fuerza brutal — varias toneladas de presión — y la única fuente de fuerza disponible eres tú, con una pierna y un pie. ¿Cómo encaja eso?</p>
+
+    <h2>El truco que viene de la cocina</h2>
+    <p>Imagina dos jeringas conectadas por un tubito lleno de agua. Una pequeña, una grande. Si aprietas el émbolo de la jeringa pequeña con dos dedos, el émbolo de la jeringa grande sube empujando un peso considerable — mucho más de lo que tus dos dedos podrían levantar directamente. Esto no es magia: es el principio que descubrió Pascal en el siglo XVII, y es exactamente lo que tu pedal usa cada vez que frenas.</p>
+    <p>La idea es esta: cuando aprietas un líquido encerrado, la presión que generas se transmite <strong>igual</strong> a todos los puntos del líquido. Si el líquido empuja una pieza pequeña aquí y una grande allá, la fuerza total que aplica a la pieza grande es proporcional a su área. Pequeña presión sobre área grande = fuerza grande. Truco simple, efecto enorme.</p>
+
+    <div class="diagram">
+      <img src="pildora-02_diagrama-1.png" alt="Sistema hidráulico de frenos: pedal, bombín, latiguillo, pinza, pastilla y disco">
+      <div class="diagram-caption">El recorrido completo de tu fuerza: el pedal empuja un émbolo pequeño en el bombín, el líquido transmite la presión por el latiguillo, y un émbolo grande en la pinza aprieta la pastilla contra el disco.</div>
+    </div>
+
+    <h2>Componentes, en orden</h2>
+    <p>El recorrido de tu fuerza es éste:</p>
+    <p><strong>Pedal</strong> → primer multiplicador. El pedal es una palanca: el punto donde apoyas el pie está más lejos del eje que el punto donde empuja el bombín. Solo con eso ya multiplicas tu fuerza por 4 o por 5 antes de tocar líquido.</p>
+    <p><strong>Bombín maestro</strong> → es la jeringa pequeña. El pedal empuja un émbolo pequeño dentro de un cilindro lleno de <em>líquido de frenos</em>. Ahí nace la presión.</p>
+    <p><strong>Latiguillos</strong> → tubos blindados que llevan el líquido a las cuatro ruedas. Son flexibles porque las ruedas se mueven (suspensión, dirección), pero internamente reforzados para no dilatarse cuando llega presión.</p>
+    <p><strong>Pinzas</strong> → la jeringa grande. En cada rueda, una pinza con uno o varios émbolos grandes recibe la presión y empuja las pastillas contra el disco. Aquí es donde tu pierna se convierte en toneladas de fuerza.</p>
+
+    <h2>El líquido importa más de lo que parece</h2>
+    <p>Para que el sistema funcione, el líquido tiene que ser <em>incompresible</em>: si tú aprietas aquí, ahí tiene que reaccionar al instante, sin que el líquido se "achuche" como una esponja. Por eso no se usa agua corriente (hierve y se mezcla con aire) sino un líquido específico llamado <strong>líquido de frenos</strong> — DOT 4 o DOT 5.1 son los más comunes.</p>
+
+    <div class="pull">El gran enemigo del sistema hidráulico es <strong>el aire</strong>. El aire sí se comprime. Si entra una burbuja en el circuito, parte de tu fuerza se la come comprimiendo el aire en lugar de mover el émbolo. Resultado: el pedal se hunde sin frenar bien.</div>
+
+    <p>Y hay un detalle traicionero: el líquido de frenos es <em>higroscópico</em>. Eso significa que absorbe humedad del aire poco a poco, incluso por los microporos de los latiguillos. Con el tiempo, esa humedad baja el punto de ebullición del líquido. Si frenas mucho en un puerto largo y el líquido viejo hierve, se forman burbujas de vapor y vuelve la sensación de pedal blando — exactamente igual que si hubiera entrado aire. Por eso hay que cambiar el líquido cada dos años, aunque no se "use".</p>
+
+    <div class="cx-box">
+      <div class="cx-label">🎯 Microcápsula CX — el tacto del pedal</div>
+      <div class="cx-title">Lo que dice el cliente vs. lo que pasa debajo</div>
+      <div class="cx-table">
+        <div class="cx-key">"Pedal duro como una piedra"</div>
+        <div class="cx-val">Servofreno parado o sin vacío. El motor tiene que estar en marcha para que el servo te ayude a empujar el bombín.</div>
+        <div class="cx-key">"Pedal blando, esponjoso"</div>
+        <div class="cx-val">Aire o líquido viejo en el circuito. Hay que purgar y, si toca, cambiar el líquido.</div>
+        <div class="cx-key">"Pedal largo, llega casi al fondo"</div>
+        <div class="cx-val">Pastillas muy gastadas (los émbolos viajan más para alcanzar el disco) o pérdida de líquido. Revisión inmediata.</div>
+        <div class="cx-key">"Pedal corto, frena enseguida"</div>
+        <div class="cx-val">Pastillas nuevas y bien ajustadas. Es lo deseable.</div>
+      </div>
+    </div>
+
+    <p>Estos cuatro tactos son el primer punto de contacto del cliente con la salud del sistema. Aprender a traducirlos es la base de cualquier conversación útil sobre frenos en concesionario.</p>
+
+    <h2>La frase que te llevas</h2>
+    <p class="lead"><strong>El sistema hidráulico convierte tu pierna en toneladas de presión gracias al principio de Pascal: poca fuerza sobre área pequeña se traduce en mucha fuerza sobre área grande. El líquido es lo que transmite la magia, y el aire (o el vapor) lo arruina.</strong></p>
+    <p>Ya sabemos cómo llega la fuerza a la rueda. La siguiente píldora resuelve el otro extremo: ¿qué encuentra esa fuerza al llegar? Hay dos geometrías posibles, disco y tambor, y la elección no es trivial.</p>
+
+    <section class="exercises">
+      <div class="ex-title">Práctica activa</div>
+
+      <details class="ex-card">
+        <summary>
+          <span class="ex-tag ex-tag-easy">fácil</span>
+          <span class="ex-q">Un cliente entra al taller y dice "el pedal está blando, se hunde mucho antes de frenar". ¿Qué dos cosas son las primeras a mirar?</span>
+        </summary>
+        <div class="ex-answer">
+          Primero: ¿hay aire en el circuito? Una purga ordenada lo confirma o lo descarta. Segundo: ¿de cuándo es el líquido de frenos? Si lleva más de dos años o el coche ha pasado por bajadas largas, puede haber absorbido humedad y estar hirviendo en uso. Las dos cosas dan el mismo síntoma porque el aire y el vapor se comprimen igual: el émbolo del bombín mueve burbujas en lugar de líquido.
+        </div>
+      </details>
+
+      <details class="ex-card">
+        <summary>
+          <span class="ex-tag ex-tag-medium">medio</span>
+          <span class="ex-q">Si el émbolo del bombín maestro tiene 2 cm² de área y el émbolo de la pinza tiene 20 cm², ¿cuánto se multiplica la fuerza al llegar a la pinza?</span>
+        </summary>
+        <div class="ex-answer">
+          <strong>Se multiplica por 10.</strong> La presión generada en el bombín (fuerza/área) se transmite igual al émbolo de la pinza, que tiene 10 veces más área. Por tanto la fuerza en la pinza es 10 veces la fuerza en el bombín. Si a eso le sumas la palanca del propio pedal (que ya multiplica por 4-5), un empuje de 20 kg con la pierna se convierte en cientos de kilos en cada pastilla. Sin trampas, solo geometría y un líquido que no se comprime.
+        </div>
+      </details>
+
+      <details class="ex-card">
+        <summary>
+          <span class="ex-tag ex-tag-hard">reto</span>
+          <span class="ex-q">¿Por qué no se usa agua como líquido de frenos? Da al menos dos razones técnicas y una operativa.</span>
+        </summary>
+        <div class="ex-answer">
+          <p><strong>Técnicas:</strong></p>
+          <p>1) El agua hierve a 100°C, y los frenos pueden superar los 200°C en uso intenso. Vapor en el circuito = pedal blando = pierdes frenada.</p>
+          <p>2) El agua congela a 0°C. Cualquier mañana de invierno bajo cero dejaría el coche sin frenos hasta que se descongelase.</p>
+          <p><strong>Operativa:</strong></p>
+          <p>3) El agua oxida el metal. Bombín, pinzas, latiguillos: todo el sistema se corroería desde dentro en pocos meses.</p>
+          <p>El líquido de frenos (DOT 4/5.1) está formulado precisamente para esquivar las tres: hierve a 230°C+, no congela en uso normal y no ataca los componentes. La contrapartida — que absorbe humedad y por eso hay que cambiarlo — es el precio razonable.</p>
+        </div>
+      </details>
+    </section>
+
+    <div class="next">
+      <div class="next-label">Siguiente píldora</div>
+      <a href="../pildora-03_disco-vs-tambor/index.html">Píldora 03 — Disco vs tambor: las dos geometrías de la fricción →</a>
+    </div>
+  </main>
+
+  <aside class="aside">
+    <div class="note">
+      <span class="note-label">Pascal en una frase</span>
+      Si encierras un líquido y lo aprietas, la presión se reparte igual a todas partes del líquido. Lo que cambia entonces es la <em>fuerza</em>, en función del <em>área</em> sobre la que actúa esa presión.
+    </div>
+
+    <div class="note">
+      <span class="note-label">El servofreno</span>
+      Lo que multiplica tu fuerza antes incluso de llegar al bombín es el <strong>servofreno</strong>: aprovecha el vacío que genera el motor para empujar él también el bombín. Por eso con el motor parado el pedal se vuelve duro como un ladrillo.
+    </div>
+
+    <div class="note">
+      <span class="note-label">Higroscopía</span>
+      El líquido de frenos absorbe humedad del aire incluso a través de los latiguillos. Con el tiempo eso baja su punto de ebullición. Cambiarlo cada dos años no es marketing, es química.
+    </div>
+
+    <div class="note">
+      <span class="note-label">DOT 4 vs DOT 5.1</span>
+      Ambos a base de glicol, compatibles entre sí. DOT 5.1 hierve más alto, mejor para uso exigente. <strong>NO confundir con DOT 5</strong>, que es de silicona y es incompatible con los anteriores: mezclarlos rompe el sistema.
+    </div>
+
+    <div class="note">
+      <span class="note-label">Tip de taller</span>
+      Si un cliente dice "el pedal pisa raro" pídele que sea más concreto: duro, blando, largo, corto, vibra, pulsa. Cada palabra apunta a una causa distinta.
+    </div>
+  </aside>
+</div>
+
+<script>
+(function() {
+  var bar = document.getElementById('progress-bar');
+  function update() {
+    var docH = document.documentElement.scrollHeight - window.innerHeight;
+    var sc = window.scrollY;
+    var pct = docH > 0 ? Math.min(100, (sc / docH) * 100) : 0;
+    bar.style.width = pct + '%';
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+  update();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Píldora 08 — La frenada como experiencia de cliente</title>
+<style>
+  :root { --bg: #F8F4EC; --bg-card: #FBF7EC; --ink: #2A2A2A; --ink-soft: #555; --ink-faint: #888; --line: #E5DFCF; --orange: #E07A3C; --orange-deep: #B8480F; --max-content: 680px; --serif: "Iowan Old Style", "Apple Garamond", "Georgia", "Times New Roman", serif; --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--ink); font-family: var(--serif); font-size: 18px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+  .progress-bar { position: fixed; top: 0; left: 0; width: 0%; height: 3px; background: var(--orange); z-index: 100; transition: width 0.05s linear; }
+  .layout { max-width: 1200px; margin: 0 auto; padding: 80px 32px 96px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 0; }
+  @media (min-width: 1024px) { .layout { grid-template-columns: minmax(0, var(--max-content)) minmax(220px, 280px); gap: 56px; padding: 80px 48px 96px; } }
+  .main { max-width: var(--max-content); }
+  .aside { font-family: var(--sans); font-size: 0.85em; color: var(--ink-soft); line-height: 1.55; }
+  .aside .note { border-left: 2px solid var(--orange); padding: 4px 0 4px 14px; margin-bottom: 28px; }
+  .aside .note-label { display: block; text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.78em; color: var(--orange-deep); font-weight: 600; margin-bottom: 4px; }
+  @media (max-width: 1023px) { .aside { margin-top: 32px; } .aside .note { background: var(--bg-card); border: 1px solid var(--line); border-left: 3px solid var(--orange); border-radius: 0 8px 8px 0; padding: 12px 16px; } }
+  .breadcrumb { font-family: var(--sans); font-size: 0.82em; color: var(--ink-faint); margin-bottom: 24px; letter-spacing: 0.02em; }
+  .breadcrumb a { color: var(--ink-soft); text-decoration: none; } .breadcrumb a:hover { color: var(--orange-deep); }
+  h1 { font-family: var(--sans); font-weight: 700; font-size: 2.1em; line-height: 1.2; color: var(--ink); margin: 0 0 12px; letter-spacing: -0.01em; }
+  .meta { font-family: var(--sans); font-size: 0.85em; color: var(--ink-faint); margin-bottom: 36px; display: flex; gap: 16px; }
+  .meta .pill { background: var(--bg-card); border: 1px solid var(--line); padding: 3px 12px; border-radius: 12px; }
+  h2 { font-family: var(--sans); font-weight: 600; font-size: 1.35em; color: var(--ink); margin: 48px 0 16px; letter-spacing: -0.005em; }
+  p { margin: 0 0 1.1em; }
+  .lead { font-size: 1.12em; color: var(--ink); line-height: 1.55; margin-bottom: 1.4em; }
+  em { font-style: italic; } strong { font-weight: 600; color: var(--ink); }
+  .pull { border-left: 3px solid var(--orange); padding: 4px 0 4px 20px; margin: 28px 0; color: var(--ink); font-style: italic; font-size: 1.05em; line-height: 1.5; }
+  .diagram { margin: 36px 0 12px; } .diagram img { width: 100%; height: auto; border-radius: 8px; display: block; }
+  .diagram-caption { font-family: var(--sans); font-size: 0.82em; color: var(--ink-faint); text-align: center; margin-top: 10px; line-height: 1.5; }
+  .next { margin-top: 56px; padding: 22px 24px; background: var(--bg-card); border: 1px solid var(--line); border-radius: 10px; font-family: var(--sans); font-size: 0.95em; }
+  .next-label { text-transform: uppercase; letter-spacing: 0.07em; font-size: 0.78em; color: var(--orange-deep); font-weight: 600; margin-bottom: 6px; }
+  .next a { color: var(--ink); text-decoration: none; font-weight: 600; } .next a:hover { color: var(--orange-deep); }
+  .dimensions { display: grid; grid-template-columns: 1fr; gap: 14px; margin: 28px 0; font-family: var(--sans); font-size: 0.95em; }
+  @media (min-width: 700px) { .dimensions { grid-template-columns: 1fr 1fr; } }
+  .dim-card { background: var(--bg-card); border: 1px solid var(--line); border-left: 3px solid var(--orange); border-radius: 0 8px 8px 0; padding: 16px 20px; }
+  .dim-name { font-weight: 700; color: var(--orange-deep); text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.78em; margin-bottom: 4px; }
+  .dim-title { font-weight: 600; color: var(--ink); margin-bottom: 8px; }
+  .dim-text { color: var(--ink-soft); line-height: 1.55; }
+  .brand-feel { font-family: var(--sans); font-size: 0.93em; margin: 28px 0; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+  .brand-row { display: grid; grid-template-columns: 110px 1fr; padding: 14px 18px; border-bottom: 1px solid var(--line); align-items: start; }
+  .brand-row:last-child { border-bottom: 0; }
+  .brand-name { font-weight: 700; color: var(--orange-deep); }
+  .brand-desc { color: var(--ink-soft); }
+  .brand-desc strong { color: var(--ink); }
+  /* Filterable dictionary */
+  .ie-dict { background: var(--bg-card); border: 1px solid var(--line); border-radius: 10px; padding: 26px; margin: 36px 0; font-family: var(--sans); }
+  .ie-dict-title { font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+  .ie-dict-hint { font-size: 0.85em; color: var(--ink-faint); font-style: italic; margin-bottom: 18px; }
+  .ie-dict-search { width: 100%; padding: 10px 14px; border: 1px solid var(--line); border-radius: 8px; background: #FFFEFA; font-family: var(--sans); font-size: 0.95em; color: var(--ink); margin-bottom: 12px; }
+  .ie-dict-filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+  .ie-dict-filter { padding: 6px 12px; border: 1px solid var(--line); border-radius: 14px; background: transparent; cursor: pointer; font-size: 0.82em; color: var(--ink-soft); transition: all 0.15s; font-family: var(--sans); }
+  .ie-dict-filter:hover { border-color: var(--orange); }
+  .ie-dict-filter.active { background: var(--orange); border-color: var(--orange); color: white; font-weight: 600; }
+  .ie-dict-list { display: grid; gap: 10px; }
+  .ie-dict-entry { background: #FFFEFA; border: 1px solid var(--line); border-radius: 8px; }
+  .ie-dict-entry summary { cursor: pointer; padding: 12px 16px; list-style: none; display: flex; gap: 12px; align-items: flex-start; color: var(--ink); }
+  .ie-dict-entry summary::-webkit-details-marker { display: none; }
+  .ie-dict-entry summary::before { content: "▸"; color: var(--orange); transition: transform 0.2s; flex-shrink: 0; margin-top: 2px; font-size: 0.85em; }
+  .ie-dict-entry[open] summary::before { transform: rotate(90deg); }
+  .ie-dict-cat-tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.7em; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; flex-shrink: 0; margin-top: 1px; background: #F4E4CC; color: #8C5E1F; }
+  .ie-dict-cat-tag.tacto { background: #E2D5BE; color: #6B5018; }
+  .ie-dict-cat-tag.ruido { background: #DCE2D2; color: #5A6E36; }
+  .ie-dict-cat-tag.vibracion { background: #D5DFE2; color: #3D5A66; }
+  .ie-dict-cat-tag.olor { background: #F0D8CB; color: #A23215; }
+  .ie-dict-cat-tag.polvo { background: #E5DFCF; color: #6E5E36; }
+  .ie-dict-cat-tag.electrico { background: #DCD5E5; color: #5A4E73; }
+  .ie-dict-quote { line-height: 1.45; }
+  .ie-dict-body { padding: 0 16px 14px 32px; color: var(--ink-soft); line-height: 1.6; font-size: 0.92em; }
+  .ie-dict-body strong { color: var(--ink); }
+  .ie-dict-empty { padding: 16px; color: var(--ink-faint); font-style: italic; text-align: center; }
+  /* metrics */
+  .metrics { font-family: var(--sans); font-size: 0.95em; margin: 28px 0; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+  .metric-row { padding: 14px 18px; border-bottom: 1px solid var(--line); }
+  .metric-row:last-child { border-bottom: 0; }
+  .metric-name { font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+  .metric-desc { color: var(--ink-soft); }
+  /* exercises */
+  .exercises { margin: 56px 0 32px; padding-top: 36px; border-top: 1px solid var(--line); }
+  .ex-title { font-family: var(--sans); font-size: 1.25em; color: var(--ink); margin-bottom: 20px; font-weight: 600; }
+  .ex-card { background: var(--bg-card); border: 1px solid var(--line); border-radius: 8px; padding: 16px 20px; margin-bottom: 14px; font-family: var(--sans); font-size: 0.95em; }
+  .ex-card summary { cursor: pointer; list-style: none; display: flex; gap: 12px; align-items: flex-start; color: var(--ink); }
+  .ex-card summary::-webkit-details-marker { display: none; }
+  .ex-card summary::before { content: "▸"; color: var(--orange); font-size: 0.9em; transition: transform 0.2s; flex-shrink: 0; margin-top: 2px; }
+  .ex-card[open] summary::before { transform: rotate(90deg); }
+  .ex-tag { display: inline-block; font-size: 0.72em; font-weight: 600; padding: 2px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.04em; flex-shrink: 0; margin-top: 1px; }
+  .ex-tag-easy { background: #E6EDD8; color: #5A6E36; }
+  .ex-tag-medium { background: #F4E4CC; color: #8C5E1F; }
+  .ex-tag-hard { background: #F0D8CB; color: #A23215; }
+  .ex-q { line-height: 1.45; }
+  .ex-answer { margin: 16px 0 4px 32px; padding: 14px 18px; background: #FFFEFA; border-left: 3px solid var(--orange); color: #444; line-height: 1.6; border-radius: 0 6px 6px 0; }
+  .ex-answer p { margin: 0 0 10px; } .ex-answer p:last-child { margin-bottom: 0; } .ex-answer strong { color: var(--ink); }
+  .closing { background: var(--bg-card); border: 1px solid var(--line); border-radius: 10px; padding: 28px; margin: 48px 0 24px; font-family: var(--sans); }
+  .closing-label { text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.8em; color: var(--orange-deep); font-weight: 700; margin-bottom: 12px; }
+  .closing p { color: var(--ink); line-height: 1.65; }
+  .closing strong { color: var(--ink); }
+  .closing-eval { margin-top: 18px; }
+  .closing-eval a { display: inline-block; padding: 10px 18px; background: var(--orange); color: white; text-decoration: none; border-radius: 8px; font-weight: 600; font-family: var(--sans); }
+  .closing-eval a:hover { background: var(--orange-deep); }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress-bar"></div>
+
+<div class="layout">
+  <main class="main">
+    <div class="breadcrumb"><a href="../indice.html">Curso · Frenos de coches</a> &nbsp;/&nbsp; Píldora 08</div>
+
+    <h1>La frenada como experiencia de cliente</h1>
+    <div class="meta"><span class="pill">⏱ 10 min</span><span class="pill">Píldora 8 de 8 · Cierre</span></div>
+
+    <p class="lead">Has llegado a la última píldora. Hasta aquí hemos construido la maquinaria: hidráulica, fricción, ABS, regenerativa, mantenimiento. Toca subirse a otro plano: el del cliente, que no ve nada de eso. El cliente ve, oye, huele, siente. Y reclama. Esta píldora junta todo lo anterior y lo traduce a tu idioma.</p>
+
+    <h2>Las cinco dimensiones perceptibles</h2>
+    <p>Toda la complejidad de un sistema de frenos llega al cliente por exactamente cinco canales sensoriales. No hay un sexto, y dominar estos cinco te da la mayor parte del trabajo CX hecho.</p>
+
+    <div class="diagram">
+      <img src="pildora-08_diagrama-1.png" alt="Cinco viñetas: tacto, sonido, vibración, olor, polvo">
+      <div class="diagram-caption">Las cinco dimensiones por las que el cliente percibe sus frenos. Cualquier queja entra por una de ellas.</div>
+    </div>
+
+    <div class="dimensions">
+      <div class="dim-card">
+        <div class="dim-name">1. Tacto</div>
+        <div class="dim-title">El pedal bajo el pie</div>
+        <div class="dim-text">Firme, esponjoso, largo, corto, vibratorio, pulsante. El primer punto de contacto del cliente con la salud del sistema.</div>
+      </div>
+      <div class="dim-card">
+        <div class="dim-name">2. Sonido</div>
+        <div class="dim-title">Lo que oye al frenar</div>
+        <div class="dim-text">Chirridos agudos, roces metálicos, silencio absoluto, zumbidos del ABS. Cada sonido tiene una causa concreta.</div>
+      </div>
+      <div class="dim-card">
+        <div class="dim-name">3. Vibración</div>
+        <div class="dim-title">Lo que llega al volante o al asiento</div>
+        <div class="dim-text">Volante temblando al frenar, pulsación del pedal, vibración del asiento. Casi siempre apunta a algo del disco o de la pinza.</div>
+      </div>
+      <div class="dim-card">
+        <div class="dim-name">4. Olor</div>
+        <div class="dim-title">Lo que huele tras frenar</div>
+        <div class="dim-text">Quemado puntual (frenada exigente, normal). Quemado intenso y persistente (síntoma clínico, urgente).</div>
+      </div>
+      <div class="dim-card">
+        <div class="dim-name">5. Polvo / visual</div>
+        <div class="dim-title">Lo que ve en las llantas</div>
+        <div class="dim-text">Llantas tiznadas de negro (semimetálicas, normal), polvo claro (cerámicas), óxido superficial (eléctricos parados, normal), surcos en disco (alabeo o desgaste irregular, problema).</div>
+      </div>
+    </div>
+
+    <h2>Pedal feel: la firma invisible de la marca</h2>
+    <p>Aquí entra una idea poco intuitiva pero crítica para tu rol. El "tacto" del pedal — cómo se siente al pisarlo — no es solo una consecuencia técnica. Es una <strong>decisión de marca</strong>. Dos coches con frenos físicamente parecidos pueden sentirse completamente distintos al pisar, porque el fabricante ha calibrado la respuesta del servofreno y el reparto regen-mecánico de forma diferente.</p>
+
+    <div class="brand-feel">
+      <div class="brand-row">
+        <div class="brand-name">BMW</div>
+        <div class="brand-desc">Pedal <strong>firme y progresivo</strong>. Mucha resistencia inicial, mordida potente desde el principio, sensación deportiva. La marca proyecta "control".</div>
+      </div>
+      <div class="brand-row">
+        <div class="brand-name">Tesla</div>
+        <div class="brand-desc">Pedal <strong>menos pisado</strong> en uso normal. La regen one-pedal hace casi todo. Cuando se usa, sensación más "blanda" y eléctrica. La marca proyecta "no necesitas frenar".</div>
+      </div>
+      <div class="brand-row">
+        <div class="brand-name">SEAT / Volkswagen</div>
+        <div class="brand-desc">Pedal <strong>equilibrado</strong>: ni muy firme ni muy blando. Zona muerta corta, mordida lineal y predecible. La marca proyecta "fiabilidad alemana".</div>
+      </div>
+      <div class="brand-row">
+        <div class="brand-name">CUPRA</div>
+        <div class="brand-desc">Pedal <strong>más firme y deportivo</strong> que SEAT, con respuesta más inmediata. Hereda gran parte del calibrado VW pero ajusta hacia "carácter". La marca proyecta "energía controlada".</div>
+      </div>
+      <div class="brand-row">
+        <div class="brand-name">Toyota</div>
+        <div class="brand-desc">Pedal <strong>suave y largo</strong>, mordida progresiva. Optimizado para confort urbano, no para deportividad. La marca proyecta "comodidad sin sorpresas".</div>
+      </div>
+    </div>
+
+    <p>Cuando un cliente cambia de marca y dice "este coche frena raro", casi nunca quiere decir "frena mal". Quiere decir "frena distinto". Reconocer eso desde CX evita el reflejo de buscar un fallo donde solo hay una calibración diferente — y permite explicarle por qué siente lo que siente.</p>
+
+    <h2>Auto Hold y freno eléctrico: dos cambios silenciosos</h2>
+    <p>Dos asistencias modernas que cambian la experiencia sin que el cliente las pida explícitamente:</p>
+    <p><strong>Auto Hold</strong>: cuando paras el coche del todo (semáforo, atasco), el sistema mantiene la presión del freno automáticamente sin que tengas que seguir pisando. Sueltas el pedal y el coche no se mueve hasta que aceleras. Para clientes que vienen de toda la vida pisando el freno en cada parada, es una pequeña liberación cotidiana. La conversación CX ideal es enseñarles dónde se activa (botón con "A") y dejar que decidan si lo prefieren.</p>
+    <p><strong>Freno eléctrico de estacionamiento</strong>: el viejo "freno de mano" mecánico ha sido reemplazado en muchos coches por un botón. Tira del cable electrónicamente. La diferencia para el cliente: ya no se acuerda de quitarlo (al menos no como antes), porque el sistema suele soltarlo solo al acelerar. Pero también, si nunca lo activa, no sabe dónde está cuando lo necesita. Vale la pena enseñárselo en la entrega.</p>
+
+    <h2>Diccionario operativo de quejas</h2>
+    <p>Aquí está la pieza más útil de todo el curso para tu día a día. Una lista de quejas reales del cliente, con su traducción técnica y la acción CX recomendada. Filtra por dimensión perceptible si quieres ver solo un tipo.</p>
+
+    <div class="ie-dict">
+      <div class="ie-dict-title">Quejas frecuentes → causa técnica → acción CX</div>
+      <div class="ie-dict-hint">Filtra por categoría o busca por palabra. Pulsa cualquier entrada para ver la traducción técnica y cómo gestionarla.</div>
+
+      <input type="search" class="ie-dict-search" id="dict-search" placeholder="Busca por palabra: 'pedal', 'chirrido', 'oxido'…">
+
+      <div class="ie-dict-filters" id="dict-filters">
+        <button type="button" class="ie-dict-filter active" data-cat="todos">Todos</button>
+        <button type="button" class="ie-dict-filter" data-cat="tacto">Tacto</button>
+        <button type="button" class="ie-dict-filter" data-cat="ruido">Ruido</button>
+        <button type="button" class="ie-dict-filter" data-cat="vibracion">Vibración</button>
+        <button type="button" class="ie-dict-filter" data-cat="olor">Olor</button>
+        <button type="button" class="ie-dict-filter" data-cat="polvo">Polvo</button>
+        <button type="button" class="ie-dict-filter" data-cat="electrico">Eléctricos</button>
+      </div>
+
+      <div class="ie-dict-list" id="dict-list"></div>
+    </div>
+
+    <h2>Cómo se mide la satisfacción de frenada</h2>
+    <p>Para cerrar el lado profesional. La frenada percibida no es solo conversación de taller: hay métricas que la cuantifican y que probablemente conoces o usas:</p>
+
+    <div class="metrics">
+      <div class="metric-row">
+        <div class="metric-name">J.D. Power Initial Quality Study (IQS)</div>
+        <div class="metric-desc">Encuesta a propietarios en los primeros 90 días. Mide problemas reportados por cada 100 vehículos. Los frenos aparecen siempre en el top 5 de áreas reclamadas — y dentro de frenos, ruidos y tacto del pedal son lo más mencionado.</div>
+      </div>
+      <div class="metric-row">
+        <div class="metric-name">CSI (Customer Satisfaction Index)</div>
+        <div class="metric-desc">Encuestas de satisfacción posventa. Específicamente miden la percepción de la frenada como "comportamiento esperado" o "sorpresa negativa". La mayor caída suele ser la primera vez que un cliente eléctrico ve óxido en sus discos.</div>
+      </div>
+      <div class="metric-row">
+        <div class="metric-name">NVH (Noise, Vibration, Harshness)</div>
+        <div class="metric-desc">Indicador interno de fabricantes. Cualquier fenómeno acústico o vibratorio del coche, incluyendo frenos, se mide en banco y se valida en pista. Los chirridos y la pulsación del ABS son los KPI más vigilados en frenos.</div>
+      </div>
+      <div class="metric-row">
+        <div class="metric-name">Tasas de queja por modelo</div>
+        <div class="metric-desc">Indicador de Customer Satisfaction interno. Frecuencia de quejas relacionadas con frenos en los primeros 12-24 meses. Útil para priorizar formación de concesionarios y guiones de entrega.</div>
+      </div>
+    </div>
+
+    <div class="pull">El cliente no compra "pinzas, pastillas y discos". Compra una sensación de control. Tu trabajo desde Customer Satisfaction es asegurar que esa sensación coincide con lo que el coche entrega — y, cuando hay desfase, traducirlo en lugar de defenderlo.</div>
+
+    <div class="closing">
+      <div class="closing-label">Has terminado el curso</div>
+      <p>Sales con una idea raíz que no se olvida: <strong>frenar es convertir movimiento en calor por fricción y disiparlo, salvo cuando puede recuperarse como electricidad</strong>. Conoces la hidráulica que multiplica tu pierna, la geometría de la fricción, la pieza sacrificable, la electrónica que supervisa y la otra forma de frenar. Sabes diferenciar mantenimiento rutinario de urgencia, y tienes un diccionario operativo para traducir lo que el cliente vive a lo que el sistema hace.</p>
+      <p>El siguiente paso es probar lo aprendido con la evaluación final del curso.</p>
+      <div class="closing-eval">
+        <a href="../evaluacion.html">Hacer la evaluación final →</a>
+      </div>
+    </div>
+
+    <section class="exercises">
+      <div class="ex-title">Práctica activa</div>
+
+      <details class="ex-card">
+        <summary>
+          <span class="ex-tag ex-tag-easy">fácil</span>
+          <span class="ex-q">Nombra las cinco dimensiones perceptibles de la frenada y un ejemplo de queja típica de cada una.</span>
+        </summary>
+        <div class="ex-answer">
+          <p><strong>Tacto:</strong> "El pedal está blando" / "se hunde" / "duro como un ladrillo".</p>
+          <p><strong>Sonido:</strong> "Chirría al frenar" / "ruido metálico continuo".</p>
+          <p><strong>Vibración:</strong> "El volante tiembla al frenar" / "el pedal me da golpes raros".</p>
+          <p><strong>Olor:</strong> "Huele a quemado tras bajar el puerto" / "olor intenso a freno en plano".</p>
+          <p><strong>Polvo / visual:</strong> "Las llantas se me ponen negras" / "los discos están oxidados".</p>
+        </div>
+      </details>
+
+      <details class="ex-card">
+        <summary>
+          <span class="ex-tag ex-tag-medium">medio</span>
+          <span class="ex-q">Un cliente que cambia de SEAT León a CUPRA Born te dice: "este coche frena rarísimo, parece que va a tope todo el rato". ¿Qué dos cosas distintas pueden estar pasando, y cómo se las explicas?</span>
+        </summary>
+        <div class="ex-answer">
+          <p>Pueden estar pasando dos cosas que se solapan:</p>
+          <p>1) <strong>Pedal feel distinto:</strong> el CUPRA Born tiene calibrado más firme y deportivo que un SEAT León convencional, por decisión de marca. Donde antes pisaba "lineal y suave", ahora siente más respuesta inicial y más mordida.</p>
+          <p>2) <strong>Frenada regenerativa:</strong> el Born frena solo al levantar el acelerador, gracias a la regenerativa. Esa "frenada sin tocar pedal" es la que percibe como "va a tope todo el rato". No es el freno: es el motor eléctrico actuando como generador.</p>
+          <p>Cómo se lo explicas: "Has cambiado de calibrado y de tecnología a la vez. El Born tiene un pedal más firme por carácter de marca, y además recupera energía al levantar el pie en lugar de inercia libre. Te enseño cómo ajustar el nivel de regeneración si quieres una sensación más cercana a tu León. La mayoría de clientes adapta el cuerpo en una semana y muchos acaban prefiriéndolo."</p>
+          <p>Resultado CX: una queja se convierte en una conversación pedagógica con opciones reales. El cliente se va con conocimiento, no con la sensación de "este coche es raro".</p>
+        </div>
+      </details>
+
+      <details class="ex-card">
+        <summary>
+          <span class="ex-tag ex-tag-hard">reto</span>
+          <span class="ex-q">Si tuvieras que diseñar una "tarjeta de bienvenida CX" sobre los frenos del CUPRA Born para entregar al cliente al recoger el coche, ¿qué cuatro mensajes pondrías y por qué?</span>
+        </summary>
+        <div class="ex-answer">
+          <p>Una versión posible, anticipando las dudas más frecuentes:</p>
+          <p><strong>1) "Tu coche frena al levantar el acelerador. Es la frenada regenerativa."</strong><br>
+          Por qué: la mayor sorpresa de un cliente que viene de combustión. Anticiparla evita la queja "frena raro" en los primeros días.</p>
+          <p><strong>2) "Es normal ver óxido superficial en los discos si dejas el coche varios días al exterior. Se va con un par de frenadas firmes."</strong><br>
+          Por qué: la queja-tipo del eléctrico. Anticiparla convierte un posible reclamación en una explicación que da tranquilidad.</p>
+          <p><strong>3) "Tienes Auto Hold: pulsa el botón "A" cerca del freno de mano. Cuando estás parado, el coche se queda quieto sin pisar. En atascos lo agradecerás."</strong><br>
+          Por qué: una asistencia útil que el cliente no descubre solo. Activarla en la entrega = momento "wow" de bajo coste.</p>
+          <p><strong>4) "Si necesitas configurar la intensidad de la regeneración, te lo enseñamos en la entrega o cuando quieras pasarte. No tienes que vivir con la opción por defecto."</strong><br>
+          Por qué: agencia. Le quitas la sensación de "tengo que aguantar lo que el coche hace" y la conviertes en "tengo opciones que controlo yo".</p>
+          <p>El conjunto: cuatro mensajes que cubren las dos quejas-tipo más comunes, una asistencia útil y una invitación a personalizar. Diez minutos en la entrega ahorran semanas de tickets de servicio.</p>
+        </div>
+      </details>
+    </section>
+  </main>
+
+  <aside class="aside">
+    <div class="note">
+      <span class="note-label">Las 5 dimensiones</span>
+      Tacto, sonido, vibración, olor, polvo. Toda queja entra por una. Si la entiendes en estos términos, has hecho la mitad del trabajo CX.
+    </div>
+    <div class="note">
+      <span class="note-label">Pedal feel = decisión de marca</span>
+      Dos coches con hardware similar se sienten distintos al frenar. La calibración del servofreno y el reparto regen-mecánico es una palanca de marca, no una consecuencia técnica. Lo "raro" no siempre es defecto.
+    </div>
+    <div class="note">
+      <span class="note-label">Auto Hold</span>
+      Mantiene el coche parado sin pisar. Para clientes acostumbrados a pisar siempre, es revelación. Activarlo en la entrega = momento "wow" gratis.
+    </div>
+    <div class="note">
+      <span class="note-label">Anticipa al cliente eléctrico</span>
+      Las dos quejas-tipo: "frena al levantar el pie" (regenerativa) y "discos oxidados" (desuso). Si anticipas las dos en la entrega, evitas la mayoría de tickets de las primeras semanas.
+    </div>
+    <div class="note">
+      <span class="note-label">J.D. Power IQS</span>
+      Encuesta a 90 días de propietarios. Frenos siempre top 5. Dentro de frenos, ruidos y tacto son lo más reportado. Mejorar ambos = mover la aguja en métricas serias.
+    </div>
+  </aside>
+</div>
+
+<script>
+(function() { var bar = document.getElementById('progress-bar'); function upd() { var d = document.documentElement.scrollHeight - window.innerHeight; var s = window.scrollY; bar.style.width = (d > 0 ? Math.min(100, (s / d) * 100) : 0) + '%'; } window.addEventListener('scroll', upd, { passive: true }); window.addEventListener('resize', upd); upd(); })();
+
+(function() {
+  var entries = [
+    { cat: 'tacto', quote: '"El pedal está blando, se hunde mucho antes de frenar"', body: '<strong>Causa probable:</strong> aire o líquido viejo y húmedo en el circuito. <strong>Acción CX:</strong> revisión inmediata, purga del circuito, comprobar fecha del último cambio de líquido. Tranquilizar pero sin minimizar — el pedal blando significa frenada limitada.' },
+    { cat: 'tacto', quote: '"El pedal está duro como una piedra"', body: '<strong>Causa probable:</strong> servofreno sin asistencia. Si pasa con motor en marcha, posible fuga del vacío. Si pasa con motor parado, es normal — el servo necesita el motor. <strong>Acción CX:</strong> preguntar primero si el motor estaba arrancado.' },
+    { cat: 'tacto', quote: '"El pedal me dio un golpe rarísimo al frenar fuerte"', body: '<strong>Causa probable:</strong> ABS activándose. La centralita está cicleando válvulas hidráulicas a 15 Hz. <strong>Acción CX:</strong> tranquilizar — es la señal de que el sistema le ha protegido. Explicarle que la próxima vez debe seguir pisando firme y dirigir el coche.' },
+    { cat: 'ruido', quote: '"Chirría al frenar suave por la mañana"', body: '<strong>Causa probable:</strong> capa fina de óxido sobre el disco tras humedad nocturna, o vibración del shim antirruido. <strong>Acción CX:</strong> si desaparece tras 5-10 frenadas, normal. Si persiste, revisar shim y compuesto de pastilla.' },
+    { cat: 'ruido', quote: '"Suena un pitido continuo al frenar"', body: '<strong>Causa probable:</strong> chivato mecánico de pastilla casi gastada. <strong>Acción CX:</strong> cambio en los próximos días. Si esperas, la placa metálica empieza a arañar el disco y se duplica el coste.' },
+    { cat: 'ruido', quote: '"Ruido metálico grave al frenar, no agudo"', body: '<strong>Causa probable:</strong> pastilla totalmente gastada. La placa metálica está arañando directamente el disco. <strong>Acción CX:</strong> URGENTE. Cada km adicional daña el disco. No retrasar.' },
+    { cat: 'vibracion', quote: '"El volante me tiembla al frenar a velocidad media"', body: '<strong>Causa probable:</strong> disco alabeado por choque térmico. Suele venir de frenazos fuertes seguidos de quedarse parado pisando, o de mojar el disco caliente. <strong>Acción CX:</strong> rectificar si está dentro de espesor mínimo, cambiar si no.' },
+    { cat: 'vibracion', quote: '"El coche tira hacia un lado al frenar"', body: '<strong>Causa probable:</strong> frenada asimétrica. Pinza grippada en un lado o pastillas distintas. <strong>Acción CX:</strong> URGENTE. Riesgo en frenada de emergencia. No retrasar la cita.' },
+    { cat: 'olor', quote: '"Olió a quemado al bajar el puerto pero ya pasó"', body: '<strong>Causa probable:</strong> fading benigno por uso intenso. <strong>Acción CX:</strong> normalmente no requiere intervención si se ha resuelto solo. Aprovechar para enseñar al cliente a usar la frenada motor reduciendo marcha en bajadas largas.' },
+    { cat: 'olor', quote: '"Huele a quemado en plano y a velocidad baja"', body: '<strong>Causa probable:</strong> pinza atascada arrastrando la pastilla rozando el disco. <strong>Acción CX:</strong> URGENTE. Riesgo de incendio. Parar el coche y llamar grúa.' },
+    { cat: 'polvo', quote: '"Las llantas se me llenan de polvo negro a las dos semanas"', body: '<strong>Causa probable:</strong> pastillas semimetálicas, generación normal de polvo metálico. <strong>Acción CX:</strong> ningún problema técnico. Si molesta estéticamente, sugerir paso a pastillas cerámicas en el próximo cambio.' },
+    { cat: 'electrico', quote: '"Mi Born tiene los discos oxidados después de unos días sin moverse"', body: '<strong>Causa probable:</strong> capa fina de óxido superficial por desuso de los frenos mecánicos (la regen hace casi todo el trabajo). <strong>Acción CX:</strong> es normal en eléctricos. Un par de frenadas firmes lo limpian. Anticiparlo en la entrega evita la queja.' },
+    { cat: 'electrico', quote: '"Llevo 90.000 km y no he tenido que cambiar pastillas, ¿es normal?"', body: '<strong>Causa probable:</strong> uso reducido del freno mecánico por la regenerativa. <strong>Acción CX:</strong> totalmente normal. Programar revisión visual sin precio sorpresa para confirmar desgaste y descartar adherencia desigual o sobreoxidación.' },
+    { cat: 'electrico', quote: '"El coche frena solo cuando levanto el pie del acelerador"', body: '<strong>Causa probable:</strong> frenada regenerativa funcionando como diseñada. <strong>Acción CX:</strong> explicar la regen, ofrecer ajustar el nivel desde el menú o la palanca (D / B / one-pedal). Dar al cliente agencia sobre la sensación.' }
+  ];
+
+  var list = document.getElementById('dict-list');
+  var search = document.getElementById('dict-search');
+  var filters = document.getElementById('dict-filters');
+  var currentCat = 'todos';
+  var currentSearch = '';
+
+  function render() {
+    list.innerHTML = '';
+    var matches = entries.filter(function(e) {
+      var catOk = currentCat === 'todos' || e.cat === currentCat;
+      var searchOk = !currentSearch || (e.quote + ' ' + e.body).toLowerCase().indexOf(currentSearch.toLowerCase()) !== -1;
+      return catOk && searchOk;
+    });
+    if (matches.length === 0) {
+      list.innerHTML = '<div class="ie-dict-empty">No hay quejas que coincidan con tu búsqueda.</div>';
+      return;
+    }
+    matches.forEach(function(e) {
+      var d = document.createElement('details');
+      d.className = 'ie-dict-entry';
+      var catLabel = e.cat.charAt(0).toUpperCase() + e.cat.slice(1);
+      d.innerHTML = '<summary><span class="ie-dict-cat-tag ' + e.cat + '">' + catLabel + '</span><span class="ie-dict-quote">' + e.quote + '</span></summary><div class="ie-dict-body">' + e.body + '</div>';
+      list.appendChild(d);
+    });
+  }
+
+  filters.querySelectorAll('.ie-dict-filter').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      filters.querySelectorAll('.ie-dict-filter').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      currentCat = btn.getAttribute('data-cat');
+      render();
+    });
+  });
+
+  search.addEventListener('input', function() { currentSearch = search.value; render(); });
+
+  render();
+})();
+</script>
+</body>
+</html>

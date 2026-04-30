@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Píldora 07 — Mantenimiento y señales de alerta</title>
+<style>
+  :root { --bg: #F8F4EC; --bg-card: #FBF7EC; --ink: #2A2A2A; --ink-soft: #555; --ink-faint: #888; --line: #E5DFCF; --orange: #E07A3C; --orange-deep: #B8480F; --red: #B23B1A; --green: #5A8050; --max-content: 680px; --serif: "Iowan Old Style", "Apple Garamond", "Georgia", "Times New Roman", serif; --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--ink); font-family: var(--serif); font-size: 18px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+  .progress-bar { position: fixed; top: 0; left: 0; width: 0%; height: 3px; background: var(--orange); z-index: 100; transition: width 0.05s linear; }
+  .layout { max-width: 1200px; margin: 0 auto; padding: 80px 32px 96px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 0; }
+  @media (min-width: 1024px) { .layout { grid-template-columns: minmax(0, var(--max-content)) minmax(220px, 280px); gap: 56px; padding: 80px 48px 96px; } }
+  .main { max-width: var(--max-content); }
+  .aside { font-family: var(--sans); font-size: 0.85em; color: var(--ink-soft); line-height: 1.55; }
+  .aside .note { border-left: 2px solid var(--orange); padding: 4px 0 4px 14px; margin-bottom: 28px; }
+  .aside .note-label { display: block; text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.78em; color: var(--orange-deep); font-weight: 600; margin-bottom: 4px; }
+  @media (max-width: 1023px) { .aside { margin-top: 32px; } .aside .note { background: var(--bg-card); border: 1px solid var(--line); border-left: 3px solid var(--orange); border-radius: 0 8px 8px 0; padding: 12px 16px; } }
+  .breadcrumb { font-family: var(--sans); font-size: 0.82em; color: var(--ink-faint); margin-bottom: 24px; letter-spacing: 0.02em; }
+  .breadcrumb a { color: var(--ink-soft); text-decoration: none; } .breadcrumb a:hover { color: var(--orange-deep); }
+  h1 { font-family: var(--sans); font-weight: 700; font-size: 2.1em; line-height: 1.2; color: var(--ink); margin: 0 0 12px; letter-spacing: -0.01em; }
+  .meta { font-family: var(--sans); font-size: 0.85em; color: var(--ink-faint); margin-bottom: 36px; display: flex; gap: 16px; }
+  .meta .pill { background: var(--bg-card); border: 1px solid var(--line); padding: 3px 12px; border-radius: 12px; }
+  h2 { font-family: var(--sans); font-weight: 600; font-size: 1.35em; color: var(--ink); margin: 48px 0 16px; letter-spacing: -0.005em; }
+  p { margin: 0 0 1.1em; }
+  .lead { font-size: 1.12em; color: var(--ink); line-height: 1.55; margin-bottom: 1.4em; }
+  em { font-style: italic; } strong { font-weight: 600; color: var(--ink); }
+  .pull { border-left: 3px solid var(--orange); padding: 4px 0 4px 20px; margin: 28px 0; color: var(--ink); font-style: italic; font-size: 1.05em; line-height: 1.5; }
+  .diagram { margin: 36px 0 12px; } .diagram img { width: 100%; height: auto; border-radius: 8px; display: block; }
+  .diagram-caption { font-family: var(--sans); font-size: 0.82em; color: var(--ink-faint); text-align: center; margin-top: 10px; line-height: 1.5; }
+  .next { margin-top: 56px; padding: 22px 24px; background: var(--bg-card); border: 1px solid var(--line); border-radius: 10px; font-family: var(--sans); font-size: 0.95em; }
+  .next-label { text-transform: uppercase; letter-spacing: 0.07em; font-size: 0.78em; color: var(--orange-deep); font-weight: 600; margin-bottom: 6px; }
+  .next a { color: var(--ink); text-decoration: none; font-weight: 600; } .next a:hover { color: var(--orange-deep); }
+  .schedule { font-family: var(--sans); font-size: 0.95em; margin: 28px 0; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+  .sched-row { display: grid; grid-template-columns: 1.6fr 1fr 2fr; padding: 14px 18px; border-bottom: 1px solid var(--line); align-items: center; }
+  .sched-row.head { background: var(--bg-card); font-weight: 600; color: var(--ink); }
+  .sched-row:last-child { border-bottom: 0; }
+  .sched-item { color: var(--ink); font-weight: 500; }
+  .sched-when { color: var(--orange-deep); font-weight: 600; }
+  .sched-why { color: var(--ink-soft); }
+  .lights { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin: 28px 0; font-family: var(--sans); font-size: 0.93em; }
+  .light-card { padding: 22px 24px; border: 1px solid var(--line); border-radius: 10px; background: #FFFEFA; }
+  .light-card.amber { border-left: 4px solid #C68A2E; }
+  .light-card.red { border-left: 4px solid var(--red); }
+  .light-color { font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.78em; margin-bottom: 6px; }
+  .light-card.amber .light-color { color: #8C5E1F; }
+  .light-card.red .light-color { color: var(--red); }
+  .light-meaning { font-size: 1.05em; font-weight: 600; color: var(--ink); margin-bottom: 8px; }
+  .light-action { color: var(--ink-soft); }
+  .alerts { font-family: var(--sans); font-size: 0.95em; margin: 28px 0; border: 2px solid var(--red); border-radius: 10px; padding: 22px 26px; background: #FEF8F4; }
+  .alerts-title { font-weight: 700; color: var(--red); text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.85em; margin-bottom: 12px; }
+  .alerts ul { margin: 0; padding-left: 20px; }
+  .alerts li { color: var(--ink); margin-bottom: 8px; line-height: 1.55; }
+  .alerts li strong { color: var(--red); }
+
+  /* Symptom decoder */
+  .ie-sym { background: var(--bg-card); border: 1px solid var(--line); border-radius: 10px; padding: 26px; margin: 36px 0; font-family: var(--sans); }
+  .ie-sym-title { font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+  .ie-sym-hint { font-size: 0.85em; color: var(--ink-faint); font-style: italic; margin-bottom: 18px; }
+  .ie-sym-list { display: grid; gap: 8px; }
+  .ie-sym-btn { width: 100%; text-align: left; background: #FFFEFA; border: 1px solid var(--line); border-radius: 6px; padding: 12px 16px; cursor: pointer; font-family: var(--sans); font-size: 0.94em; color: var(--ink); transition: all 0.15s; }
+  .ie-sym-btn:hover { border-color: var(--orange); }
+  .ie-sym-btn.active { border-color: var(--orange); background: #FFF1E2; }
+  .ie-sym-result { margin-top: 16px; padding: 16px 20px; background: #FFFEFA; border-radius: 8px; border-left: 4px solid var(--orange); display: none; }
+  .ie-sym-result.show { display: block; }
+  .ie-sym-result-label { font-size: 0.78em; text-transform: uppercase; letter-spacing: 0.05em; color: var(--ink-faint); margin-bottom: 4px; }
+  .ie-sym-result-cause { font-weight: 600; color: var(--ink); margin-bottom: 10px; }
+  .ie-sym-result-action { color: var(--ink-soft); line-height: 1.55; margin-bottom: 8px; }
+  .ie-sym-urgency { display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 0.75em; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+  .ie-sym-urgency.low { background: #E6EDD8; color: #5A6E36; }
+  .ie-sym-urgency.med { background: #F4E4CC; color: #8C5E1F; }
+  .ie-sym-urgency.high { background: #F0D8CB; color: var(--red); }
+
+  .exercises { margin: 56px 0 32px; padding-top: 36px; border-top: 1px solid var(--line); }
+  .ex-title { font-family: var(--sans); font-size: 1.25em; color: var(--ink); margin-bottom: 20px; font-weight: 600; }
+  .ex-card { background: var(--bg-card); border: 1px solid var(--line); border-radius: 8px; padding: 16px 20px; margin-bottom: 14px; font-family: var(--sans); font-size: 0.95em; }
+  .ex-card summary { cursor: pointer; list-style: none; display: flex; gap: 12px; align-items: flex-start; color: var(--ink); }
+  .ex-card summary::-webkit-details-marker { display: none; }
+  .ex-card summary::before { content: "▸"; color: var(--orange); font-size: 0.9em; transition: transform 0.2s; flex-shrink: 0; margin-top: 2px; }
+  .ex-card[open] summary::before { transform: rotate(90deg); }
+  .ex-tag { display: inline-block; font-size: 0.72em; font-weight: 600; padding: 2px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.04em; flex-shrink: 0; margin-top: 1px; }
+  .ex-tag-easy { background: #E6EDD8; color: #5A6E36; }
+  .ex-tag-medium { background: #F4E4CC; color: #8C5E1F; }
+  .ex-tag-hard { background: #F0D8CB; color: #A23215; }
+  .ex-q { line-height: 1.45; }
+  .ex-answer { margin: 16px 0 4px 32px; padding: 14px 18px; background: #FFFEFA; border-left: 3px solid var(--orange); color: #444; line-height: 1.6; border-radius: 0 6px 6px 0; }
+  .ex-answer p { margin: 0 0 10px; } .ex-answer p:last-child { margin-bottom: 0; } .ex-answer strong { color: var(--ink); }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress-bar"></div>
+
+<div class="layout">
+  <main class="main">
+    <div class="breadcrumb"><a href="../indice.html">Curso · Frenos de coches</a> &nbsp;/&nbsp; Píldora 07</div>
+
+    <h1>Mantenimiento y señales de alerta</h1>
+    <div class="meta"><span class="pill">⏱ 10 min</span><span class="pill">Píldora 7 de 8</span></div>
+
+    <p class="lead">Hasta aquí hemos hecho ingeniería pura. Esta píldora cambia el plano: ¿qué tienes que saber tú, o qué tiene que saber tu cliente, para mantener todo esto vivo y reconocer cuándo algo necesita atención inmediata? Ordenado por dos categorías mentales muy distintas: lo rutinario (lo que se cambia con calendario y kilómetros) y lo urgente (lo que te dice "para el coche YA").</p>
+
+    <h2>Mantenimiento rutinario</h2>
+    <p>Estos son los intervalos orientativos para un coche de uso mixto. Conducción urbana intensa los acorta; carretera tranquila los estira. No son leyes, son referencias para conversar con el taller.</p>
+
+    <div class="schedule">
+      <div class="sched-row head"><div>Pieza</div><div>Cuándo cambiar</div><div>Por qué</div></div>
+      <div class="sched-row">
+        <div class="sched-item">Pastillas delanteras</div>
+        <div class="sched-when">30-60 mil km</div>
+        <div class="sched-why">Trabajan más (70-80% de la frenada). Conducción urbana acorta.</div>
+      </div>
+      <div class="sched-row">
+        <div class="sched-item">Pastillas traseras</div>
+        <div class="sched-when">60-100 mil km</div>
+        <div class="sched-why">Trabajan menos. En eléctricos pueden durar muchísimo más por la regenerativa.</div>
+      </div>
+      <div class="sched-row">
+        <div class="sched-item">Discos</div>
+        <div class="sched-when">2 juegos de pastillas</div>
+        <div class="sched-why">Cada disco aguanta dos cambios de pastilla, salvo alabeo o desgaste prematuro.</div>
+      </div>
+      <div class="sched-row">
+        <div class="sched-item">Líquido de frenos</div>
+        <div class="sched-when">Cada 2 años</div>
+        <div class="sched-why">Absorbe humedad del aire (higroscopía). Con humedad, hierve antes y baja la mordida.</div>
+      </div>
+      <div class="sched-row">
+        <div class="sched-item">Latiguillos</div>
+        <div class="sched-when">10 años o si dilatan</div>
+        <div class="sched-why">Goma cubierta de malla metálica. Si se ven hinchados al frenar, cambio inmediato.</div>
+      </div>
+      <div class="sched-row">
+        <div class="sched-item">Sensores ABS</div>
+        <div class="sched-when">Solo si fallan</div>
+        <div class="sched-why">No tienen calendario. Si el testigo del ABS se enciende, suele ser un sensor sucio o roto.</div>
+      </div>
+    </div>
+
+    <p>El líquido de frenos cada dos años es el que más sorprende a clientes. No "se ve" gastado: el aspecto sigue siendo dorado-ámbar y no hay forma intuitiva de notarlo. Pero la humedad acumulada baja su punto de ebullición de manera silenciosa, y un día — bajando un puerto largo o frenando duro varias veces seguidas — el conductor descubre el pedal blando justo cuando más necesitaba lo contrario.</p>
+
+    <h2>Los testigos del cuadro: amarillo vs rojo</h2>
+    <p>Tu coche no te grita en abstracto. Te avisa con dos colores y la diferencia es importante.</p>
+
+    <div class="diagram">
+      <img src="pildora-07_diagrama-1.png" alt="Cuadro de mandos con testigos relacionados con el sistema de frenos">
+      <div class="diagram-caption">Los testigos relacionados con el sistema: freno de mano, fluido bajo, ABS. Amarillo es revisar; rojo es atender ya.</div>
+    </div>
+
+    <div class="lights">
+      <div class="light-card amber">
+        <div class="light-color">Amarillo</div>
+        <div class="light-meaning">"Revisa pronto"</div>
+        <div class="light-action">El sistema funciona, pero algo no está al 100%. Típicamente el ABS deshabilitado por un sensor sucio. Puedes seguir conduciendo con cuidado y llevarlo al taller en los próximos días.</div>
+      </div>
+      <div class="light-card red">
+        <div class="light-color">Rojo</div>
+        <div class="light-meaning">"Atiéndelo ya"</div>
+        <div class="light-action">Algo serio está pasando. Nivel de líquido bajo, pastillas al límite, freno de mano puesto, fallo crítico del sistema. Busca un sitio seguro para parar y revisa el manual o llama al taller.</div>
+      </div>
+    </div>
+
+    <h2>Las cinco señales rojas — para el coche YA</h2>
+    <p>Por encima de cualquier testigo, estos cinco síntomas son los que NO se discuten. Si aparecen, hay que parar el coche en un sitio seguro y no seguir hasta confirmar qué pasa.</p>
+
+    <div class="alerts">
+      <div class="alerts-title">⚠ Si pasa esto, para el coche</div>
+      <ul>
+        <li><strong>Pedal que se hunde al fondo</strong> sin frenar el coche. Pérdida de líquido o aire crítico en el circuito. Frenar con el de mano y llamar grúa.</li>
+        <li><strong>Vibración fuerte y nueva</strong> al frenar — más que un temblor. Disco gravemente alabeado o componente roto. Riesgo de fallo mecánico.</li>
+        <li><strong>Olor intenso a quemado</strong> con el coche en marcha o recién parado. Puede ser una pastilla o pinza atascada que esté friendo el disco; riesgo de incendio.</li>
+        <li><strong>El coche tira fuerte hacia un lado al frenar.</strong> Frenada asimétrica: una rueda agarra y la otra no. En curva o a alta velocidad puede ser peligroso.</li>
+        <li><strong>Ruido metálico continuo y grave al frenar</strong> (no chirrido agudo). Pastilla totalmente gastada arañando el disco con su placa metálica. Cada metro adicional daña el disco.</li>
+      </ul>
+    </div>
+
+    <div class="ie-sym">
+      <div class="ie-sym-title">Decodificador rápido de síntomas</div>
+      <div class="ie-sym-hint">Pulsa cualquier síntoma para ver causa probable, urgencia y qué hacer.</div>
+      <div class="ie-sym-list" id="sym-list"></div>
+      <div class="ie-sym-result" id="sym-result">
+        <div class="ie-sym-result-label">Causa probable</div>
+        <div class="ie-sym-result-cause" id="sym-cause"></div>
+        <div class="ie-sym-result-action" id="sym-action"></div>
+        <span class="ie-sym-urgency" id="sym-urg"></span>
+      </div>
+    </div>
+
+    <h2>Particularidades en eléctricos e híbridos</h2>
+    <p>Si tienes (o atiendes a clientes con) un eléctrico, tres apuntes que cambian el mantenimiento:</p>
+
+    <p><strong>Pastillas y discos duran muchísimo más.</strong> La regenerativa hace tanto trabajo que las pastillas pueden llegar fácilmente a más de 100.000 km. No es señal de buena calidad — es uso reducido. Eso sí: hay que <em>revisar</em> el desgaste con calendario, no esperar al chivato sonoro, porque una pastilla que casi nunca se usa se puede deteriorar por óxido o por adherencia desigual antes de gastarse.</p>
+
+    <p><strong>El líquido de frenos sigue siendo higroscópico.</strong> Aunque el sistema mecánico se use poco, la humedad sigue entrando por los latiguillos. Cambio cada dos años, igual que en combustión. No te lo saltes "porque casi no frena".</p>
+
+    <p><strong>El óxido superficial en los discos es normal.</strong> Especialmente si el coche pasa días parado al exterior. Un par de frenadas firmes lo limpian. Hay propietarios que, viviendo cerca del mar, programan una "frenada de limpieza" cada cierto tiempo. Es una práctica razonable.</p>
+
+    <h2>Checklist mental antes de un viaje largo</h2>
+    <div class="pull">Cinco minutos antes de salir: pedal firme al pisar (no se hunde más de lo normal), nivel de líquido entre marcas (depósito en el vano), ningún testigo encendido, sin ruidos al rodar despacio frenando suavemente, y olfato neutro (sin olor a quemado en el primer kilómetro). Si los cinco puntos están bien, sales tranquilo.</div>
+
+    <h2>La frase que te llevas</h2>
+    <p class="lead"><strong>El mantenimiento rutinario son intervalos sencillos: pastillas según uso, discos cada dos juegos, líquido cada dos años. Los testigos amarillos piden revisión pronto; los rojos piden parar. Y hay cinco señales clínicas que, cuando aparecen, no se discuten: paras y revisas. Esto no convierte a nadie en mecánico — convierte a cualquiera en mejor cliente y a ti, mejor profesional CX.</strong></p>
+    <p>Cerramos el curso con la píldora más estratégica para tu rol: leer la frenada como experiencia de cliente y construir un diccionario operativo de quejas.</p>
+
+    <section class="exercises">
+      <div class="ex-title">Práctica activa</div>
+
+      <details class="ex-card">
+        <summary>
+          <span class="ex-tag ex-tag-easy">fácil</span>
+          <span class="ex-q">¿Por qué hay que cambiar el líquido de frenos cada dos años aunque el coche apenas haya frenado?</span>
+        </summary>
+        <div class="ex-answer">
+          Porque el líquido absorbe humedad del aire (es higroscópico) incluso a través de los latiguillos y juntas. Con el tiempo, esa humedad baja su punto de ebullición. Un líquido viejo aparentemente sano puede hervir cuando el sistema se calienta — bajada de puerto, frenadas duras seguidas — y formar burbujas de vapor. Vapor en el circuito = pedal blando = pérdida de mordida. El cambio cada dos años no es mantenimiento "por si acaso", es química rutinaria.
+        </div>
+      </details>
+
+      <details class="ex-card">
+        <summary>
+          <span class="ex-tag ex-tag-medium">medio</span>
+          <span class="ex-q">Un cliente eléctrico te dice: "Llevo 90.000 km y no he tenido que cambiar pastillas, ¿es normal o me las están pasando por alto?". ¿Cómo respondes?</span>
+        </summary>
+        <div class="ex-answer">
+          <p>Es totalmente normal y esperable. La frenada regenerativa hace casi todo el trabajo en conducción cotidiana, y los frenos mecánicos solo entran en frenadas fuertes o a velocidad muy baja. Resultado: las pastillas duran muchísimo, a veces más del doble que en un equivalente de combustión.</p>
+          <p>Aún así, le recomiendas <strong>una revisión visual</strong> en la próxima cita de mantenimiento, sin precio sorpresa. Por dos razones: (1) confirmar que el desgaste está dentro de lo esperado y no hay nada irregular, y (2) verificar que las pastillas no han desarrollado adherencia desigual o capa de óxido por desuso. Es un control rápido, no un cambio.</p>
+          <p>El CX aquí: una pregunta de inquietud se convierte en una visita programada con valor. El cliente se va sintiendo cuidado y con la certeza de que el coche está bien.</p>
+        </div>
+      </details>
+
+      <details class="ex-card">
+        <summary>
+          <span class="ex-tag ex-tag-hard">reto</span>
+          <span class="ex-q">Diseña un script de tres frases para que un asesor de servicio explique a un cliente que necesita cambiar líquido de frenos, sin que suene a venta.</span>
+        </summary>
+        <div class="ex-answer">
+          <p>Una versión posible:</p>
+          <p><em>"El líquido de frenos no se ve en el día a día, pero absorbe humedad del aire poco a poco — como una sal mal cerrada en la cocina. Con el tiempo, esa humedad baja la temperatura a la que el líquido empieza a hervir, y si un día frenas mucho seguido en un puerto o en una emergencia, esas burbujas pueden hacer que el pedal se sienta blando justo cuando lo necesitas firme. Por eso lo cambiamos cada dos años: es como cambiar un detector de humo, lo haces antes de que falle, no después."</em></p>
+          <p>La estructura: <strong>una analogía cotidiana</strong> (sal mal cerrada), <strong>un escenario concreto</strong> (puerto / emergencia), y <strong>una comparación con algo aceptado</strong> (detector de humo). Ninguna jerga, ningún miedo gratuito. La decisión de hacerlo o no la deja el cliente, pero ahora con contexto.</p>
+        </div>
+      </details>
+    </section>
+
+    <div class="next">
+      <div class="next-label">Última píldora del curso</div>
+      <a href="../pildora-08_experiencia-de-cliente/index.html">Píldora 08 — La frenada como experiencia de cliente →</a>
+    </div>
+  </main>
+
+  <aside class="aside">
+    <div class="note">
+      <span class="note-label">Cambio siempre por pares</span>
+      Pastillas y discos: nunca un solo lado. Si frenas con materiales diferentes en cada rueda del eje, el coche tira. Eje delantero las dos a la vez; eje trasero las dos a la vez.
+    </div>
+    <div class="note">
+      <span class="note-label">Espesor mínimo del disco</span>
+      Cada disco tiene grabado en su canto un espesor mínimo en mm. Si el desgaste lo lleva por debajo, hay que cambiar — no rectificar — el disco. Por debajo del mínimo, no disipa calor de forma fiable.
+    </div>
+    <div class="note">
+      <span class="note-label">El olfato de los frenos</span>
+      Olor a quemado puntual en bajadas duras puede ser fading benigno. Olor intenso, persistente, en plano y a baja velocidad: pinza atascada o pastilla rozando. La diferencia es importante.
+    </div>
+    <div class="note">
+      <span class="note-label">Antes de la ITV</span>
+      Las dos cosas que más suspenden por frenos: pedal con recorrido excesivo (líquido o aire) y desigualdad de frenada entre ruedas del mismo eje (pastillas distintas, pinza grippada). Revisar ambas antes de pasar.
+    </div>
+    <div class="note">
+      <span class="note-label">Eléctrico parado en garaje</span>
+      Si vas a dejar un eléctrico una semana o más sin moverlo, una recomendación útil: la primera salida, hacer un par de frenadas firmes en un sitio seguro para limpiar la capa fina de óxido superficial del disco. No es obligatorio; ayuda.
+    </div>
+  </aside>
+</div>
+
+<script>
+(function() { var bar = document.getElementById('progress-bar'); function upd() { var d = document.documentElement.scrollHeight - window.innerHeight; var s = window.scrollY; bar.style.width = (d > 0 ? Math.min(100, (s / d) * 100) : 0) + '%'; } window.addEventListener('scroll', upd, { passive: true }); window.addEventListener('resize', upd); upd(); })();
+
+(function() {
+  var symptoms = [
+    { sym: 'Chirrido agudo y continuo a cualquier velocidad', cause: 'Chivato mecánico de pastilla casi gastada', action: 'Cambio de pastillas en los próximos días. Si esperas demasiado, la placa metálica empieza a arañar el disco y se duplica el coste.', urg: 'med' },
+    { sym: 'Vibración del volante al frenar a velocidad media', cause: 'Disco probablemente alabeado por choque térmico', action: 'Revisar planitud del disco. Si está dentro de espesor, rectificar; si no, cambiar. Si la vibración es leve, no urgente — pero programa cita esta semana.', urg: 'med' },
+    { sym: 'Pedal blando, se hunde mucho antes de frenar', cause: 'Aire o líquido viejo y húmedo en el circuito', action: 'Purgar el circuito y verificar fecha del último cambio de líquido. No conducir mucho hasta resolverlo: el pedal blando significa frenada limitada.', urg: 'high' },
+    { sym: 'El coche tira hacia un lado al frenar fuerte', cause: 'Frenada asimétrica: una pinza grippada o pastillas desiguales', action: 'PARAR Y REVISAR. Riesgo de pérdida de control en frenada de emergencia. No retrasar.', urg: 'high' },
+    { sym: 'Polvo negro en las llantas', cause: 'Pastillas semimetálicas (normal)', action: 'Ningún problema técnico. Si te molesta estéticamente, en el próximo cambio puedes pedir pastillas cerámicas de baja emisión.', urg: 'low' },
+    { sym: 'Pedal duro como un ladrillo, mucha fuerza para frenar', cause: 'Servofreno sin asistencia (motor parado, fuga de vacío)', action: 'Si ocurre con motor en marcha: revisión inmediata, posible fuga del servo. Con motor parado es normal: el servo necesita el motor para asistirte.', urg: 'high' },
+    { sym: 'Testigo amarillo del ABS encendido', cause: 'Sensor de rueda sucio o averiado, ABS deshabilitado', action: 'Los frenos normales siguen funcionando, pero sin red ABS. Programar revisión en los próximos días — no urgente, pero sí pronto.', urg: 'med' },
+    { sym: 'Olor a quemado intenso al circular en plano', cause: 'Pinza atascada que arrastra la pastilla rozando el disco', action: 'PARAR EN SITIO SEGURO. Riesgo de incendio si la pinza sigue calentándose. Llamar grúa.', urg: 'high' },
+    { sym: 'Ruidito al frenar la primera vez tras una noche de lluvia', cause: 'Capa fina de óxido sobre el disco, especialmente en eléctricos', action: 'Normal y benigno. Las primeras frenadas la raspan. Si tras 5-10 frenadas sigue, revisar.', urg: 'low' }
+  ];
+
+  var list = document.getElementById('sym-list');
+  var result = document.getElementById('sym-result');
+  var causeEl = document.getElementById('sym-cause');
+  var actionEl = document.getElementById('sym-action');
+  var urgEl = document.getElementById('sym-urg');
+  var current = null;
+
+  symptoms.forEach(function(s, i) {
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'ie-sym-btn';
+    btn.textContent = s.sym;
+    btn.addEventListener('click', function() {
+      var btns = list.querySelectorAll('.ie-sym-btn');
+      btns.forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      causeEl.textContent = s.cause;
+      actionEl.textContent = s.action;
+      urgEl.className = 'ie-sym-urgency ' + s.urg;
+      urgEl.textContent = s.urg === 'low' ? 'Baja urgencia' : s.urg === 'med' ? 'Media — programa cita' : 'Alta — atender ya';
+      result.classList.add('show');
+    });
+    list.appendChild(btn);
+  });
+})();
+</script>
+</body>
+</html>

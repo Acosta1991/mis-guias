@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mis guías</title>
+<style>
+  :root {
+    --bg: #F8F4EC; --bg-card: #FBF7EC; --ink: #2A2A2A; --ink-soft: #555;
+    --ink-faint: #888; --line: #E5DFCF; --orange: #E07A3C; --orange-deep: #B8480F;
+    --serif: "Iowan Old Style", "Apple Garamond", "Georgia", "Times New Roman", serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg); color: var(--ink); font-family: var(--serif);
+    font-size: 18px; line-height: 1.7; -webkit-font-smoothing: antialiased;
+  }
+  .container { max-width: 760px; margin: 0 auto; padding: 96px 32px 96px; }
+  .eyebrow {
+    font-family: var(--sans); font-size: 0.82em; color: var(--orange-deep);
+    text-transform: uppercase; letter-spacing: 0.14em; font-weight: 700; margin-bottom: 18px;
+  }
+  h1 {
+    font-family: var(--sans); font-weight: 700; font-size: 3em; line-height: 1.1;
+    color: var(--ink); margin: 0 0 18px; letter-spacing: -0.02em;
+  }
+  .subtitle {
+    font-size: 1.18em; color: var(--ink-soft); line-height: 1.55;
+    margin-bottom: 60px; max-width: 540px;
+  }
+  .label {
+    font-family: var(--sans); font-size: 0.82em; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--orange-deep); font-weight: 700; margin-bottom: 18px;
+  }
+  .courses { display: grid; gap: 16px; margin-bottom: 64px; }
+  .course-card {
+    display: block; padding: 26px 28px; background: var(--bg-card);
+    border: 1px solid var(--line); border-radius: 12px;
+    text-decoration: none; color: var(--ink); transition: all 0.15s;
+  }
+  .course-card:hover { border-color: var(--orange); transform: translateX(2px); }
+  .course-title {
+    font-family: var(--sans); font-weight: 700; font-size: 1.3em;
+    color: var(--ink); margin-bottom: 8px;
+  }
+  .course-desc { color: var(--ink-soft); font-size: 1em; line-height: 1.55; margin-bottom: 14px; }
+  .course-meta {
+    display: flex; gap: 10px; flex-wrap: wrap;
+    font-family: var(--sans); font-size: 0.8em; color: var(--ink-faint);
+  }
+  .course-meta .tag {
+    padding: 3px 10px; background: white; border: 1px solid var(--line); border-radius: 12px;
+  }
+  .footer {
+    font-family: var(--sans); font-size: 0.85em; color: var(--ink-faint);
+    padding-top: 32px; border-top: 1px solid var(--line); line-height: 1.6;
+  }
+  .footer p { margin: 0 0 6px; }
+  .footer a { color: var(--ink-soft); text-decoration: none; }
+  .footer a:hover { color: var(--orange-deep); }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="eyebrow">Colección personal</div>
+  <h1>Mis guías</h1>
+  <div class="subtitle">Cursos y guías de aprendizaje en píldoras de diez minutos. Producidos para leer en sesiones cortas, autocontenidos, sin jerga gratuita.</div>
+
+  <div class="label">Cursos publicados</div>
+  <div class="courses">
+
+    <a class="course-card" href="frenos-de-coches/indice.html">
+      <div class="course-title">Frenos de coches</div>
+      <div class="course-desc">De la idea raíz a la lente de cliente. Cómo funciona un freno moderno (hidráulica, fricción, ABS, frenada regenerativa) y cómo se traduce eso a la experiencia que vive el cliente.</div>
+      <div class="course-meta">
+        <span class="tag">⏱ 80 min</span>
+        <span class="tag">8 píldoras + evaluación</span>
+        <span class="tag">Introductorio</span>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="footer">
+    <p>Producido por Luis Acosta · 2026</p>
+    <p><a href="https://github.com/Acosta1991/mis-guias">Repositorio en GitHub</a></p>
+  </div>
+</div>
+
+</body>
+</html>

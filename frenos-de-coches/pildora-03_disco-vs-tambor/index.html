@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Píldora 03 — Disco vs tambor</title>
+<style>
+  :root { --bg: #F8F4EC; --bg-card: #FBF7EC; --ink: #2A2A2A; --ink-soft: #555; --ink-faint: #888; --line: #E5DFCF; --orange: #E07A3C; --orange-deep: #B8480F; --max-content: 680px; --serif: "Iowan Old Style", "Apple Garamond", "Georgia", "Times New Roman", serif; --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--ink); font-family: var(--serif); font-size: 18px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+  .progress-bar { position: fixed; top: 0; left: 0; width: 0%; height: 3px; background: var(--orange); z-index: 100; transition: width 0.05s linear; }
+  .layout { max-width: 1200px; margin: 0 auto; padding: 80px 32px 96px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 0; }
+  @media (min-width: 1024px) { .layout { grid-template-columns: minmax(0, var(--max-content)) minmax(220px, 280px); gap: 56px; padding: 80px 48px 96px; } }
+  .main { max-width: var(--max-content); }
+  .aside { font-family: var(--sans); font-size: 0.85em; color: var(--ink-soft); line-height: 1.55; }
+  .aside .note { border-left: 2px solid var(--orange); padding: 4px 0 4px 14px; margin-bottom: 28px; }
+  .aside .note-label { display: block; text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.78em; color: var(--orange-deep); font-weight: 600; margin-bottom: 4px; }
+  @media (max-width: 1023px) { .aside { margin-top: 32px; } .aside .note { background: var(--bg-card); border: 1px solid var(--line); border-left: 3px solid var(--orange); border-radius: 0 8px 8px 0; padding: 12px 16px; } }
+  .breadcrumb { font-family: var(--sans); font-size: 0.82em; color: var(--ink-faint); margin-bottom: 24px; letter-spacing: 0.02em; }
+  .breadcrumb a { color: var(--ink-soft); text-decoration: none; } .breadcrumb a:hover { color: var(--orange-deep); }
+  h1 { font-family: var(--sans); font-weight: 700; font-size: 2.1em; line-height: 1.2; color: var(--ink); margin: 0 0 12px; letter-spacing: -0.01em; }
+  .meta { font-family: var(--sans); font-size: 0.85em; color: var(--ink-faint); margin-bottom: 36px; display: flex; gap: 16px; }
+  .meta .pill { background: var(--bg-card); border: 1px solid var(--line); padding: 3px 12px; border-radius: 12px; }
+  h2 { font-family: var(--sans); font-weight: 600; font-size: 1.35em; color: var(--ink); margin: 48px 0 16px; letter-spacing: -0.005em; }
+  p { margin: 0 0 1.1em; }
+  .lead { font-size: 1.12em; color: var(--ink); line-height: 1.55; margin-bottom: 1.4em; }
+  em { font-style: italic; } strong { font-weight: 600; color: var(--ink); }
+  .pull { border-left: 3px solid var(--orange); padding: 4px 0 4px 20px; margin: 28px 0; color: var(--ink); font-style: italic; font-size: 1.05em; line-height: 1.5; }
+  .diagram { margin: 36px 0 12px; } .diagram img { width: 100%; height: auto; border-radius: 8px; display: block; }
+  .diagram-labels { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; font-family: var(--sans); font-size: 0.85em; color: var(--ink-soft); text-align: center; }
+  .diagram-labels span { padding: 6px 4px; border-top: 2px solid var(--orange); font-weight: 500; }
+  .diagram-caption { font-family: var(--sans); font-size: 0.82em; color: var(--ink-faint); text-align: center; margin-top: 10px; line-height: 1.5; }
+  .next { margin-top: 56px; padding: 22px 24px; background: var(--bg-card); border: 1px solid var(--line); border-radius: 10px; font-family: var(--sans); font-size: 0.95em; }
+  .next-label { text-transform: uppercase; letter-spacing: 0.07em; font-size: 0.78em; color: var(--orange-deep); font-weight: 600; margin-bottom: 6px; }
+  .next a { color: var(--ink); text-decoration: none; font-weight: 600; } .next a:hover { color: var(--orange-deep); }
+  .compare { font-family: var(--sans); font-size: 0.95em; margin: 28px 0; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+  .compare-row { display: grid; grid-template-columns: 1.2fr 1fr 1fr; }
+  .compare-row > div { padding: 12px 16px; border-bottom: 1px solid var(--line); }
+  .compare-row:last-child > div { border-bottom: 0; }
+  .compare-row.head > div { background: var(--bg-card); font-weight: 600; color: var(--ink); }
+  .compare-row .label { color: var(--ink-soft); border-right: 1px solid var(--line); }
+  .compare-row .disco { color: var(--ink); border-right: 1px solid var(--line); }
+  .compare-row .tambor { color: var(--ink); }
+  .exercises { margin: 56px 0 32px; padding-top: 36px; border-top: 1px solid var(--line); }
+  .ex-title { font-family: var(--sans); font-size: 1.25em; color: var(--ink); margin-bottom: 20px; font-weight: 600; }
+  .ex-card { background: var(--bg-card); border: 1px solid var(--line); border-radius: 8px; padding: 16px 20px; margin-bottom: 14px; font-family: var(--sans); font-size: 0.95em; }
+  .ex-card summary { cursor: pointer; list-style: none; display: flex; gap: 12px; align-items: flex-start; color: var(--ink); }
+  .ex-card summary::-webkit-details-marker { display: none; }
+  .ex-card summary::before { content: "▸"; color: var(--orange); font-size: 0.9em; transition: transform 0.2s; flex-shrink: 0; margin-top: 2px; }
+  .ex-card[open] summary::before { transform: rotate(90deg); }
+  .ex-tag { display: inline-block; font-size: 0.72em; font-weight: 600; padding: 2px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.04em; flex-shrink: 0; margin-top: 1px; }
+  .ex-tag-easy { background: #E6EDD8; color: #5A6E36; }
+  .ex-tag-medium { background: #F4E4CC; color: #8C5E1F; }
+  .ex-tag-hard { background: #F0D8CB; color: #A23215; }
+  .ex-q { line-height: 1.45; }
+  .ex-answer { margin: 16px 0 4px 32px; padding: 14px 18px; background: #FFFEFA; border-left: 3px solid var(--orange); color: #444; line-height: 1.6; border-radius: 0 6px 6px 0; }
+  .ex-answer p { margin: 0 0 10px; } .ex-answer p:last-child { margin-bottom: 0; } .ex-answer strong { color: var(--ink); }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress-bar"></div>
+
+<div class="layout">
+  <main class="main">
+    <div class="breadcrumb"><a href="../indice.html">Curso · Frenos de coches</a> &nbsp;/&nbsp; Píldora 03</div>
+
+    <h1>Disco vs tambor: las dos geometrías de la fricción</h1>
+    <div class="meta"><span class="pill">⏱ 10 min</span><span class="pill">Píldora 3 de 8</span></div>
+
+    <p class="lead">La píldora anterior dejó la fuerza llegando hasta la rueda. Ahora viene la pregunta de geometría: ¿cómo se aplica esa fricción exactamente? Hay dos respuestas históricas, dos formas de "agarrar" la rueda con una pieza fija. Una ganó la guerra para casi todo el coche, pero la otra resiste en un sitio concreto y por buenas razones.</p>
+
+    <h2>Las dos respuestas</h2>
+    <p>El <strong>freno de disco</strong> es lo que probablemente imaginas: un disco metálico que gira con la rueda, atrapado entre dos pastillas que se cierran sobre él como una pinza. Las pastillas atacan el disco <em>desde fuera</em>, en una zona expuesta al aire.</p>
+    <p>El <strong>freno de tambor</strong> es lo opuesto: un tambor metálico (una "lata" hueca) que gira con la rueda, y dentro del tambor unas <em>zapatas</em> curvadas que se separan empujando hacia afuera y rozan la cara interior del tambor. La fricción ocurre <em>dentro</em>, en una zona cerrada.</p>
+
+    <div class="diagram">
+      <img src="pildora-03_diagrama-1.png" alt="Comparativa de freno de disco (izquierda) y freno de tambor (derecha)">
+      <div class="diagram-labels"><span>disco</span><span>tambor</span></div>
+      <div class="diagram-caption">Izquierda: el disco se ataca desde fuera por dos pastillas que cierran como una pinza. Derecha: el tambor se ataca desde dentro por dos zapatas que se separan.</div>
+    </div>
+
+    <h2>Por qué el disco ganó casi toda la guerra</h2>
+    <p>Recuerda la idea raíz: frenar es generar calor y luego <em>disipar</em> ese calor al aire. Aquí está la diferencia decisiva entre ambos sistemas:</p>
+    <p>El disco está al aire libre. El calor que se genera tiene casi toda su superficie expuesta para irse. Y los discos modernos son <strong>ventilados</strong>: dos caras separadas por aletas internas que actúan como ventilador, soplando aire por dentro mientras la rueda gira. Disipan calor a saco.</p>
+    <p>El tambor, en cambio, encierra todo el calor en un volumen cerrado. La cara que roza está dentro, sin aire. El sistema entero acumula temperatura y fácil llega a saturarse — el famoso <strong>fading</strong> — antes que un disco equivalente. En frenadas duras o sostenidas, el disco es claramente superior.</p>
+
+    <div class="compare">
+      <div class="compare-row head">
+        <div class="label">Aspecto</div>
+        <div class="disco">Disco</div>
+        <div class="tambor">Tambor</div>
+      </div>
+      <div class="compare-row">
+        <div class="label">Disipación de calor</div>
+        <div class="disco">Excelente (al aire)</div>
+        <div class="tambor">Pobre (cerrado)</div>
+      </div>
+      <div class="compare-row">
+        <div class="label">Mordida en frenadas duras</div>
+        <div class="disco">Constante</div>
+        <div class="tambor">Se desvanece (fading)</div>
+      </div>
+      <div class="compare-row">
+        <div class="label">Comportamiento en mojado</div>
+        <div class="disco">Se seca rápido</div>
+        <div class="tambor">Tarda más</div>
+      </div>
+      <div class="compare-row">
+        <div class="label">Coste de fabricación</div>
+        <div class="disco">Más alto</div>
+        <div class="tambor">Más bajo</div>
+      </div>
+      <div class="compare-row">
+        <div class="label">Mantenimiento</div>
+        <div class="disco">Visual y rápido</div>
+        <div class="tambor">Hay que abrirlo</div>
+      </div>
+      <div class="compare-row">
+        <div class="label">Freno de mano integrado</div>
+        <div class="disco">Más complejo</div>
+        <div class="tambor">Sencillo y barato</div>
+      </div>
+    </div>
+
+    <h2>Entonces, ¿por qué sigue habiendo tambores?</h2>
+    <p>Por dos razones muy concretas, ambas en el eje trasero de coches utilitarios:</p>
+    <p>Una es el <strong>coste</strong>. En un coche económico, el eje trasero hace solo entre el 20% y el 30% del trabajo de frenada — el delantero hace el resto porque el coche se inclina hacia adelante al frenar. Si el trasero apenas se exige, un tambor barato cumple sin que el cliente note la diferencia.</p>
+    <p>La segunda es <strong>el freno de mano</strong>. Implementar un freno de estacionamiento dentro de un tambor es trivial: un cable tira de las zapatas y ya está. En un freno de disco hay que añadir un mecanismo de aparcamiento aparte, más caro. Para un coche utilitario, el tambor trasero resuelve dos problemas a la vez por menos dinero.</p>
+
+    <div class="pull">Mira tu coche. Casi seguro que lleva discos delante (siempre). Detrás puede llevar discos (si es de gama media-alta) o tambores (si es utilitario). Que lleve tambor detrás <em>no</em> significa que sea peor coche; significa que el fabricante decidió que el trasero no necesita más.</div>
+
+    <h2>Subtipos de disco: macizo, ventilado, perforado, cerámico</h2>
+    <p>No todos los discos son iguales:</p>
+    <p><strong>Macizo</strong>: una pieza única, sin canales. Más barato, peor refrigeración. Típico del eje trasero.</p>
+    <p><strong>Ventilado</strong>: dos caras separadas por aletas internas. El aire circula por dentro al girar. Estándar en el eje delantero de prácticamente todo coche moderno.</p>
+    <p><strong>Perforado o ranurado</strong>: agujeros o ranuras en la cara del disco. La función técnica real es ayudar a expulsar gases que se forman entre pastilla y disco al frenar muy caliente, y romper el agua en mojado. La función real-real en muchos coches deportivos es estética y de marca. En uso normal mejoran poco; en pista, sí.</p>
+    <p><strong>Cerámico</strong> (carbono-cerámica): disco hecho de cerámica reforzada con fibra de carbono. Mucho más ligero, soporta temperaturas brutales, dura muchísimo. Y cuesta una pequeña fortuna. Se ven en deportivos de altas prestaciones, no en uso diario.</p>
+
+    <h2>La pinza: fija vs flotante</h2>
+    <p>Sobre el disco vive la pinza, que es la que aprieta las pastillas. Hay dos tipos.</p>
+    <p>La <strong>pinza fija</strong> tiene émbolos a ambos lados del disco. Cada lado empuja su pastilla. Es más cara, más rígida y da mejor tacto. Verás varias en deportivos: pinzas grandes, pintadas, con 4 o 6 émbolos por rueda.</p>
+    <p>La <strong>pinza flotante</strong> tiene émbolos solo en un lado. Cuando ese lado empuja su pastilla contra el disco, toda la pinza se desliza sobre unas guías y arrastra la pastilla del otro lado para apretar también. Más simple, más barata, suficiente para uso normal. Es lo que llevará el 90% de los coches en la calle.</p>
+
+    <h2>La frase que te llevas</h2>
+    <p class="lead"><strong>El disco gana en disipación y modulación, el tambor sobrevive donde el coste y el freno de mano lo justifican (eje trasero de utilitarios). En tu coche cada eje puede llevar la geometría que el fabricante ha decidido que basta.</strong></p>
+    <p>Hasta aquí hemos visto los dos lados duros de la fricción. La siguiente píldora se centra en la pieza blanda — la que se gasta a propósito — y por qué importa más de lo que parece: la <em>pastilla</em>.</p>
+
+    <section class="exercises">
+      <div class="ex-title">Práctica activa</div>
+
+      <details class="ex-card">
+        <summary>
+          <span class="ex-tag ex-tag-easy">fácil</span>
+          <span class="ex-q">¿Por qué un freno de disco se enfría mejor que un freno de tambor, hablando solo de geometría?</span>
+        </summary>
+        <div class="ex-answer">
+          Porque la superficie que roza está al aire. En el disco, las pastillas atacan al disco desde fuera y casi toda la masa caliente está expuesta al viento que produce la rueda al girar. En el tambor, la fricción ocurre dentro de un volumen cerrado: el calor no tiene por dónde salir hasta que conduce hacia las paredes del tambor y de ahí lentamente al aire. A geometría comparable, el disco siempre disipa más rápido.
+        </div>
+      </details>
+
+      <details class="ex-card">
+        <summary>
+          <span class="ex-tag ex-tag-medium">medio</span>
+          <span class="ex-q">Si los discos son mejores, ¿por qué Volkswagen sigue montando tambores en el eje trasero del Polo o el T-Cross de acceso?</span>
+        </summary>
+        <div class="ex-answer">
+          <p>Por dos razones combinadas:</p>
+          <p>1) El eje trasero apenas trabaja en frenada (el coche se inclina hacia delante y el peso recae sobre el delantero). Un tambor económico es de sobra para ese 20-30% del trabajo, especialmente en un utilitario que no se exige en circuito.</p>
+          <p>2) Implementar el freno de estacionamiento dentro de un tambor es mucho más simple y barato que en un disco. Dos beneficios por una sola pieza.</p>
+          <p>El cliente no nota diferencia en uso urbano, y el fabricante mejora el margen sin penalizar la seguridad. Cuando el coche sube de gama, el tambor desaparece — es un marcador clarísimo de gama.</p>
+        </div>
+      </details>
+
+      <details class="ex-card">
+        <summary>
+          <span class="ex-tag ex-tag-hard">reto</span>
+          <span class="ex-q">Un cliente CUPRA Born trae el coche al taller diciendo "los discos traseros se me oxidan en cuanto deja de circular un par de días". ¿Es un defecto del coche o explicable? ¿Qué le dirías?</span>
+        </summary>
+        <div class="ex-answer">
+          <p>Es <strong>explicable y conocido</strong>, no un defecto. El CUPRA Born usa frenada regenerativa intensa: la mayor parte de la deceleración se hace con el motor eléctrico actuando como generador, no con los frenos mecánicos. Eso significa que las pastillas y discos traseros prácticamente <em>no se usan</em> en conducción normal. El óxido superficial aparece porque, sin desgaste habitual, una pequeña capa de óxido se acumula en la superficie del disco al estar parado a la intemperie.</p>
+          <p>La buena noticia: en cuanto frenas con cierta firmeza un par de veces, las pastillas raspan ese óxido superficial y el disco vuelve a estar limpio. No afecta a la seguridad ni acorta la vida útil de forma apreciable.</p>
+          <p>La nota CX: anticipa esta conversación a clientes que vienen de combustión. Decirles antes — "es normal, no te preocupes si lo ves después de unos días parado" — convierte una posible reclamación en una explicación que les hace sentir cuidados. La regenerativa la veremos a fondo en la píldora 6.</p>
+        </div>
+      </details>
+    </section>
+
+    <div class="next">
+      <div class="next-label">Siguiente píldora</div>
+      <a href="../pildora-04_pastilla-y-disco/index.html">Píldora 04 — Pastilla y disco: el binomio sacrificable →</a>
+    </div>
+  </main>
+
+  <aside class="aside">
+    <div class="note">
+      <span class="note-label">Regla de oro</span>
+      Discos delante <em>siempre</em>. Detrás puede haber lo que el fabricante decida. Cuanto más alta la gama, más probable que los traseros también sean disco.
+    </div>
+
+    <div class="note">
+      <span class="note-label">¿Y los discos perforados?</span>
+      Su ventaja real es expulsar gases y agua en frenadas extremas (pista, mojado intenso). En uso de calle aportan más estética que rendimiento. No los pidas porque "frenan mejor": frenan parecido y pueden agrietarse si abusas.</div>
+
+    <div class="note">
+      <span class="note-label">Cerámica</span>
+      Carbono-cerámica: durísimos, ligerísimos, ultra-resistentes al calor. Y carísimos. Reservados a deportivos de altas prestaciones (Porsche, Ferrari, AMG…). En tu coche del día a día no aparecen.
+    </div>
+
+    <div class="note">
+      <span class="note-label">Pinza fija vs flotante</span>
+      Fija: émbolos a ambos lados, mejor tacto, más cara. Flotante: émbolos solo en un lado, la pinza se desliza, más barata. La mayoría de coches llevan flotantes. Las fijas se ven en deportivos.
+    </div>
+  </aside>
+</div>
+
+<script>
+(function() { var bar = document.getElementById('progress-bar'); function update() { var docH = document.documentElement.scrollHeight - window.innerHeight; var sc = window.scrollY; var pct = docH > 0 ? Math.min(100, (sc / docH) * 100) : 0; bar.style.width = pct + '%'; } window.addEventListener('scroll', update, { passive: true }); window.addEventListener('resize', update); update(); })();
+</script>
+</body>
+</html>

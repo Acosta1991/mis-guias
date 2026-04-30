@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Curso · Frenos de coches</title>
+<style>
+  :root { --bg: #F8F4EC; --bg-card: #FBF7EC; --ink: #2A2A2A; --ink-soft: #555; --ink-faint: #888; --line: #E5DFCF; --orange: #E07A3C; --orange-deep: #B8480F; --max-content: 760px; --serif: "Iowan Old Style", "Apple Garamond", "Georgia", "Times New Roman", serif; --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--ink); font-family: var(--serif); font-size: 18px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+  .container { max-width: var(--max-content); margin: 0 auto; padding: 80px 32px 96px; }
+  .eyebrow { font-family: var(--sans); font-size: 0.82em; color: var(--orange-deep); text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; margin-bottom: 16px; }
+  h1 { font-family: var(--sans); font-weight: 700; font-size: 2.6em; line-height: 1.15; color: var(--ink); margin: 0 0 16px; letter-spacing: -0.015em; }
+  .subtitle { font-size: 1.18em; color: var(--ink-soft); line-height: 1.5; margin-bottom: 36px; max-width: 580px; }
+  .meta-row { display: flex; gap: 14px; flex-wrap: wrap; font-family: var(--sans); font-size: 0.88em; color: var(--ink-faint); margin-bottom: 56px; }
+  .meta-row .pill { background: var(--bg-card); border: 1px solid var(--line); padding: 4px 14px; border-radius: 14px; }
+  .intro { font-size: 1.05em; color: var(--ink); line-height: 1.65; margin-bottom: 48px; padding-bottom: 36px; border-bottom: 1px solid var(--line); }
+  .intro p { margin: 0 0 1em; }
+  .intro p:last-child { margin: 0; }
+  .intro em { font-style: italic; }
+  .intro strong { color: var(--ink); font-weight: 600; }
+  .toc-label { font-family: var(--sans); font-size: 0.82em; text-transform: uppercase; letter-spacing: 0.1em; color: var(--orange-deep); font-weight: 700; margin-bottom: 16px; }
+  .toc { display: grid; gap: 14px; margin-bottom: 56px; }
+  .toc-item { display: grid; grid-template-columns: 56px 1fr; gap: 16px; padding: 18px 22px; background: var(--bg-card); border: 1px solid var(--line); border-radius: 10px; text-decoration: none; color: var(--ink); transition: all 0.15s; align-items: start; }
+  .toc-item:hover { border-color: var(--orange); transform: translateX(2px); }
+  .toc-num { font-family: var(--sans); font-weight: 700; color: var(--orange); font-size: 1.5em; line-height: 1; padding-top: 2px; }
+  .toc-title { font-family: var(--sans); font-weight: 600; font-size: 1.12em; color: var(--ink); margin-bottom: 4px; }
+  .toc-obj { color: var(--ink-soft); font-size: 0.94em; line-height: 1.5; margin-bottom: 8px; }
+  .toc-meta { display: flex; gap: 12px; font-family: var(--sans); font-size: 0.78em; color: var(--ink-faint); flex-wrap: wrap; }
+  .toc-meta .tag { padding: 2px 8px; background: white; border: 1px solid var(--line); border-radius: 12px; }
+  .toc-meta .tag.cx { background: #F4E4CC; color: #8C5E1F; border-color: #E5CDA5; }
+  .toc-meta .tag.feature { background: #FFF1E2; color: var(--orange-deep); border-color: #F0CDA8; }
+  .eval-link { display: block; padding: 24px 28px; background: var(--orange); border-radius: 10px; text-decoration: none; color: white; transition: background 0.15s; margin-bottom: 36px; }
+  .eval-link:hover { background: var(--orange-deep); }
+  .eval-label { font-family: var(--sans); font-size: 0.82em; text-transform: uppercase; letter-spacing: 0.08em; opacity: 0.85; margin-bottom: 4px; }
+  .eval-title { font-family: var(--sans); font-weight: 600; font-size: 1.15em; }
+  .footer { font-family: var(--sans); font-size: 0.85em; color: var(--ink-faint); padding-top: 28px; border-top: 1px solid var(--line); line-height: 1.6; }
+  .footer p { margin: 0 0 6px; }
+  .footer strong { color: var(--ink-soft); }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="eyebrow">Curso de aprendizaje</div>
+  <h1>Frenos de coches</h1>
+  <div class="subtitle">De la idea raíz a la lente de cliente. Ocho píldoras de diez minutos para entender cómo frena un coche moderno y cómo se traduce eso a la experiencia que vive tu cliente.</div>
+
+  <div class="meta-row">
+    <span class="pill">⏱ 80 min totales</span>
+    <span class="pill">8 píldoras + evaluación</span>
+    <span class="pill">Nivel introductorio sólido</span>
+  </div>
+
+  <div class="intro">
+    <p>Toda la mecánica de los frenos cabe en una idea: <em>convertir el movimiento del coche en calor mediante fricción y disipar ese calor al aire</em>. Esa frase, bien entendida, explica los discos, las pastillas, el ABS, el líquido higroscópico, el fading en bajadas y casi todo lo que un cliente puede preguntarte.</p>
+    <p>El curso recorre esa idea de varias formas: la <strong>hidráulica</strong> que multiplica tu pierna, la <strong>geometría</strong> de la fricción (disco vs tambor), la <strong>pieza sacrificable</strong> (la pastilla), la <strong>electrónica</strong> que supervisa todo (ABS y compañía), y la <strong>excepción regenerativa</strong> que recupera energía como electricidad en eléctricos e híbridos. Termina con dos píldoras puente con tu rol: el mantenimiento real y, sobre todo, la frenada como experiencia de cliente.</p>
+    <p>Pensado para leer en sesiones cortas. Cada píldora abre la siguiente. Hay un par de puntos donde se siente un escalón de dificultad: están señalados y suavizados con analogías cotidianas. La evaluación final, al cierre, valida que el conjunto ha cuajado.</p>
+  </div>
+
+  <div class="toc-label">Tabla de contenidos</div>
+  <div class="toc">
+
+    <a class="toc-item" href="pildora-01_frenar-es-calor/index.html">
+      <div class="toc-num">01</div>
+      <div>
+        <div class="toc-title">Frenar es convertir movimiento en calor</div>
+        <div class="toc-obj">La idea raíz: energía cinética + fricción controlada + disipación al aire. Por qué doblar la velocidad cuadruplica la energía a disipar.</div>
+        <div class="toc-meta"><span class="tag">⏱ 10 min</span><span class="tag feature">Interactivo</span></div>
+      </div>
+    </a>
+
+    <a class="toc-item" href="pildora-02_truco-hidraulico/index.html">
+      <div class="toc-num">02</div>
+      <div>
+        <div class="toc-title">El truco hidráulico</div>
+        <div class="toc-obj">Cómo una pierna mueve 1.500 kg gracias al principio de Pascal. Tacto del pedal y qué te dice cada sensación.</div>
+        <div class="toc-meta"><span class="tag">⏱ 10 min</span><span class="tag cx">CX</span></div>
+      </div>
+    </a>
+
+    <a class="toc-item" href="pildora-03_disco-vs-tambor/index.html">
+      <div class="toc-num">03</div>
+      <div>
+        <div class="toc-title">Disco vs tambor</div>
+        <div class="toc-obj">Las dos geometrías de la fricción. Por qué el disco ganó la guerra y por qué el tambor sigue vivo en el eje trasero.</div>
+        <div class="toc-meta"><span class="tag">⏱ 10 min</span></div>
+      </div>
+    </a>
+
+    <a class="toc-item" href="pildora-04_pastilla-y-disco/index.html">
+      <div class="toc-num">04</div>
+      <div>
+        <div class="toc-title">Pastilla y disco: el binomio sacrificable</div>
+        <div class="toc-obj">La pieza diseñada para gastarse y proteger al disco. Compuestos, ruidos, polvo en llantas y traducción CX.</div>
+        <div class="toc-meta"><span class="tag">⏱ 10 min</span><span class="tag cx">CX</span></div>
+      </div>
+    </a>
+
+    <a class="toc-item" href="pildora-05_abs-y-asistencias/index.html">
+      <div class="toc-num">05</div>
+      <div>
+        <div class="toc-title">ABS y asistencias modernas</div>
+        <div class="toc-obj">La electrónica que supervisa: ABS, ESP, EBD, BAS, Hill Holder, AEB. Qué hace cada una y cómo se siente cuando entra.</div>
+        <div class="toc-meta"><span class="tag">⏱ 10 min</span><span class="tag feature">Interactivo</span><span class="tag cx">CX</span></div>
+      </div>
+    </a>
+
+    <a class="toc-item" href="pildora-06_frenada-regenerativa/index.html">
+      <div class="toc-num">06</div>
+      <div>
+        <div class="toc-title">Frenada regenerativa</div>
+        <div class="toc-obj">Cuando el calor se convierte en electricidad. El motor como generador, frenada mixta y caso aplicado al CUPRA Born.</div>
+        <div class="toc-meta"><span class="tag">⏱ 10 min</span><span class="tag feature">Interactivo</span></div>
+      </div>
+    </a>
+
+    <a class="toc-item" href="pildora-07_mantenimiento-y-alertas/index.html">
+      <div class="toc-num">07</div>
+      <div>
+        <div class="toc-title">Mantenimiento y señales de alerta</div>
+        <div class="toc-obj">Intervalos rutinarios, testigos amarillos vs rojos y las cinco señales clínicas que obligan a parar el coche.</div>
+        <div class="toc-meta"><span class="tag">⏱ 10 min</span><span class="tag feature">Interactivo</span></div>
+      </div>
+    </a>
+
+    <a class="toc-item" href="pildora-08_experiencia-de-cliente/index.html">
+      <div class="toc-num">08</div>
+      <div>
+        <div class="toc-title">La frenada como experiencia de cliente</div>
+        <div class="toc-obj">Las cinco dimensiones perceptibles, pedal feel como firma de marca y diccionario operativo de quejas. El cierre desde tu lente profesional.</div>
+        <div class="toc-meta"><span class="tag">⏱ 10 min</span><span class="tag feature">Interactivo</span><span class="tag cx">CX</span></div>
+      </div>
+    </a>
+
+  </div>
+
+  <a class="eval-link" href="evaluacion.html">
+    <div class="eval-label">Evaluación final</div>
+    <div class="eval-title">7 preguntas para validar el curso →</div>
+  </a>
+
+  <div class="footer">
+    <p><strong>Curso producido por el equipo:</strong> Olivia (plan), Hugo (índice), Nora (estructura cognitiva), Bruno (analogías), Lara (diagramas), Vega (interactivos), Marcos (práctica), Diego (orquestación).</p>
+    <p>Fecha: 2026-04-30 · Aprendiz: Luis Acosta — Customer Satisfaction · SEAT/CUPRA</p>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Píldora 04 — Pastilla y disco: el binomio sacrificable</title>
+<style>
+  :root { --bg: #F8F4EC; --bg-card: #FBF7EC; --ink: #2A2A2A; --ink-soft: #555; --ink-faint: #888; --line: #E5DFCF; --orange: #E07A3C; --orange-deep: #B8480F; --max-content: 680px; --serif: "Iowan Old Style", "Apple Garamond", "Georgia", "Times New Roman", serif; --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--ink); font-family: var(--serif); font-size: 18px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+  .progress-bar { position: fixed; top: 0; left: 0; width: 0%; height: 3px; background: var(--orange); z-index: 100; transition: width 0.05s linear; }
+  .layout { max-width: 1200px; margin: 0 auto; padding: 80px 32px 96px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 0; }
+  @media (min-width: 1024px) { .layout { grid-template-columns: minmax(0, var(--max-content)) minmax(220px, 280px); gap: 56px; padding: 80px 48px 96px; } }
+  .main { max-width: var(--max-content); }
+  .aside { font-family: var(--sans); font-size: 0.85em; color: var(--ink-soft); line-height: 1.55; }
+  .aside .note { border-left: 2px solid var(--orange); padding: 4px 0 4px 14px; margin-bottom: 28px; }
+  .aside .note-label { display: block; text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.78em; color: var(--orange-deep); font-weight: 600; margin-bottom: 4px; }
+  @media (max-width: 1023px) { .aside { margin-top: 32px; } .aside .note { background: var(--bg-card); border: 1px solid var(--line); border-left: 3px solid var(--orange); border-radius: 0 8px 8px 0; padding: 12px 16px; } }
+  .breadcrumb { font-family: var(--sans); font-size: 0.82em; color: var(--ink-faint); margin-bottom: 24px; letter-spacing: 0.02em; }
+  .breadcrumb a { color: var(--ink-soft); text-decoration: none; } .breadcrumb a:hover { color: var(--orange-deep); }
+  h1 { font-family: var(--sans); font-weight: 700; font-size: 2.1em; line-height: 1.2; color: var(--ink); margin: 0 0 12px; letter-spacing: -0.01em; }
+  .meta { font-family: var(--sans); font-size: 0.85em; color: var(--ink-faint); margin-bottom: 36px; display: flex; gap: 16px; }
+  .meta .pill { background: var(--bg-card); border: 1px solid var(--line); padding: 3px 12px; border-radius: 12px; }
+  h2 { font-family: var(--sans); font-weight: 600; font-size: 1.35em; color: var(--ink); margin: 48px 0 16px; letter-spacing: -0.005em; }
+  p { margin: 0 0 1.1em; }
+  .lead { font-size: 1.12em; color: var(--ink); line-height: 1.55; margin-bottom: 1.4em; }
+  em { font-style: italic; } strong { font-weight: 600; color: var(--ink); }
+  .pull { border-left: 3px solid var(--orange); padding: 4px 0 4px 20px; margin: 28px 0; color: var(--ink); font-style: italic; font-size: 1.05em; line-height: 1.5; }
+  .diagram { margin: 36px 0 12px; } .diagram img { width: 100%; height: auto; border-radius: 8px; display: block; }
+  .diagram-caption { font-family: var(--sans); font-size: 0.82em; color: var(--ink-faint); text-align: center; margin-top: 10px; line-height: 1.5; }
+  .next { margin-top: 56px; padding: 22px 24px; background: var(--bg-card); border: 1px solid var(--line); border-radius: 10px; font-family: var(--sans); font-size: 0.95em; }
+  .next-label { text-transform: uppercase; letter-spacing: 0.07em; font-size: 0.78em; color: var(--orange-deep); font-weight: 600; margin-bottom: 6px; }
+  .next a { color: var(--ink); text-decoration: none; font-weight: 600; } .next a:hover { color: var(--orange-deep); }
+  .cx-box { background: var(--bg-card); border: 1px solid var(--line); border-radius: 10px; padding: 22px 26px; margin: 32px 0; font-family: var(--sans); font-size: 0.95em; }
+  .cx-label { text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.74em; color: var(--orange-deep); font-weight: 700; margin-bottom: 8px; }
+  .cx-title { font-size: 1.1em; font-weight: 600; color: var(--ink); margin-bottom: 14px; }
+  .cx-table { display: grid; grid-template-columns: 1fr 2fr; gap: 12px 18px; }
+  .cx-table .cx-key { font-weight: 600; color: var(--orange-deep); }
+  .cx-table .cx-val { color: var(--ink-soft); }
+  .compounds { font-family: var(--sans); font-size: 0.95em; margin: 28px 0; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+  .compound-row { display: grid; grid-template-columns: 1fr 2.5fr; padding: 14px 18px; border-bottom: 1px solid var(--line); }
+  .compound-row:last-child { border-bottom: 0; }
+  .compound-name { font-weight: 600; color: var(--orange-deep); }
+  .compound-desc { color: var(--ink-soft); }
+  .exercises { margin: 56px 0 32px; padding-top: 36px; border-top: 1px solid var(--line); }
+  .ex-title { font-family: var(--sans); font-size: 1.25em; color: var(--ink); margin-bottom: 20px; font-weight: 600; }
+  .ex-card { background: var(--bg-card); border: 1px solid var(--line); border-radius: 8px; padding: 16px 20px; margin-bottom: 14px; font-family: var(--sans); font-size: 0.95em; }
+  .ex-card summary { cursor: pointer; list-style: none; display: flex; gap: 12px; align-items: flex-start; color: var(--ink); }
+  .ex-card summary::-webkit-details-marker { display: none; }
+  .ex-card summary::before { content: "▸"; color: var(--orange); font-size: 0.9em; transition: transform 0.2s; flex-shrink: 0; margin-top: 2px; }
+  .ex-card[open] summary::before { transform: rotate(90deg); }
+  .ex-tag { display: inline-block; font-size: 0.72em; font-weight: 600; padding: 2px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.04em; flex-shrink: 0; margin-top: 1px; }
+  .ex-tag-easy { background: #E6EDD8; color: #5A6E36; }
+  .ex-tag-medium { background: #F4E4CC; color: #8C5E1F; }
+  .ex-tag-hard { background: #F0D8CB; color: #A23215; }
+  .ex-q { line-height: 1.45; }
+  .ex-answer { margin: 16px 0 4px 32px; padding: 14px 18px; background: #FFFEFA; border-left: 3px solid var(--orange); color: #444; line-height: 1.6; border-radius: 0 6px 6px 0; }
+  .ex-answer p { margin: 0 0 10px; } .ex-answer p:last-child { margin-bottom: 0; } .ex-answer strong { color: var(--ink); }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress-bar"></div>
+
+<div class="layout">
+  <main class="main">
+    <div class="breadcrumb"><a href="../indice.html">Curso · Frenos de coches</a> &nbsp;/&nbsp; Píldora 04</div>
+
+    <h1>Pastilla y disco: el binomio sacrificable</h1>
+    <div class="meta"><span class="pill">⏱ 10 min</span><span class="pill">Píldora 4 de 8</span></div>
+
+    <p class="lead">Hasta aquí hemos visto el sistema de transmisión de fuerza (la hidráulica) y la geometría de la fricción (disco vs tambor). Toca el momento del contacto físico, donde la energía cinética se convierte realmente en calor: la pareja pastilla-disco. Es donde está toda la acción y, no por casualidad, la zona donde el cliente verá los avisos antes que en ningún otro sitio.</p>
+
+    <h2>Una pieza diseñada para morir</h2>
+    <p>La pastilla es la única pieza del sistema diseñada deliberadamente para gastarse. No es un fallo, es la idea: que se desgaste ella y proteja al disco. Como la goma de borrar, que se va consumiendo mientras el papel queda intacto. Si fuera al revés — pastilla eterna, disco que se gasta — tendrías que cambiar discos cada año y el coste sería absurdo.</p>
+    <p>Por eso la pastilla es lo que cambias rutinariamente. El disco también acaba gastándose, pero a un ritmo mucho más lento: como regla mental, un juego de discos sobrevive típicamente a dos juegos de pastillas.</p>
+
+    <div class="diagram">
+      <img src="pildora-04_diagrama-1.png" alt="Sección de la pastilla pegada al disco, con polvo desprendiéndose y testigo de desgaste">
+      <div class="diagram-caption">La pastilla en sección: una placa metálica de soporte arriba y el material de fricción abajo, presionando contra el disco. El polvo naranja es lo que se desprende al frenar. La pestaña metálica lateral es el chivato que avisa cuando ha llegado al final.</div>
+    </div>
+
+    <h2>Anatomía rápida de la pastilla</h2>
+    <p>Una pastilla son dos capas pegadas:</p>
+    <p><strong>Placa de soporte</strong>: una pieza metálica rígida que se aloja en la pinza. Es la parte que dura, se reutiliza el alojamiento.</p>
+    <p><strong>Material de fricción</strong>: el "compuesto" que muerde el disco. Es lo que se gasta. Aquí está toda la ingeniería.</p>
+    <p>Y dos componentes pequeños pero importantes:</p>
+    <p><strong>Capa antirruido (shim)</strong>: una lámina fina entre la placa y el émbolo de la pinza. Su trabajo es absorber las micro-vibraciones que generan los chirridos. Cuando un cliente se queja de "ruido al frenar suave", a veces es un shim mal montado o ausente.</p>
+    <p><strong>Indicador de desgaste</strong>: una pestaña metálica lateral (chivato mecánico) que, cuando la pastilla está casi al final, empieza a rozar el disco y produce un chirrido agudo y constante. En coches modernos hay además un sensor electrónico que enciende un testigo en el cuadro antes de llegar a ese punto.</p>
+
+    <h2>Tres compuestos, tres carácteres</h2>
+    <p>El material de fricción no es uno solo: hay familias de compuestos con perfiles muy distintos. La elección define cómo se va a portar la pastilla.</p>
+
+    <div class="compounds">
+      <div class="compound-row">
+        <div class="compound-name">Orgánicas</div>
+        <div class="compound-desc">Fibras naturales o sintéticas con resinas. Suaves con el disco, silenciosas, baratas. Pero se desgastan rápido y pierden mordida cuando se calientan. Típicas de utilitarios y conducción tranquila.</div>
+      </div>
+      <div class="compound-row">
+        <div class="compound-name">Semimetálicas</div>
+        <div class="compound-desc">Mezcla con virutas de acero, cobre o latón. Mejor mordida en frío y caliente, mejor resistencia al fading. Pero más ruidosas, más agresivas con el disco y dejan más polvo. Estándar en muchos coches medios.</div>
+      </div>
+      <div class="compound-row">
+        <div class="compound-name">Cerámicas</div>
+        <div class="compound-desc">Fibras cerámicas. Polvo claro y poco visible en las llantas, muy silenciosas, larga vida. Pero más caras y la mordida en frío es algo más floja al principio. Típicas en coches premium y en clientes que quieren llantas limpias.</div>
+      </div>
+    </div>
+
+    <p>La elección no es académica: el polvo de las pastillas semimetálicas es el principal culpable de las llantas tiznadas de negro que tantos clientes quieren entender. No es suciedad ambiental, es el desgaste normal de su pastilla. Y a veces es exactamente la pastilla que el coche pide para frenar bien.</p>
+
+    <div class="cx-box">
+      <div class="cx-label">🎯 Microcápsula CX — Quejas frecuentes y traducción técnica</div>
+      <div class="cx-title">Lo que el cliente describe vs. lo que está pasando</div>
+      <div class="cx-table">
+        <div class="cx-key">"Chirría al frenar suave"</div>
+        <div class="cx-val">Vibración pastilla-disco a baja presión. Suele ser el shim o un compuesto que vibra en cierta frecuencia. Si es continuo y agudo, puede ser el chivato del desgaste avisando.</div>
+        <div class="cx-key">"Tiñe las llantas de negro"</div>
+        <div class="cx-val">Pastilla semimetálica generando polvo metálico. Es normal, no defecto. Si molesta estéticamente, recomendar paso a pastillas cerámicas en el siguiente cambio.</div>
+        <div class="cx-key">"Cuando llueve hace ruido al arrancar"</div>
+        <div class="cx-val">Capa fina de óxido superficial sobre el disco tras una noche húmeda. Las primeras frenadas la raspan y desaparece. Normal, especialmente en coches que pasan días parados.</div>
+        <div class="cx-key">"Pita continuo a cierta velocidad"</div>
+        <div class="cx-val">Casi seguro chivato mecánico de pastilla al final. Cambio inmediato — no esperar.</div>
+        <div class="cx-key">"Vibra el volante al frenar"</div>
+        <div class="cx-val">Disco alabeado por choque térmico (frenar muy fuerte y mojar después, o frenar hasta detenerse y dejar la pastilla apoyada). Hay que rectificar o cambiar disco.</div>
+      </div>
+    </div>
+
+    <div class="pull">El cliente que llega quejándose es, casi siempre, un cliente que acaba de aprender que su sistema tiene una voz. Lo que pide no es que callemos esa voz — pide que se la traduzcamos.</div>
+
+    <h2>Cuánto duran (orientativo)</h2>
+    <p>Una <strong>pastilla delantera</strong> de un coche medio en uso urbano-mixto suele durar entre 30.000 y 60.000 km. En carretera y conducción suave puede llegar a 70.000-80.000. En ciudad densa con paradas constantes, baja a 25.000-35.000. La conducción manda mucho más que el kilometraje en sí.</p>
+    <p>Las pastillas <strong>traseras</strong> duran bastante más — 60.000 a 100.000 km — porque trabajan menos (recuerda: el delantero se come el 70-80% de la frenada).</p>
+    <p>Los <strong>discos</strong> duran típicamente dos juegos de pastillas: 60.000 a 120.000 km. Si los cambias antes, normalmente es por alabeo, ralla profunda o porque están al límite de espesor mínimo (viene marcado en el propio disco).</p>
+
+    <h2>La frase que te llevas</h2>
+    <p class="lead"><strong>La pastilla es la pieza sacrificable que protege al disco. Lo que el cliente percibe como "el coche hace ruidos raros" es casi siempre la pastilla hablando: chirridos, polvo, vibraciones. Aprender a traducir esos avisos a causa técnica es el corazón del CX en frenos.</strong></p>
+    <p>Hasta aquí hemos visto la mecánica pura: fuerza, geometría, materiales. Toca dar un salto a la electrónica que orquesta todo: ABS, ESP y compañía. La siguiente píldora.</p>
+
+    <section class="exercises">
+      <div class="ex-title">Práctica activa</div>
+
+      <details class="ex-card">
+        <summary>
+          <span class="ex-tag ex-tag-easy">fácil</span>
+          <span class="ex-q">¿Por qué se diseña la pastilla para gastarse y no el disco?</span>
+        </summary>
+        <div class="ex-answer">
+          Porque el disco es una pieza grande, cara y más complicada de cambiar (alojamiento, espesor mínimo, rectificado). La pastilla es pequeña, barata y se cambia en minutos. Hacer que la pastilla absorba todo el desgaste posible significa que cada cierto tiempo cambias una pieza simple en lugar de una pieza compleja. Es la misma lógica que la goma de borrar y el papel: lo barato se sacrifica para proteger lo caro.
+        </div>
+      </details>
+
+      <details class="ex-card">
+        <summary>
+          <span class="ex-tag ex-tag-medium">medio</span>
+          <span class="ex-q">Un cliente cambia su utilitario por un coche premium y dice "ya no se me ensucian las llantas, mucho mejor". ¿Qué ha cambiado realmente?</span>
+        </summary>
+        <div class="ex-answer">
+          <p>Casi seguro el <strong>tipo de pastilla</strong>. El utilitario probablemente llevaba pastillas semimetálicas (más baratas, más mordida pero más polvo). El coche premium suele venir con pastillas cerámicas o de baja emisión (más caras, polvo claro y poco visible).</p>
+          <p>Las llantas no están "más limpias" porque el coche sea mejor: están más limpias porque la pastilla deja menos rastro. Es una decisión de diseño. Esto se puede explicar al cliente con tranquilidad y sin meter teoría: "la pastilla de tu coche nuevo está hecha de un material distinto que casi no deja polvo".</p>
+        </div>
+      </details>
+
+      <details class="ex-card">
+        <summary>
+          <span class="ex-tag ex-tag-hard">reto</span>
+          <span class="ex-q">Un cliente vuelve diciendo: "Justo después de cambiar pastillas, el coche frena raro los primeros días y hace ruidos. ¿Está mal el cambio?" Explícale lo que pasa.</span>
+        </summary>
+        <div class="ex-answer">
+          <p>No, está bien — lo que pasa es <strong>el rodaje de la pastilla</strong>. Una pastilla nueva tiene una superficie completamente plana de fábrica, mientras que el disco tiene su micro-relieve concreto (el patrón que el disco fue desarrollando con la pastilla anterior). En las primeras decenas o cientos de kilómetros, la pastilla y el disco "se conocen": la pastilla se va adaptando a la huella del disco hasta que el contacto es completo y uniforme.</p>
+          <p>Durante ese rodaje, es normal que:</p>
+          <p>1) La frenada se sienta menos firme o más larga (la pastilla aún no muerde con toda su superficie).</p>
+          <p>2) Aparezcan ruidos esporádicos (puntos donde el contacto aún no es perfecto).</p>
+          <p>3) Si el compuesto es semimetálico, deje algo más de polvo del habitual al principio.</p>
+          <p>Recomendación: en los primeros 200-300 km, evitar frenazos brutales y dejar que el sistema "aprenda". Pasada esa fase, todo se normaliza. El CX aquí es claro: explicarlo antes del cambio o al entregarlo evita la llamada de "algo va mal" — convierte un comportamiento normal en una expectativa cumplida.</p>
+        </div>
+      </details>
+    </section>
+
+    <div class="next">
+      <div class="next-label">Siguiente píldora</div>
+      <a href="../pildora-05_abs-y-asistencias/index.html">Píldora 05 — ABS y asistencias modernas →</a>
+    </div>
+  </main>
+
+  <aside class="aside">
+    <div class="note">
+      <span class="note-label">Vida útil orientativa</span>
+      Pastillas delanteras: 30-60 mil km. Traseras: 60-100 mil km. Discos: 2 juegos de pastillas. Conducción urbana acorta; carretera estira.
+    </div>
+
+    <div class="note">
+      <span class="note-label">Espesor mínimo del disco</span>
+      Cada disco tiene un espesor mínimo grabado (en mm). Si el desgaste lo lleva por debajo, hay que cambiar — no es opcional. Frenarse con un disco fuera de espesor compromete su capacidad de disipar calor y aumenta el riesgo de alabeo.
+    </div>
+
+    <div class="note">
+      <span class="note-label">Cambio "siempre por pares"</span>
+      Pastillas: las cuatro del mismo eje a la vez (ambas delanteras, o ambas traseras). Discos: idem. Nunca un solo lado: el coche frenaría de forma asimétrica y tiraría hacia el lado más débil.
+    </div>
+
+    <div class="note">
+      <span class="note-label">Polvo de freno</span>
+      No es suciedad ambiental, es la pastilla gastándose. Las semimetálicas dejan polvo gris-negro abundante; las cerámicas, polvo claro y poco visible. Cambiar a cerámica reduce el efecto a llantas casi limpias.
+    </div>
+
+    <div class="note">
+      <span class="note-label">Disco alabeado</span>
+      Si vibra el volante al frenar, especialmente a velocidad media, es síntoma típico. Suele venir de frenazos muy fuertes seguidos de quedarse parado con el pedal pisado, o de mojar el disco caliente.
+    </div>
+  </aside>
+</div>
+
+<script>
+(function() { var bar = document.getElementById('progress-bar'); function update() { var docH = document.documentElement.scrollHeight - window.innerHeight; var sc = window.scrollY; var pct = docH > 0 ? Math.min(100, (sc / docH) * 100) : 0; bar.style.width = pct + '%'; } window.addEventListener('scroll', update, { passive: true }); window.addEventListener('resize', update); update(); })();
+</script>
+</body>
+</html>
