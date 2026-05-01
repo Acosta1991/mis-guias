@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P09 — Animación con keyframes · Curso Blender</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<div class="progress" id="progress"></div>
+
+<div class="topbar">
+  <a href="../indice.html">← Curso Blender</a>
+</div>
+
+<div class="container">
+
+  <header class="title">
+    <div class="meta">Píldora 09 · <span class="clock">⏱ 10 min</span></div>
+    <h1>Animación con keyframes</h1>
+    <p class="objetivo">Al acabar sabrás animar un objeto a lo largo del tiempo con keyframes y previsualizar el movimiento sin renderizar.</p>
+  </header>
+
+  <main class="col-main">
+
+    <h2>La idea, en una frase</h2>
+    <p>Animar en 3D no es dibujar 24 imágenes por segundo a mano. Es decirle al programa <em>"en este momento, este objeto está aquí; en este otro momento, está allá"</em>, y dejar que Blender rellene todo lo de en medio.</p>
+
+    <p>Cada uno de esos "momentos clave" se llama un <strong>keyframe</strong>. La traducción literal sería "fotograma clave". Tú pones los puntos de partida y de llegada (y los que quieras intermedios). Lo demás lo calcula el programa.</p>
+
+    <p>La analogía es un GPS: tú metes origen y destino. Tú no le dices al coche cómo girar el volante en cada calle. Solo marcas dos puntos, y el GPS traza todo lo que hay entre medias.</p>
+
+    <h2>Frames y frames por segundo</h2>
+    <p>El timeline (la franja de abajo) trabaja en <strong>frames</strong>. Un frame es un fotograma. Por defecto Blender corre a <strong>24 frames por segundo</strong> (24 fps), que es la velocidad clásica del cine.</p>
+
+    <p>Eso significa: un segundo de animación = 24 frames. Dos segundos = 48 frames. Si quieres una animación de 4 segundos, vas del frame 1 al frame 96.</p>
+
+    <h2>Cómo se ve un keyframe</h2>
+    <figure>
+      <svg viewBox="0 0 620 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Una pelota animada con dos keyframes: posición inicial y final">
+        <!-- escena con tira de frames -->
+        <text x="20" y="30" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#c8580d">Lo que tú haces</text>
+        <text x="20" y="46" font-family="Iowan Old Style, Georgia, serif" font-size="11" font-style="italic" fill="#6f6a62">Pones dos keyframes: en el frame 1 y en el frame 24.</text>
+
+        <!-- mesa estilizada como suelo -->
+        <line x1="20" y1="100" x2="600" y2="100" stroke="#6f6a62" stroke-width="1" stroke-dasharray="2 4"/>
+
+        <!-- Pelota inicial (frame 1, izquierda) -->
+        <g>
+          <circle cx="80" cy="86" r="14" fill="#c84545" stroke="#6e1a1a" stroke-width="1.2"/>
+          <circle cx="76" cy="82" r="3" fill="white" opacity="0.55"/>
+          <text x="80" y="125" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" font-weight="700" fill="#c8580d">KEYFRAME</text>
+          <text x="80" y="138" text-anchor="middle" font-family="Inter, sans-serif" font-size="9" fill="#6f6a62">Frame 1</text>
+        </g>
+
+        <!-- Pelota final (frame 24, derecha) -->
+        <g>
+          <circle cx="540" cy="86" r="14" fill="#c84545" stroke="#6e1a1a" stroke-width="1.2"/>
+          <circle cx="536" cy="82" r="3" fill="white" opacity="0.55"/>
+          <text x="540" y="125" text-anchor="middle" font-family="Inter, sans-serif" font-size="10" font-weight="700" fill="#c8580d">KEYFRAME</text>
+          <text x="540" y="138" text-anchor="middle" font-family="Inter, sans-serif" font-size="9" fill="#6f6a62">Frame 24</text>
+        </g>
+
+        <!-- Línea separadora -->
+        <line x1="20" y1="160" x2="600" y2="160" stroke="#d8d2c2" stroke-width="0.8"/>
+
+        <text x="20" y="180" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#c8580d">Lo que rellena Blender</text>
+        <text x="20" y="196" font-family="Iowan Old Style, Georgia, serif" font-size="11" font-style="italic" fill="#6f6a62">Calcula todas las posiciones intermedias automáticamente.</text>
+
+        <!-- Pelota interpolada en frames intermedios -->
+        <g>
+          <line x1="20" y1="240" x2="600" y2="240" stroke="#6f6a62" stroke-width="1" stroke-dasharray="2 4"/>
+          <!-- pelotas en posiciones intermedias, semi-transparentes excepto las dos de los keyframes -->
+          <circle cx="80" cy="226" r="11" fill="#c84545" stroke="#6e1a1a" stroke-width="1"/>
+          <circle cx="160" cy="226" r="11" fill="#c84545" stroke="#6e1a1a" stroke-width="1" opacity="0.4"/>
+          <circle cx="240" cy="226" r="11" fill="#c84545" stroke="#6e1a1a" stroke-width="1" opacity="0.4"/>
+          <circle cx="320" cy="226" r="11" fill="#c84545" stroke="#6e1a1a" stroke-width="1" opacity="0.4"/>
+          <circle cx="400" cy="226" r="11" fill="#c84545" stroke="#6e1a1a" stroke-width="1" opacity="0.4"/>
+          <circle cx="480" cy="226" r="11" fill="#c84545" stroke="#6e1a1a" stroke-width="1" opacity="0.4"/>
+          <circle cx="540" cy="226" r="11" fill="#c84545" stroke="#6e1a1a" stroke-width="1"/>
+
+          <text x="80" y="262" text-anchor="middle" font-family="Inter, sans-serif" font-size="9" fill="#c8580d" font-weight="600">F1</text>
+          <text x="160" y="262" text-anchor="middle" font-family="Inter, sans-serif" font-size="9" fill="#6f6a62">F5</text>
+          <text x="240" y="262" text-anchor="middle" font-family="Inter, sans-serif" font-size="9" fill="#6f6a62">F10</text>
+          <text x="320" y="262" text-anchor="middle" font-family="Inter, sans-serif" font-size="9" fill="#6f6a62">F14</text>
+          <text x="400" y="262" text-anchor="middle" font-family="Inter, sans-serif" font-size="9" fill="#6f6a62">F18</text>
+          <text x="480" y="262" text-anchor="middle" font-family="Inter, sans-serif" font-size="9" fill="#6f6a62">F22</text>
+          <text x="540" y="262" text-anchor="middle" font-family="Inter, sans-serif" font-size="9" fill="#c8580d" font-weight="600">F24</text>
+        </g>
+      </svg>
+      <figcaption>Marcas inicio y fin (los dos keyframes) y Blender calcula todos los pasos intermedios para que la pelota se desplace suave.</figcaption>
+    </figure>
+
+    <h2>Crear un keyframe paso a paso</h2>
+    <p>El flujo es siempre el mismo:</p>
+
+    <ol>
+      <li>Posiciona el cabezal del timeline en el frame que quieras (clic en el número, o flecha izquierda/derecha).</li>
+      <li>Coloca el objeto donde quieres que esté en ese momento (con <code>G</code>, <code>R</code>, <code>S</code>...).</li>
+      <li>Con el objeto seleccionado, pulsa <code>I</code>. Aparece un menú: elige <em>Location</em> (para guardar la posición), <em>Rotation</em>, <em>Scale</em>, o <em>Location, Rotation &amp; Scale</em> si quieres guardarlo todo.</li>
+      <li>Avanza el cabezal a otro frame.</li>
+      <li>Mueves el objeto a la posición nueva.</li>
+      <li><code>I</code> otra vez, mismo tipo. Segundo keyframe creado.</li>
+    </ol>
+
+    <p>Y ya tienes una animación. Bórrame en el timeline tendrás dos rombos amarillos en los frames donde has metido los keyframes. Esos rombos son la "marca" del keyframe.</p>
+
+    <h2>El truco que ahorra una hora: Auto Keyframe</h2>
+    <p>Pulsar <code>I</code> cada vez que mueves algo es repetitivo y se olvida. Hay un atajo que automatiza eso: <strong>Auto Keyframe</strong>. En el timeline (la zona de abajo) hay un pequeño botón con un <strong>círculo rojo</strong>. Cuando lo activas (se queda rojo continuo), <em>cualquier cambio</em> que hagas a un objeto crea automáticamente un keyframe en el frame actual.</p>
+
+    <p>Trabajar así es mucho más fluido: avanzas el cabezal, mueves el objeto, avanzas, mueves. No hace falta acordarse de pulsar <code>I</code>. Eso sí: cuando termines, <strong>desactívalo</strong>, porque si se queda activado puedes meter keyframes sin querer al toquetear cosas.</p>
+
+    <h2>Reproducir y scrubbear</h2>
+    <p>Para ver tu animación en directo: tecla <code>Espacio</code>. La animación se reproduce en el viewport. Pulsa otra vez para parar.</p>
+
+    <p>Para inspeccionar manualmente, arrastra el cabezal del timeline (la línea vertical en el panel de abajo) con el ratón. Cada posición del cabezal te muestra cómo está la escena en ese frame. A esto se le llama <em>scrubbear</em>.</p>
+
+    <h2>Frame inicial y frame final</h2>
+    <p>Por defecto Blender va del frame 1 al 250. Si tu animación dura solo 24 frames (un segundo), te interesa <strong>acortar</strong> el rango para que no se reproduzca todo el rato esos 250 frames vacíos.</p>
+
+    <p>En la parte superior derecha del timeline hay dos cuadros: <em>Start</em> y <em>End</em>. Pon, por ejemplo, Start = 1 y End = 24 si quieres exactamente un segundo. Esto también es lo que se renderizará cuando exportes el vídeo (P10).</p>
+
+    <h2>Qué se puede animar (casi todo)</h2>
+    <p>En esta píldora hemos animado <em>posición</em> (Location) por simplicidad. Pero la mecánica vale para muchas cosas:</p>
+
+    <ul>
+      <li><strong>Rotation</strong> &mdash; rotar un objeto a lo largo del tiempo (una rueda que gira).</li>
+      <li><strong>Scale</strong> &mdash; cambiar de tamaño (un objeto que crece).</li>
+      <li>Color de un material, intensidad de una luz, transparencia, posición de la cámara... casi cualquier valor.</li>
+    </ul>
+
+    <p>Para casi todos esos casos, el atajo es el mismo: pones el cursor sobre el valor y pulsas <code>I</code> con el cursor encima. O dejas Auto Keyframe activado y modificas a saco.</p>
+
+    <h2>Una mención al Graph Editor</h2>
+    <p>Cuando creas dos keyframes, Blender no interpola en línea recta y velocidad constante. Por defecto usa una <em>curva suave</em>: arranca despacio, acelera por el medio y frena al final, como un coche normal. Eso queda mejor que un movimiento robótico.</p>
+
+    <p>Si quieres ver y modificar esas curvas, existe el <strong>Graph Editor</strong>. No vamos a entrar hoy, pero saber que está te ayuda cuando un día quieras una animación más precisa: ahí es donde se ajusta.</p>
+
+    <div class="recap">
+      <h3>Recap</h3>
+      <ul>
+        <li>Un <strong>keyframe</strong> es una marca de "este objeto, en este frame, está así". Tú pones puntos clave; Blender rellena el resto.</li>
+        <li>Atajo: <strong><code>I</code></strong> en el viewport, eligiendo <em>Location</em> (o lo que apliques).</li>
+        <li><strong>Auto Keyframe</strong> (botón círculo rojo en el timeline) crea keyframes automáticamente al mover el objeto.</li>
+        <li><strong>Espacio</strong> reproduce; arrastrar el cabezal del timeline = scrubbear.</li>
+        <li>Ajusta <em>Start</em> y <em>End</em> del timeline para encajar la duración real de tu animación.</li>
+      </ul>
+    </div>
+
+    <div class="practice">
+      <div class="label">Práctica · 6 min</div>
+      <h3>Animar la pelota deslizándose por la mesa</h3>
+      <ol>
+        <li>Abre <code>p08_encuadrada.blend</code>.</li>
+        <li>En el timeline (panel inferior), ajusta el rango: <em>Start</em> a <code>1</code> y <em>End</em> a <code>24</code>.</li>
+        <li>Coloca el cabezal en el frame <code>1</code> (arrastra la línea vertical o escribe 1 en la casilla de frame actual).</li>
+        <li>Selecciona la pelota y muévela a un extremo de la mesa: <code>G</code> → <code>X</code> → arrastrar → clic.</li>
+        <li>Con la pelota seleccionada en el viewport, pulsa <code>I</code>. En el menú elige <em>Location</em>. Aparece un rombo amarillo en el timeline en el frame 1.</li>
+        <li>Mueve el cabezal al frame <code>24</code>.</li>
+        <li>Mueve la pelota al otro extremo de la mesa: <code>G</code> → <code>X</code> → arrastrar → clic.</li>
+        <li>Pulsa <code>I</code> → <em>Location</em>. Aparece un segundo rombo en el frame 24.</li>
+        <li>Pulsa <code>Espacio</code> para reproducir. La pelota debería deslizarse de un lado al otro y volver a empezar.</li>
+        <li>Si va muy rápido o muy lento, sube o baja el End del timeline (más frames = más lento).</li>
+        <li>Guarda como <code>p09_animada.blend</code>.</li>
+      </ol>
+      <div class="check"><strong>Sabes que te ha salido si:</strong> al pulsar Espacio la pelota se mueve suave de un lado a otro de la mesa. Si la pelota desaparece o se mueve "a saltos", revisa que pusiste keyframes en los dos frames y que el rango del timeline cubre los dos.</div>
+    </div>
+
+  </main>
+
+  <aside class="col-aside">
+    <div class="note">
+      <strong>Frame rate.</strong> Está en Output Properties (icono impresora), apartado <em>Frame Rate</em>. 24 fps es cine, 30 fps es web/TV americana, 60 fps es muy fluido pero pesa. Para empezar, deja 24.
+    </div>
+    <div class="note">
+      <strong>Borrar un keyframe.</strong> En el timeline, clic derecho sobre el rombo amarillo → <em>Delete Keyframes</em>. O selecciónalo y <code>X</code>.
+    </div>
+    <div class="note">
+      <strong>Mover un keyframe.</strong> En el timeline, lo arrastras de un frame a otro con el ratón. Útil cuando quieres que la animación empiece más tarde o termine antes.
+    </div>
+    <div class="note">
+      <strong>Hover keyframe.</strong> Si pones el cursor sobre cualquier valor (por ejemplo Location X en el panel <code>N</code>) y pulsas <code>I</code>, crea keyframe solo de ese valor concreto. Más quirúrgico que el menú general.
+    </div>
+    <div class="note">
+      <strong>Color del rombo.</strong> Amarillo = keyframe creado. Verde = lo estás interpolando (entre dos keyframes). Rojo = está activado Auto Keyframe.
+    </div>
+    <div class="note">
+      <strong>Repetición.</strong> Por defecto, cuando llegas al frame final, vuelve al inicio en bucle. Si solo quieres una pasada, en Playback (icono ↑↓ del timeline) cambia el modo.
+    </div>
+    <div class="note">
+      <strong>Más allá: Graph Editor.</strong> Si abres el panel inferior cambiándolo de "Timeline" a "Graph Editor", verás las curvas de cada propiedad animada. Permite suavizar, exagerar, o hacer movimientos discretos. Tema avanzado.
+    </div>
+  </aside>
+
+  <nav class="foot-nav">
+    <a href="../pildora-08_camara-y-render/index.html" class="prev">P08 · Cámara y render</a>
+    <a href="../indice.html" class="home">Índice</a>
+    <a href="../pildora-10_proyecto-final/index.html" class="next">P10 · Proyecto final</a>
+  </nav>
+
+</div>
+
+<script>
+window.addEventListener('scroll', function() {
+  var h = document.documentElement, b = document.body;
+  var pct = (h.scrollTop || b.scrollTop) / ((h.scrollHeight || b.scrollHeight) - h.clientHeight) * 100;
+  document.getElementById('progress').style.width = pct + '%';
+});
+</script>
+
+</body>
+</html>

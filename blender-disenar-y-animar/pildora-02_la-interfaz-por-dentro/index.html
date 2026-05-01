@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P02 — La interfaz por dentro · Curso Blender</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<div class="progress" id="progress"></div>
+
+<div class="topbar">
+  <a href="../indice.html">← Curso Blender</a>
+</div>
+
+<div class="container">
+
+  <header class="title">
+    <div class="meta">Píldora 02 · <span class="clock">⏱ 10 min</span></div>
+    <h1>La interfaz por dentro</h1>
+    <p class="objetivo">Al acabar sabrás identificar las cuatro zonas principales de la pantalla y para qué sirve cada una.</p>
+  </header>
+
+  <main class="col-main">
+
+    <h2>Mapa antes que detalles</h2>
+    <p>La interfaz de Blender intimida porque parece muchas cosas a la vez. Pero la mayor parte de lo que ves al abrir el programa cae en <strong>cuatro zonas</strong>. Si te aprendes esas cuatro zonas, el resto es cuestión de saber en cuál de ellas mirar.</p>
+
+    <p>La cocina sirve de mapa. En cualquier cocina hay <em>un sitio donde cocinas</em>, <em>un sitio donde están los ingredientes</em>, <em>los mandos para regular fuego y horno</em>, y <em>una receta con tiempos</em>. Las cuatro zonas de Blender son exactamente eso, traducido a 3D.</p>
+
+    <figure>
+      <svg viewBox="0 0 620 380" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Mapa de las cuatro zonas de la interfaz de Blender">
+        <!-- Marco exterior -->
+        <rect x="20" y="20" width="580" height="340" fill="#fbf8f1" stroke="#2a2622" stroke-width="1.4" rx="3"/>
+
+        <!-- Barra de workspaces arriba -->
+        <rect x="20" y="20" width="580" height="22" fill="#e8e2d2" stroke="#2a2622" stroke-width="1.4"/>
+        <g font-family="Inter, sans-serif" font-size="9.5" fill="#6f6a62">
+          <text x="40" y="35">Layout</text>
+          <text x="80" y="35">Modeling</text>
+          <text x="125" y="35">Sculpting</text>
+          <text x="170" y="35">Shading</text>
+          <text x="210" y="35">Animation</text>
+          <text x="260" y="35">Rendering</text>
+          <text x="310" y="35">...</text>
+        </g>
+
+        <!-- Viewport (zona grande izq-arriba) -->
+        <rect x="20" y="42" width="380" height="240" fill="#fde9d3" stroke="#c8580d" stroke-width="1.6"/>
+        <!-- Cubito dentro del viewport -->
+        <g transform="translate(180, 130)">
+          <path d="M 0 30 L 30 18 L 50 28 L 20 40 Z" fill="#fff" stroke="#c8580d" stroke-width="1.2"/>
+          <path d="M 0 30 L 20 40 L 20 70 L 0 60 Z" fill="#f5cfa3" stroke="#c8580d" stroke-width="1.2"/>
+          <path d="M 20 40 L 50 28 L 50 58 L 20 70 Z" fill="#e8a76e" stroke="#c8580d" stroke-width="1.2"/>
+        </g>
+        <text x="35" y="62" font-family="Inter, sans-serif" font-size="13" font-weight="700" fill="#c8580d">1 · Viewport</text>
+        <text x="35" y="78" font-family="Iowan Old Style, Georgia, serif" font-size="11" font-style="italic" fill="#6f6a62">la encimera</text>
+
+        <!-- Outliner (arriba derecha) -->
+        <rect x="400" y="42" width="200" height="120" fill="#fbf8f1" stroke="#c8580d" stroke-width="1.6"/>
+        <g font-family="Inter, sans-serif" font-size="10" fill="#2a2622">
+          <text x="412" y="80">▸ Scene</text>
+          <text x="424" y="96">▸ Collection</text>
+          <text x="438" y="112">• Cube</text>
+          <text x="438" y="128">• Camera</text>
+          <text x="438" y="144">• Light</text>
+        </g>
+        <text x="412" y="62" font-family="Inter, sans-serif" font-size="13" font-weight="700" fill="#c8580d">2 · Outliner</text>
+
+        <!-- Propiedades (zona derecha media) -->
+        <rect x="400" y="162" width="200" height="120" fill="#fbf8f1" stroke="#c8580d" stroke-width="1.6"/>
+        <!-- Iconos de pestañas -->
+        <g fill="#c8580d">
+          <circle cx="412" cy="180" r="3.5"/>
+          <circle cx="424" cy="180" r="3.5" opacity="0.4"/>
+          <circle cx="436" cy="180" r="3.5" opacity="0.4"/>
+          <circle cx="448" cy="180" r="3.5" opacity="0.4"/>
+          <circle cx="460" cy="180" r="3.5" opacity="0.4"/>
+        </g>
+        <g font-family="Inter, sans-serif" font-size="9.5" fill="#6f6a62">
+          <rect x="412" y="195" width="178" height="10" fill="#e8e2d2"/>
+          <rect x="412" y="210" width="120" height="10" fill="#e8e2d2"/>
+          <rect x="412" y="225" width="160" height="10" fill="#e8e2d2"/>
+          <rect x="412" y="240" width="100" height="10" fill="#e8e2d2"/>
+          <rect x="412" y="255" width="140" height="10" fill="#e8e2d2"/>
+        </g>
+        <text x="500" y="180" font-family="Inter, sans-serif" font-size="13" font-weight="700" fill="#c8580d">3 · Propiedades</text>
+
+        <!-- Timeline (abajo, ancho completo) -->
+        <rect x="20" y="282" width="580" height="78" fill="#fbf8f1" stroke="#c8580d" stroke-width="1.6"/>
+        <!-- Marcas de timeline -->
+        <g stroke="#d8d2c2" stroke-width="0.8">
+          <line x1="60" y1="320" x2="60" y2="335"/>
+          <line x1="120" y1="320" x2="120" y2="335"/>
+          <line x1="180" y1="320" x2="180" y2="335"/>
+          <line x1="240" y1="320" x2="240" y2="335"/>
+          <line x1="300" y1="320" x2="300" y2="335"/>
+          <line x1="360" y1="320" x2="360" y2="335"/>
+          <line x1="420" y1="320" x2="420" y2="335"/>
+          <line x1="480" y1="320" x2="480" y2="335"/>
+          <line x1="540" y1="320" x2="540" y2="335"/>
+        </g>
+        <line x1="40" y1="335" x2="580" y2="335" stroke="#6f6a62" stroke-width="1"/>
+        <!-- Cabezal de reproducción -->
+        <line x1="100" y1="290" x2="100" y2="350" stroke="#c8580d" stroke-width="2"/>
+        <text x="35" y="305" font-family="Inter, sans-serif" font-size="13" font-weight="700" fill="#c8580d">4 · Timeline</text>
+      </svg>
+      <figcaption>Las cuatro zonas. Saber dónde está cada una es la mitad del trabajo de orientarse en Blender.</figcaption>
+    </figure>
+
+    <h2>Zona 1: el Viewport (la encimera)</h2>
+    <p>Es la zona grande del centro, donde aparece el cubo. <strong>Aquí es donde haces casi todo el trabajo</strong>: colocar objetos, modelarlos, animarlos. Es tu encimera.</p>
+
+    <p>Cuando alguien te dice "muévelo al lado del cubo" o "rota la cámara", lo haces aquí. Cuando alguien te dice "qué bonito te ha quedado", está mirando lo que pasa aquí. La mayor parte del tiempo en Blender es tiempo en el viewport.</p>
+
+    <h2>Zona 2: el Outliner (la lista de ingredientes)</h2>
+    <p>Arriba a la derecha hay una lista pequeña con cosas como "Cube", "Camera", "Light". Eso es el <strong>Outliner</strong>: la lista de todo lo que hay en tu escena. Funciona como el explorador de archivos del sistema operativo, pero en lugar de carpetas y documentos, lista objetos 3D.</p>
+
+    <p>Cuando una escena se complica y tiene veinte objetos, el outliner te salva la vida: te permite seleccionar uno por su nombre, esconderlo temporalmente con el icono del ojo, o agruparlos en colecciones (carpetas).</p>
+
+    <p class="note-inline"><strong>Truco temprano:</strong> renombra los objetos según vayas creándolos (doble clic en el nombre). Trabajar con "Cube.001", "Cube.002", "Cube.003" es un infierno futuro.</p>
+
+    <h2>Zona 3: el panel de Propiedades (los mandos)</h2>
+    <p>Abajo a la derecha tienes un panel lleno de iconitos en una columna y un montón de ajustes a su lado. Ese es el <strong>panel de Propiedades</strong>: <em>los mandos</em> con los que regulas todo lo que hace Blender.</p>
+
+    <p>Cada icono de la columna es una pestaña distinta: render, output, mundo, material, modificadores, físicas... Cuando quieras cambiar el color de un objeto, apretarás un icono. Cuando quieras cambiar la resolución del render, otro. No hace falta que te aprendas los iconos ahora: irás aterrizando uno cada vez según los necesites.</p>
+
+    <h2>Zona 4: el Timeline (la receta con tiempos)</h2>
+    <p>Abajo del todo, ocupando el ancho de la pantalla, hay una franja con números y una raya vertical. Ese es el <strong>Timeline</strong>, la línea de tiempo. Aquí va a vivir la animación.</p>
+
+    <p>De momento no tienes que hacer nada con él. La línea vertical es el cabezal de reproducción ("vamos por el frame X"); los números son los frames. Lo activamos en serio en la píldora 9.</p>
+
+    <h2>Las pestañas de arriba: Workspaces</h2>
+    <p>En la franja superior hay varias pestañas con nombres como <code>Layout</code>, <code>Modeling</code>, <code>Sculpting</code>, <code>Shading</code>, <code>Animation</code>... Cada una es un <strong>Workspace</strong>: una preconfiguración de la pantalla pensada para una tarea distinta.</p>
+
+    <p>Es como tener varias mesas montadas para tareas diferentes. Cuando vas a modelar, cambias a la mesa de modelar. Cuando vas a animar, a la de animar. Las cuatro zonas siguen estando ahí debajo, pero el tamaño y el énfasis cambia.</p>
+
+    <p>Para este curso vas a vivir en dos: <code>Layout</code> (vista general, el que te encuentras al abrir) y <code>Modeling</code> (cuando entremos en la píldora 5).</p>
+
+    <h2>Una palabra que vamos a oír mucho: "modo"</h2>
+    <p>Antes de cerrar la píldora, te dejo plantada una palabra que vas a ver bastante: <strong>modo</strong>. Blender tiene varios <em>modos</em> de trabajo: en uno mueves objetos enteros, en otro modificas su forma por dentro, en otro pintas sobre ellos, en otro los esculpes. Cada modo cambia lo que el ratón hace cuando haces clic.</p>
+
+    <p>De momento solo te interesan dos: <strong>Object Mode</strong> (mueves objetos enteros) y <strong>Edit Mode</strong> (modificas su forma por dentro). Llegan en la píldora 5. Aquí solo te dejo el nombre para que no te asuste cuando aparezca.</p>
+
+    <div class="recap">
+      <h3>Recap</h3>
+      <ul>
+        <li><strong>Cuatro zonas</strong>: Viewport (la encimera), Outliner (la lista), Propiedades (los mandos) y Timeline (la receta con tiempos).</li>
+        <li><strong>Workspaces</strong>: las pestañas de arriba son mesas preconfiguradas para tareas distintas.</li>
+        <li>Existe la palabra "<strong>modo</strong>" — la veremos a fondo en la P05.</li>
+      </ul>
+    </div>
+
+    <div class="practice">
+      <div class="label">Práctica · 3 min</div>
+      <h3>Reconocer las cuatro zonas</h3>
+      <ol>
+        <li>Abre el archivo que guardaste en la P01 (o crea uno nuevo si no lo tienes).</li>
+        <li>Sin tocar nada, identifica con el dedo (o el cursor) las cuatro zonas: Viewport, Outliner, Propiedades, Timeline.</li>
+        <li>En el <strong>Outliner</strong>, haz clic en la palabra <code>Cube</code>. Verás que el cubo del viewport se pone con borde naranja: lo has seleccionado <em>desde la lista</em>.</li>
+        <li>Haz clic en la pestaña <code>Modeling</code> de arriba. La pantalla cambia: las cuatro zonas siguen ahí pero reorganizadas. Has cambiado de Workspace.</li>
+        <li>Vuelve a la pestaña <code>Layout</code>.</li>
+      </ol>
+      <div class="check"><strong>Sabes que te ha salido si:</strong> seleccionas el cubo desde el Outliner sin tocar el viewport, y consigues cambiar entre los workspaces <code>Layout</code> y <code>Modeling</code> y volver atrás.</div>
+    </div>
+
+  </main>
+
+  <aside class="col-aside">
+    <div class="note">
+      <strong>Ventanas redimensionables.</strong> Cualquier zona se puede agrandar o achicar arrastrando los bordes que la separan. Si por accidente te sale algo distinto, haz clic derecho sobre el borde y "Reset" lo deja como estaba.
+    </div>
+    <div class="note">
+      <strong>Renombrar objetos.</strong> Doble clic en el nombre del Outliner. Trabajar con <code>Cube.001</code>, <code>Cube.002</code>, <code>Cube.003</code> es un infierno cuando la escena crece. Ponles nombres ("Mesa", "Pelota").
+    </div>
+    <div class="note">
+      <strong>Esconder objetos.</strong> En el Outliner, el icono del ojo a la derecha de cada nombre lo esconde temporalmente del viewport sin borrarlo. Útil cuando algo te tapa lo que quieres ver.
+    </div>
+    <div class="note">
+      <strong>Iconos de Propiedades.</strong> No los memorices. Pasa el cursor por encima y un <em>tooltip</em> te dice qué es cada uno. Con el tiempo, los dos o tres que más uses se quedan.
+    </div>
+    <div class="note">
+      <strong>Si pierdes el panel de Propiedades</strong> o cualquier otro arrastrando esquinas: <code>File → Defaults → Load Factory Settings</code>. Vuelve todo a fábrica.
+    </div>
+    <div class="note">
+      <strong>Workspaces extra.</strong> Existen más de los que aparecen por defecto (texturas, escultura, video editing). Se añaden con el <code>+</code> al final de la barra. No los necesitas para este curso.
+    </div>
+    <div class="note">
+      <strong>Modos por venir.</strong> Los dos modos que importan ahora son <em>Object</em> y <em>Edit</em>. Hay más (Sculpt, Texture Paint, Weight Paint, Vertex Paint), pero quedan fuera del curso.
+    </div>
+  </aside>
+
+  <nav class="foot-nav">
+    <a href="../pildora-01_blender-de-cero/index.html" class="prev">P01 · Blender de cero</a>
+    <a href="../indice.html" class="home">Índice</a>
+    <a href="../pildora-03_moverte-en-3d/index.html" class="next">P03 · Moverte en 3D</a>
+  </nav>
+
+</div>
+
+<script>
+window.addEventListener('scroll', function() {
+  var h = document.documentElement, b = document.body;
+  var pct = (h.scrollTop || b.scrollTop) / ((h.scrollHeight || b.scrollHeight) - h.clientHeight) * 100;
+  document.getElementById('progress').style.width = pct + '%';
+});
+</script>
+
+</body>
+</html>

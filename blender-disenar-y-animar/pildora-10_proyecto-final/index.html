@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P10 — Proyecto final · Curso Blender</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<div class="progress" id="progress"></div>
+
+<div class="topbar">
+  <a href="../indice.html">← Curso Blender</a>
+</div>
+
+<div class="container">
+
+  <header class="title">
+    <div class="meta">Píldora 10 · <span class="clock">⏱ 10 min</span></div>
+    <h1>Proyecto final: escena animada completa</h1>
+    <p class="objetivo">Al acabar tendrás un archivo MP4 de unos 3-4 segundos con una pelota dando botes sobre una mesa, completamente hecho por ti.</p>
+  </header>
+
+  <main class="col-main">
+
+    <h2>Cero teoría nueva</h2>
+    <p>Esta píldora no introduce nada que no hayas visto. Es la prueba de que ya sabes hacer una escena 3D animada de principio a fin. Vas a juntar las nueve píldoras anteriores en un proyecto completo: una pelota dando dos o tres botes sobre la mesa, con un vaso y un libro al lado para dar contexto, iluminada y exportada como vídeo.</p>
+
+    <h2>El plan en cuatro pasos</h2>
+
+    <h3>Paso 1 · La escena</h3>
+    <p>Necesitas cuatro objetos:</p>
+    <ul>
+      <li><strong>La mesa</strong> &mdash; ya la tienes modelada de la P05.</li>
+      <li><strong>La pelota</strong> &mdash; una esfera (<code>Shift+A</code> → <em>UV Sphere</em>).</li>
+      <li><strong>Un vaso</strong> &mdash; un cilindro alto y delgado (<code>Shift+A</code> → <em>Cylinder</em>, escala en X e Y a 0.4, sube un poco).</li>
+      <li><strong>Un libro</strong> &mdash; un cubo aplastado (<code>Shift+A</code> → <em>Cube</em>, escala Z a 0.1, X a 0.7, Y a 1).</li>
+    </ul>
+
+    <h3>Paso 2 · Materiales</h3>
+    <p>Aplica un material a cada objeto, con el flujo de la P06:</p>
+    <ul>
+      <li>Mesa: marrón medio, Roughness 0.7 (madera mate).</li>
+      <li>Pelota: rojo vivo, Roughness 0.25 (plástico brillante).</li>
+      <li>Vaso: gris muy claro, Roughness 0.1, Metallic 0 (parece cristal sin entrar a transparencia, suficiente para esta píldora).</li>
+      <li>Libro: verde oscuro o azul oscuro, Roughness 0.7.</li>
+    </ul>
+
+    <h3>Paso 3 · Luces y cámara</h3>
+    <p>Igual que en la P07 y P08:</p>
+    <ul>
+      <li>Una luz <strong>Area</strong> grande encima de la mesa, Power alto (≈500 W), Size 3 m.</li>
+      <li>Una luz <strong>Sun</strong> en diagonal, Strength 1.5, color ligeramente cálido.</li>
+      <li>Encuadra a tu gusto y manda la cámara con <code>Ctrl+Alt+Numpad 0</code>. Pon la mesa centrada y un poco bajada respecto al horizonte.</li>
+    </ul>
+
+    <h3>Paso 4 · La animación: dos botes con squash</h3>
+    <p>Esta es la parte interesante. La pelota va a dar dos botes sobre la mesa. Cada bote tiene tres momentos clave:</p>
+
+    <ol>
+      <li><strong>Arriba</strong>: pelota en el aire, esférica.</li>
+      <li><strong>Toca</strong>: pelota tocando la mesa, ligeramente <em>aplastada</em> (esto es el "squash"). Da sensación de impacto.</li>
+      <li><strong>Vuelve a subir</strong>: ya separada de la mesa, otra vez esférica.</li>
+    </ol>
+
+    <p>Eso es animación clásica de toda la vida. La pelota deformada al tocar el suelo es el truco más antiguo del cine de animación. Con keyframes de <em>Location</em> y <em>Scale</em> en los frames adecuados, sale.</p>
+
+    <figure>
+      <svg viewBox="0 0 620 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Animación de un bote: pelota arriba, aplastada al tocar, arriba otra vez">
+        <!-- suelo de mesa -->
+        <line x1="20" y1="170" x2="600" y2="170" stroke="#8c5a2c" stroke-width="2"/>
+        <line x1="20" y1="173" x2="600" y2="173" stroke="#5c3915" stroke-width="0.6"/>
+
+        <!-- Trayectoria parábola -->
+        <path d="M 60 165 Q 175 40 280 165 Q 380 60 480 165 Q 540 110 580 130" stroke="#c8580d" stroke-width="1.2" fill="none" stroke-dasharray="3 4" opacity="0.5"/>
+
+        <!-- Posiciones clave -->
+        <!-- 1. Arriba 1 (frame 1) -->
+        <g>
+          <circle cx="60" cy="100" r="14" fill="#c84545" stroke="#6e1a1a" stroke-width="1.2"/>
+          <circle cx="56" cy="96" r="3" fill="white" opacity="0.55"/>
+          <text x="60" y="200" text-anchor="middle" font-family="Inter, sans-serif" font-size="9" font-weight="700" fill="#c8580d">F1</text>
+          <text x="60" y="212" text-anchor="middle" font-family="Inter, sans-serif" font-size="9" fill="#6f6a62">arriba</text>
+        </g>
+
+        <!-- 2. Aplastada (toca, frame 12) -->
+        <g>
+          <ellipse cx="170" cy="166" rx="20" ry="6" fill="#c84545" stroke="#6e1a1a" stroke-width="1.2"/>
+          <ellipse cx="167" cy="164" rx="4" ry="1.5" fill="white" opacity="0.55"/>
+          <text x="170" y="200" text-anchor="middle" font-family="Inter, sans-serif" font-size="9" font-weight="700" fill="#c8580d">F12</text>
+          <text x="170" y="212" text-anchor="middle" font-family="Inter, sans-serif" font-size="9" fill="#6f6a62">aplastada</text>
+        </g>
+
+        <!-- 3. Arriba 2 (frame 24) -->
+        <g>
+          <circle cx="280" cy="100" r="14" fill="#c84545" stroke="#6e1a1a" stroke-width="1.2"/>
+          <circle cx="276" cy="96" r="3" fill="white" opacity="0.55"/>
+          <text x="280" y="200" text-anchor="middle" font-family="Inter, sans-serif" font-size="9" font-weight="700" fill="#c8580d">F24</text>
+          <text x="280" y="212" text-anchor="middle" font-family="Inter, sans-serif" font-size="9" fill="#6f6a62">arriba</text>
+        </g>
+
+        <!-- 4. Aplastada 2 (frame 36) -->
+        <g>
+          <ellipse cx="380" cy="166" rx="18" ry="5" fill="#c84545" stroke="#6e1a1a" stroke-width="1.2"/>
+          <ellipse cx="377" cy="164" rx="4" ry="1.5" fill="white" opacity="0.55"/>
+          <text x="380" y="200" text-anchor="middle" font-family="Inter, sans-serif" font-size="9" font-weight="700" fill="#c8580d">F36</text>
+          <text x="380" y="212" text-anchor="middle" font-family="Inter, sans-serif" font-size="9" fill="#6f6a62">aplastada</text>
+        </g>
+
+        <!-- 5. Arriba menos alto (frame 48) -->
+        <g>
+          <circle cx="480" cy="125" r="13" fill="#c84545" stroke="#6e1a1a" stroke-width="1.2"/>
+          <circle cx="476" cy="121" r="3" fill="white" opacity="0.55"/>
+          <text x="480" y="200" text-anchor="middle" font-family="Inter, sans-serif" font-size="9" font-weight="700" fill="#c8580d">F48</text>
+          <text x="480" y="212" text-anchor="middle" font-family="Inter, sans-serif" font-size="9" fill="#6f6a62">arriba</text>
+        </g>
+
+        <!-- 6. Resting (frame 72) -->
+        <g>
+          <circle cx="580" cy="156" r="13" fill="#c84545" stroke="#6e1a1a" stroke-width="1.2"/>
+          <circle cx="576" cy="152" r="3" fill="white" opacity="0.55"/>
+          <text x="580" y="200" text-anchor="middle" font-family="Inter, sans-serif" font-size="9" font-weight="700" fill="#c8580d">F72</text>
+          <text x="580" y="212" text-anchor="middle" font-family="Inter, sans-serif" font-size="9" fill="#6f6a62">parada</text>
+        </g>
+
+        <text x="310" y="30" text-anchor="middle" font-family="Iowan Old Style, Georgia, serif" font-size="11" font-style="italic" fill="#6f6a62">Seis keyframes y Blender hace todo lo de en medio.</text>
+      </svg>
+      <figcaption>La pelota sube, baja, se aplasta al tocar la mesa, vuelve a subir un poco menos, vuelve a tocar, y se queda parada. Con seis keyframes basta.</figcaption>
+    </figure>
+
+    <h2>Exportar como vídeo</h2>
+    <p>Por defecto, F12 hace una imagen. Para que renderice <em>todos</em> los frames y los meta en un vídeo, hay dos cambios:</p>
+
+    <ol>
+      <li>En <strong>Output Properties</strong> (icono impresora), apartado <em>Output</em>, cambia <em>File Format</em> de "PNG" a <strong>"FFmpeg Video"</strong>. Aparece debajo otro apartado <em>Encoding</em>.</li>
+      <li>En <em>Encoding</em>, elige <em>Container: MPEG-4</em> y <em>Video Codec: H.264</em>. Es el formato MP4 estándar, lo lee cualquier reproductor.</li>
+      <li>En el campo <em>Output</em> (la ruta), elige carpeta y nombre. Termina en <code>.mp4</code>.</li>
+    </ol>
+
+    <p>Y para lanzar el render del vídeo, en lugar de F12: <strong><code>Ctrl + F12</code></strong>. Eso renderiza <em>cada frame</em> entre Start y End del timeline y los pega en el archivo MP4.</p>
+
+    <p>Tarda más que renderizar una imagen. Para 72 frames con Eevee, en un ordenador normal, tirando a unos pocos minutos. Vete a por un café.</p>
+
+    <h2>Tres consejos antes de pulsar el botón</h2>
+    <p><strong>Reproduce primero en el viewport.</strong> Antes de gastar minutos renderizando, asegúrate de que la animación se ve como quieres. Pulsa Espacio en el viewport: si algo se mueve raro, ajústalo en el timeline antes de renderizar.</p>
+
+    <p><strong>Resolución modesta.</strong> Para esta primera prueba, en Output Properties baja el porcentaje de resolución a <code>50%</code>. Tarda menos y se ve igual de bien para evaluar el resultado. Cuando esté perfecto, súbelo al 100% y vuelve a renderizar.</p>
+
+    <p><strong>Guarda el archivo .blend antes de renderizar.</strong> Si Blender se cierra a la mitad del render (no debería, pero pasa), no pierdes el trabajo.</p>
+
+    <div class="recap">
+      <h3>Recap</h3>
+      <ul>
+        <li>Piezas: mesa (P05), pelota, vaso, libro · materiales (P06) · luces Area + Sun (P07) · cámara encuadrada (P08).</li>
+        <li>Animación: 6 keyframes de pelota con <em>Location</em> y <em>Scale</em> para hacer dos botes con squash.</li>
+        <li>Output: <em>FFmpeg Video</em>, MPEG-4, H.264, ruta acabada en <code>.mp4</code>.</li>
+        <li>Lanzar: <strong><code>Ctrl + F12</code></strong>.</li>
+      </ul>
+    </div>
+
+    <div class="practice">
+      <div class="label">Práctica · 30-40 min (en este caso, sin prisa)</div>
+      <h3>El proyecto final, paso a paso</h3>
+      <ol>
+        <li><strong>Empieza desde un archivo nuevo:</strong> abre Blender, borra todo lo que haya con <code>A</code> + <code>X</code>.</li>
+        <li><strong>Importa la mesa</strong> de la P05: <code>File → Append</code> → busca <code>p05_mesa.blend</code> → carpeta <em>Object</em> → selecciona el objeto Cube (la mesa). Aparece en tu escena.</li>
+        <li>Si la mesa no está en el origen, muévela: <code>G</code> + <code>Z</code> + ajusta para que las patas toquen el suelo (Z = 0).</li>
+        <li><strong>Añade la pelota</strong>: <code>Shift+A</code> → <em>UV Sphere</em>. Súbela encima de la mesa: <code>G</code> → <code>Z</code> → <code>3</code> → <em>Enter</em>.</li>
+        <li><strong>Vaso</strong>: <code>Shift+A</code> → <em>Cylinder</em>. <code>S</code> → <code>0.4</code> → <em>Enter</em>. Súbelo y desplázalo a un lado de la mesa.</li>
+        <li><strong>Libro</strong>: <code>Shift+A</code> → <em>Cube</em>. Aplástalo: <code>S</code> → <code>Z</code> → <code>0.1</code> → <em>Enter</em>. Colócalo al otro lado de la mesa.</li>
+        <li><strong>Materiales</strong>: a cada uno asigna su material (los valores que vimos arriba). Activa Material Preview en el viewport.</li>
+        <li><strong>Luces</strong>: borra la Point por defecto. Añade una Area encima (Power 500, Size 3) y una Sun lateral (Strength 1.5, color cálido).</li>
+        <li><strong>Cámara</strong>: orbita y haz zoom hasta el encuadre que te guste. <code>Ctrl + Alt + Numpad 0</code>. Comprueba con <code>Numpad 0</code>.</li>
+        <li><strong>Timeline</strong>: pon Start = 1, End = 72.</li>
+        <li><strong>Animación</strong> (con Auto Keyframe ACTIVADO):
+          <ul>
+            <li>Frame 1: pelota en el aire, alta, escala 1. (Auto Keyframe captura.)</li>
+            <li>Frame 12: pelota tocando la mesa, escala Z = 0.6 (aplastada). Mueve y aplasta.</li>
+            <li>Frame 24: pelota arriba otra vez, escala 1.</li>
+            <li>Frame 36: pelota tocando la mesa, escala Z = 0.7 (segundo bote, menos aplastada).</li>
+            <li>Frame 48: pelota arriba, menos alto que el primer bote.</li>
+            <li>Frame 72: pelota descansando sobre la mesa, sin moverse, escala 1.</li>
+          </ul>
+        </li>
+        <li><strong>Desactiva Auto Keyframe</strong> cuando termines.</li>
+        <li>Pulsa <code>Espacio</code> y revisa que la animación se ve bien. Ajusta lo que haga falta.</li>
+        <li><strong>Output</strong>: en Output Properties, File Format → <em>FFmpeg Video</em>, Container <em>MPEG-4</em>, Codec <em>H.264</em>. Ruta: tu carpeta del curso, archivo <code>p10_proyecto-final.mp4</code>. Resolución al 50% para esta primera prueba.</li>
+        <li>Guarda el archivo Blender: <code>Ctrl+S</code> como <code>p10_proyecto-final.blend</code>.</li>
+        <li><strong><code>Ctrl + F12</code></strong>. Espera. Toma un café.</li>
+        <li>Cuando termine, abre tu MP4 con cualquier reproductor.</li>
+      </ol>
+      <div class="check"><strong>Sabes que te ha salido si:</strong> tienes en disco un MP4 de 3 segundos donde una pelota roja da dos botes sobre una mesa de madera, con un vaso y un libro al lado, iluminado con sombras suaves. Si la pelota atraviesa la mesa, ajusta los keyframes de Location Z. Si no se aplasta, revisa los keyframes de Scale en los frames de impacto.</div>
+    </div>
+
+    <h2>Y a partir de aquí</h2>
+    <p>Has hecho un cortometraje 3D. No es Pixar, pero <em>técnicamente</em> es exactamente lo mismo: modelar, dar materiales, iluminar, encuadrar, animar, renderizar.</p>
+
+    <p>Si te ha enganchado y quieres seguir, los siguientes pasos naturales son: <strong>texturas con imagen</strong> (madera de verdad, no marrón liso), <strong>modificadores</strong> (Subdivision Surface da formas suaves; Mirror modela un lado y se replica el otro), <strong>el motor Cycles</strong> (más realismo, más espera) y la base del <strong>rigging</strong> (armaduras para animar personajes). Para todo eso ya tienes los fundamentos.</p>
+
+  </main>
+
+  <aside class="col-aside">
+    <div class="note">
+      <strong>Append vs Open.</strong> <code>File → Append</code> "importa" un objeto desde otro archivo .blend a tu archivo actual, como copiar y pegar. <code>Open</code> abre el archivo entero.
+    </div>
+    <div class="note">
+      <strong>Squash y stretch.</strong> Es el principio número uno de los doce de la animación clásica de Disney. Aplastar al impacto y estirar al ascender da sensación de peso y vida. Hoy solo aplastamos por simplicidad.
+    </div>
+    <div class="note">
+      <strong>Origen de la pelota.</strong> Si al aplastar la pelota Z parece atravesar la mesa, su origen está en el centro: al escalar Z se aplana hacia ambos lados. Para un squash más realista habría que mover el origen a la base, pero para esta píldora la trampa de mover Z + escalar Z funciona bien.
+    </div>
+    <div class="note">
+      <strong>Más botes, más vida.</strong> Con tres botes (en lugar de dos) y la altura cayendo cada vez, la pelota parece más pesada y real. Pruébalo si te ves con tiempo.
+    </div>
+    <div class="note">
+      <strong>Sombras del impacto.</strong> Si quieres más punch, en el frame del impacto añade un pequeño pulso de escala a la <em>luz</em> Area: aumentar y volver a su valor en 3 frames simula un destello. Truco de cine.
+    </div>
+    <div class="note">
+      <strong>Render con motion blur.</strong> En Render Properties, activa <em>Motion Blur</em>. Da el efecto de movimiento que ves en grabaciones reales (la pelota se ve borrosa cuando se mueve rápido). En Eevee es una opción.
+    </div>
+    <div class="note">
+      <strong>Si el render se cuelga</strong>, revisa la consola de errores (en Window → Toggle System Console en Windows, o lanzando Blender desde terminal en Mac/Linux). Casi siempre es un problema de codec o de ruta del archivo de salida.
+    </div>
+  </aside>
+
+  <nav class="foot-nav">
+    <a href="../pildora-09_animacion-keyframes/index.html" class="prev">P09 · Animación</a>
+    <a href="../indice.html" class="home">Índice</a>
+    <a href="../evaluacion.html" class="next">Evaluación final</a>
+  </nav>
+
+</div>
+
+<script>
+window.addEventListener('scroll', function() {
+  var h = document.documentElement, b = document.body;
+  var pct = (h.scrollTop || b.scrollTop) / ((h.scrollHeight || b.scrollHeight) - h.clientHeight) * 100;
+  document.getElementById('progress').style.width = pct + '%';
+});
+</script>
+
+</body>
+</html>

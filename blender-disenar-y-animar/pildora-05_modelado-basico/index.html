@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P05 — Modelado básico · Curso Blender</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<div class="progress" id="progress"></div>
+
+<div class="topbar">
+  <a href="../indice.html">← Curso Blender</a>
+</div>
+
+<div class="container">
+
+  <header class="title">
+    <div class="meta">Píldora 05 · <span class="clock">⏱ 10 min</span></div>
+    <h1>Modelado básico: del cubo a otra cosa</h1>
+    <p class="objetivo">Al acabar sabrás entrar en modo edición y modificar la forma de un objeto trabajando con sus vértices, aristas y caras. Vamos a convertir un cubo en una mesa.</p>
+  </header>
+
+  <main class="col-main">
+
+    <h2>Dos modos: por fuera y por dentro</h2>
+    <p>Hasta ahora has movido objetos enteros, como muebles. En Blender eso se llama <strong>Object Mode</strong>: trabajas con el objeto como un bloque cerrado.</p>
+
+    <p>Para cambiar la <em>forma</em> del objeto necesitas otro modo: <strong>Edit Mode</strong>. La diferencia se entiende rápido con un coche: en Object Mode aparcas el coche, lo mueves, lo rotas. En Edit Mode levantas el capó y metes mano a las piezas de dentro.</p>
+
+    <p>Para alternar entre uno y otro: tecla <code>Tab</code>. Una vez en Edit Mode, otra vez <code>Tab</code> para volver. Es el atajo más usado de la sesión.</p>
+
+    <div class="callout">
+      <strong>Regla de oro:</strong> antes de pulsar <code>Tab</code>, asegúrate de tener seleccionado el objeto cuya forma quieres modificar. Si no, no se entera de a quién le abres el capó.
+    </div>
+
+    <h2>Los tres ladrillos: vértices, aristas y caras</h2>
+    <p>Cuando entras en Edit Mode de un cubo, lo ves de otra manera: ya no es un bloque uniforme, sino un montaje de piezas. Esas piezas son los <strong>tres ladrillos</strong> con los que se hace cualquier objeto 3D:</p>
+
+    <figure>
+      <svg viewBox="0 0 620 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Vértices, aristas y caras de un cubo">
+        <!-- Vértices -->
+        <g>
+          <rect x="20" y="20" width="180" height="180" fill="#fbf8f1" stroke="#d8d2c2" stroke-width="1"/>
+          <text x="110" y="42" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" font-weight="700" fill="#c8580d">Vértices</text>
+          <text x="110" y="56" text-anchor="middle" font-family="Iowan Old Style, Georgia, serif" font-size="11" font-style="italic" fill="#6f6a62">los puntos</text>
+
+          <!-- Cubo en alambre con vértices destacados -->
+          <g stroke="#c8580d" stroke-width="0.8" fill="none" opacity="0.5">
+            <path d="M 60 130 L 100 110 L 160 130 L 120 150 Z"/>
+            <path d="M 60 130 L 60 170 L 120 190 L 120 150"/>
+            <path d="M 120 150 L 160 130 L 160 170 L 120 190"/>
+            <path d="M 100 110 L 100 150 L 120 150"/>
+            <path d="M 100 150 L 60 170"/>
+            <path d="M 100 150 L 160 170"/>
+          </g>
+          <!-- Vertices visibles (puntos) -->
+          <g fill="#c8580d">
+            <circle cx="60" cy="130" r="3.5"/>
+            <circle cx="100" cy="110" r="3.5"/>
+            <circle cx="160" cy="130" r="3.5"/>
+            <circle cx="120" cy="150" r="3.5"/>
+            <circle cx="60" cy="170" r="3.5"/>
+            <circle cx="100" cy="150" r="3.5"/>
+            <circle cx="160" cy="170" r="3.5"/>
+            <circle cx="120" cy="190" r="3.5"/>
+          </g>
+        </g>
+
+        <!-- Aristas -->
+        <g>
+          <rect x="220" y="20" width="180" height="180" fill="#fbf8f1" stroke="#d8d2c2" stroke-width="1"/>
+          <text x="310" y="42" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" font-weight="700" fill="#c8580d">Aristas</text>
+          <text x="310" y="56" text-anchor="middle" font-family="Iowan Old Style, Georgia, serif" font-size="11" font-style="italic" fill="#6f6a62">las líneas que los unen</text>
+
+          <!-- Cubo con aristas destacadas -->
+          <g fill="#c8580d" opacity="0.4">
+            <circle cx="260" cy="130" r="2.5"/>
+            <circle cx="300" cy="110" r="2.5"/>
+            <circle cx="360" cy="130" r="2.5"/>
+            <circle cx="320" cy="150" r="2.5"/>
+            <circle cx="260" cy="170" r="2.5"/>
+            <circle cx="300" cy="150" r="2.5"/>
+            <circle cx="360" cy="170" r="2.5"/>
+            <circle cx="320" cy="190" r="2.5"/>
+          </g>
+          <g stroke="#c8580d" stroke-width="2" fill="none">
+            <path d="M 260 130 L 300 110 L 360 130 L 320 150 Z"/>
+            <path d="M 260 130 L 260 170 L 320 190 L 320 150"/>
+            <path d="M 320 150 L 360 130 L 360 170 L 320 190"/>
+          </g>
+        </g>
+
+        <!-- Caras -->
+        <g>
+          <rect x="420" y="20" width="180" height="180" fill="#fbf8f1" stroke="#d8d2c2" stroke-width="1"/>
+          <text x="510" y="42" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" font-weight="700" fill="#c8580d">Caras</text>
+          <text x="510" y="56" text-anchor="middle" font-family="Iowan Old Style, Georgia, serif" font-size="11" font-style="italic" fill="#6f6a62">los rectángulos rellenos</text>
+
+          <!-- Cubo con caras pintadas -->
+          <g>
+            <path d="M 460 130 L 500 110 L 560 130 L 520 150 Z" fill="#fde9d3" stroke="#c8580d" stroke-width="1.2"/>
+            <path d="M 460 130 L 520 150 L 520 190 L 460 170 Z" fill="#f5cfa3" stroke="#c8580d" stroke-width="1.2"/>
+            <path d="M 520 150 L 560 130 L 560 170 L 520 190 Z" fill="#e8a76e" stroke="#c8580d" stroke-width="1.2"/>
+          </g>
+        </g>
+      </svg>
+      <figcaption>Cualquier objeto en Blender se compone de estos tres tipos de elementos.</figcaption>
+    </figure>
+
+    <ul>
+      <li><strong>Vértices</strong> &mdash; los puntos. Las esquinas del cubo, por ejemplo. Un cubo tiene 8 vértices.</li>
+      <li><strong>Aristas</strong> &mdash; las líneas rectas que unen dos vértices. Las "varillas" del esqueleto. Un cubo tiene 12 aristas.</li>
+      <li><strong>Caras</strong> &mdash; las superficies planas que se forman entre tres o cuatro aristas cerradas. Las "tablas" que tapan los huecos. Un cubo tiene 6 caras.</li>
+    </ul>
+
+    <p>En Edit Mode puedes seleccionar cualquiera de los tres y trabajar con ellos. Pulsas:</p>
+
+    <ul>
+      <li><code>1</code> &mdash; modo selección de vértices.</li>
+      <li><code>2</code> &mdash; modo selección de aristas.</li>
+      <li><code>3</code> &mdash; modo selección de caras.</li>
+    </ul>
+
+    <p>(Sí, son los números <em>de arriba</em> del teclado, no los del numpad.)</p>
+
+    <h2>Tres herramientas que se quedan: Extrude, Inset, Loop Cut</h2>
+
+    <h3>Extrude (E): tirar de una cara</h3>
+    <p>La operación reina del modelado. <strong>Extrude</strong> coge una cara seleccionada y la "tira" hacia afuera, creando geometría nueva por el camino. Es como agarrar una pared y estirarla para que el edificio crezca.</p>
+
+    <p>Atajo: con una cara seleccionada, pulsa <code>E</code> y mueve el ratón. La cara se aleja, y aparece nueva geometría conectando la posición original con la nueva.</p>
+
+    <h3>Inset (I): meter una cara dentro de otra</h3>
+    <p><strong>Inset</strong> hace lo contrario en cierto modo: dada una cara, te crea otra cara más pequeña dentro de ella, como si dibujaras un rectángulo concéntrico. Útil cuando quieres añadir un detalle en medio de una superficie (un botón en una pared, por ejemplo).</p>
+
+    <p>Atajo: con una cara seleccionada, <code>I</code> y mueve el ratón.</p>
+
+    <h3>Loop Cut (Ctrl+R): añadir una arista en medio</h3>
+    <p>Un cubo solo tiene 12 aristas y eso a veces es muy poco si quieres modelar algo con detalle. <strong>Loop Cut</strong> mete una arista nueva en medio de una cara, dividiéndola en dos. Repítelo varias veces y tienes superficie suficiente para hacer las patas de una mesa.</p>
+
+    <p>Atajo: <code>Ctrl + R</code>, mueve el ratón hacia la cara donde quieras la arista, clic para confirmar la dirección, mueve para colocarla, clic de nuevo para fijarla. (Si te lías, clic derecho para que la deje justo en el medio.)</p>
+
+    <h2>De cubo a mesa: el plan</h2>
+    <p>Aplicamos las tres herramientas para convertir el cubo en una mesa. La idea, en cuatro movimientos:</p>
+
+    <ol>
+      <li><strong>Aplastar</strong> el cubo en altura, en Object Mode (escala): será el tablero.</li>
+      <li><strong>Entrar a Edit Mode</strong> y seleccionar la cara inferior.</li>
+      <li>Hacer <strong>dos loop cuts perpendiculares</strong> en esa cara, dividiéndola en cuatro cuadrados (una rejilla 2×2 dentro de la cara inferior).</li>
+      <li>Hacer <strong>extrude hacia abajo</strong> de cada una de las cuatro esquinas para sacar las patas.</li>
+    </ol>
+
+    <p>Suena más complicado de lo que es. La práctica te lleva paso a paso.</p>
+
+    <div class="recap">
+      <h3>Recap</h3>
+      <ul>
+        <li><strong>Tab</strong> alterna Object Mode (mover el objeto entero) y Edit Mode (modificar su forma por dentro).</li>
+        <li>Tres ladrillos: <strong>vértices</strong>, <strong>aristas</strong>, <strong>caras</strong>. Selección con <code>1</code>, <code>2</code>, <code>3</code>.</li>
+        <li>Tres herramientas que se quedan: <strong><code>E</code> Extrude</strong> (tirar de una cara), <strong><code>I</code> Inset</strong> (meter cara dentro), <strong><code>Ctrl+R</code> Loop Cut</strong> (añadir arista en medio).</li>
+      </ul>
+    </div>
+
+    <div class="practice">
+      <div class="label">Práctica · 7 min</div>
+      <h3>Modelar una mesa (la usaremos en el proyecto final)</h3>
+      <ol>
+        <li>Abre Blender. Si no tienes el cubo, añádelo con <code>Shift+A</code> → <code>Mesh</code> → <code>Cube</code>.</li>
+        <li>En Object Mode, selecciónalo. Aplástalo en altura: <code>S</code> → <code>Z</code> → <code>0.1</code> → <code>Enter</code>. Ya tienes el tablero (delgado).</li>
+        <li>Súbelo: <code>G</code> → <code>Z</code> → <code>1</code> → <code>Enter</code>, para que las patas tengan sitio cuando salgan.</li>
+        <li>Pulsa <code>Tab</code> para entrar en Edit Mode.</li>
+        <li>Cambia a modo selección de caras: tecla <code>3</code>.</li>
+        <li>Pon vista lateral con <code>Numpad 1</code> y haz clic en la cara inferior del cubo (la que mira al suelo) para seleccionarla.</li>
+        <li>Vuelve a perspectiva (<code>Numpad 5</code> si hace falta).</li>
+        <li>Loop cut 1: <code>Ctrl+R</code>, mueve el ratón sobre la cara inferior hasta que veas una línea amarilla horizontal, clic, clic derecho (lo deja en el centro).</li>
+        <li>Loop cut 2: <code>Ctrl+R</code>, mueve el ratón hasta ver una línea amarilla en la dirección perpendicular, clic, clic derecho.</li>
+        <li>Ahora la cara inferior está dividida en cuatro cuadrados pequeños. Vamos a sacar una pata desde cada uno.</li>
+        <li>Selecciona uno de los cuatro cuadrados (clic). Extrude hacia abajo: <code>E</code> → <code>Z</code> → <code>-1.5</code> → <code>Enter</code>. Tienes la primera pata.</li>
+        <li>Repite para cada una de las otras tres esquinas.</li>
+        <li>Pulsa <code>Tab</code> para volver a Object Mode.</li>
+        <li>Guarda como <code>p05_mesa.blend</code> con <code>Ctrl+S</code>.</li>
+      </ol>
+      <div class="check"><strong>Sabes que te ha salido si:</strong> tienes una mesa rectangular con cuatro patas que llegan al suelo. No tiene que ser perfecta. Si una pata sale a tres patas, deshaz con <code>Ctrl+Z</code> y vuelve a intentarlo.</div>
+    </div>
+
+  </main>
+
+  <aside class="col-aside">
+    <div class="note">
+      <strong>El cubo en Edit Mode se ve en negro.</strong> Es normal: Blender pinta los bordes para que veas la geometría. No es un fallo.
+    </div>
+    <div class="note">
+      <strong>Solo se modifica un objeto a la vez.</strong> Edit Mode trabaja con el objeto activo. Para editar otro, sal a Object Mode (<code>Tab</code>), selecciona el otro, y vuelve a entrar.
+    </div>
+    <div class="note">
+      <strong>Restringir extrude.</strong> <code>E</code> seguido de <code>Z</code> restringe el extrude al eje Z, igual que con G. Y puedes meter números: <code>E → Z → -1.5 → Enter</code> mete extrude exacto de 1.5 m hacia abajo.
+    </div>
+    <div class="note">
+      <strong>Doble extrude por error.</strong> Si pulsas <code>E</code> y luego <code>Esc</code>, la geometría nueva ya se ha creado (encima de la original), aunque parezca que has cancelado. Para deshacer del todo, <code>Ctrl+Z</code>.
+    </div>
+    <div class="note">
+      <strong>Subdivisiones.</strong> Otra forma de meter geometría: clic derecho sobre la cara → <em>Subdivide</em>. Divide en 4 (rejilla 2×2) de un golpe. Más rápido que dos loop cuts cuando quieres una rejilla regular.
+    </div>
+    <div class="note">
+      <strong>Selección por borde.</strong> En modo cara (tecla <code>3</code>), <code>Alt + clic</code> en una arista selecciona <em>todo el bucle</em> (loop) de caras alrededor del objeto. Útil para seleccionar "la fila entera".
+    </div>
+    <div class="note">
+      <strong>Modos en el menú.</strong> Si te olvidas del atajo, en la esquina superior izquierda del viewport hay un desplegable que pone "Object Mode". Desde ahí también se cambia a Edit Mode.
+    </div>
+  </aside>
+
+  <nav class="foot-nav">
+    <a href="../pildora-04_mover-rotar-escalar/index.html" class="prev">P04 · Mover, rotar, escalar</a>
+    <a href="../indice.html" class="home">Índice</a>
+    <a href="../pildora-06_materiales/index.html" class="next">P06 · Materiales</a>
+  </nav>
+
+</div>
+
+<script>
+window.addEventListener('scroll', function() {
+  var h = document.documentElement, b = document.body;
+  var pct = (h.scrollTop || b.scrollTop) / ((h.scrollHeight || b.scrollHeight) - h.clientHeight) * 100;
+  document.getElementById('progress').style.width = pct + '%';
+});
+</script>
+
+</body>
+</html>

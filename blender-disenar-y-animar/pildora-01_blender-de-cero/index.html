@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P01 — Blender de cero · Curso Blender</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<div class="progress" id="progress"></div>
+
+<div class="topbar">
+  <a href="../indice.html">← Curso Blender</a>
+</div>
+
+<div class="container">
+
+  <header class="title">
+    <div class="meta">Píldora 01 · <span class="clock">⏱ 10 min</span></div>
+    <h1>Blender de cero: instalar, abrir y no asustarte</h1>
+    <p class="objetivo">Al acabar tendrás Blender abierto en tu pantalla y entenderás qué son los tres bichos que aparecen flotando.</p>
+  </header>
+
+  <main class="col-main">
+
+    <h2>Empezamos</h2>
+    <p>Esta píldora hace una cosa: te deja en la casilla de salida. Vas a instalar Blender, abrirlo, y entender qué estás mirando. La mitad del tiempo te lo come la instalación, así que de "aprendizaje" puro hay poco. Pero sin esto, las nueve píldoras siguientes no se sostienen.</p>
+
+    <h2>Qué es Blender, en una frase</h2>
+    <p>Blender es un programa para hacer 3D que es <strong>gratis</strong>, <strong>libre</strong> (su código es público y nadie te puede cortar el grifo) y <strong>todo-en-uno</strong>: con él se modela, se anima, se renderiza, se monta vídeo y hasta se pintan texturas, sin salir nunca del programa.</p>
+
+    <p>Esa última palabra, <em>todo-en-uno</em>, es la que cambia las cosas. Imagínate una cocina donde, además de los fuegos, tienes el horno, la nevera, la batidora, el cuchillo bueno y el cajón de los <em>tuppers</em>, todo a un brazo de distancia. No tienes que mudarte de cocina cada vez que quieres pasar de cortar a freír. Blender es así: cualquier cosa que necesites en una escena 3D la tienes dentro.</p>
+
+    <p class="note-inline"><strong>Para qué se usa por ahí.</strong> Cortometrajes animados, videojuegos, diseño de producto, ilustración 3D, visualizaciones de arquitectura, efectos visuales. Que sea gratis no significa amateur: lo usan estudios profesionales.</p>
+
+    <h2>Instalarlo</h2>
+    <p>La instalación es la parte más aburrida y la más rápida. Tres pasos:</p>
+    <ol>
+      <li>Ve a <code>blender.org</code> en el navegador.</li>
+      <li>Descarga la versión recomendada para tu sistema (Windows, macOS o Linux). Vienen marcadas en la propia web.</li>
+      <li>Instala como cualquier otro programa: doble clic al instalador en Windows, arrastrar a "Aplicaciones" en macOS, o el gestor de paquetes en Linux.</li>
+    </ol>
+
+    <p>Tarda un par de minutos. Pesa unos 500 MB. Una vez instalado, ya no necesita internet para nada de lo que vamos a hacer en este curso.</p>
+
+    <h2>La primera vez que lo abres</h2>
+    <p>Aviso: cuando arrancas Blender por primera vez te aparece una pantalla densa, con paneles por todos los lados, números, botones diminutos y palabras en inglés. Es normal y no pasa nada. <strong>Ahora mismo solo te pido una cosa: mira el centro de la pantalla.</strong></p>
+
+    <p>En el centro hay tres cosas flotando. Esas tres cosas son lo único que importa de momento.</p>
+
+    <figure>
+      <svg viewBox="0 0 620 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Escena por defecto de Blender: cubo, cámara y luz">
+        <!-- Suelo sutil con líneas de horizonte -->
+        <g stroke="#d8d2c2" stroke-width="0.8" fill="none" opacity="0.7">
+          <line x1="40" y1="290" x2="580" y2="290"/>
+          <line x1="80" y1="320" x2="540" y2="320" stroke-dasharray="2 4"/>
+        </g>
+
+        <!-- Cubo central (vista isométrica) -->
+        <g>
+          <!-- cara superior -->
+          <path d="M 270 175 L 340 150 L 380 170 L 310 195 Z" fill="#fde9d3" stroke="#c8580d" stroke-width="1.6" stroke-linejoin="round"/>
+          <!-- cara frontal -->
+          <path d="M 270 175 L 310 195 L 310 270 L 270 250 Z" fill="#f5cfa3" stroke="#c8580d" stroke-width="1.6" stroke-linejoin="round"/>
+          <!-- cara lateral derecha -->
+          <path d="M 310 195 L 380 170 L 380 245 L 310 270 Z" fill="#e8a76e" stroke="#c8580d" stroke-width="1.6" stroke-linejoin="round"/>
+        </g>
+
+        <!-- Cámara estilizada (arriba a la izquierda) -->
+        <g transform="translate(75, 100)">
+          <rect x="0" y="6" width="48" height="30" rx="3" fill="#fbf8f1" stroke="#2a2622" stroke-width="1.6"/>
+          <rect x="10" y="0" width="14" height="8" fill="#fbf8f1" stroke="#2a2622" stroke-width="1.4"/>
+          <circle cx="48" cy="21" r="7" fill="#2a2622"/>
+          <circle cx="48" cy="21" r="3" fill="#fde9d3"/>
+          <!-- Cono de visión punteado hacia el cubo -->
+          <path d="M 56 18 L 280 180" stroke="#6f6a62" stroke-width="0.9" stroke-dasharray="3 3" fill="none"/>
+          <path d="M 56 24 L 280 220" stroke="#6f6a62" stroke-width="0.9" stroke-dasharray="3 3" fill="none"/>
+        </g>
+
+        <!-- Luz tipo sol (arriba a la derecha) -->
+        <g transform="translate(495, 95)">
+          <circle cx="0" cy="0" r="15" fill="#fde9d3" stroke="#c8580d" stroke-width="1.6"/>
+          <g stroke="#c8580d" stroke-width="1.6" stroke-linecap="round">
+            <line x1="0" y1="-23" x2="0" y2="-32"/>
+            <line x1="23" y1="0" x2="32" y2="0"/>
+            <line x1="0" y1="23" x2="0" y2="32"/>
+            <line x1="-23" y1="0" x2="-32" y2="0"/>
+            <line x1="16" y1="-16" x2="22" y2="-22"/>
+            <line x1="16" y1="16" x2="22" y2="22"/>
+            <line x1="-16" y1="16" x2="-22" y2="22"/>
+            <line x1="-16" y1="-16" x2="-22" y2="-22"/>
+          </g>
+        </g>
+
+        <!-- Etiquetas -->
+        <g font-family="Inter, sans-serif" font-size="13" fill="#2a2622" font-weight="600">
+          <text x="325" y="320" text-anchor="middle">El cubo</text>
+          <text x="100" y="170" text-anchor="middle">La cámara</text>
+          <text x="495" y="160" text-anchor="middle">La luz</text>
+        </g>
+
+        <!-- Líneas guía sutiles desde etiquetas a objetos -->
+        <g stroke="#c8580d" stroke-width="0.7" fill="none" opacity="0.5">
+          <line x1="325" y1="305" x2="325" y2="278"/>
+          <line x1="100" y1="155" x2="100" y2="148"/>
+          <line x1="495" y1="145" x2="495" y2="135"/>
+        </g>
+      </svg>
+      <figcaption>Lo único que importa al abrir Blender por primera vez: tres objetos flotando en el centro.</figcaption>
+    </figure>
+
+    <p>La maraña de paneles que rodea esos tres objetos es la <em>interfaz</em>. La vemos a fondo en la siguiente píldora. Aquí, solo el centro.</p>
+
+    <h2>Los tres objetos de la escena por defecto</h2>
+    <p>Blender no te abre con la pantalla en blanco. Te abre con una <strong>escena por defecto</strong> que ya tiene un cubo, una cámara y una luz. No es decoración: son los tres ingredientes mínimos de cualquier escena 3D. Si tienes los tres, ya tienes algo que se puede ver. Si te falta uno, no se puede.</p>
+
+    <h3>El cubo</h3>
+    <p>El cubo es un saludo. Está ahí para que no abras un programa con la pantalla vacía y te entren las dudas. Es como cuando entras a un bar y antes de pedir te ponen unas aceitunas: no las has pedido, pero te dicen "siéntate, tranquilo".</p>
+
+    <p>Mucha gente lo borra nada más abrir el programa para empezar de cero. Otros lo dejan ahí y construyen encima. Las dos cosas son válidas.</p>
+
+    <h3>La cámara</h3>
+    <p>La cámara es <strong>el ojo desde el que se va a hacer la foto final</strong>. Lo que la cámara <em>ve</em> es exactamente lo que va a salir cuando renderices (es decir, cuando le digas a Blender "calcula la imagen final"). Lo que queda fuera de su encuadre, no existe en la foto.</p>
+
+    <p class="note-inline"><strong>Cámaras y render</strong> los vemos a fondo en la píldora 8. De momento basta con saber que ese trastecito triangular es la cámara.</p>
+
+    <h3>La luz</h3>
+    <p>La luz hace lo mismo que en el mundo real: sin ella, todo es negro. Por eso Blender ya te deja una puesta de regalo. Es el motivo de que veas el cubo iluminado en lugar de un cuadrado oscuro.</p>
+
+    <p class="note-inline"><strong>Tipos de luz</strong> y cómo cambian la escena los vemos en la píldora 7. Aquí solo te interesa saber que está y para qué sirve.</p>
+
+    <h2>Guardar tu trabajo</h2>
+    <p>Blender mete <strong>todo</strong> dentro de un único archivo con extensión <code>.blend</code>: los objetos, sus materiales, las luces, la cámara, la animación, los ajustes de render, todo. Es una caja única. Si copias ese archivo a otro ordenador con Blender, todo aparece igual.</p>
+
+    <p>Crea una carpeta para el curso (por ejemplo <code>blender-curso</code>) y guarda dentro con <code>Ctrl+S</code> (en Mac, <code>Cmd+S</code>). La primera vez te preguntará nombre y carpeta. La segunda y siguientes, ya sobreescribe sin preguntar.</p>
+
+    <h2>Antes de cerrar: el ratón importa</h2>
+    <p>Una advertencia práctica para que la siguiente píldora no sea un suplicio: en Blender vas a usar mucho la <strong>rueda del ratón</strong> y el <strong>botón central</strong> (la rueda pulsable cuenta como tercer botón). A poder ser, ratón con tres botones.</p>
+
+    <div class="recap">
+      <h3>Recap</h3>
+      <ul>
+        <li><strong>Blender</strong> es un programa 3D gratis, libre y todo-en-uno.</li>
+        <li>Al abrirlo aparecen tres cosas en el centro: <strong>cubo</strong>, <strong>cámara</strong> y <strong>luz</strong>. Son los ingredientes mínimos de una escena 3D.</li>
+        <li>Tu trabajo se guarda en un único archivo <strong><code>.blend</code></strong>.</li>
+      </ul>
+    </div>
+
+    <div class="practice">
+      <div class="label">Práctica · 5 min</div>
+      <h3>Tu primera vez en Blender</h3>
+      <ol>
+        <li>Descarga e instala Blender desde <code>blender.org</code>.</li>
+        <li>Ábrelo. Identifica en el centro de la pantalla el cubo, la cámara y la luz.</li>
+        <li>Haz clic sobre el cubo (se pondrá un borde naranja: significa "seleccionado") y bórralo con la tecla <code>X</code> o <code>Supr</code>. Confirma.</li>
+        <li>Pulsa <code>Ctrl+Z</code> (Mac: <code>Cmd+Z</code>) para deshacer. El cubo vuelve.</li>
+        <li>Crea una carpeta llamada <code>blender-curso</code> en tu ordenador.</li>
+        <li>Pulsa <code>Ctrl+S</code> (Mac: <code>Cmd+S</code>). Guarda el archivo dentro de esa carpeta con el nombre <code>p01_primer-archivo.blend</code>.</li>
+      </ol>
+      <div class="check"><strong>Sabes que te ha salido si:</strong> tienes en tu carpeta del curso un archivo <code>.blend</code> que, al hacer doble clic, abre Blender con tu escena.</div>
+    </div>
+
+  </main>
+
+  <aside class="col-aside">
+    <div class="note">
+      <strong>Para qué se usa.</strong> Cortometrajes animados, videojuegos, ilustración 3D, diseño de producto, visualizaciones de arquitectura, efectos visuales. Que sea gratis no lo hace amateur: lo usan estudios profesionales.
+    </div>
+    <div class="note">
+      <strong>Código abierto.</strong> Que sea libre quiere decir que el código es público y nadie puede subirle el precio mañana, retirarlo ni meterte un anuncio dentro. Está mantenido por una fundación.
+    </div>
+    <div class="note">
+      <strong>LTS o última.</strong> En la web verás dos versiones: la "LTS" (más estable, soporte largo) y la última (con cosas nuevas). Para este curso, cualquiera vale. Si dudas, coge la LTS.
+    </div>
+    <div class="note">
+      <strong>macOS.</strong> Cuando abres el <code>.dmg</code> en Mac, hay que arrastrar el icono de Blender a la carpeta "Aplicaciones". Si no lo arrastras, no queda instalado.
+    </div>
+    <div class="note">
+      <strong>Linux.</strong> El paquete del repositorio del sistema suele ir desactualizado. Mejor descargar el <code>.tar.xz</code> de blender.org y descomprimir.
+    </div>
+    <div class="note">
+      <strong>Cubo de bienvenida.</strong> Es una convención del oficio. Hay quien lo borra siempre nada más abrir; hay quien construye sobre él. Las dos cosas son normales.
+    </div>
+    <div class="note">
+      <strong>El archivo <code>.blend1</code></strong> que aparece sin pedirlo en tu carpeta es la copia de seguridad automática del archivo anterior. Es normal, no la borres.
+    </div>
+    <div class="note">
+      <strong>Sin ratón de tres botones.</strong> En <code>Edit → Preferences → Input</code>, activa <em>Emulate 3 Button Mouse</em> y <em>Emulate Numpad</em>. Funciona, pero un ratón de verdad es mucho más cómodo.
+    </div>
+  </aside>
+
+  <nav class="foot-nav">
+    <span></span>
+    <a href="../indice.html" class="home">Índice del curso</a>
+    <a href="../pildora-02_la-interfaz-por-dentro/index.html" class="next">P02 · La interfaz por dentro</a>
+  </nav>
+
+</div>
+
+<script>
+window.addEventListener('scroll', function() {
+  var h = document.documentElement;
+  var b = document.body;
+  var st = 'scrollTop';
+  var sh = 'scrollHeight';
+  var pct = (h[st]||b[st]) / ((h[sh]||b[sh]) - h.clientHeight) * 100;
+  document.getElementById('progress').style.width = pct + '%';
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Evaluación final · Curso Blender</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="progress" id="progress"></div>
+
+<div class="topbar">
+  <a href="indice.html">← Curso Blender</a>
+</div>
+
+<div class="container">
+
+  <header class="title">
+    <div class="meta">Evaluación final · <span class="clock">⏱ 15 min</span></div>
+    <h1>Evaluación: ¿lo has pillado?</h1>
+    <p class="objetivo">Doce preguntas para comprobar comprensión, no para aprobar nada. Piensa tu respuesta antes de abrir la solución, sin hacer trampa. Si fallas alguna, vuelve a la píldora correspondiente.</p>
+  </header>
+
+  <main class="col-main">
+
+    <div class="quiz-q">
+      <div class="qnum">Pregunta 1 · P01</div>
+      <div class="qtext">Al abrir Blender por primera vez, ¿qué tres objetos aparecen en el centro de la escena y para qué sirven?</div>
+      <details>
+        <summary>Ver respuesta</summary>
+        <div class="answer">
+          <strong>Cubo, cámara y luz.</strong> El cubo es solo un saludo, un objeto cualquiera para que la pantalla no esté vacía. La cámara es el ojo desde el que se hará la imagen final (lo que ella ve es lo que sale en el render). La luz es lo que evita que todo se vea negro. Cubo + cámara + luz son los tres ingredientes mínimos de cualquier escena 3D.
+        </div>
+      </details>
+    </div>
+
+    <div class="quiz-q">
+      <div class="qnum">Pregunta 2 · P02</div>
+      <div class="qtext">¿Cuáles son las cuatro zonas principales de la interfaz y cómo se llaman?</div>
+      <details>
+        <summary>Ver respuesta</summary>
+        <div class="answer">
+          <strong>Viewport</strong> (la encimera, donde haces el trabajo en 3D), <strong>Outliner</strong> (la lista de todos los objetos de la escena), <strong>panel de Propiedades</strong> (los mandos: render, materiales, modificadores...) y <strong>Timeline</strong> (la línea de tiempo, donde vive la animación). Las pestañas de arriba (<em>Layout</em>, <em>Modeling</em>, <em>Shading</em>...) son <em>Workspaces</em>: configuraciones de pantalla preparadas para una tarea.
+        </div>
+      </details>
+    </div>
+
+    <div class="quiz-q">
+      <div class="qnum">Pregunta 3 · P03</div>
+      <div class="qtext">¿Qué color tiene cada eje en Blender y qué representa cada uno en el espacio?</div>
+      <details>
+        <summary>Ver respuesta</summary>
+        <div class="answer">
+          <strong>X = rojo</strong> (anchura, de pared a pared). <strong>Y = verde</strong> (profundidad, de delante a atrás). <strong>Z = azul</strong> (altura, del suelo al techo). En Blender, Z es siempre arriba. Hay programas que usan Y como altura — si vienes de uno de ellos, te toca readaptar.
+        </div>
+      </details>
+    </div>
+
+    <div class="quiz-q">
+      <div class="qnum">Pregunta 4 · P03</div>
+      <div class="qtext">Te has perdido orbitando y no ves nada. ¿Qué dos teclas te devuelven al sitio?</div>
+      <details>
+        <summary>Ver respuesta</summary>
+        <div class="answer">
+          <strong><code>Home</code></strong> reencuadra <em>toda</em> la escena (todo lo que hay entra a la vista). <strong><code>.</code> del numpad</strong> (el punto) reencuadra <em>solo lo que tienes seleccionado</em>. La primera es la red de seguridad cuando te has alejado mucho; la segunda, para volver al objeto en el que estás trabajando.
+        </div>
+      </details>
+    </div>
+
+    <div class="quiz-q">
+      <div class="qnum">Pregunta 5 · P04</div>
+      <div class="qtext">Quieres mover un objeto exactamente 2 metros hacia arriba, sin desviarse. ¿Qué tecleas?</div>
+      <details>
+        <summary>Ver respuesta</summary>
+        <div class="answer">
+          <strong><code>G → Z → 2 → Enter</code></strong>. <code>G</code> activa el modo mover, <code>Z</code> restringe el movimiento al eje Z (altura), <code>2</code> escribe la distancia, <code>Enter</code> confirma. La misma estructura vale para <code>R</code> (rotar) y <code>S</code> (escalar): tecla, eje opcional, número, Enter.
+        </div>
+      </details>
+    </div>
+
+    <div class="quiz-q">
+      <div class="qnum">Pregunta 6 · P05</div>
+      <div class="qtext">¿Cuál es la diferencia entre <em>Object Mode</em> y <em>Edit Mode</em>, y con qué tecla se alterna entre los dos?</div>
+      <details>
+        <summary>Ver respuesta</summary>
+        <div class="answer">
+          En <strong>Object Mode</strong> trabajas con los objetos como bloques cerrados: los mueves, rotas, escalas, los añades o borras. En <strong>Edit Mode</strong> entras "dentro" del objeto y manipulas su forma trabajando con vértices, aristas y caras. Se alterna con <strong><code>Tab</code></strong>. Es el atajo más usado de la sesión cuando estás modelando.
+        </div>
+      </details>
+    </div>
+
+    <div class="quiz-q">
+      <div class="qnum">Pregunta 7 · P05</div>
+      <div class="qtext">Tienes una cara seleccionada y quieres "tirar" de ella para crear nueva geometría hacia afuera. ¿Qué tecla usas?</div>
+      <details>
+        <summary>Ver respuesta</summary>
+        <div class="answer">
+          <strong><code>E</code></strong>, de <em>Extrude</em>. Crea geometría nueva conectando la posición original de la cara con la nueva. Es la operación reina del modelado: con extrudes y cortes (loop cuts) se modela el 80% de las cosas básicas. Si quieres restringir el extrude a un eje, igual que con G/R/S: <code>E → Z</code>, etc.
+        </div>
+      </details>
+    </div>
+
+    <div class="quiz-q">
+      <div class="qnum">Pregunta 8 · P06</div>
+      <div class="qtext">¿Qué hace el ajuste <em>Roughness</em> en un material y qué pasa cuando vale 0 vs cuando vale 1?</div>
+      <details>
+        <summary>Ver respuesta</summary>
+        <div class="answer">
+          Roughness controla lo <strong>mate</strong> o <strong>brillante</strong> que es la superficie. Con <strong>Roughness 0</strong> el material es totalmente liso: la luz se refleja como en un espejo, con brillos nítidos (cristal pulido, pintura recién hecha). Con <strong>Roughness 1</strong> es totalmente rugoso: la luz se dispersa y queda mate, sin reflejos (tiza, fieltro). La mayoría de materiales reales están entre 0.2 y 0.8.
+        </div>
+      </details>
+    </div>
+
+    <div class="quiz-q">
+      <div class="qnum">Pregunta 9 · P07</div>
+      <div class="qtext">Quieres simular el sol entrando por una ventana grande. ¿Qué tipo de luz usas y por qué?</div>
+      <details>
+        <summary>Ver respuesta</summary>
+        <div class="answer">
+          Una luz <strong>Sun</strong>. Sus rayos vienen <em>paralelos</em> desde el infinito en una dirección, exactamente como hace el sol cuando da en un edificio. La <em>posición</em> de una Sun no importa (puedes ponerla donde quieras): solo importa su <em>rotación</em>, que define el ángulo de incidencia. Para luz interior difusa hubieras usado <strong>Area</strong> grande; para una bombilla puntual, <strong>Point</strong>; para un foco dirigido, <strong>Spot</strong>.
+        </div>
+      </details>
+    </div>
+
+    <div class="quiz-q">
+      <div class="qnum">Pregunta 10 · P08</div>
+      <div class="qtext">Has compuesto la vista que quieres en el viewport. ¿Cómo le dices a la cámara que se ponga exactamente en esa posición?</div>
+      <details>
+        <summary>Ver respuesta</summary>
+        <div class="answer">
+          <strong><code>Ctrl + Alt + Numpad 0</code></strong>. Con esa combinación, la cámara salta a la posición y orientación de tu vista actual. Es la forma rápida de encuadrar: tú compones a ojo y luego mandas la cámara al sitio. La alternativa lenta sería mover la cámara con <code>G</code> y <code>R</code> a mano hasta acertar.
+        </div>
+      </details>
+    </div>
+
+    <div class="quiz-q">
+      <div class="qnum">Pregunta 11 · P09</div>
+      <div class="qtext">¿Qué es un <em>keyframe</em> y qué tecla se usa para crearlo?</div>
+      <details>
+        <summary>Ver respuesta</summary>
+        <div class="answer">
+          Un <strong>keyframe</strong> es una marca que dice "en este frame, esta propiedad del objeto vale esto". Tú pones los puntos clave (inicio, fin, intermedios) y Blender calcula automáticamente todas las posiciones intermedias. Atajo: <strong><code>I</code></strong>. Te abre un menú para elegir qué quieres guardar: Location, Rotation, Scale, o todo a la vez. Con <em>Auto Keyframe</em> activado (botón círculo rojo en el timeline), no hace falta pulsar I: cualquier cambio que hagas crea keyframe automáticamente.
+        </div>
+      </details>
+    </div>
+
+    <div class="quiz-q">
+      <div class="qnum">Pregunta 12 · P10</div>
+      <div class="qtext">Diferencia entre <code>F12</code> y <code>Ctrl + F12</code>.</div>
+      <details>
+        <summary>Ver respuesta</summary>
+        <div class="answer">
+          <strong><code>F12</code></strong> renderiza una <em>imagen fija</em>: solo el frame actual del timeline. Útil para una foto. <strong><code>Ctrl + F12</code></strong> renderiza una <em>animación</em>: cada frame entre Start y End del timeline, y los pega en un archivo de vídeo (si tienes el formato de salida configurado como FFmpeg Video / MP4). Tarda mucho más, pero te entrega el vídeo entero.
+        </div>
+      </details>
+    </div>
+
+    <div class="recap" style="margin-top: 60px;">
+      <h3>Si has fallado alguna</h3>
+      <ul>
+        <li>Preguntas 1-4 → revisa <strong>P01-P03</strong> (orientación e interfaz).</li>
+        <li>Pregunta 5 → revisa <strong>P04</strong> (G, R, S).</li>
+        <li>Preguntas 6-7 → revisa <strong>P05</strong> (modo edición).</li>
+        <li>Pregunta 8 → revisa <strong>P06</strong> (materiales).</li>
+        <li>Pregunta 9 → revisa <strong>P07</strong> (luces).</li>
+        <li>Pregunta 10 → revisa <strong>P08</strong> (cámara y render).</li>
+        <li>Pregunta 11 → revisa <strong>P09</strong> (animación).</li>
+        <li>Pregunta 12 → revisa <strong>P10</strong> (proyecto final).</li>
+      </ul>
+    </div>
+
+    <p style="margin-top: 40px; font-style: italic; color: var(--muted); text-align: center;">Si has llegado hasta aquí con el MP4 hecho, ya sabes hacer 3D animado con Blender. No es lo mismo que ser experto, pero sí es lo mismo que tener los cimientos.</p>
+
+  </main>
+
+  <aside class="col-aside">
+    <div class="note">
+      <strong>Cómo usar esta evaluación.</strong> Léela en orden. Para cada pregunta, intenta responder mentalmente o por escrito antes de abrir la solución. Si abres directamente, te suena, pero no te entrenas.
+    </div>
+    <div class="note">
+      <strong>No es un examen.</strong> Fallar es información, no fracaso. Cada fallo te dice qué píldora vale la pena releer.
+    </div>
+    <div class="note">
+      <strong>Bonus de aplicación.</strong> Si quieres comprobar de verdad: vuelve a hacer el proyecto final desde cero <em>sin abrir las píldoras</em>. Si te atascas en algún paso, esa es la zona a reforzar.
+    </div>
+  </aside>
+
+  <nav class="foot-nav">
+    <a href="pildora-10_proyecto-final/index.html" class="prev">P10 · Proyecto final</a>
+    <a href="indice.html" class="home">Volver al índice</a>
+    <span></span>
+  </nav>
+
+</div>
+
+<script>
+window.addEventListener('scroll', function() {
+  var h = document.documentElement, b = document.body;
+  var pct = (h.scrollTop || b.scrollTop) / ((h.scrollHeight || b.scrollHeight) - h.clientHeight) * 100;
+  document.getElementById('progress').style.width = pct + '%';
+});
+</script>
+
+</body>
+</html>

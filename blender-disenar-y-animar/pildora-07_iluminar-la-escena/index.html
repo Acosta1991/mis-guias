@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P07 — Iluminar la escena · Curso Blender</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<div class="progress" id="progress"></div>
+
+<div class="topbar">
+  <a href="../indice.html">← Curso Blender</a>
+</div>
+
+<div class="container">
+
+  <header class="title">
+    <div class="meta">Píldora 07 · <span class="clock">⏱ 10 min</span></div>
+    <h1>Iluminar la escena</h1>
+    <p class="objetivo">Al acabar conocerás los cuatro tipos de luz principales y sabrás colocar al menos dos en la escena para que se vea bonita.</p>
+  </header>
+
+  <main class="col-main">
+
+    <h2>Por qué la luz lo cambia todo</h2>
+    <p>Has puesto a la mesa color madera, a la pelota color rojo, y aún así la escena se ve plana, fría, "con luz de oficina". Eso pasa porque la única luz que tienes es la <strong>Point</strong> que vino por defecto, mal colocada y débil. La forma de los objetos no se ve hasta que la luz no la dibuja.</p>
+
+    <p>Piensa en cualquier sitio bonito: un restaurante con velas, una habitación al amanecer con la luz entrando de lado, un escenario con focos. Lo que les hace bonitos no es la decoración, es <em>cómo está iluminado</em>. En 3D igual.</p>
+
+    <h2>Los cuatro tipos de luz</h2>
+    <p>Blender tiene cuatro tipos principales de luz. Cada uno se comporta como un tipo de iluminación que conoces del mundo real:</p>
+
+    <figure>
+      <svg viewBox="0 0 620 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Cuatro tipos de luz: Point, Sun, Spot, Area">
+        <!-- Point -->
+        <g>
+          <rect x="20" y="20" width="140" height="240" fill="#fbf8f1" stroke="#d8d2c2" stroke-width="1"/>
+          <text x="90" y="40" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#c8580d">Point</text>
+          <text x="90" y="55" text-anchor="middle" font-family="Iowan Old Style, Georgia, serif" font-size="10" font-style="italic" fill="#6f6a62">bombilla colgada</text>
+          <!-- bombilla -->
+          <circle cx="90" cy="100" r="8" fill="#fde9d3" stroke="#c8580d" stroke-width="1.4"/>
+          <!-- rayos en todas direcciones -->
+          <g stroke="#c8580d" stroke-width="1" opacity="0.7">
+            <line x1="90" y1="100" x2="60" y2="160"/>
+            <line x1="90" y1="100" x2="120" y2="160"/>
+            <line x1="90" y1="100" x2="50" y2="130"/>
+            <line x1="90" y1="100" x2="130" y2="130"/>
+            <line x1="90" y1="100" x2="40" y2="100"/>
+            <line x1="90" y1="100" x2="140" y2="100"/>
+            <line x1="90" y1="100" x2="50" y2="80"/>
+            <line x1="90" y1="100" x2="130" y2="80"/>
+            <line x1="90" y1="100" x2="90" y2="170"/>
+          </g>
+          <!-- objeto -->
+          <rect x="65" y="220" width="50" height="20" fill="#e8a76e" stroke="#c8580d" stroke-width="1"/>
+          <ellipse cx="90" cy="248" rx="35" ry="6" fill="#2a2622" opacity="0.25"/>
+        </g>
+
+        <!-- Sun -->
+        <g>
+          <rect x="170" y="20" width="140" height="240" fill="#fbf8f1" stroke="#d8d2c2" stroke-width="1"/>
+          <text x="240" y="40" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#c8580d">Sun</text>
+          <text x="240" y="55" text-anchor="middle" font-family="Iowan Old Style, Georgia, serif" font-size="10" font-style="italic" fill="#6f6a62">sol por la ventana</text>
+          <!-- sol arriba -->
+          <circle cx="240" cy="80" r="10" fill="#fde9d3" stroke="#c8580d" stroke-width="1.4"/>
+          <g stroke="#c8580d" stroke-width="1" stroke-linecap="round">
+            <line x1="240" y1="65" x2="240" y2="58"/>
+            <line x1="225" y1="80" x2="218" y2="80"/>
+            <line x1="255" y1="80" x2="262" y2="80"/>
+            <line x1="229" y1="69" x2="224" y2="64"/>
+            <line x1="251" y1="69" x2="256" y2="64"/>
+          </g>
+          <!-- rayos paralelos -->
+          <g stroke="#c8580d" stroke-width="1" opacity="0.6">
+            <line x1="195" y1="105" x2="220" y2="195" stroke-dasharray="3 3"/>
+            <line x1="220" y1="105" x2="245" y2="195" stroke-dasharray="3 3"/>
+            <line x1="245" y1="105" x2="270" y2="195" stroke-dasharray="3 3"/>
+            <line x1="270" y1="105" x2="295" y2="195" stroke-dasharray="3 3"/>
+          </g>
+          <!-- objeto -->
+          <rect x="215" y="220" width="50" height="20" fill="#e8a76e" stroke="#c8580d" stroke-width="1"/>
+          <ellipse cx="245" cy="248" rx="40" ry="5" fill="#2a2622" opacity="0.3"/>
+        </g>
+
+        <!-- Spot -->
+        <g>
+          <rect x="320" y="20" width="140" height="240" fill="#fbf8f1" stroke="#d8d2c2" stroke-width="1"/>
+          <text x="390" y="40" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#c8580d">Spot</text>
+          <text x="390" y="55" text-anchor="middle" font-family="Iowan Old Style, Georgia, serif" font-size="10" font-style="italic" fill="#6f6a62">foco de teatro</text>
+          <!-- foco arriba -->
+          <path d="M 380 75 L 400 75 L 405 88 L 375 88 Z" fill="#2a2622"/>
+          <!-- cono de luz -->
+          <path d="M 378 88 L 350 220 L 430 220 L 402 88 Z" fill="#fde9d3" opacity="0.55" stroke="#c8580d" stroke-width="1" stroke-dasharray="3 3"/>
+          <!-- objeto -->
+          <rect x="365" y="220" width="50" height="20" fill="#e8a76e" stroke="#c8580d" stroke-width="1"/>
+          <ellipse cx="390" cy="245" rx="32" ry="5" fill="#2a2622" opacity="0.4"/>
+        </g>
+
+        <!-- Area -->
+        <g>
+          <rect x="470" y="20" width="140" height="240" fill="#fbf8f1" stroke="#d8d2c2" stroke-width="1"/>
+          <text x="540" y="40" text-anchor="middle" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#c8580d">Area</text>
+          <text x="540" y="55" text-anchor="middle" font-family="Iowan Old Style, Georgia, serif" font-size="10" font-style="italic" fill="#6f6a62">panel / ventana</text>
+          <!-- panel arriba -->
+          <rect x="500" y="80" width="80" height="14" fill="#fde9d3" stroke="#c8580d" stroke-width="1.4"/>
+          <!-- luz difusa cayendo -->
+          <path d="M 500 94 L 470 220 L 610 220 L 580 94 Z" fill="#fde9d3" opacity="0.4"/>
+          <g stroke="#c8580d" stroke-width="0.8" opacity="0.5">
+            <line x1="510" y1="100" x2="495" y2="200" stroke-dasharray="2 4"/>
+            <line x1="530" y1="100" x2="525" y2="200" stroke-dasharray="2 4"/>
+            <line x1="550" y1="100" x2="555" y2="200" stroke-dasharray="2 4"/>
+            <line x1="570" y1="100" x2="585" y2="200" stroke-dasharray="2 4"/>
+          </g>
+          <!-- objeto -->
+          <rect x="515" y="220" width="50" height="20" fill="#e8a76e" stroke="#c8580d" stroke-width="1"/>
+          <ellipse cx="540" cy="248" rx="38" ry="6" fill="#2a2622" opacity="0.2"/>
+        </g>
+      </svg>
+      <figcaption>Cuatro tipos de luz, cuatro analogías cotidianas. La sombra debajo de cada objeto te dice cómo se comporta cada una.</figcaption>
+    </figure>
+
+    <h3>Point: la bombilla colgada</h3>
+    <p>Una <strong>luz puntual</strong> en mitad del aire que reparte luz en <em>todas direcciones</em>. Es la bombilla del techo de toda la vida. Es la que viene por defecto en Blender. Tiene una caída con la distancia: cuanto más lejos está un objeto, menos luz le llega.</p>
+
+    <h3>Sun: el sol</h3>
+    <p>Una luz que viene desde el infinito y cae con <strong>rayos paralelos</strong>, como el sol cuando da en un edificio. Lo que importa de una luz Sun no es <em>dónde</em> está colocada (no afecta), sino <em>en qué dirección apunta</em>. La intensidad llega igual a todos los objetos, estén cerca o lejos.</p>
+
+    <p>Sirve para escenas de exterior y, en interiores, para simular la luz que entra por una ventana grande.</p>
+
+    <h3>Spot: el foco</h3>
+    <p>Como un foco de teatro o el faro de un coche: ilumina solo dentro de un <strong>cono dirigido</strong>. Lo que queda fuera del cono está a oscuras (al menos respecto a esta luz). Es la más teatral, ideal para destacar un objeto en concreto.</p>
+
+    <h3>Area: el panel difuso</h3>
+    <p>Una luz <strong>plana</strong> que ilumina desde una superficie en lugar de desde un punto. Es la luz de una ventana grande con cortinas finas, o de un panel de fotografía. Da una iluminación <em>suave</em>: las sombras quedan difusas, no tan duras.</p>
+
+    <p>Es probablemente la más útil de las cuatro para escenas de interior: queda bonita casi sin esfuerzo.</p>
+
+    <h2>Cómo se añade y se mueve una luz</h2>
+    <p>Igual que cualquier otro objeto: <code>Shift+A</code> → <code>Light</code> → elige el tipo. Aparece en la posición del cursor 3D (la cruz pequeña de la escena). Se mueve, rota y duplica con los atajos que ya conoces (<code>G</code>, <code>R</code>, <code>Shift+D</code>).</p>
+
+    <p>En la rotación importa especialmente con la <strong>Sun</strong> y la <strong>Spot</strong>: para una Sun, la rotación es la dirección desde la que viene el sol. Para una Spot, hacia dónde apunta el foco.</p>
+
+    <h2>Intensidad (Power) y color</h2>
+    <p>Selecciona la luz. En el panel de Propiedades hay un icono con forma de <strong>bombilla</strong>: ahí están sus ajustes. Los dos que importan hoy:</p>
+
+    <ul>
+      <li><strong>Power</strong> &mdash; la intensidad. Por defecto las luces están bastante flojas. Subirla a 100, 500 o 1000 watios es normal según el tipo y el tamaño de la escena. La Sun se mide diferente y va de 1 a 10 unidades, normalmente.</li>
+      <li><strong>Color</strong> &mdash; el tono de la luz. Una luz blanca pura es neutra; una ligeramente cálida (amarillento) recuerda a bombilla doméstica; una azulada da sensación de luna o ambiente frío.</li>
+    </ul>
+
+    <p class="note-inline"><strong>Trampa que se hace siempre:</strong> escena <em>fría</em> (luz azulada) cruzada con una <em>cálida</em> (luz anaranjada) desde otro ángulo. Da contraste de color y queda más interesante que una sola luz blanca. Probarlo cuando tengas la práctica hecha.</p>
+
+    <h2>El fondo: el "World"</h2>
+    <p>Antes de cerrar, una mención. Aparte de las luces que pones tú, en Blender hay una luz "<em>de fondo</em>" que afecta a toda la escena: es el <strong>World</strong>. Es el cielo virtual que envuelve todo. Por defecto es un gris uniforme suave, que rellena las sombras como si la habitación tuviera paredes claras.</p>
+
+    <p>Para esta píldora basta con saber que está. Lo encuentras en el panel de Propiedades, en el icono de un <strong>globo terráqueo</strong>. Puedes subirlo, bajarlo o cambiarle el color. Subirlo demasiado <em>aplana</em> la escena (todo se ilumina por igual y se pierden las sombras).</p>
+
+    <div class="recap">
+      <h3>Recap</h3>
+      <ul>
+        <li>Cuatro tipos de luz: <strong>Point</strong> (bombilla), <strong>Sun</strong> (sol), <strong>Spot</strong> (foco), <strong>Area</strong> (panel difuso).</li>
+        <li>Para Sun, lo que importa es la <em>rotación</em>; para Spot, la <em>dirección</em>; para Point y Area, la <em>posición</em>.</li>
+        <li>Dos ajustes clave: <strong>Power</strong> (intensidad) y <strong>Color</strong>.</li>
+        <li>El <strong>World</strong> es la luz de fondo que afecta a toda la escena.</li>
+      </ul>
+    </div>
+
+    <div class="practice">
+      <div class="label">Práctica · 6 min</div>
+      <h3>Iluminar la mesa con la pelota</h3>
+      <ol>
+        <li>Abre <code>p06_mesa-y-pelota.blend</code>.</li>
+        <li>Selecciona la luz Point por defecto y bórrala (<code>X</code>).</li>
+        <li>Añade una luz Area: <code>Shift+A</code> → <code>Light</code> → <code>Area</code>.</li>
+        <li>Súbela encima de la mesa: <code>G</code> → <code>Z</code> → <code>5</code> → <code>Enter</code>.</li>
+        <li>Selecciónala. Abre el icono de <strong>bombilla</strong> en Propiedades.</li>
+        <li>Cambia <em>Shape</em> a "Square" y <em>Size</em> a <code>3 m</code>. Y sube el <em>Power</em> a <code>500 W</code>. (Verás la mesa iluminada desde arriba con sombras suaves.)</li>
+        <li>Añade una segunda luz, esta vez Sun: <code>Shift+A</code> → <code>Light</code> → <code>Sun</code>.</li>
+        <li>Rótala para que entre desde un lado: <code>R</code> → <code>X</code> → <code>50</code> → <code>Enter</code>, y luego <code>R</code> → <code>Z</code> → <code>30</code> → <code>Enter</code>.</li>
+        <li>Selecciónala y baja el <em>Strength</em> a <code>1.5</code>. Cambia ligeramente el color hacia un amarillento cálido.</li>
+        <li>En la esquina superior derecha del viewport, prueba el cuarto modo (<em>Rendered</em>) para ver el resultado real.</li>
+        <li>Guarda como <code>p07_iluminada.blend</code>.</li>
+      </ol>
+      <div class="check"><strong>Sabes que te ha salido si:</strong> ves la mesa y la pelota iluminadas con sombras suaves debajo y un toque de luz lateral cálida. Si ves todo plano y aburrido, sube el Power de la Area; si ves manchas oscuras, baja el World.</div>
+    </div>
+
+  </main>
+
+  <aside class="col-aside">
+    <div class="note">
+      <strong>Cuántas luces.</strong> Para escenas pequeñas, dos o tres. Una "principal" más fuerte que define la dirección de las sombras, y una o dos de "relleno" que aclaran la zona oscura sin matar el contraste.
+    </div>
+    <div class="note">
+      <strong>Esquema de tres puntos.</strong> Convención clásica del cine: una luz principal (key), una de relleno suave desde el lado opuesto (fill), y una desde atrás que separa al objeto del fondo (rim). Funciona casi siempre.
+    </div>
+    <div class="note">
+      <strong>Caída con la distancia.</strong> Las luces Point y Spot pierden intensidad cuanto más lejos. Si pones una Point pequeña en una escena grande, llega muy poca luz al fondo. Sube el Power o usa Area.
+    </div>
+    <div class="note">
+      <strong>Sun no se mueve.</strong> La posición de una luz Sun es irrelevante: sus rayos vienen desde el infinito en la dirección que marca su rotación. Puedes "guardarla" en una esquina lejos del viewport para que no estorbe.
+    </div>
+    <div class="note">
+      <strong>El cono del Spot.</strong> En las propiedades de un Spot tienes <em>Spot Size</em> (qué tan abierto es el cono) y <em>Blend</em> (qué tan suave es el borde). Spot Size 30° + Blend 0.3 da un foco bonito.
+    </div>
+    <div class="note">
+      <strong>Vista Rendered.</strong> El cuarto modo de visualización del viewport (la cuarta bolita). Calcula luces de verdad pero es lento. Útil cuando quieres ver "casi" el resultado final sin lanzar render.
+    </div>
+    <div class="note">
+      <strong>Color cálido vs frío.</strong> Cálidos (amarillos/naranjas) dan acogedor, doméstico, hora dorada. Fríos (azules) dan distante, lunar, hospitalario. Mezclar uno cálido y uno frío en ángulos opuestos es el truco más viejo del cine.
+    </div>
+  </aside>
+
+  <nav class="foot-nav">
+    <a href="../pildora-06_materiales/index.html" class="prev">P06 · Materiales</a>
+    <a href="../indice.html" class="home">Índice</a>
+    <a href="../pildora-08_camara-y-render/index.html" class="next">P08 · Cámara y render</a>
+  </nav>
+
+</div>
+
+<script>
+window.addEventListener('scroll', function() {
+  var h = document.documentElement, b = document.body;
+  var pct = (h.scrollTop || b.scrollTop) / ((h.scrollHeight || b.scrollHeight) - h.clientHeight) * 100;
+  document.getElementById('progress').style.width = pct + '%';
+});
+</script>
+
+</body>
+</html>

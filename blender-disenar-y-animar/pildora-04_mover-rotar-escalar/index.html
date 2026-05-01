@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P04 — Mover, rotar, escalar · Curso Blender</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<div class="progress" id="progress"></div>
+
+<div class="topbar">
+  <a href="../indice.html">← Curso Blender</a>
+</div>
+
+<div class="container">
+
+  <header class="title">
+    <div class="meta">Píldora 04 · <span class="clock">⏱ 10 min</span></div>
+    <h1>Mover, rotar, escalar objetos</h1>
+    <p class="objetivo">Al acabar sabrás manipular cualquier objeto del viewport con tres atajos clave (G, R, S) y restringir el movimiento a un solo eje.</p>
+  </header>
+
+  <main class="col-main">
+
+    <h2>Tres verbos para todo</h2>
+    <p>Cuando reorganizas el salón de tu casa solo haces tres cosas: <em>mueves</em> el sofá un metro a la izquierda, <em>giras</em> la mesa para que mire al sofá, y a veces dices "ese cuadro lo veo grande, lo cambio por otro más pequeño". Ahí están las tres operaciones básicas.</p>
+
+    <p>En Blender es exactamente igual. Cualquier cosa que quieras hacer con un objeto entero se reduce a <strong>moverlo</strong>, <strong>rotarlo</strong> o <strong>escalarlo</strong>. Y cada una tiene una tecla:</p>
+
+    <ul>
+      <li><code>G</code> &mdash; <strong>Grab</strong> (agarrar y mover).</li>
+      <li><code>R</code> &mdash; <strong>Rotate</strong> (rotar).</li>
+      <li><code>S</code> &mdash; <strong>Scale</strong> (escalar, hacer más grande o más pequeño).</li>
+    </ul>
+
+    <p>Aprende esas tres letras y ya manejas el 80% de la manipulación de objetos en Blender.</p>
+
+    <figure>
+      <svg viewBox="0 0 620 220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="G, R, S sobre un cubo">
+        <!-- 3 paneles -->
+        <!-- G: Mover -->
+        <g>
+          <rect x="20" y="20" width="180" height="180" fill="#fbf8f1" stroke="#d8d2c2" stroke-width="1"/>
+          <text x="110" y="42" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" font-weight="700" fill="#c8580d">G · Mover</text>
+
+          <!-- Cubo origen (semi-transparente) -->
+          <g opacity="0.35">
+            <path d="M 50 130 L 80 118 L 100 128 L 70 140 Z" fill="#fde9d3" stroke="#c8580d" stroke-width="1"/>
+            <path d="M 50 130 L 70 140 L 70 170 L 50 160 Z" fill="#f5cfa3" stroke="#c8580d" stroke-width="1"/>
+            <path d="M 70 140 L 100 128 L 100 158 L 70 170 Z" fill="#e8a76e" stroke="#c8580d" stroke-width="1"/>
+          </g>
+          <!-- Cubo destino -->
+          <g>
+            <path d="M 110 110 L 140 98 L 160 108 L 130 120 Z" fill="#fde9d3" stroke="#c8580d" stroke-width="1.4"/>
+            <path d="M 110 110 L 130 120 L 130 150 L 110 140 Z" fill="#f5cfa3" stroke="#c8580d" stroke-width="1.4"/>
+            <path d="M 130 120 L 160 108 L 160 138 L 130 150 Z" fill="#e8a76e" stroke="#c8580d" stroke-width="1.4"/>
+          </g>
+          <!-- Flecha de movimiento -->
+          <path d="M 75 145 Q 100 125 125 130" stroke="#c8580d" stroke-width="1.4" fill="none" stroke-dasharray="3 3"/>
+          <polygon points="125,130 117,124 119,134" fill="#c8580d"/>
+        </g>
+
+        <!-- R: Rotar -->
+        <g>
+          <rect x="220" y="20" width="180" height="180" fill="#fbf8f1" stroke="#d8d2c2" stroke-width="1"/>
+          <text x="310" y="42" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" font-weight="700" fill="#c8580d">R · Rotar</text>
+
+          <!-- Cubo rotado -->
+          <g transform="translate(310, 130) rotate(20)">
+            <path d="M -25 -10 L 5 -22 L 25 -12 L -5 0 Z" fill="#fde9d3" stroke="#c8580d" stroke-width="1.4"/>
+            <path d="M -25 -10 L -5 0 L -5 30 L -25 20 Z" fill="#f5cfa3" stroke="#c8580d" stroke-width="1.4"/>
+            <path d="M -5 0 L 25 -12 L 25 18 L -5 30 Z" fill="#e8a76e" stroke="#c8580d" stroke-width="1.4"/>
+          </g>
+          <!-- Flecha curva de rotación -->
+          <path d="M 270 90 A 50 50 0 0 1 350 90" stroke="#c8580d" stroke-width="1.4" fill="none" stroke-dasharray="3 3"/>
+          <polygon points="350,90 343,84 343,96" fill="#c8580d"/>
+        </g>
+
+        <!-- S: Escalar -->
+        <g>
+          <rect x="420" y="20" width="180" height="180" fill="#fbf8f1" stroke="#d8d2c2" stroke-width="1"/>
+          <text x="510" y="42" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" font-weight="700" fill="#c8580d">S · Escalar</text>
+
+          <!-- Cubo pequeño (origen) -->
+          <g opacity="0.35">
+            <path d="M 495 135 L 510 129 L 520 134 L 505 140 Z" fill="#fde9d3" stroke="#c8580d" stroke-width="1"/>
+            <path d="M 495 135 L 505 140 L 505 152 L 495 147 Z" fill="#f5cfa3" stroke="#c8580d" stroke-width="1"/>
+            <path d="M 505 140 L 520 134 L 520 146 L 505 152 Z" fill="#e8a76e" stroke="#c8580d" stroke-width="1"/>
+          </g>
+          <!-- Cubo grande -->
+          <g>
+            <path d="M 470 130 L 510 114 L 540 124 L 500 140 Z" fill="#fde9d3" stroke="#c8580d" stroke-width="1.4"/>
+            <path d="M 470 130 L 500 140 L 500 180 L 470 170 Z" fill="#f5cfa3" stroke="#c8580d" stroke-width="1.4"/>
+            <path d="M 500 140 L 540 124 L 540 164 L 500 180 Z" fill="#e8a76e" stroke="#c8580d" stroke-width="1.4"/>
+          </g>
+          <!-- Flechas de expansión -->
+          <g stroke="#c8580d" stroke-width="1.4" fill="none">
+            <line x1="465" y1="186" x2="455" y2="196"/>
+            <line x1="545" y1="120" x2="555" y2="110"/>
+            <polygon points="455,196 461,194 459,200" fill="#c8580d" stroke="none"/>
+            <polygon points="555,110 549,112 551,106" fill="#c8580d" stroke="none"/>
+          </g>
+        </g>
+      </svg>
+      <figcaption>Las tres transformaciones básicas. Todas usan el mismo flujo: tecla, mover el ratón, clic para confirmar.</figcaption>
+    </figure>
+
+    <h2>El flujo es siempre el mismo</h2>
+    <p>Las tres transformaciones se manejan exactamente igual. Una vez te aprendes una, te has aprendido las tres:</p>
+
+    <ol>
+      <li>Selecciona un objeto (clic sobre él, o clic en el outliner).</li>
+      <li>Pulsa la tecla: <code>G</code>, <code>R</code> o <code>S</code>.</li>
+      <li>Mueve el ratón. El objeto sigue al cursor (mover, rotar o cambiar tamaño en directo).</li>
+      <li><strong>Clic izquierdo para confirmar</strong>. <strong><code>Esc</code> o clic derecho para cancelar</strong> y dejarlo como estaba.</li>
+    </ol>
+
+    <p>No hay arrastre. No hay menús. Pulsas la tecla, mueves, clic. Cuando pillas el ritmo, manipular objetos en Blender es muy rápido.</p>
+
+    <h2>Restringir a un eje (lo más útil del día)</h2>
+    <p>Si pulsas <code>G</code> y mueves, el objeto se desplaza por todas partes a la vez. Eso casi nunca es lo que quieres. Lo que quieres es: "muévete a la derecha sin cambiar de altura". O: "súbete, sin moverte horizontalmente".</p>
+
+    <p>Para eso, después de la tecla de transformación, pulsa la letra del eje:</p>
+
+    <ul>
+      <li><code>G + X</code> &mdash; mover solo en el eje X (anchura).</li>
+      <li><code>G + Z</code> &mdash; mover solo en el eje Z (altura).</li>
+      <li><code>R + Z</code> &mdash; rotar solo alrededor del eje Z.</li>
+      <li><code>S + X</code> &mdash; escalar solo en X (estirarlo a lo ancho).</li>
+    </ul>
+
+    <p>Verás que aparece una línea de color (rojo, verde o azul, según el eje) que te recuerda en qué dirección estás restringido.</p>
+
+    <div class="callout">
+      <strong>Truco que vas a usar siempre:</strong> después de pulsar <code>G</code>, <code>R</code> o <code>S</code> y la letra del eje, puedes <em>escribir un número</em> con el teclado y darle a Enter. Ejemplo: <code>G</code> → <code>Z</code> → <code>2</code> → <code>Enter</code> mueve el objeto exactamente 2 metros hacia arriba. Para cuando necesitas precisión.
+    </div>
+
+    <h2>Seleccionar y deseleccionar</h2>
+    <p>Antes de transformar, hay que <strong>seleccionar</strong>. La selección en Blender funciona así:</p>
+
+    <ul>
+      <li><strong>Clic</strong> sobre un objeto: lo selecciona (y deselecciona los demás).</li>
+      <li><strong>Shift + clic</strong>: añade ese objeto a la selección actual (selección múltiple).</li>
+      <li>Tecla <code>A</code>: <strong>selecciona todo</strong>.</li>
+      <li><code>Alt + A</code>: <strong>deselecciona todo</strong>.</li>
+    </ul>
+
+    <p>El objeto seleccionado se ve con borde naranja brillante; los demás seleccionados a la vez (en selección múltiple) con borde naranja más suave. El último seleccionado es el "activo" y es el que sirve de referencia en algunas operaciones.</p>
+
+    <h2>Añadir y borrar objetos</h2>
+    <p>El cubo no es lo único que existe. Para meter más cosas en la escena: menú <code>Add → Mesh → ...</code> en la barra superior del viewport. Ahí tienes <em>cube</em>, <em>UV sphere</em> (esfera), <em>cylinder</em>, <em>plane</em> (un plano que sirve de suelo), <em>cone</em>, <em>torus</em> (un donut)...</p>
+
+    <p>Atajo más rápido: <code>Shift + A</code> abre ese mismo menú directamente.</p>
+
+    <p>Para <strong>borrar</strong> un objeto seleccionado: tecla <code>X</code> o <code>Supr</code>. Te pide confirmación.</p>
+
+    <h2>El punto naranja del objeto: su origen</h2>
+    <p>Cuando seleccionas un objeto, además del borde naranja, ves un <strong>puntito naranja</strong>. Ese punto es el <em>origen</em> del objeto: su "centro oficial". Es el punto desde el que se rota cuando le das <code>R</code>, y desde el que escala cuando le das <code>S</code>.</p>
+
+    <p>De momento basta con saber que existe. Si algún día rotas un objeto y se rota "raro", probablemente sea porque su origen está fuera de su centro visual. Se arregla, pero no nos hace falta hoy.</p>
+
+    <div class="recap">
+      <h3>Recap</h3>
+      <ul>
+        <li>Tres verbos: <strong><code>G</code></strong> mueve, <strong><code>R</code></strong> rota, <strong><code>S</code></strong> escala.</li>
+        <li>Restringir a un eje añadiendo la letra: <code>G+X</code>, <code>R+Z</code>, <code>S+Y</code>...</li>
+        <li>Selección: clic (uno), Shift+clic (varios), <code>A</code> (todos), <code>Alt+A</code> (ninguno).</li>
+        <li>Añadir objeto: <code>Shift+A</code>. Borrar: <code>X</code> o <code>Supr</code>.</li>
+        <li>El puntito naranja del objeto es su <strong>origen</strong>: desde ahí rota y escala.</li>
+      </ul>
+    </div>
+
+    <div class="practice">
+      <div class="label">Práctica · 5 min</div>
+      <h3>Componer una escena básica</h3>
+      <ol>
+        <li>Abre Blender. Selecciona el cubo y bórralo (<code>X</code>).</li>
+        <li>Añade un plano: <code>Shift+A</code> → <code>Mesh</code> → <code>Plane</code>. Esto es tu "suelo".</li>
+        <li>Escálalo a lo grande: <code>S</code> → <code>5</code> → <code>Enter</code>. Será tu suelo amplio.</li>
+        <li>Añade una esfera: <code>Shift+A</code> → <code>Mesh</code> → <code>UV Sphere</code>.</li>
+        <li>Súbela para que descanse sobre el suelo: <code>G</code> → <code>Z</code> → <code>1</code> → <code>Enter</code>.</li>
+        <li>Añade un cilindro: <code>Shift+A</code> → <code>Mesh</code> → <code>Cylinder</code>.</li>
+        <li>Muévelo al lado de la esfera: <code>G</code> → <code>X</code> → <code>2</code> → <code>Enter</code>. Y súbelo: <code>G</code> → <code>Z</code> → <code>1</code> → <code>Enter</code>.</li>
+        <li>Inclínalo: con el cilindro seleccionado, <code>R</code> → <code>Y</code> → <code>30</code> → <code>Enter</code> (lo gira 30 grados).</li>
+        <li>Adelgázalo: <code>S</code> → <code>X</code> → <code>0.5</code> → <code>Enter</code> (la mitad de ancho).</li>
+        <li>Guarda: <code>Ctrl+S</code> como <code>p04_escena-basica.blend</code>.</li>
+      </ol>
+      <div class="check"><strong>Sabes que te ha salido si:</strong> tienes un suelo plano grande, una esfera apoyada y un cilindro inclinado y delgado al lado, y todos están a la altura del suelo (no flotando ni atravesándolo).</div>
+    </div>
+
+  </main>
+
+  <aside class="col-aside">
+    <div class="note">
+      <strong>Por qué G y no M.</strong> En Blender, M está reservado para "mover de colección" (cambiar a qué carpeta del outliner pertenece el objeto). <em>Grab</em> es el verbo histórico para "agarrar y mover", de ahí la G.
+    </div>
+    <div class="note">
+      <strong>Mover en pantalla, no en mundo.</strong> Existe una variante: <code>G + X + X</code> (la X dos veces) restringe el movimiento al X <em>local</em> del objeto, no al X global de la escena. Muy útil cuando el objeto está rotado.
+    </div>
+    <div class="note">
+      <strong>Bloquear un eje al revés.</strong> <code>G + Shift + Z</code> mueve en X e Y libremente <em>excepto</em> en Z. Versión "todo menos esto". Útil para "muévete por el suelo, pero no subas".
+    </div>
+    <div class="note">
+      <strong>Snap a unidades.</strong> Mantén <code>Ctrl</code> pulsado mientras mueves o rotas: el objeto avanza de un metro en metro, o de cinco grados en cinco. Para colocaciones limpias.
+    </div>
+    <div class="note">
+      <strong>Duplicar.</strong> <code>Shift + D</code> duplica el objeto seleccionado y entra automáticamente en modo "mover", para que arrastres la copia donde la quieras.
+    </div>
+    <div class="note">
+      <strong>Origen mal puesto.</strong> Si rotas y se rota desde un sitio raro: <code>Object → Set Origin → Origin to Geometry</code> recoloca el origen en el centro real del objeto. Lo verás un día.
+    </div>
+    <div class="note">
+      <strong>Coordenadas exactas.</strong> En el panel <code>N</code> (a la derecha del viewport, se abre con la tecla <code>N</code>) verás las coordenadas X, Y, Z, la rotación y la escala del objeto seleccionado. Editables a mano.
+    </div>
+  </aside>
+
+  <nav class="foot-nav">
+    <a href="../pildora-03_moverte-en-3d/index.html" class="prev">P03 · Moverte en 3D</a>
+    <a href="../indice.html" class="home">Índice</a>
+    <a href="../pildora-05_modelado-basico/index.html" class="next">P05 · Modelado básico</a>
+  </nav>
+
+</div>
+
+<script>
+window.addEventListener('scroll', function() {
+  var h = document.documentElement, b = document.body;
+  var pct = (h.scrollTop || b.scrollTop) / ((h.scrollHeight || b.scrollHeight) - h.clientHeight) * 100;
+  document.getElementById('progress').style.width = pct + '%';
+});
+</script>
+
+</body>
+</html>

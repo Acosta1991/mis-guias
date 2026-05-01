@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P06 — Materiales · Curso Blender</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<div class="progress" id="progress"></div>
+
+<div class="topbar">
+  <a href="../indice.html">← Curso Blender</a>
+</div>
+
+<div class="container">
+
+  <header class="title">
+    <div class="meta">Píldora 06 · <span class="clock">⏱ 10 min</span></div>
+    <h1>Materiales: vestir los objetos</h1>
+    <p class="objetivo">Al acabar sabrás aplicar color y materiales básicos a varios objetos para que dejen de ser todos del mismo gris insípido.</p>
+  </header>
+
+  <main class="col-main">
+
+    <h2>Por qué tu mesa parece de plastilina</h2>
+    <p>Si abres el archivo de la P05 verás que tu mesa, técnicamente perfecta, parece de plastilina gris. Le falta <strong>aspecto</strong>: el color, el brillo, la sensación de qué está hecha. Esa información se la da el <em>material</em>.</p>
+
+    <p>Un material es la "ropa" del objeto. La forma del objeto no cambia, pero sí cambia qué se ve cuando la luz le da. Una camiseta de algodón blanco y otra de seda roja tienen la misma forma sobre el cuerpo, pero se ven muy distinto. Un material hace eso para tus objetos 3D.</p>
+
+    <h2>Encender el modo "vista con materiales"</h2>
+    <p>Antes de ponernos a tocar nada, hay que decirle al viewport que muestre los materiales. Por defecto está en modo <em>Solid</em> (todo gris) para que vaya rápido.</p>
+
+    <p>En la esquina superior derecha del viewport hay cuatro bolitas pequeñas. Son los modos de visualización. Clic en la <strong>tercera</strong> (la que parece una esfera con un toque de brillo): se llama <strong>Material Preview</strong>. A partir de ahora vas a ver los colores y materiales en tiempo real, según los aplicas.</p>
+
+    <h2>Crear un material</h2>
+    <p>El sitio para crear materiales es el panel de Propiedades (zona derecha de la pantalla). Entre los iconos verticales hay uno con forma de <strong>esfera roja</strong>: ese es <em>Material Properties</em>. Clic ahí.</p>
+
+    <p>Con un objeto seleccionado, verás un botón "<code>+ New</code>". Púlsalo. Acabas de crear el primer material del objeto. Aparecen un montón de ajustes; vamos a ocuparnos solo de tres.</p>
+
+    <h2>Los tres ajustes que importan hoy</h2>
+
+    <h3>Base Color: el color base</h3>
+    <p>Lo más obvio. Es el color "puro" del objeto, antes de que la luz haga sus juegos. Haz clic en el rectángulo de color al lado de "Base Color" y elige uno. Si lo cambias, el objeto cambia inmediatamente en el viewport.</p>
+
+    <p>Para una mesa de madera: un marrón medio, ni demasiado claro ni demasiado oscuro. Para una pelota: el color que quieras.</p>
+
+    <h3>Roughness: lo mate o brillante que es</h3>
+    <p>Roughness significa "rugosidad" en inglés. Va de <strong>0 a 1</strong>:</p>
+
+    <ul>
+      <li><strong>0</strong> = totalmente liso. La luz se refleja como en un espejo: reflejos nítidos, brillos marcados. Piensa en <em>cristal pulido</em>.</li>
+      <li><strong>1</strong> = totalmente rugoso. La luz se dispersa por todas partes: aspecto mate, sin reflejos. Piensa en <em>tiza</em> o <em>fieltro</em>.</li>
+    </ul>
+
+    <p>La mayoría de cosas están en algún punto intermedio. Una mesa de madera barnizada: alrededor de 0.4. Una madera sin barnizar: 0.8. Una pelota de plástico brillante: 0.2.</p>
+
+    <h3>Metallic: si es metal o no</h3>
+    <p>Metallic también va de 0 a 1, pero en la práctica solo usas dos valores:</p>
+
+    <ul>
+      <li><strong>0</strong> = no es metal. Madera, plástico, tela, piel, cerámica. La inmensa mayoría de cosas.</li>
+      <li><strong>1</strong> = es metal. Cobre, aluminio, oro, plata. Cambia mucho cómo se comporta la luz: el "color" del metal es en realidad cómo refleja, no su pintura.</li>
+    </ul>
+
+    <p>Si dudas, déjalo en 0. La diferencia se nota mucho más con luces puestas (P07).</p>
+
+    <figure>
+      <svg viewBox="0 0 620 320" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Comparación de materiales según roughness y metallic">
+        <!-- Tres filas: roughness alta, media, baja -->
+        <!-- Etiquetas eje Y -->
+        <text x="20" y="100" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#c8580d">Mate</text>
+        <text x="20" y="115" font-family="Inter, sans-serif" font-size="9" fill="#6f6a62">Rough = 0.9</text>
+
+        <text x="20" y="190" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#c8580d">Medio</text>
+        <text x="20" y="205" font-family="Inter, sans-serif" font-size="9" fill="#6f6a62">Rough = 0.4</text>
+
+        <text x="20" y="280" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#c8580d">Brillante</text>
+        <text x="20" y="295" font-family="Inter, sans-serif" font-size="9" fill="#6f6a62">Rough = 0.05</text>
+
+        <!-- Etiquetas eje X -->
+        <text x="160" y="40" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#c8580d">Marrón · Metal 0</text>
+        <text x="320" y="40" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#c8580d">Rojo · Metal 0</text>
+        <text x="480" y="40" text-anchor="middle" font-family="Inter, sans-serif" font-size="11" font-weight="700" fill="#c8580d">Dorado · Metal 1</text>
+
+        <!-- Fila 1: Roughness alta (mate) -->
+        <g>
+          <!-- esfera marrón mate -->
+          <defs>
+            <radialGradient id="g1" cx="35%" cy="35%">
+              <stop offset="0%" stop-color="#a06a3a"/>
+              <stop offset="100%" stop-color="#5c3915"/>
+            </radialGradient>
+          </defs>
+          <circle cx="160" cy="105" r="35" fill="url(#g1)"/>
+
+          <defs>
+            <radialGradient id="g2" cx="35%" cy="35%">
+              <stop offset="0%" stop-color="#c84545"/>
+              <stop offset="100%" stop-color="#6e1a1a"/>
+            </radialGradient>
+          </defs>
+          <circle cx="320" cy="105" r="35" fill="url(#g2)"/>
+
+          <defs>
+            <radialGradient id="g3" cx="35%" cy="35%">
+              <stop offset="0%" stop-color="#c8a05c"/>
+              <stop offset="100%" stop-color="#6e5018"/>
+            </radialGradient>
+          </defs>
+          <circle cx="480" cy="105" r="35" fill="url(#g3)"/>
+        </g>
+
+        <!-- Fila 2: Roughness media -->
+        <g>
+          <defs>
+            <radialGradient id="g4" cx="32%" cy="32%">
+              <stop offset="0%" stop-color="#d4956a"/>
+              <stop offset="22%" stop-color="#8c5a2c"/>
+              <stop offset="100%" stop-color="#3e2410"/>
+            </radialGradient>
+          </defs>
+          <circle cx="160" cy="195" r="35" fill="url(#g4)"/>
+
+          <defs>
+            <radialGradient id="g5" cx="32%" cy="32%">
+              <stop offset="0%" stop-color="#fa7878"/>
+              <stop offset="22%" stop-color="#b53535"/>
+              <stop offset="100%" stop-color="#4a1010"/>
+            </radialGradient>
+          </defs>
+          <circle cx="320" cy="195" r="35" fill="url(#g5)"/>
+
+          <defs>
+            <radialGradient id="g6" cx="32%" cy="32%">
+              <stop offset="0%" stop-color="#ffe8a0"/>
+              <stop offset="22%" stop-color="#d8a648"/>
+              <stop offset="100%" stop-color="#3e2c0c"/>
+            </radialGradient>
+          </defs>
+          <circle cx="480" cy="195" r="35" fill="url(#g6)"/>
+        </g>
+
+        <!-- Fila 3: Roughness baja (brillante) -->
+        <g>
+          <defs>
+            <radialGradient id="g7" cx="30%" cy="30%">
+              <stop offset="0%" stop-color="#ffd6a0" stop-opacity="1"/>
+              <stop offset="10%" stop-color="#a06a3a"/>
+              <stop offset="100%" stop-color="#1a0d04"/>
+            </radialGradient>
+          </defs>
+          <circle cx="160" cy="285" r="35" fill="url(#g7)"/>
+          <ellipse cx="148" cy="270" rx="6" ry="9" fill="white" opacity="0.85"/>
+
+          <defs>
+            <radialGradient id="g8" cx="30%" cy="30%">
+              <stop offset="0%" stop-color="#fff" stop-opacity="1"/>
+              <stop offset="10%" stop-color="#c84545"/>
+              <stop offset="100%" stop-color="#1a0606"/>
+            </radialGradient>
+          </defs>
+          <circle cx="320" cy="285" r="35" fill="url(#g8)"/>
+          <ellipse cx="308" cy="270" rx="6" ry="9" fill="white" opacity="0.85"/>
+
+          <defs>
+            <radialGradient id="g9" cx="30%" cy="30%">
+              <stop offset="0%" stop-color="#fff8d8" stop-opacity="1"/>
+              <stop offset="10%" stop-color="#e8c068"/>
+              <stop offset="100%" stop-color="#251806"/>
+            </radialGradient>
+          </defs>
+          <circle cx="480" cy="285" r="35" fill="url(#g9)"/>
+          <ellipse cx="468" cy="270" rx="7" ry="11" fill="white" opacity="0.95"/>
+        </g>
+      </svg>
+      <figcaption>Misma forma, tres colores y tres niveles de brillo. La columna del oro se ve diferente porque <em>Metallic = 1</em>: el color tiñe el reflejo en lugar de quedarse en la superficie.</figcaption>
+    </figure>
+
+    <h2>Reutilizar el mismo material</h2>
+    <p>Si tienes cinco esferas y quieres que las cinco sean del mismo color, no hace falta crear cinco materiales. Selecciona la primera, créale el material, y a partir de la segunda en adelante: en el panel de Material Properties, en lugar de pulsar <code>+ New</code>, haz clic en la pequeña <strong>esfera con flechas</strong> a la izquierda del nombre. Verás una lista con los materiales que ya existen. Eliges el mismo y listo.</p>
+
+    <p>Esto importa cuando una escena crece: cambias el color del material una vez, y se actualiza en todos los objetos que lo comparten.</p>
+
+    <h2>Cosas que dejamos para más adelante</h2>
+    <p>Lo que has aprendido aquí cubre el 90% de las situaciones del día a día con materiales sencillos. Cosas que existen pero <em>no</em> tocamos en este curso:</p>
+
+    <ul>
+      <li><strong>Texturas con imagen</strong> (que el material sea una foto de madera real, no un color plano).</li>
+      <li><strong>Sombreado por nodos</strong> (combinar varios efectos para hacer materiales complejos: agua, cristal con refracciones, mármol).</li>
+      <li><strong>Transmisión y transparencia</strong> (cristal que deja pasar la luz).</li>
+    </ul>
+
+    <p>Cuando termines este curso y quieras seguir, esos son los siguientes pasos.</p>
+
+    <div class="recap">
+      <h3>Recap</h3>
+      <ul>
+        <li>Activa <strong>Material Preview</strong> en la esquina superior derecha del viewport para ver los materiales en directo.</li>
+        <li>El icono de <strong>esfera roja</strong> en el panel de Propiedades abre Material Properties.</li>
+        <li>Tres ajustes hoy: <strong>Base Color</strong> (el color), <strong>Roughness</strong> (de 0 brillo a 1 mate), <strong>Metallic</strong> (0 no metal, 1 metal).</li>
+        <li>Materiales se pueden <strong>reutilizar</strong> entre objetos.</li>
+      </ul>
+    </div>
+
+    <div class="practice">
+      <div class="label">Práctica · 5 min</div>
+      <h3>Vestir la mesa y la pelota</h3>
+      <ol>
+        <li>Abre el archivo <code>p05_mesa.blend</code> de la P05 (la mesa).</li>
+        <li>En la esquina superior derecha del viewport, cambia a <strong>Material Preview</strong> (la tercera bolita).</li>
+        <li>Selecciona la mesa.</li>
+        <li>En el panel derecho, abre <strong>Material Properties</strong> (icono esfera roja). Pulsa <code>+ New</code>.</li>
+        <li>Renombra el material a <code>madera</code> (clic en el nombre).</li>
+        <li>Ajustes: Base Color a un marrón medio. Roughness a <code>0.7</code>. Metallic a <code>0</code>. La mesa cambia.</li>
+        <li>Añade una esfera (<code>Shift+A</code> → <code>Mesh</code> → <code>UV Sphere</code>) y colócala encima de la mesa: <code>G</code> → <code>Z</code> → <code>2</code> → <code>Enter</code> (o lo que haga falta para que descanse en la superficie).</li>
+        <li>Con la esfera seleccionada, pulsa <code>+ New</code> en Material Properties. Renombra a <code>pelota</code>.</li>
+        <li>Base Color: rojo vivo. Roughness: <code>0.25</code>. Metallic: <code>0</code>. Una pelota de plástico brillante.</li>
+        <li>Guarda como <code>p06_mesa-y-pelota.blend</code>.</li>
+      </ol>
+      <div class="check"><strong>Sabes que te ha salido si:</strong> tienes una mesa marrón mate y una pelota roja brillante encima, y las ves con esos colores en el viewport (no grises).</div>
+    </div>
+
+  </main>
+
+  <aside class="col-aside">
+    <div class="note">
+      <strong>El cuarto modo de viewport</strong> es <em>Rendered</em>: muestra exactamente cómo va a salir en el render final. Es más lento que Material Preview porque calcula luces de verdad. Útil al final, no durante el modelado.
+    </div>
+    <div class="note">
+      <strong>Renombrar materiales.</strong> Hazlo siempre. <code>Material</code>, <code>Material.001</code>, <code>Material.002</code> es ilegible cuando vuelves al archivo dos semanas después.
+    </div>
+    <div class="note">
+      <strong>Roughness en metales.</strong> En Metallic = 1, el roughness controla si el metal está pulido (0, espejo) o cepillado/oxidado (alto). Un metal con roughness 0.6 parece aluminio mate.
+    </div>
+    <div class="note">
+      <strong>Color del metal.</strong> El "color" de Base Color en un metal es lo que la luz refleja en él. Por eso el oro tiene Base Color amarillo: porque ese es el color con el que refleja todo lo que tiene delante.
+    </div>
+    <div class="note">
+      <strong>Borrar un material.</strong> Si te equivocas: en Material Properties, junto al nombre del material, hay un icono <code>x</code>. Clic ahí lo desvincula del objeto. El material sigue existiendo en el archivo (lo puedes recuperar) pero ya no se aplica a este objeto.
+    </div>
+    <div class="note">
+      <strong>Varios materiales en un objeto.</strong> Sí se puede: en Edit Mode, seleccionas algunas caras y les asignas un material distinto. Por ejemplo, una caja con la tapa de un color y los lados de otro. No nos hace falta hoy.
+    </div>
+    <div class="note">
+      <strong>El "principled" del nombre.</strong> El material por defecto se llama <em>Principled BSDF</em>. No te obsesiones con el nombre: es solo "el material genérico" que cubre el 90% de los casos.
+    </div>
+  </aside>
+
+  <nav class="foot-nav">
+    <a href="../pildora-05_modelado-basico/index.html" class="prev">P05 · Modelado básico</a>
+    <a href="../indice.html" class="home">Índice</a>
+    <a href="../pildora-07_iluminar-la-escena/index.html" class="next">P07 · Iluminar la escena</a>
+  </nav>
+
+</div>
+
+<script>
+window.addEventListener('scroll', function() {
+  var h = document.documentElement, b = document.body;
+  var pct = (h.scrollTop || b.scrollTop) / ((h.scrollHeight || b.scrollHeight) - h.clientHeight) * 100;
+  document.getElementById('progress').style.width = pct + '%';
+});
+</script>
+
+</body>
+</html>
