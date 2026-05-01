@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P09 — Métricas que importan · Petarlo en LinkedIn 2026</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<div class="progress" id="progress"></div>
+
+<div class="topbar">
+  <a href="../indice.html">← Petarlo en LinkedIn 2026</a>
+</div>
+
+<div class="container">
+
+  <header class="title">
+    <div class="meta">Píldora 09 · <span class="clock">⏱ 10 min</span></div>
+    <h1>Métricas que importan vs vanity</h1>
+    <p class="objetivo">Al acabar tendrás un dashboard mínimo de 5 columnas para revisar cada lunes en 15 minutos, y sabrás cuándo cambiar el rumbo si los números no se mueven.</p>
+  </header>
+
+  <main class="col-main">
+
+    <h2>El problema de mirar lo que no toca</h2>
+    <p>LinkedIn te pone en cara, todo el rato, métricas atractivas: likes, seguidores, impresiones. Mirar eso ocho veces al día es tentador y casi gratis emocionalmente. El problema es que <strong>esas métricas correlacionan poco con tu objetivo real</strong> (definido en P01).</p>
+
+    <p>Petarlo en LinkedIn no es ganar likes; es atraer al tipo de persona que querías atraer y conseguir lo que querías conseguir (clientes, oportunidades, visibilidad útil). Las métricas tienen que reflejar eso. Si miras likes, te alegrarás cuando un post de relleno reciba 200 likes y te frustrarás cuando un post bueno reciba 30 — aunque del segundo te haya escrito un cliente potencial.</p>
+
+    <h2>Vanity vs reales</h2>
+
+    <figure>
+      <svg viewBox="0 0 620 280" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Métricas vanity vs métricas reales">
+        <!-- Vanity -->
+        <g>
+          <rect x="20" y="20" width="280" height="240" fill="#fbf8f1" stroke="#d8d2c2" stroke-width="1" rx="4"/>
+          <rect x="20" y="20" width="280" height="38" fill="#e8e2d2" rx="4"/>
+          <text x="160" y="44" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" font-weight="700" fill="#6f6a62">VANITY</text>
+          <text x="160" y="58" text-anchor="middle" font-family="Iowan Old Style, Georgia, serif" font-size="10" font-style="italic" fill="#6f6a62">se sienten bien, no mueven aguja</text>
+
+          <text x="40" y="88" font-family="Inter, sans-serif" font-size="11" fill="#2a2622">✕  Likes totales</text>
+          <text x="40" y="110" font-family="Inter, sans-serif" font-size="11" fill="#2a2622">✕  Seguidores totales</text>
+          <text x="40" y="132" font-family="Inter, sans-serif" font-size="11" fill="#2a2622">✕  Impresiones a secas</text>
+          <text x="40" y="154" font-family="Inter, sans-serif" font-size="11" fill="#2a2622">✕  Visualizaciones de perfil</text>
+          <text x="40" y="176" font-family="Inter, sans-serif" font-size="11" fill="#2a2622">✕  Aparición en búsquedas</text>
+          <text x="40" y="198" font-family="Inter, sans-serif" font-size="11" fill="#2a2622">✕  SSI (LinkedIn Score)</text>
+
+          <text x="40" y="232" font-family="Iowan Old Style, Georgia, serif" font-size="10" font-style="italic" fill="#6f6a62">No las ignores del todo, pero</text>
+          <text x="40" y="246" font-family="Iowan Old Style, Georgia, serif" font-size="10" font-style="italic" fill="#6f6a62">no las uses para decidir.</text>
+        </g>
+
+        <!-- Reales -->
+        <g>
+          <rect x="320" y="20" width="280" height="240" fill="#fde9d3" stroke="#c8580d" stroke-width="1.4" rx="4"/>
+          <rect x="320" y="20" width="280" height="38" fill="#c8580d" rx="4"/>
+          <text x="460" y="44" text-anchor="middle" font-family="Inter, sans-serif" font-size="13" font-weight="700" fill="white">REALES</text>
+          <text x="460" y="58" text-anchor="middle" font-family="Iowan Old Style, Georgia, serif" font-size="10" font-style="italic" fill="#fde9d3">indican si vas hacia tu objetivo</text>
+
+          <text x="340" y="88" font-family="Inter, sans-serif" font-size="11" fill="#2a2622">✓  Tiempo de lectura (dwell)</text>
+          <text x="340" y="110" font-family="Inter, sans-serif" font-size="11" fill="#2a2622">✓  Comentarios largos</text>
+          <text x="340" y="132" font-family="Inter, sans-serif" font-size="11" fill="#2a2622">✓  DMs cualificados nuevos</text>
+          <text x="340" y="154" font-family="Inter, sans-serif" font-size="11" fill="#2a2622">✓  Conexiones del perfil ICP</text>
+          <text x="340" y="176" font-family="Inter, sans-serif" font-size="11" fill="#2a2622">✓  Conversiones (P01)</text>
+          <text x="340" y="198" font-family="Inter, sans-serif" font-size="11" fill="#2a2622">✓  Reposts con texto añadido</text>
+
+          <text x="340" y="232" font-family="Iowan Old Style, Georgia, serif" font-size="10" font-style="italic" fill="#6f6a62">Estas son las que te dicen</text>
+          <text x="340" y="246" font-family="Iowan Old Style, Georgia, serif" font-size="10" font-style="italic" fill="#6f6a62">si la cosa va o no.</text>
+        </g>
+      </svg>
+      <figcaption>La regla: si una métrica te haría sentir bien sin que cambien tus oportunidades reales, es vanity.</figcaption>
+    </figure>
+
+    <h3>Métricas vanity y por qué no decidir con ellas</h3>
+    <p><strong>Likes totales</strong>: una broma puede tener 500 likes. Eso no te trae clientes. Y los likes son la señal más débil del algoritmo (un like cuesta menos esfuerzo que un comentario, así que el algoritmo lo pondera menos).</p>
+
+    <p><strong>Seguidores totales</strong>: tener 5.000 seguidores irrelevantes vale menos que 500 con tu perfil de cliente ideal. Hay cuentas con 50K seguidores que no monetizan; otras con 3K que viven de LinkedIn.</p>
+
+    <p><strong>Impresiones a secas</strong>: que mucha gente vea pasar tu post no significa que lo haya leído ni que les haya importado. Sin profundidad, una impresión vale poco.</p>
+
+    <p><strong>SSI (Social Selling Index)</strong>: es un número que te da LinkedIn entre 0 y 100. Lo trataban como referencia hace años. Hoy correlaciona poco con resultados reales.</p>
+
+    <h3>Métricas reales y qué te dicen</h3>
+    <p><strong>Tiempo de lectura</strong>: cuánto se queda la gente en tus posts. LinkedIn lo enseña en analítica de cada post. Una buena señal son posts con dwell time creciente respecto a la media de tu cuenta.</p>
+
+    <p><strong>Comentarios largos</strong>: 5 comentarios de 4 líneas dicen mucho más que 50 likes. Te están dedicando tiempo y pensando en tu post. Cuenta los comentarios "de verdad", no los "+1".</p>
+
+    <p><strong>DMs cualificados nuevos</strong>: la madre de las métricas si tu objetivo es clientes u oportunidades. Cualificado = persona del perfil al que apuntas (P01) que te escribe espontáneamente, no spam.</p>
+
+    <p><strong>Conexiones nuevas que cumplen tu ICP</strong> (Ideal Customer/Contact Profile): no cualquier conexión vale lo mismo. Lo que importa es cuántas conexiones nuevas a la semana son del perfil que buscas atraer.</p>
+
+    <p><strong>Conversiones al objetivo de P01</strong>: si dijiste "quiero 2 reuniones al mes con responsables de talento", esta métrica es "cuántas reuniones agendadas". Esto es lo único que mide si tu trabajo en LinkedIn está produciendo el resultado que querías.</p>
+
+    <p><strong>Reposts con texto añadido</strong>: cuando alguien te recompra con una opinión propia, te llega un público nuevo y lleva un sello de aprobación. Vale 10x un like normal.</p>
+
+    <h2>Cadencia: lunes 15 minutos, no diario</h2>
+    <p>Mirar las métricas todos los días es contraproducente. Te emociona un día y te frustra al siguiente, sin que el dato signifique nada porque la varianza diaria es enorme. <strong>Una vez a la semana</strong>: el lunes (revisas la semana pasada) o el viernes (cierras la semana). 15 minutos máximo.</p>
+
+    <p>Lo que haces en esos 15 minutos:</p>
+    <ol>
+      <li>Anotas las cifras de la semana en tu dashboard.</li>
+      <li>Identificas el post que mejor funcionó (con métricas reales, no vanity).</li>
+      <li>Anotas <strong>una</strong> hipótesis para la semana que viene: "voy a probar X, a ver si mejora Y".</li>
+    </ol>
+
+    <p>Y a partir de ahí, no vuelves a mirar hasta el siguiente lunes. La disciplina aquí es más útil que la frecuencia.</p>
+
+    <h2>El dashboard mínimo: 5 columnas</h2>
+    <p>No necesitas herramienta especial. Una hoja de cálculo (Google Sheets, Numbers, Excel) con cinco columnas:</p>
+
+    <table style="width: 100%; border-collapse: collapse; margin: 20px 0; font-family: var(--sans); font-size: 0.85rem;">
+      <thead>
+        <tr style="background: var(--accent); color: white;">
+          <th style="padding: 10px; text-align: left;">Semana</th>
+          <th style="padding: 10px; text-align: left;">Posts publicados</th>
+          <th style="padding: 10px; text-align: left;">Comentario top</th>
+          <th style="padding: 10px; text-align: left;">DMs cualificados</th>
+          <th style="padding: 10px; text-align: left;">A probar</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="background: var(--bg-soft);">
+          <td style="padding: 10px;">S1 (1-7 may)</td>
+          <td style="padding: 10px;">3 (T+T+H)</td>
+          <td style="padding: 10px;">Post martes (12 com.)</td>
+          <td style="padding: 10px;">2 nuevos</td>
+          <td style="padding: 10px;">Empezar carrusel</td>
+        </tr>
+        <tr>
+          <td style="padding: 10px;">S2 (8-14 may)</td>
+          <td style="padding: 10px;">3 (E+P+H)</td>
+          <td style="padding: 10px;">Carrusel jueves</td>
+          <td style="padding: 10px;">3 nuevos</td>
+          <td style="padding: 10px;">Comentar más capa 3</td>
+        </tr>
+        <tr style="background: var(--bg-soft);">
+          <td style="padding: 10px;">S3...</td>
+          <td style="padding: 10px;">...</td>
+          <td style="padding: 10px;">...</td>
+          <td style="padding: 10px;">...</td>
+          <td style="padding: 10px;">...</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>Las columnas más importantes son la 4 (DMs cualificados) si tu objetivo es clientes/oportunidades, y la 3 (comentario top) para entender qué tipo de contenido genera conversación real. La 5 (a probar) te obliga a tener una hipótesis cada semana, lo que evita ir a ciegas.</p>
+
+    <p>Lo que <strong>no</strong> está en este dashboard: likes, seguidores totales, impresiones a secas. A propósito.</p>
+
+    <h2>Cuándo cambiar el rumbo</h2>
+    <p>Petarlo en LinkedIn es lento, especialmente al principio. Las primeras 4-6 semanas casi nadie ve resultados claros. Eso es normal: estás construyendo señal en el algoritmo y autoridad en tu nicho. <strong>No cambies de rumbo en las primeras 6 semanas</strong>, aunque las métricas estén tibias.</p>
+
+    <p>Pero si llevas <strong>3 semanas seguidas sin movimiento en métricas reales</strong> después de las 6 semanas iniciales, hay algo que cambiar. Por orden de probabilidad:</p>
+
+    <ol>
+      <li>Tu nicho/voz no es lo bastante específico (vuelve a P04).</li>
+      <li>Tus posts no abren conversación (vuelve a P03 y revisa la pregunta abierta al final).</li>
+      <li>No estás comentando suficiente en otros sitios (vuelve a P07).</li>
+      <li>Tus DMs no están alineados con tu nicho (vuelve a P08).</li>
+    </ol>
+
+    <p>Casi nunca el problema es "el algoritmo me odia". Casi siempre es una de las cuatro de arriba.</p>
+
+    <div class="recap">
+      <h3>Recap</h3>
+      <ul>
+        <li><strong>Vanity</strong>: likes, seguidores totales, impresiones, SSI. Se sienten bien, no mueven aguja.</li>
+        <li><strong>Reales</strong>: dwell time, comentarios largos, <strong>DMs cualificados</strong>, conexiones ICP, conversiones a P01, reposts con texto.</li>
+        <li>Revisa <strong>una vez a la semana, 15 min</strong>. Diario es ruido.</li>
+        <li>Dashboard mínimo: <strong>5 columnas</strong> (semana, posts, comentario top, DMs, qué probar).</li>
+        <li>No cambies de rumbo en las primeras 6 semanas. Si llevas <strong>3 semanas tras las 6</strong> sin movimiento, revisa nicho, ganchos, comentarios y DMs.</li>
+      </ul>
+    </div>
+
+    <div class="practice">
+      <div class="label">Práctica · 8 min — entregable del plan 90 días #7</div>
+      <h3>Tu dashboard semanal</h3>
+      <ol>
+        <li>Abre una hoja de cálculo (Google Sheets, Excel, Numbers o lo que uses). Crea un nuevo archivo: "Dashboard LinkedIn 90 días".</li>
+        <li>Crea las 5 columnas:
+          <ul>
+            <li>Semana (S1, S2... y rango de fechas)</li>
+            <li>Posts publicados (cantidad y tipo: E, P, H)</li>
+            <li>Comentario top (qué post recibió mejores comentarios + número)</li>
+            <li>DMs cualificados nuevos (nuevos contactos del perfil que buscas)</li>
+            <li>A probar la semana que viene (una hipótesis)</li>
+          </ul>
+        </li>
+        <li>Crea 12 filas vacías (una por cada semana del plan 90 días). Si quieres, mete las fechas de antemano para que ya esté la estructura.</li>
+        <li><strong>Bonus</strong>: añade una sexta columna oculta o aparte para "conversiones al objetivo de P01" (reuniones, contactos a tu ICP, lo que sea concreto en tu caso).</li>
+        <li>Guarda el archivo. Compromiso: cada lunes 15 minutos rellenando.</li>
+      </ol>
+      <div class="check"><strong>Sabes que tu dashboard funciona si:</strong> al final de las 12 semanas puedes leer la columna "A probar" en orden y ver una progresión de hipótesis (no las mismas dudas repetidas). Esa columna es el motor del aprendizaje.</div>
+    </div>
+
+  </main>
+
+  <aside class="col-aside">
+    <div class="note">
+      <strong>Analítica nativa.</strong> En cada post tuyo, dándole a "ver analítica", LinkedIn te muestra impresiones, alcance único y un desglose por sectores/empresas/cargos de tu audiencia. Útil para entender QUIÉN te está leyendo.
+    </div>
+    <div class="note">
+      <strong>El dato más infrautilizado.</strong> En la analítica de tu cuenta global, mira "Empresas top de visitantes" y "Cargos top". Si los visitantes de tu perfil son del perfil que buscas (P01), vas bien aunque los números absolutos sean modestos.
+    </div>
+    <div class="note">
+      <strong>Reescribe ganchos viejos.</strong> En el dashboard, marca con asterisco los posts top. Cada 4 semanas relee los ganchos. Si encuentras un patrón ("los posts que abren con pregunta específica funcionan mejor"), tienes oro.
+    </div>
+    <div class="note">
+      <strong>Métricas lentas.</strong> Algunas cosas que pasan en LinkedIn no se ven en métricas hasta semanas después: alguien te lee 4 meses, un día te escribe, otros 3 cierra contigo. La paciencia con métricas es parte del juego.
+    </div>
+    <div class="note">
+      <strong>Herramientas externas.</strong> Hay plataformas que dan métricas más detalladas. Son útiles cuando ya llevas 6 meses y necesitas afinar. Los primeros 90 días, una hoja de cálculo basta.
+    </div>
+    <div class="note">
+      <strong>El "DM cualificado".</strong> ¿Cuándo cuenta uno? Cuando es del perfil ICP de tu P01, no es spam, y representa una oportunidad alineada con tu objetivo. Si te escriben para venderte SEO, no cuenta.
+    </div>
+    <div class="note">
+      <strong>Métrica orgullo.</strong> Lleva un "diario" aparte de momentos memorables: el primer DM cualificado, el primer post con &gt;50 comentarios, el primer cliente cerrado. Mirar atrás 6 meses después es brutal motivacionalmente.
+    </div>
+  </aside>
+
+  <nav class="foot-nav">
+    <a href="../pildora-08_dms-y-networking/index.html" class="prev">P08 · DMs</a>
+    <a href="../indice.html" class="home">Índice</a>
+    <a href="../pildora-10_plan-90-dias/index.html" class="next">P10 · Plan 90 días</a>
+  </nav>
+
+</div>
+
+<script>
+window.addEventListener('scroll', function() {
+  var h = document.documentElement, b = document.body;
+  var pct = (h.scrollTop || b.scrollTop) / ((h.scrollHeight || b.scrollHeight) - h.clientHeight) * 100;
+  document.getElementById('progress').style.width = pct + '%';
+});
+</script>
+
+</body>
+</html>

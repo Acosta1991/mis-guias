@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>P03 — El algoritmo en 2026 · Petarlo en LinkedIn 2026</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<div class="progress" id="progress"></div>
+
+<div class="topbar">
+  <a href="../indice.html">← Petarlo en LinkedIn 2026</a>
+</div>
+
+<div class="container">
+
+  <header class="title">
+    <div class="meta">Píldora 03 · <span class="clock">⏱ 10 min</span></div>
+    <h1>El algoritmo de LinkedIn en 2026</h1>
+    <p class="objetivo">Al acabar entenderás qué señales premia y qué castiga el feed, sin necesidad de hacer trampas, y sabrás reconocer las que llevas activando sin querer.</p>
+  </header>
+
+  <main class="col-main">
+
+    <h2>El algoritmo no es magia, es una cadena de filtros</h2>
+    <p>"El algoritmo" suena místico. No lo es. Es un conjunto de filtros en cadena que decide quién ve tu post y cuánto. La buena noticia es que esos filtros tienen una lógica entendible. La mala es que cambian cada cierto tiempo, así que conviene aprender los <strong>principios</strong>, no los trucos.</p>
+
+    <p>La idea más útil para entenderlo: <strong>LinkedIn no quiere posts virales. Quiere conversaciones que traigan a la gente de vuelta a la app</strong>. Cualquier cosa que aumente eso, gana. Cualquier cosa que parezca un atajo barato, pierde.</p>
+
+    <h2>Las cuatro capas del filtro</h2>
+
+    <figure>
+      <svg viewBox="0 0 620 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Las cuatro capas del algoritmo de LinkedIn">
+        <!-- Capa 1 -->
+        <g>
+          <rect x="20" y="20" width="580" height="60" fill="#fde9d3" stroke="#c8580d" stroke-width="1.4" rx="4"/>
+          <text x="40" y="44" font-family="Inter, sans-serif" font-size="13" font-weight="700" fill="#c8580d">CAPA 1 · Clasificación del autor</text>
+          <text x="40" y="62" font-family="Iowan Old Style, Georgia, serif" font-size="11" fill="#6f6a62">¿Eres un autor "creíble" según tu historial? ¿Has activado señales de spam recientemente?</text>
+          <text x="540" y="58" text-anchor="end" font-family="Inter, sans-serif" font-size="9" fill="#6f6a62" font-style="italic">~1 segundo</text>
+        </g>
+
+        <!-- Flecha -->
+        <path d="M 310 84 L 310 100 L 305 95 M 310 100 L 315 95" stroke="#c8580d" stroke-width="1.5" fill="none"/>
+
+        <!-- Capa 2 -->
+        <g>
+          <rect x="20" y="105" width="580" height="60" fill="#fbf8f1" stroke="#c8580d" stroke-width="1.4" rx="4"/>
+          <text x="40" y="129" font-family="Inter, sans-serif" font-size="13" font-weight="700" fill="#c8580d">CAPA 2 · Primeros 90 minutos (Golden Hour)</text>
+          <text x="40" y="147" font-family="Iowan Old Style, Georgia, serif" font-size="11" fill="#6f6a62">Se muestra a tu red cercana. Mide cuánta interacción genera <em>en relación a tus posts anteriores</em>.</text>
+          <text x="540" y="143" text-anchor="end" font-family="Inter, sans-serif" font-size="9" fill="#6f6a62" font-style="italic">90 min</text>
+        </g>
+
+        <path d="M 310 169 L 310 185 L 305 180 M 310 185 L 315 180" stroke="#c8580d" stroke-width="1.5" fill="none"/>
+
+        <!-- Capa 3 -->
+        <g>
+          <rect x="20" y="190" width="580" height="60" fill="#fbf8f1" stroke="#c8580d" stroke-width="1.4" rx="4"/>
+          <text x="40" y="214" font-family="Inter, sans-serif" font-size="13" font-weight="700" fill="#c8580d">CAPA 3 · Señales de calidad</text>
+          <text x="40" y="232" font-family="Iowan Old Style, Georgia, serif" font-size="11" fill="#6f6a62">Tiempo de lectura · comentarios largos · respuestas tuyas · ratio comentarios/likes alto.</text>
+          <text x="540" y="228" text-anchor="end" font-family="Inter, sans-serif" font-size="9" fill="#6f6a62" font-style="italic">2-24 horas</text>
+        </g>
+
+        <path d="M 310 254 L 310 270 L 305 265 M 310 270 L 315 265" stroke="#c8580d" stroke-width="1.5" fill="none"/>
+
+        <!-- Capa 4 -->
+        <g>
+          <rect x="20" y="275" width="580" height="60" fill="#fbf8f1" stroke="#c8580d" stroke-width="1.4" rx="4"/>
+          <text x="40" y="299" font-family="Inter, sans-serif" font-size="13" font-weight="700" fill="#c8580d">CAPA 4 · Ampliación</text>
+          <text x="40" y="317" font-family="Iowan Old Style, Georgia, serif" font-size="11" fill="#6f6a62">Si las capas anteriores van bien, se muestra a segundas conexiones y por hashtags/temas.</text>
+          <text x="540" y="313" text-anchor="end" font-family="Inter, sans-serif" font-size="9" fill="#6f6a62" font-style="italic">1-7 días</text>
+        </g>
+
+      </svg>
+      <figcaption>Tu post sube por la cadena de filtros solo si pasa el anterior. La capa 2 — los primeros 90 minutos — es la más decisiva.</figcaption>
+    </figure>
+
+    <h3>Capa 1: ¿quién eres tú?</h3>
+    <p>Antes de mirar el post, mira al autor. ¿Has publicado consistentemente? ¿La gente comenta tus cosas o solo das likes pasivos? ¿Has hecho algo que dispare alarmas (publicar 8 posts el mismo día, etiquetar a 30 personas a la vez, comentar lo mismo en 50 sitios)? Esa "confianza" que LinkedIn tiene en ti se construye y se rompe con relativa facilidad.</p>
+
+    <h3>Capa 2: el Golden Hour</h3>
+    <p>Tu post se muestra primero a una pequeña parte de tu red, normalmente la que más interactúa contigo. <strong>En los primeros 90 minutos, LinkedIn mide qué pasa</strong>. ¿La gente se queda leyéndolo (dwell time)? ¿Comenta? ¿Las conversaciones tienen ida y vuelta? Si la respuesta es no, se queda ahí y nunca sale más allá.</p>
+
+    <p>Esto cambia algunas cosas prácticas: publica cuando tu red esté online (más adelante en P06 vemos cómo encontrar tu hora), y si vas a editar el texto del post, no lo hagas en los primeros 10 minutos — eso resetea o penaliza la métrica.</p>
+
+    <h3>Capa 3: señales de calidad</h3>
+    <p>Si has pasado el Golden Hour, LinkedIn empieza a mirar señales más finas. Las que más pesan en 2026:</p>
+    <ul>
+      <li><strong>Tiempo de lectura</strong> (dwell time): cuánto tiempo se queda la gente sobre tu post antes de seguir bajando.</li>
+      <li><strong>Comentarios largos</strong>: un "muy interesante" cuenta poco. Un comentario de 4-5 líneas con opinión propia cuenta mucho.</li>
+      <li><strong>Tus respuestas a esos comentarios</strong>: si respondes, hay diálogo, vuelve la gente.</li>
+      <li><strong>Ratio comentarios/likes alto</strong>: 30 comentarios y 100 likes envían mejor señal que 5 comentarios y 1.000 likes.</li>
+      <li><strong>Reposts con texto añadido</strong>: si alguien te recompra, tienen mucho más peso que un like.</li>
+    </ul>
+
+    <h3>Capa 4: ampliación</h3>
+    <p>Si las tres capas anteriores van bien, el post empieza a aparecer a segundas conexiones (gente que conoce a quien te interactuó) y a través de hashtags o temas. Esto es lo que hace que algunos posts vivan días enteros, no horas.</p>
+
+    <h2>Lo que premia y lo que castiga el algoritmo en 2026</h2>
+
+    <h3>Premia</h3>
+    <ul>
+      <li><strong>Contenido nativo</strong>: texto plano, carrusel PDF, vídeo subido directamente, audio. Nada que requiera salir de la app.</li>
+      <li><strong>Vídeo subido a LinkedIn</strong> (no enlace a YouTube): especialmente vertical y con subtítulos.</li>
+      <li><strong>Posts que se leen completos</strong>: textos con ritmo, párrafos cortos, frases puntuadas.</li>
+      <li><strong>Conversaciones reales en comentarios</strong>: ida y vuelta, no monólogos.</li>
+      <li><strong>Consistencia</strong>: publicar 2 veces a la semana durante meses pesa más que publicar 7 veces una semana y desaparecer.</li>
+    </ul>
+
+    <h3>Castiga</h3>
+    <ul>
+      <li><strong>Enlaces externos en el cuerpo del post</strong>: si quieres compartir un link, mejor en el primer comentario y avisas en el post (truco viejo, pero sigue valiendo).</li>
+      <li><strong>Engagement bait</strong>: "comenta SÍ si estás de acuerdo", "si te gusta, dale me gusta". El algoritmo lo huele.</li>
+      <li><strong>Edición masiva en los primeros minutos</strong>: editar para arreglar una errata es normal. Reescribir el post entero a los 5 minutos no.</li>
+      <li><strong>Contenido obviamente generado por IA</strong>: estructura repetida, frases hechas, listas perfectas. La gente ya las reconoce y los modelos del feed empiezan a hacerlo.</li>
+      <li><strong>Etiquetar a gente que no va a interactuar</strong>: si etiquetas a 10 personas y ninguna comenta, perjudica.</li>
+      <li><strong>Posts con muchos hashtags</strong>: 3-5 va bien. 15 huele a spam.</li>
+    </ul>
+
+    <h2>Mitos que circulan y no son verdad</h2>
+
+    <p><strong>"Hay que publicar a las 8:30 de la mañana."</strong> Falso a medias. La hora óptima depende de cuándo está tu audiencia conectada, no de una regla universal. Hablamos de cómo encontrarla en P06.</p>
+
+    <p><strong>"Los hashtags ya no sirven."</strong> Falso. Sirven menos que en 2020, pero ayudan a llegar a búsquedas temáticas. Tres a cinco hashtags relevantes, sí. Quince, no.</p>
+
+    <p><strong>"Hay que publicar todos los días."</strong> Falso. Consistencia &gt; cantidad. Dos posts buenos a la semana superan a siete mediocres.</p>
+
+    <p><strong>"El vídeo siempre llega más lejos."</strong> Falso. Un texto con un hook brutal puede pasar a un vídeo aburrido. El vídeo bien hecho pega fuerte; el mediocre, no más que el texto.</p>
+
+    <p><strong>"Si pongo la palabra ‘algoritmo' en el post, me penaliza."</strong> Falso. No hay palabras prohibidas. Las penalizaciones son por <em>patrones</em>, no por términos.</p>
+
+    <div class="callout">
+      <strong>La regla resumen para 2026:</strong> piensa en cada post como una invitación a una conversación, no como un anuncio. Si genera diálogo, sube. Si solo recibe aplausos pasivos, se queda.
+    </div>
+
+    <div class="recap">
+      <h3>Recap</h3>
+      <ul>
+        <li>El algoritmo es <strong>cuatro filtros en cadena</strong>: autor → 90 min → señales de calidad → ampliación.</li>
+        <li>El <strong>Golden Hour</strong> (primeros 90 min) decide si tu post sigue subiendo o se queda.</li>
+        <li>Premia: nativo, conversación real, consistencia, dwell time, comentarios largos.</li>
+        <li>Castiga: enlaces externos, engagement bait, IA genérica, edición masiva temprana.</li>
+        <li>Olvídate de la hora "mágica", del número de hashtags exacto, de las palabras prohibidas. Piensa en patrones de comportamiento.</li>
+      </ul>
+    </div>
+
+    <div class="practice">
+      <div class="label">Práctica · 8 min</div>
+      <h3>Auditoría de tus últimos 5 posts</h3>
+      <ol>
+        <li>Abre tu LinkedIn. Ve a tus últimos 5 posts publicados. Si llevas mucho tiempo sin publicar, los últimos que tengas.</li>
+        <li>Para cada uno, anota en una hoja:
+          <ul>
+            <li>¿Tiene enlace externo en el cuerpo del post? (sí/no)</li>
+            <li>¿Pide explícitamente likes o comentarios? (sí/no)</li>
+            <li>¿Es contenido nativo (texto/carrusel/vídeo) o solo un enlace? (nativo/no)</li>
+            <li>¿Tiene una pregunta abierta al final que invite a comentar? (sí/no)</li>
+            <li>¿Recibió comentarios largos (≥3 líneas) o solo "+1"? (largos/cortos/ninguno)</li>
+            <li>¿Respondiste tú a cada comentario? (sí/parcial/no)</li>
+            <li>¿Qué dirías que es: alineado con el algoritmo / neutro / penalizado?</li>
+          </ul>
+        </li>
+        <li>Con la auditoría delante, identifica <strong>el error más repetido</strong>. Esa es la primera cosa a corregir.</li>
+        <li>Si llevas tiempo sin publicar y no tienes 5 posts: salta este ejercicio. Volverás a él en 4-6 semanas, cuando ya tengas material propio.</li>
+      </ol>
+      <div class="check"><strong>Sabes que te ha sido útil si:</strong> identificas un patrón. Algo que llevas haciendo mal sin querer (típicamente: enlaces externos, falta de pregunta al final, o no responder a los comentarios).</div>
+    </div>
+
+  </main>
+
+  <aside class="col-aside">
+    <div class="note">
+      <strong>El algoritmo cambia.</strong> Cada año LinkedIn ajusta. Los principios (premio a la conversación, castigo al spam) se mantienen; los detalles cambian. No te obsesiones con tácticas concretas.
+    </div>
+    <div class="note">
+      <strong>Dwell time.</strong> Es la métrica que más ha subido en peso en los últimos años. Mantener al lector en tu post 30 segundos vale mucho más que 100 likes rápidos.
+    </div>
+    <div class="note">
+      <strong>El truco del enlace en comentario.</strong> Si quieres compartir un link externo, ponlo en el primer comentario y termina el post con "el link en el primer comentario". Pierdes algo de fricción pero ganas alcance.
+    </div>
+    <div class="note">
+      <strong>"No edites en los primeros 10 minutos".</strong> Vale para erratas pequeñas también: mejor dejarlo y editar después de los 90 minutos. Si la errata es mortal, es mejor borrar y volver a publicar.
+    </div>
+    <div class="note">
+      <strong>Los comentarios <em>tuyos</em> también cuentan.</strong> Cuando comentas en un post ajeno, también te ayuda a ti: te aparece en más feeds de personas que vieron ese post. Más en P07.
+    </div>
+    <div class="note">
+      <strong>Polls.</strong> Las encuestas tuvieron su momento (2021-2023) y luego cayeron. En 2026 son una opción más, ni mejor ni peor que el resto. No abuses.
+    </div>
+    <div class="note">
+      <strong>Trending topics.</strong> Subirse a un tema viral del día puede dar empujón puntual, pero si lo haces cuando no tiene nada que ver con tu nicho, te ven como oportunista. Solo si encaja.
+    </div>
+    <div class="note">
+      <strong>Marcar a alguien.</strong> Etiquetar a gente que aporta y va a comentar = bien. Etiquetar para que "le llegue una notificación a un pez gordo a ver si pica" = mal y se nota.
+    </div>
+  </aside>
+
+  <nav class="foot-nav">
+    <a href="../pildora-02_tu-perfil/index.html" class="prev">P02 · Tu perfil</a>
+    <a href="../indice.html" class="home">Índice</a>
+    <a href="../pildora-04_nicho-y-voz/index.html" class="next">P04 · Nicho y voz</a>
+  </nav>
+
+</div>
+
+<script>
+window.addEventListener('scroll', function() {
+  var h = document.documentElement, b = document.body;
+  var pct = (h.scrollTop || b.scrollTop) / ((h.scrollHeight || b.scrollHeight) - h.clientHeight) * 100;
+  document.getElementById('progress').style.width = pct + '%';
+});
+</script>
+
+</body>
+</html>
