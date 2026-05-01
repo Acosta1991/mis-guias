@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Evaluación final · Sistemas de energía en coches eléctricos</title>
+<style>
+  :root { --bg:#F8F4EC; --bg-card:#FBF7EC; --ink:#2A2A2A; --ink-soft:#555; --ink-faint:#888; --line:#E5DFCF; --orange:#E07A3C; --orange-deep:#B8480F; --max-content:720px; --serif:"Iowan Old Style","Apple Garamond","Georgia","Times New Roman",serif; --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{background:var(--bg);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.7;-webkit-font-smoothing:antialiased;}
+  .wrapper{max-width:var(--max-content);margin:0 auto;padding:80px 32px 96px;}
+  .breadcrumb{font-family:var(--sans);font-size:.82em;color:var(--ink-faint);margin-bottom:24px;letter-spacing:.02em;}
+  .breadcrumb a{color:var(--ink-soft);text-decoration:none;}
+  .breadcrumb a:hover{color:var(--orange-deep);}
+  .eyebrow{font-family:var(--sans);font-size:.82em;color:var(--orange-deep);text-transform:uppercase;letter-spacing:.12em;font-weight:600;margin-bottom:14px;}
+  h1{font-family:var(--sans);font-weight:700;font-size:2.2em;line-height:1.15;color:var(--ink);margin:0 0 14px;letter-spacing:-.015em;}
+  .sub{color:var(--ink-soft);font-size:1.05em;line-height:1.55;margin-bottom:36px;}
+  h2{font-family:var(--sans);font-weight:600;font-size:1em;color:var(--orange-deep);margin:42px 0 14px;letter-spacing:.06em;text-transform:uppercase;border-bottom:1px solid var(--line);padding-bottom:8px;}
+  .ex-card{background:var(--bg-card);border:1px solid var(--line);border-radius:8px;padding:16px 20px;margin-bottom:14px;font-family:var(--sans);font-size:.96em;}
+  .ex-card summary{cursor:pointer;list-style:none;display:flex;gap:12px;align-items:flex-start;color:var(--ink);}
+  .ex-card summary::-webkit-details-marker{display:none;}
+  .ex-card summary::before{content:"▸";color:var(--orange);font-size:.9em;transition:transform .2s;flex-shrink:0;margin-top:2px;}
+  .ex-card[open] summary::before{transform:rotate(90deg);}
+  .ex-tag{display:inline-block;font-size:.72em;font-weight:600;padding:2px 8px;border-radius:4px;text-transform:uppercase;letter-spacing:.04em;flex-shrink:0;margin-top:1px;}
+  .ex-tag-easy{background:#E6EDD8;color:#5A6E36;}
+  .ex-tag-medium{background:#F4E4CC;color:#8C5E1F;}
+  .ex-tag-hard{background:#F0D8CB;color:#A23215;}
+  .ex-q{line-height:1.45;}
+  .ex-answer{margin:16px 0 4px 32px;padding:14px 18px;background:#FFFEFA;border-left:3px solid var(--orange);color:#444;line-height:1.6;border-radius:0 6px 6px 0;}
+  .ex-answer p{margin:0 0 10px;}
+  .ex-answer p:last-child{margin-bottom:0;}
+  .ex-answer strong{color:var(--ink);}
+  .ref{font-family:var(--sans);font-size:.78em;color:var(--ink-faint);font-style:italic;margin-top:8px;}
+  .closing{margin-top:48px;padding:22px 24px;background:var(--bg-card);border:1px solid var(--line);border-radius:10px;font-family:var(--sans);font-size:.95em;color:var(--ink);line-height:1.6;}
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <div class="breadcrumb"><a href="indice.html">Curso · Sistemas de energía en coches eléctricos</a> &nbsp;/&nbsp; Evaluación final</div>
+
+  <div class="eyebrow">Evaluación final</div>
+  <h1>Comprueba lo que sabes ahora</h1>
+  <p class="sub">15 preguntas que recorren todo el curso. Mezcla de fácil, medio y difícil. Cada pregunta indica de qué píldora viene, por si quieres volver a repasarla. Pliega y despliega para ver la respuesta cuando quieras.</p>
+
+  <h2>Bloque A · Anatomía del sistema</h2>
+
+  <details class="ex-card">
+    <summary><span class="ex-tag ex-tag-easy">Fácil</span><span class="ex-q">¿Qué unidad mide la cantidad de energía que cabe en una batería: kW o kWh?</span></summary>
+    <div class="ex-answer">
+      <p>kWh. El kW mide potencia (trabajo por segundo); el kWh mide energía (trabajo acumulado durante una hora). Una batería se describe siempre por su capacidad en kWh.</p>
+      <div class="ref">Píldora 0 — Electricidad mínima viable</div>
+    </div>
+  </details>
+
+  <details class="ex-card">
+    <summary><span class="ex-tag ex-tag-easy">Fácil</span><span class="ex-q">Nombra los cinco bloques principales del sistema, en orden, desde el enchufe hasta la rueda.</span></summary>
+    <div class="ex-answer">
+      <p>Enchufe → cargador a bordo (OBC) → pack de baterías → inversor → motor + rueda. Más dos elementos transversales: el BMS supervisando la batería y la flecha de regeneración volviendo del motor a la batería.</p>
+      <div class="ref">Píldora 1 — El viaje de un electrón</div>
+    </div>
+  </details>
+
+  <details class="ex-card">
+    <summary><span class="ex-tag ex-tag-medium">Medio</span><span class="ex-q">¿Por qué la densidad energética del pack completo es siempre menor que la de una celda aislada?</span></summary>
+    <div class="ex-answer">
+      <p>Porque al pasar de la celda al pack hay que añadir todo lo que no almacena energía pero sí pesa: carcasas de módulos, cableado, caja del pack, sensores, sistema térmico. Esa estructura "muerta" baja el ratio Wh/kg del conjunto. Una celda puede ir a 280 Wh/kg, pero un pack acaba en 170-200 Wh/kg.</p>
+      <div class="ref">Píldora 2 — La batería por dentro</div>
+    </div>
+  </details>
+
+  <details class="ex-card">
+    <summary><span class="ex-tag ex-tag-medium">Medio</span><span class="ex-q">Una flota de taxi hace 250 km al día durante 8 años. ¿Qué química eliges, NMC o LFP, y por qué?</span></summary>
+    <div class="ex-answer">
+      <p>LFP, casi seguro. La cuenta total da en torno a 500 000 km y miles de ciclos completos. LFP aguanta entre 3 000 y 6 000 ciclos, sobra para esa vida útil. Es además más barata, más segura y aguanta mejor las cargas rápidas frecuentes. NMC iría justa al final con degradación más visible. Para flotas, LFP gana casi siempre.</p>
+      <div class="ref">Píldora 3 — NMC vs LFP</div>
+    </div>
+  </details>
+
+  <details class="ex-card">
+    <summary><span class="ex-tag ex-tag-medium">Medio</span><span class="ex-q">¿Por qué el porcentaje de batería que muestra el coche puede saltar bruscamente después de cargar al 100%?</span></summary>
+    <div class="ex-answer">
+      <p>Porque el porcentaje no es una medición directa: es una estimación que hace el BMS combinando voltaje, corriente integrada en el tiempo, temperatura, edad estimada y modelos químicos. Una carga completa permite recalibrar contra un punto conocido. Si la estimación previa estaba un poco desviada, al recalibrar "salta" al valor correcto. Es una corrección honesta, no un fallo.</p>
+      <div class="ref">Píldora 4 — El BMS</div>
+    </div>
+  </details>
+
+  <details class="ex-card">
+    <summary><span class="ex-tag ex-tag-hard">Difícil</span><span class="ex-q">Una bomba de calor mueve 3 kWh de calor con 1 kWh eléctrico. ¿Cómo es posible? ¿Cuál es la trampa?</span></summary>
+    <div class="ex-answer">
+      <p>Una bomba de calor no <em>genera</em> calor: lo <em>transfiere</em> de un sitio a otro (típicamente del aire exterior al refrigerante interior). Como mueve calor en lugar de fabricarlo, su rendimiento puede ser superior al 100% — porque la energía que entrega no la crea, la recoge. La trampa: cuanto más frío esté el aire exterior, más cuesta extraerle calor, y la eficiencia (COP) baja. Aún así, sigue ganando al calentador resistivo en casi todas las condiciones reales.</p>
+      <div class="ref">Píldora 5 — Sistema térmico</div>
+    </div>
+  </details>
+
+  <h2>Bloque B · Movimiento e infraestructura</h2>
+
+  <details class="ex-card">
+    <summary><span class="ex-tag ex-tag-easy">Fácil</span><span class="ex-q">Tu coche tiene un OBC de 11 kW. Conectas un cargador AC público de 22 kW. ¿A qué velocidad cargas?</span></summary>
+    <div class="ex-answer">
+      <p>A 11 kW. El cargador puede dar más, pero tu OBC es el cuello de botella. La carga AC siempre va a la velocidad del componente más lento, y casi siempre es el OBC del coche.</p>
+      <div class="ref">Píldora 6 — Electrónica de potencia</div>
+    </div>
+  </details>
+
+  <details class="ex-card">
+    <summary><span class="ex-tag ex-tag-easy">Fácil</span><span class="ex-q">¿Por qué un coche eléctrico no necesita caja de cambios?</span></summary>
+    <div class="ex-answer">
+      <p>Porque el inversor puede ajustar en tiempo real la frecuencia y la amplitud de la corriente trifásica que recibe el motor, lo que permite entregar par útil desde 0 rpm hasta el régimen máximo con una sola "marcha". Un motor de gasolina solo da par útil en un rango estrecho de revoluciones y por eso necesita varias marchas.</p>
+      <div class="ref">Píldora 7 — Inversor y motor</div>
+    </div>
+  </details>
+
+  <details class="ex-card">
+    <summary><span class="ex-tag ex-tag-medium">Medio</span><span class="ex-q">Sales de un cargador rápido al 100% y el primer tramo de tu trayecto es una bajada larga de montaña. ¿Por qué tu coche frenará menos al levantar el pie?</span></summary>
+    <div class="ex-answer">
+      <p>Porque el BMS bloquea la regeneración cuando el pack está al 100%: no hay sitio para meter más energía sin sobrecargar las celdas. Sin regeneración activa, lo único que frena al coche al soltar el acelerador es la rodadura y el aire, mucho menos. Tendrás que usar el freno mecánico para compensar. La solución práctica: si vives cerca de una bajada, no salgas al 100%.</p>
+      <div class="ref">Píldora 8 — Frenado regenerativo</div>
+    </div>
+  </details>
+
+  <details class="ex-card">
+    <summary><span class="ex-tag ex-tag-medium">Medio</span><span class="ex-q">En un cargador rápido DC, ¿por qué la potencia baja claramente después del 80%?</span></summary>
+    <div class="ex-answer">
+      <p>Porque cerca del 100% el voltaje de las celdas se acerca al máximo permitido y los iones de litio se acumulan en zonas casi saturadas. Forzar más corriente las dañaría. El BMS reduce progresivamente la potencia para protegerlas. Por eso del 80 al 100% suele tardar casi tanto como del 10 al 80%, y la regla práctica de viaje es cargar siempre del 10 al 80%.</p>
+      <div class="ref">Píldora 9 — Cargar AC vs DC</div>
+    </div>
+  </details>
+
+  <details class="ex-card">
+    <summary><span class="ex-tag ex-tag-hard">Difícil</span><span class="ex-q">Si la potencia es voltaje × corriente, ¿por qué doblar el voltaje de 400 V a 800 V no dobla la potencia, sino que reduce la corriente a la mitad para la misma potencia?</span></summary>
+    <div class="ex-answer">
+      <p>Porque la potencia que el sistema entrega depende de la demanda (lo que el motor pide o lo que el cargador puede dar), no del voltaje del pack. Si el sistema necesita entregar 250 kW, lo va a entregar — pero a 800 V puede hacerlo con la mitad de corriente que a 400 V. Esa es la ventaja: misma potencia útil, menos corriente, menos calor en el cable, cables más finos y permite más potencia pico antes de tocar techos térmicos.</p>
+      <div class="ref">Píldora 10 — 400V vs 800V</div>
+    </div>
+  </details>
+
+  <h2>Bloque C · Hacia dónde va</h2>
+
+  <details class="ex-card">
+    <summary><span class="ex-tag ex-tag-easy">Fácil</span><span class="ex-q">¿Qué cambia exactamente entre una batería de litio convencional y una de estado sólido?</span></summary>
+    <div class="ex-answer">
+      <p>El electrolito. En una convencional es líquido (un solvente con sales de litio); en una de estado sólido es sólido (cerámica o polímero). Ese cambio permite usar ánodos más densos y elimina el riesgo del electrolito inflamable, pero produce a escala industrial es muy difícil.</p>
+      <div class="ref">Píldora 11 — Futuro próximo</div>
+    </div>
+  </details>
+
+  <details class="ex-card">
+    <summary><span class="ex-tag ex-tag-easy">Fácil</span><span class="ex-q">Distingue V2L, V2H y V2G en una frase cada una.</span></summary>
+    <div class="ex-answer">
+      <p><strong>V2L</strong>: el coche alimenta directamente un aparato enchufado a él. <strong>V2H</strong>: el coche alimenta tu casa. <strong>V2G</strong>: el coche devuelve energía a la red eléctrica nacional.</p>
+      <div class="ref">Píldora 12 — Futuro extendido</div>
+    </div>
+  </details>
+
+  <details class="ex-card">
+    <summary><span class="ex-tag ex-tag-hard">Difícil</span><span class="ex-q">Lees: "Nueva batería logra 500 Wh/kg en laboratorio". Da tres motivos para ser cauto antes de creer que pronto la tendrás en un coche.</span></summary>
+    <div class="ex-answer">
+      <p>(1) Los 500 Wh/kg son a nivel de celda. Al pasar al pack se pierde un 30-40% por carcasas y conexiones — el coche real estaría en 300-350 Wh/kg, no 500. (2) Pasar de un prototipo de laboratorio a producción industrial a escala puede tardar años o décadas, y muchos anuncios nunca llegan. (3) La densidad sin durabilidad es media historia: si la celda dura solo 200 ciclos, no sirve para coche. Hay que ver siempre qué dice el estudio sobre vida útil.</p>
+      <div class="ref">Píldora 11 — Futuro próximo</div>
+    </div>
+  </details>
+
+  <details class="ex-card">
+    <summary><span class="ex-tag ex-tag-hard">Difícil</span><span class="ex-q">Junta varios conceptos: ¿por qué los coches con química LFP son especialmente buenos candidatos para participar en V2G?</span></summary>
+    <div class="ex-answer">
+      <p>Porque participar en V2G suma ciclos a la batería: la cargas y la descargas más veces de las que harías solo conduciendo. La química LFP aguanta muchísimos más ciclos (3 000-6 000 típicos) que NMC (1 000-2 500). Por eso el desgaste extra del V2G se nota mucho menos en una batería LFP. En NMC cada ciclo cuenta más y la cuenta económica del V2G es más ajustada (porque pierdes vida útil más cara). Es un buen ejemplo de cómo decisiones químicas tomadas hace años encajan con casos de uso que vienen ahora.</p>
+      <div class="ref">Píldoras 3 + 12</div>
+    </div>
+  </details>
+
+  <div class="closing">
+    Si has llegado hasta aquí y respondes con soltura la mayoría, tienes el mapa entero del sistema en la cabeza. Cualquier ficha técnica, cualquier debate, cualquier noticia que toque coches eléctricos puedes leerla con criterio propio. Ya no necesitas que nadie te lo explique — ahora puedes seguir el partido tú solo.
+  </div>
+
+</div>
+</body>
+</html>

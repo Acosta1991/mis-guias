@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Píldora 07 — Inversor y motor eléctrico</title>
+<style>
+  :root { --bg:#F8F4EC; --bg-card:#FBF7EC; --ink:#2A2A2A; --ink-soft:#555; --ink-faint:#888; --line:#E5DFCF; --orange:#E07A3C; --orange-deep:#B8480F; --max-content:680px; --serif:"Iowan Old Style","Apple Garamond","Georgia","Times New Roman",serif; --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{background:var(--bg);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.7;-webkit-font-smoothing:antialiased;}
+  .progress-bar{position:fixed;top:0;left:0;width:0%;height:3px;background:var(--orange);z-index:100;transition:width .05s linear;}
+  .layout{max-width:1200px;margin:0 auto;padding:80px 32px 96px;display:grid;grid-template-columns:minmax(0,1fr);gap:0;}
+  @media (min-width:1024px){.layout{grid-template-columns:minmax(0,var(--max-content)) minmax(220px,280px);gap:56px;padding:80px 48px 96px;}}
+  .main{max-width:var(--max-content);}
+  .aside{font-family:var(--sans);font-size:.85em;color:var(--ink-soft);line-height:1.55;}
+  .aside .note{border-left:2px solid var(--orange);padding:4px 0 4px 14px;margin-bottom:28px;}
+  .aside .note-label{display:block;text-transform:uppercase;letter-spacing:.06em;font-size:.78em;color:var(--orange-deep);font-weight:600;margin-bottom:4px;}
+  @media (max-width:1023px){.aside{margin-top:32px;} .aside .note{background:var(--bg-card);border:1px solid var(--line);border-left:3px solid var(--orange);border-radius:0 8px 8px 0;padding:12px 16px;}}
+  .breadcrumb{font-family:var(--sans);font-size:.82em;color:var(--ink-faint);margin-bottom:24px;letter-spacing:.02em;}
+  .breadcrumb a{color:var(--ink-soft);text-decoration:none;} .breadcrumb a:hover{color:var(--orange-deep);}
+  h1{font-family:var(--sans);font-weight:700;font-size:2.1em;line-height:1.2;color:var(--ink);margin:0 0 12px;letter-spacing:-.01em;}
+  .meta{font-family:var(--sans);font-size:.85em;color:var(--ink-faint);margin-bottom:36px;display:flex;gap:16px;flex-wrap:wrap;}
+  .meta .pill{background:var(--bg-card);border:1px solid var(--line);padding:3px 12px;border-radius:12px;}
+  h2{font-family:var(--sans);font-weight:600;font-size:1.35em;color:var(--ink);margin:48px 0 16px;letter-spacing:-.005em;}
+  p{margin:0 0 1.1em;}
+  .lead{font-size:1.12em;color:var(--ink);line-height:1.55;margin-bottom:1.4em;}
+  em{font-style:italic;} strong{font-weight:600;color:var(--ink);}
+  .pull{border-left:3px solid var(--orange);padding:4px 0 4px 20px;margin:28px 0;color:var(--ink);font-style:italic;font-size:1.05em;line-height:1.5;}
+  .diagram{margin:36px 0 12px;}
+  .diagram img{width:100%;height:auto;border-radius:8px;display:block;}
+  .diagram-caption{font-family:var(--sans);font-size:.82em;color:var(--ink-faint);text-align:center;margin-top:10px;line-height:1.5;}
+  .diagram-labels{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px;font-family:var(--sans);font-size:.85em;color:var(--ink-soft);text-align:center;}
+  .diagram-labels span{padding:6px 4px;border-top:2px solid var(--orange);font-weight:500;}
+  .next{margin-top:56px;padding:22px 24px;background:var(--bg-card);border:1px solid var(--line);border-radius:10px;font-family:var(--sans);font-size:.95em;}
+  .next-label{text-transform:uppercase;letter-spacing:.07em;font-size:.78em;color:var(--orange-deep);font-weight:600;margin-bottom:6px;}
+  .next a{color:var(--ink);text-decoration:none;font-weight:600;} .next a:hover{color:var(--orange-deep);}
+  .versus{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:30px 0;font-family:var(--sans);font-size:.93em;}
+  .versus .col{background:var(--bg-card);border:1px solid var(--line);border-radius:10px;padding:18px;}
+  .versus .col h3{margin:0 0 8px;font-size:1em;color:var(--orange-deep);}
+  .versus .col p{color:var(--ink-soft);line-height:1.55;margin:0 0 6px;}
+  @media (max-width:600px){.versus{grid-template-columns:1fr;}}
+  .exercises{margin:56px 0 32px;padding-top:36px;border-top:1px solid var(--line);}
+  .ex-title{font-family:var(--sans);font-size:1.25em;color:var(--ink);margin-bottom:20px;font-weight:600;}
+  .ex-card{background:var(--bg-card);border:1px solid var(--line);border-radius:8px;padding:16px 20px;margin-bottom:14px;font-family:var(--sans);font-size:.95em;}
+  .ex-card summary{cursor:pointer;list-style:none;display:flex;gap:12px;align-items:flex-start;color:var(--ink);}
+  .ex-card summary::-webkit-details-marker{display:none;}
+  .ex-card summary::before{content:"▸";color:var(--orange);font-size:.9em;transition:transform .2s;flex-shrink:0;margin-top:2px;}
+  .ex-card[open] summary::before{transform:rotate(90deg);}
+  .ex-tag{display:inline-block;font-size:.72em;font-weight:600;padding:2px 8px;border-radius:4px;text-transform:uppercase;letter-spacing:.04em;flex-shrink:0;margin-top:1px;}
+  .ex-tag-easy{background:#E6EDD8;color:#5A6E36;} .ex-tag-medium{background:#F4E4CC;color:#8C5E1F;} .ex-tag-hard{background:#F0D8CB;color:#A23215;}
+  .ex-q{line-height:1.45;}
+  .ex-answer{margin:16px 0 4px 32px;padding:14px 18px;background:#FFFEFA;border-left:3px solid var(--orange);color:#444;line-height:1.6;border-radius:0 6px 6px 0;}
+  .ex-answer p{margin:0 0 10px;} .ex-answer p:last-child{margin-bottom:0;} .ex-answer strong{color:var(--ink);}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress-bar"></div>
+
+<div class="layout">
+  <main class="main">
+    <div class="breadcrumb"><a href="../indice.html">Curso · Sistemas de energía en coches eléctricos</a> &nbsp;/&nbsp; Píldora 07</div>
+
+    <h1>Inversor y motor eléctrico: trifásico sin trauma</h1>
+    <div class="meta">
+      <span class="pill">⏱ 10 min</span>
+      <span class="pill">Píldora 7 de 12</span>
+    </div>
+
+    <p class="lead">El motor eléctrico es la pieza más simple y a la vez la más asombrosa del coche. Una sola parte gira. No hay pistones, ni cigüeñal, ni cambio de marchas. Y sin embargo es capaz de pasar de cero a velocidad de autopista en segundos, con una suavidad que ningún motor de combustión puede igualar. Detrás de ese gesto hay un viejo truco eléctrico — el campo magnético giratorio — y un acompañante imprescindible: el inversor.</p>
+
+    <h2>El truco que hace girar todo</h2>
+    <p>El motor eléctrico funciona gracias a una propiedad básica: <strong>una corriente eléctrica que pasa por una bobina genera un campo magnético</strong>. Si rodeas un núcleo de hierro con un alambre y haces pasar electricidad, ese núcleo se vuelve un imán mientras pasa la corriente.</p>
+
+    <p>Ahora imagina que pones tres bobinas distintas formando un círculo, separadas 120 grados (como las tres patas de una mesa de bar). En el centro del círculo, montas un eje libre que puede girar. Si haces pasar corriente por las tres bobinas <em>en momentos distintos</em> — primero la de arriba, luego la de la derecha, luego la de la izquierda, y vuelta a empezar muy rápido —, el "norte magnético" del conjunto va saltando de una bobina a otra, dando vueltas alrededor del centro. Lo que tienes es un <strong>campo magnético giratorio</strong>: como si un imán invisible diera vueltas alrededor del eje.</p>
+
+    <p>Pon ahora en el centro de ese círculo un imán (o algo que se comporte como tal). El campo giratorio lo arrastra. El eje gira. Le pones una rueda. La rueda se mueve. <em>Ya tienes un coche</em>.</p>
+
+    <div class="diagram">
+      <img src="pildora-07_diagrama-1.png" alt="Vista frontal de un motor eléctrico: tres bobinas dispuestas a 120 grados emiten ondas senoidales desfasadas, un rotor central con flecha de rotación en naranja indica el giro inducido por el campo magnético">
+      <div class="diagram-labels">
+        <span>tres bobinas a 120°</span>
+        <span>ondas desfasadas</span>
+        <span>rotor que sigue</span>
+      </div>
+      <div class="diagram-caption">El estator (la carcasa) tiene tres bobinas alimentadas por tres ondas eléctricas desfasadas entre sí. El campo magnético resultante gira. El rotor (la pieza central) sigue el campo y gira con él. Lo demás es ingeniería.</div>
+    </div>
+
+    <h2>Lo que aporta el inversor</h2>
+    <p>Para que las tres bobinas reciban sus tres ondas desfasadas hace falta una fuente que las produzca. La batería no sirve directamente: entrega DC, una corriente plana sin variaciones. Hace falta una pieza que <em>fabrique</em> AC trifásica a partir de DC. Esa pieza es el <strong>inversor</strong>.</p>
+
+    <p>Conmutando los semiconductores que vimos en la píldora anterior miles de veces por segundo, el inversor produce tres ondas senoidales, una por cada bobina, con un desfase de 120 grados entre ellas. Y aquí está la magia: <strong>puede cambiar la frecuencia y la amplitud de esas ondas en tiempo real</strong>. Si quieres que el motor gire más rápido, sube la frecuencia. Si quieres más par (más fuerza de giro), sube la amplitud. Es lo que hace el ordenador del coche cuando aprietas el acelerador: pedir al inversor más frecuencia, más amplitud, o ambas.</p>
+
+    <p>Esa es la razón por la que un coche eléctrico no necesita caja de cambios. Un motor de gasolina solo da par útil en un rango estrecho de revoluciones, y por eso necesita marchas que multipliquen su giro a distintas relaciones. Un motor eléctrico, gracias al inversor, puede entregar par desde cero revoluciones hasta sus revoluciones máximas. Una sola "marcha" cubre todo el rango. Por eso aceleras pisando, sin sentir cambios.</p>
+
+    <h2>Dos familias de motor</h2>
+    <p>Casi todos los motores de coche eléctrico hoy son una de dos familias. Hacen lo mismo conceptualmente, pero el rotor está hecho distinto.</p>
+
+    <div class="versus">
+      <div class="col">
+        <h3>Síncrono de imanes permanentes (PMSM)</h3>
+        <p><strong>Cómo es.</strong> El rotor lleva imanes potentes (de tierras raras como neodimio).</p>
+        <p><strong>Pro.</strong> Más eficiente, más compacto, mejor en rangos típicos de conducción urbana e interurbana.</p>
+        <p><strong>Contra.</strong> Imanes caros y geopolíticamente sensibles (gran parte del neodimio viene de pocos países). Pierde algo de eficiencia a altísima velocidad.</p>
+      </div>
+      <div class="col">
+        <h3>Asíncrono de inducción (ASM)</h3>
+        <p><strong>Cómo es.</strong> El rotor no lleva imanes: es una "jaula" metálica que se magnetiza al ser atravesada por el campo del estator.</p>
+        <p><strong>Pro.</strong> Más barato, sin tierras raras, mejor a velocidades sostenidas altas.</p>
+        <p><strong>Contra.</strong> Algo menos eficiente en uso urbano y un poco más voluminoso para la misma potencia.</p>
+      </div>
+    </div>
+
+    <p>Muchos coches con dos motores combinan ambos tipos: un PMSM atrás (eficiente para conducción normal) y un ASM delante (ligero, se desconecta cuando no hace falta, y aporta empuje extra al acelerar). Es una decisión de ingeniería pragmática: cada motor donde rinde mejor.</p>
+
+    <div class="pull">El motor genera fuerza de giro. El inversor decide cuánta y a qué velocidad. Los dos juntos sustituyen al motor de explosión, al cambio de marchas y al embrague — con una fracción de las piezas y casi sin fricción interna.</div>
+
+    <h2>Por qué un coche eléctrico es tan rápido al arrancar</h2>
+    <p>Un motor de gasolina necesita girar (revolucionar) para entregar par. Cuando arranca desde parado, está prácticamente sin par y por eso necesita un embrague o un convertidor de par para pasar la energía al eje.</p>
+
+    <p>Un motor eléctrico hace lo contrario: entrega <strong>par máximo desde 0 rpm</strong>. Aprietas el acelerador y todo el empuje disponible está ahí ya, en el primer instante. No hay que esperar a que el motor "coja vueltas". Por eso un coche eléctrico modesto ya se siente más vivo en ciudad que un gasolina parecido — y por eso un eléctrico potente acelera de forma que parece desafiar la física.</p>
+
+    <p>El inversor también ayuda en sentido contrario: como controla con precisión la corriente que entra al motor, modula la entrega de par con una finura imposible en mecánica. Por eso el control de tracción de un eléctrico es más rápido y preciso que el de un coche tradicional, y por eso los coches eléctricos suelen ir muy bien en superficies resbaladizas: el sistema reacciona en milisegundos.</p>
+
+    <h2>Eficiencia que sorprende</h2>
+    <p>Un buen motor eléctrico convierte entre el 90% y el 95% de la energía eléctrica que recibe en movimiento. Un motor de combustión raramente pasa del 35-40% en condiciones óptimas, y cae al 20% en uso urbano normal.</p>
+
+    <p>Esto explica por qué un coche eléctrico, aunque arrastre cientos de kilos de batería, gasta tan poca energía por kilómetro: gran parte de lo que sale de la batería llega a la rueda, sin tirarse por el escape como calor. Es un cambio de paradigma. Y es también la base de la siguiente píldora: si el motor convierte tan eficientemente electricidad en movimiento, también puede hacer lo contrario — convertir movimiento en electricidad cuando frenas.</p>
+
+    <div class="exercises">
+      <div class="ex-title">Comprueba que lo tienes</div>
+
+      <details class="ex-card">
+        <summary><span class="ex-tag ex-tag-easy">Fácil</span><span class="ex-q">¿Por qué se llama "trifásica" la corriente que recibe un motor de coche eléctrico?</span></summary>
+        <div class="ex-answer">
+          <p>Porque son tres ondas eléctricas distintas (una por cada bobina del estator), desfasadas 120 grados entre sí. La combinación de las tres crea un campo magnético que gira alrededor del rotor. Cada una de esas ondas se llama "fase" — de ahí "trifásica".</p>
+        </div>
+      </details>
+
+      <details class="ex-card">
+        <summary><span class="ex-tag ex-tag-easy">Fácil</span><span class="ex-q">¿Por qué un coche eléctrico no necesita caja de cambios?</span></summary>
+        <div class="ex-answer">
+          <p>Porque el inversor ajusta la frecuencia y la amplitud de la corriente trifásica en tiempo real, lo que permite al motor entregar par útil desde 0 rpm hasta sus revoluciones máximas con una sola "marcha". El motor de gasolina solo da par útil en un rango estrecho y por eso necesita varias marchas para cubrir todo el rango de uso.</p>
+        </div>
+      </details>
+
+      <details class="ex-card">
+        <summary><span class="ex-tag ex-tag-medium">Medio</span><span class="ex-q">¿Cuál es la diferencia esencial entre un motor síncrono de imanes permanentes y uno asíncrono de inducción?</span></summary>
+        <div class="ex-answer">
+          <p>Cómo se magnetiza el rotor. El síncrono lleva imanes permanentes incrustados en el rotor (de neodimio u otros materiales raros), por lo que su magnetismo está siempre presente. El asíncrono no lleva imanes: el rotor es una jaula metálica que se magnetiza solo cuando el campo del estator lo atraviesa. Diferencia práctica: los síncronos son más eficientes en uso típico pero usan materiales caros; los asíncronos son más baratos y robustos pero algo menos eficientes.</p>
+        </div>
+      </details>
+
+      <details class="ex-card">
+        <summary><span class="ex-tag ex-tag-hard">Difícil</span><span class="ex-q">¿Por qué la eficiencia de un motor eléctrico (90-95%) es muy superior a la de un motor de combustión (20-40%)?</span></summary>
+        <div class="ex-answer">
+          <p>Porque el motor eléctrico no quema nada. La energía pasa de eléctrica a mecánica casi directamente, con pérdidas pequeñas en forma de calor por la resistencia de las bobinas y la fricción de los rodamientos. El motor de combustión, en cambio, transforma calor en movimiento, y la termodinámica le impone un límite teórico (ciclo de Carnot) muy por debajo del 100%. Además gran parte del calor del combustible se pierde por el escape, por la refrigeración y por la fricción interna de cientos de piezas en movimiento. Por eso el coche eléctrico, aun con la batería pesada, gasta menos energía por kilómetro recorrido.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="next">
+      <div class="next-label">Siguiente</div>
+      <a href="../pildora-08_frenado-regenerativo/index.html">Píldora 8 — Frenado regenerativo →</a>
+    </div>
+  </main>
+
+  <aside class="aside">
+    <div class="note">
+      <span class="note-label">Vocabulario</span>
+      <strong>Estator</strong>: la parte fija del motor (las bobinas). <strong>Rotor</strong>: la parte que gira.
+    </div>
+    <div class="note">
+      <span class="note-label">Síncrono vs asíncrono</span>
+      Síncrono = el rotor gira a la misma velocidad que el campo magnético. Asíncrono = el rotor "se queda atrás" un poco respecto al campo (es lo que induce la magnetización en él, de ahí el nombre "de inducción").
+    </div>
+    <div class="note">
+      <span class="note-label">Par</span>
+      La fuerza de giro. Cuanto más par, más fuerza de empuje en las ruedas. Un coche eléctrico entrega su par máximo desde el primer milisegundo, lo que explica esa sensación de "salir disparado".
+    </div>
+    <div class="note">
+      <span class="note-label">Una sola marcha (casi siempre)</span>
+      Casi todos los eléctricos tienen una sola relación de transmisión. Hay excepciones (algún deportivo monta dos para mejorar punta y eficiencia a alta velocidad), pero son la rareza.
+    </div>
+  </aside>
+</div>
+
+<script>
+  const bar=document.getElementById('progress-bar');
+  function up(){const h=document.documentElement;bar.style.width=((h.scrollTop)/(h.scrollHeight-h.clientHeight)*100)+'%';}
+  document.addEventListener('scroll',up,{passive:true}); up();
+</script>
+</body>
+</html>

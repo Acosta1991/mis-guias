@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Píldora 11 — Futuro próximo</title>
+<style>
+  :root { --bg:#F8F4EC; --bg-card:#FBF7EC; --ink:#2A2A2A; --ink-soft:#555; --ink-faint:#888; --line:#E5DFCF; --orange:#E07A3C; --orange-deep:#B8480F; --max-content:680px; --serif:"Iowan Old Style","Apple Garamond","Georgia","Times New Roman",serif; --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{background:var(--bg);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.7;-webkit-font-smoothing:antialiased;}
+  .progress-bar{position:fixed;top:0;left:0;width:0%;height:3px;background:var(--orange);z-index:100;transition:width .05s linear;}
+  .layout{max-width:1200px;margin:0 auto;padding:80px 32px 96px;display:grid;grid-template-columns:minmax(0,1fr);gap:0;}
+  @media (min-width:1024px){.layout{grid-template-columns:minmax(0,var(--max-content)) minmax(220px,280px);gap:56px;padding:80px 48px 96px;}}
+  .main{max-width:var(--max-content);}
+  .aside{font-family:var(--sans);font-size:.85em;color:var(--ink-soft);line-height:1.55;}
+  .aside .note{border-left:2px solid var(--orange);padding:4px 0 4px 14px;margin-bottom:28px;}
+  .aside .note-label{display:block;text-transform:uppercase;letter-spacing:.06em;font-size:.78em;color:var(--orange-deep);font-weight:600;margin-bottom:4px;}
+  @media (max-width:1023px){.aside{margin-top:32px;} .aside .note{background:var(--bg-card);border:1px solid var(--line);border-left:3px solid var(--orange);border-radius:0 8px 8px 0;padding:12px 16px;}}
+  .breadcrumb{font-family:var(--sans);font-size:.82em;color:var(--ink-faint);margin-bottom:24px;letter-spacing:.02em;}
+  .breadcrumb a{color:var(--ink-soft);text-decoration:none;} .breadcrumb a:hover{color:var(--orange-deep);}
+  h1{font-family:var(--sans);font-weight:700;font-size:2.1em;line-height:1.2;color:var(--ink);margin:0 0 12px;letter-spacing:-.01em;}
+  .meta{font-family:var(--sans);font-size:.85em;color:var(--ink-faint);margin-bottom:36px;display:flex;gap:16px;flex-wrap:wrap;}
+  .meta .pill{background:var(--bg-card);border:1px solid var(--line);padding:3px 12px;border-radius:12px;}
+  h2{font-family:var(--sans);font-weight:600;font-size:1.35em;color:var(--ink);margin:48px 0 16px;letter-spacing:-.005em;}
+  h3{font-family:var(--sans);font-weight:600;font-size:1.1em;color:var(--ink);margin:32px 0 8px;}
+  p{margin:0 0 1.1em;}
+  .lead{font-size:1.12em;color:var(--ink);line-height:1.55;margin-bottom:1.4em;}
+  em{font-style:italic;} strong{font-weight:600;color:var(--ink);}
+  .pull{border-left:3px solid var(--orange);padding:4px 0 4px 20px;margin:28px 0;color:var(--ink);font-style:italic;font-size:1.05em;line-height:1.5;}
+  .next{margin-top:56px;padding:22px 24px;background:var(--bg-card);border:1px solid var(--line);border-radius:10px;font-family:var(--sans);font-size:.95em;}
+  .next-label{text-transform:uppercase;letter-spacing:.07em;font-size:.78em;color:var(--orange-deep);font-weight:600;margin-bottom:6px;}
+  .next a{color:var(--ink);text-decoration:none;font-weight:600;} .next a:hover{color:var(--orange-deep);}
+  .quad{font-family:var(--sans);font-size:.92em;border-collapse:collapse;width:100%;margin:24px 0;background:var(--bg-card);border:1px solid var(--line);border-radius:8px;overflow:hidden;}
+  .quad th,.quad td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);}
+  .quad th{color:var(--orange-deep);text-transform:uppercase;letter-spacing:.05em;font-size:.76em;font-weight:600;background:var(--bg);}
+  .quad tr:last-child td{border-bottom:none;}
+  .quad td:first-child{font-weight:600;color:var(--ink);}
+  .exercises{margin:56px 0 32px;padding-top:36px;border-top:1px solid var(--line);}
+  .ex-title{font-family:var(--sans);font-size:1.25em;color:var(--ink);margin-bottom:20px;font-weight:600;}
+  .ex-card{background:var(--bg-card);border:1px solid var(--line);border-radius:8px;padding:16px 20px;margin-bottom:14px;font-family:var(--sans);font-size:.95em;}
+  .ex-card summary{cursor:pointer;list-style:none;display:flex;gap:12px;align-items:flex-start;color:var(--ink);}
+  .ex-card summary::-webkit-details-marker{display:none;}
+  .ex-card summary::before{content:"▸";color:var(--orange);font-size:.9em;transition:transform .2s;flex-shrink:0;margin-top:2px;}
+  .ex-card[open] summary::before{transform:rotate(90deg);}
+  .ex-tag{display:inline-block;font-size:.72em;font-weight:600;padding:2px 8px;border-radius:4px;text-transform:uppercase;letter-spacing:.04em;flex-shrink:0;margin-top:1px;}
+  .ex-tag-easy{background:#E6EDD8;color:#5A6E36;} .ex-tag-medium{background:#F4E4CC;color:#8C5E1F;} .ex-tag-hard{background:#F0D8CB;color:#A23215;}
+  .ex-q{line-height:1.45;}
+  .ex-answer{margin:16px 0 4px 32px;padding:14px 18px;background:#FFFEFA;border-left:3px solid var(--orange);color:#444;line-height:1.6;border-radius:0 6px 6px 0;}
+  .ex-answer p{margin:0 0 10px;} .ex-answer p:last-child{margin-bottom:0;} .ex-answer strong{color:var(--ink);}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress-bar"></div>
+
+<div class="layout">
+  <main class="main">
+    <div class="breadcrumb"><a href="../indice.html">Curso · Sistemas de energía en coches eléctricos</a> &nbsp;/&nbsp; Píldora 11</div>
+
+    <h1>Futuro próximo: estado sólido, sodio-ion y baterías estructurales</h1>
+    <div class="meta">
+      <span class="pill">⏱ 10 min</span>
+      <span class="pill">Píldora 11 de 12</span>
+    </div>
+
+    <p class="lead">El panorama de NMC y LFP que vimos en la píldora 3 cubre prácticamente todo el mercado actual. Pero hay tres apuestas tecnológicas que están entrando con fuerza y que en los próximos cinco a diez años cambiarán parte del juego. No vendrán a sustituir todo: vendrán a ocupar nichos específicos donde superen a las químicas dominantes. Conocerlas con criterio te permite leer las próximas oleadas de noticias sin caer en el bombo.</p>
+
+    <h2>Por qué hay carrera</h2>
+    <p>Las baterías de hoy son razonablemente buenas, pero tienen tres fronteras incómodas: <strong>densidad energética</strong> (el peso por kWh), <strong>materias primas</strong> (litio, cobalto y níquel son finitos y geopolíticamente sensibles) y <strong>seguridad</strong> (el riesgo de fuga térmica es bajo, pero no cero). Cualquier química que mejore claramente alguna de estas tres dimensiones, sin empeorar las otras, tiene un mercado garantizado. Eso explica por qué se está invirtiendo tanto.</p>
+
+    <p>Las tres apuestas serias del horizonte 2026-2030 atacan cada una una frontera distinta:</p>
+
+    <ul style="font-family: var(--sans); font-size: .98em; color: var(--ink-soft); line-height: 1.8;">
+      <li><strong>Estado sólido</strong>: ataca la densidad energética y la seguridad.</li>
+      <li><strong>Sodio-ion</strong>: ataca el coste y la dependencia del litio.</li>
+      <li><strong>Baterías estructurales</strong>: no cambia la química, sino el cómo se monta.</li>
+    </ul>
+
+    <p>Vamos una por una.</p>
+
+    <h3>Estado sólido</h3>
+    <p>El cambio es conceptualmente simple: en una batería normal, el electrolito (el líquido por el que viajan los iones de litio entre los electrodos) es exactamente eso, líquido. En una batería de <strong>estado sólido</strong>, ese líquido se sustituye por un electrolito sólido — típicamente una cerámica especial o un polímero.</p>
+
+    <p>Beneficios potenciales:</p>
+
+    <p><strong>Más densidad energética.</strong> El electrolito sólido permite usar un ánodo de litio metálico (en lugar del ánodo de grafito habitual), lo que dispara la cantidad de iones que se pueden almacenar. Las cifras que se manejan: 400-500 Wh/kg a nivel de celda, frente a los 250-300 actuales. Eso podría suponer 20-30% más de autonomía con la misma batería en peso.</p>
+
+    <p><strong>Más seguridad.</strong> Sin líquido inflamable dentro, la fuga térmica se vuelve mucho menos probable. Una celda de estado sólido perforada no se incendia.</p>
+
+    <p><strong>Carga más rápida potencialmente.</strong> Algunos diseños prometen tolerar mucha más corriente sin degradarse, lo que se traduciría en cargas de minutos.</p>
+
+    <p>El obstáculo es la fabricación. Producir electrolito sólido con la pureza y la fiabilidad necesarias, y a un coste competitivo, es muy difícil. Algunas celdas de estado sólido ya existen en laboratorios y prototipos, pero la producción a escala industrial sigue siendo el cuello de botella. Las primeras aplicaciones reales se esperan en gama premium hacia finales de esta década.</p>
+
+    <h3>Sodio-ion</h3>
+    <p>El planteamiento opuesto: en lugar de buscar más densidad, buscar menos coste. La idea es sustituir el litio por <strong>sodio</strong>. El sodio es el sexto elemento más abundante en la corteza terrestre (presente en la sal común). Es muchísimo más barato y políticamente neutro que el litio, que se concentra en pocos países productores.</p>
+
+    <p>El precio que se paga: el sodio es más pesado y más voluminoso que el litio, así que la densidad energética de una celda de sodio-ion es inferior. Hoy estamos hablando de unos 120-160 Wh/kg, frente a los 200-300 de las químicas de litio actuales. Para la misma autonomía, una batería de sodio-ion pesa más.</p>
+
+    <p>Eso la descarta para coches premium o de larga autonomía, pero la hace muy interesante para:</p>
+
+    <p><strong>Coches urbanos pequeños y baratos.</strong> Donde 250-300 km de autonomía sobran y la prioridad es el precio.</p>
+
+    <p><strong>Almacenamiento estacionario.</strong> En casas o plantas eléctricas, donde el peso da igual y lo que importa es coste por kWh y vida útil.</p>
+
+    <p>El sodio-ion ya está empezando a aparecer en coches eléctricos comerciales en mercados sensibles al precio, y es probable que se asiente en gama de acceso. Compite directamente con LFP por el segmento bajo, igual que LFP compite con NMC por el medio.</p>
+
+    <h3>Baterías estructurales</h3>
+    <p>Esta no es un cambio de química, es un cambio de <strong>arquitectura</strong>. La idea es eliminar la separación entre la batería y el chasis: en lugar de tener un pack que se monta dentro del coche como una bandeja independiente, las celdas y los módulos forman <em>parte</em> de la estructura misma del vehículo.</p>
+
+    <p>Beneficios:</p>
+
+    <p><strong>Menos peso.</strong> Al integrar pack y chasis, se eliminan duplicidades estructurales. La carcasa del pack ya no necesita ser tan robusta porque el chasis del coche lo es.</p>
+
+    <p><strong>Más espacio interior.</strong> El pack ya no es un bloque separado; las celdas se distribuyen donde mejor encajan, liberando espacio para el habitáculo o el maletero.</p>
+
+    <p><strong>Más rigidez del coche.</strong> El pack contribuye a la rigidez torsional del chasis, lo que mejora la dinámica de conducción.</p>
+
+    <p>Costes:</p>
+
+    <p><strong>Reparabilidad.</strong> Si una celda falla, ya no se cambia un módulo: hay que intervenir el chasis. Las reparaciones son más caras y menos modulares.</p>
+
+    <p><strong>Reciclado complicado.</strong> Al final de la vida del coche, separar las celdas del chasis es más complejo que desmontar un pack independiente.</p>
+
+    <p>Las baterías estructurales son una tendencia clara en gama premium y deportivos, donde los kilos cuentan más que la facilidad de reparación. Es probable que se extiendan a gama media a medida que la tecnología madura, pero el debate de "reparable vs eficiente" seguirá abierto durante años.</p>
+
+    <h2>Comparativa con lo de hoy</h2>
+    <p>Cuatro químicas / arquitecturas, cuatro perfiles distintos:</p>
+
+    <table class="quad">
+      <tr><th></th><th>Densidad</th><th>Coste</th><th>Durabilidad</th><th>Seguridad</th></tr>
+      <tr><td>NMC</td><td>Alta</td><td>Alta</td><td>Media</td><td>Media</td></tr>
+      <tr><td>LFP</td><td>Media</td><td>Baja</td><td>Alta</td><td>Alta</td></tr>
+      <tr><td>Sodio-ion</td><td>Baja-media</td><td>Muy baja</td><td>Alta</td><td>Alta</td></tr>
+      <tr><td>Estado sólido</td><td>Muy alta</td><td>Muy alta</td><td>Promete alta</td><td>Muy alta</td></tr>
+    </table>
+
+    <p>Como ves, no hay una "mejor". Cada química tiene su perfil y encaja en un nicho. La realidad de los próximos años no será "estado sólido sustituye a NMC" o "sodio-ion mata a LFP". Será una <em>especialización progresiva</em>: cada coche llevará la química más adecuada para su segmento, y el panorama se diversificará en lugar de homogeneizarse.</p>
+
+    <div class="pull">El futuro no es una química nueva que arrasa con las viejas. Es un mosaico donde cada pieza está donde mejor encaja. Saber leer ese mosaico es lo que te permite ver más allá del titular.</div>
+
+    <h2>Cómo leer las noticias del sector</h2>
+    <p>Cuando leas un titular sobre una nueva batería revolucionaria, tres preguntas para no caer en el hype:</p>
+
+    <p><strong>¿Es a nivel de celda o a nivel de pack?</strong> Las cifras de laboratorio suelen ser de celda aislada. Al pasar al pack se pierde un 30-40% por las carcasas, conexiones y gestión. Si dicen "500 Wh/kg en celda", el pack rondará 350.</p>
+
+    <p><strong>¿Es producción o prototipo?</strong> Hay un abismo entre demostrar una celda en laboratorio y fabricar millones al año con coste razonable. Muchos anuncios brillantes nunca llegan a producción a escala. Pregunta cuándo hay coches reales en concesionario.</p>
+
+    <p><strong>¿Qué dice el estudio sobre durabilidad?</strong> Una celda con 500 Wh/kg pero solo 200 ciclos no sirve para coche. Las cifras de densidad sin las de vida útil son medio relato. Los buenos estudios reportan ambas.</p>
+
+    <p>Con esas tres preguntas filtras la mayoría del ruido. Lo que pase con las baterías en los próximos diez años importa, pero la mayoría de cambios vendrán por mejoras incrementales en NMC, LFP y sodio-ion, no por una revolución mágica.</p>
+
+    <div class="exercises">
+      <div class="ex-title">Comprueba que lo tienes</div>
+
+      <details class="ex-card">
+        <summary><span class="ex-tag ex-tag-easy">Fácil</span><span class="ex-q">¿Qué cambia exactamente en una batería de estado sólido respecto a una de litio convencional?</span></summary>
+        <div class="ex-answer">
+          <p>El electrolito. En una convencional es líquido (un solvente con sales de litio); en una de estado sólido es sólido (cerámica o polímero). Ese cambio permite usar ánodos más densos y elimina el riesgo del electrolito inflamable, pero produce a escala industrial es muy difícil.</p>
+        </div>
+      </details>
+
+      <details class="ex-card">
+        <summary><span class="ex-tag ex-tag-easy">Fácil</span><span class="ex-q">¿Cuál es la principal limitación del sodio-ion frente al litio?</span></summary>
+        <div class="ex-answer">
+          <p>La densidad energética. El sodio es más pesado y más voluminoso que el litio, así que para almacenar los mismos kWh hace falta una batería más pesada. Por eso encaja en coches urbanos pequeños y en almacenamiento estacionario, no en coches premium o de larga autonomía.</p>
+        </div>
+      </details>
+
+      <details class="ex-card">
+        <summary><span class="ex-tag ex-tag-medium">Medio</span><span class="ex-q">¿Por qué una batería estructural es difícil de reparar?</span></summary>
+        <div class="ex-answer">
+          <p>Porque las celdas y los módulos forman parte del chasis del coche, no son una pieza separada que se pueda sustituir. Si una celda interior falla, intervenir significa abrir o cambiar parte de la estructura misma del vehículo, lo que multiplica el coste y la complejidad respecto a un pack convencional donde basta cambiar un módulo.</p>
+        </div>
+      </details>
+
+      <details class="ex-card">
+        <summary><span class="ex-tag ex-tag-hard">Difícil</span><span class="ex-q">Lees un titular: "Nueva batería logra 500 Wh/kg en laboratorio, triplicando la autonomía actual". Da tres motivos para ser cauto.</span></summary>
+        <div class="ex-answer">
+          <p>(1) Esos 500 Wh/kg son a nivel de celda. Al pasar al pack se pierden por las estructuras y conexiones — el coche real estará en torno a 300-350 Wh/kg, no 500. (2) Pasar de una celda de laboratorio a una línea de producción a escala industrial puede tardar años o décadas, y muchos anuncios nunca llegan. (3) La densidad sin la durabilidad es media historia: si esa celda dura 200 ciclos, no sirve para coche. Hay que ver qué dice el estudio sobre vida útil. Sin esas tres respuestas, el titular es solo titular.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="next">
+      <div class="next-label">Siguiente</div>
+      <a href="../pildora-12_futuro-extendido/index.html">Píldora 12 — Futuro extendido →</a>
+    </div>
+  </main>
+
+  <aside class="aside">
+    <div class="note">
+      <span class="note-label">Vocabulario</span>
+      <strong>Electrolito</strong>: el medio por el que viajan los iones entre los electrodos. <strong>Estado sólido</strong>: cuando ese medio es sólido en lugar de líquido.
+    </div>
+    <div class="note">
+      <span class="note-label">Por qué el sodio es tan barato</span>
+      Porque la sal común (cloruro de sodio) se obtiene del mar y de yacimientos enormes. Es uno de los recursos más abundantes y geográficamente distribuidos del planeta.
+    </div>
+    <div class="note">
+      <span class="note-label">"Cell-to-chassis"</span>
+      Variante extrema de batería estructural: las celdas van directamente integradas en el chasis, sin módulos intermedios. Máxima eficiencia de espacio, mínima reparabilidad.
+    </div>
+    <div class="note">
+      <span class="note-label">El reciclado importa cada vez más</span>
+      A medida que envejezcan los packs de los primeros coches eléctricos, recuperar litio, níquel y cobalto se va volviendo industria. Las arquitecturas estructurales complican ese reciclado, lo que es uno de los argumentos en su contra.
+    </div>
+  </aside>
+</div>
+
+<script>
+  const bar=document.getElementById('progress-bar');
+  function up(){const h=document.documentElement;bar.style.width=((h.scrollTop)/(h.scrollHeight-h.clientHeight)*100)+'%';}
+  document.addEventListener('scroll',up,{passive:true}); up();
+</script>
+</body>
+</html>

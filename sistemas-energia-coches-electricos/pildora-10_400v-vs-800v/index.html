@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Píldora 10 — 400V vs 800V</title>
+<style>
+  :root { --bg:#F8F4EC; --bg-card:#FBF7EC; --ink:#2A2A2A; --ink-soft:#555; --ink-faint:#888; --line:#E5DFCF; --orange:#E07A3C; --orange-deep:#B8480F; --max-content:680px; --serif:"Iowan Old Style","Apple Garamond","Georgia","Times New Roman",serif; --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{background:var(--bg);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.7;-webkit-font-smoothing:antialiased;}
+  .progress-bar{position:fixed;top:0;left:0;width:0%;height:3px;background:var(--orange);z-index:100;transition:width .05s linear;}
+  .layout{max-width:1200px;margin:0 auto;padding:80px 32px 96px;display:grid;grid-template-columns:minmax(0,1fr);gap:0;}
+  @media (min-width:1024px){.layout{grid-template-columns:minmax(0,var(--max-content)) minmax(220px,280px);gap:56px;padding:80px 48px 96px;}}
+  .main{max-width:var(--max-content);}
+  .aside{font-family:var(--sans);font-size:.85em;color:var(--ink-soft);line-height:1.55;}
+  .aside .note{border-left:2px solid var(--orange);padding:4px 0 4px 14px;margin-bottom:28px;}
+  .aside .note-label{display:block;text-transform:uppercase;letter-spacing:.06em;font-size:.78em;color:var(--orange-deep);font-weight:600;margin-bottom:4px;}
+  @media (max-width:1023px){.aside{margin-top:32px;} .aside .note{background:var(--bg-card);border:1px solid var(--line);border-left:3px solid var(--orange);border-radius:0 8px 8px 0;padding:12px 16px;}}
+  .breadcrumb{font-family:var(--sans);font-size:.82em;color:var(--ink-faint);margin-bottom:24px;letter-spacing:.02em;}
+  .breadcrumb a{color:var(--ink-soft);text-decoration:none;} .breadcrumb a:hover{color:var(--orange-deep);}
+  h1{font-family:var(--sans);font-weight:700;font-size:2.1em;line-height:1.2;color:var(--ink);margin:0 0 12px;letter-spacing:-.01em;}
+  .meta{font-family:var(--sans);font-size:.85em;color:var(--ink-faint);margin-bottom:36px;display:flex;gap:16px;flex-wrap:wrap;}
+  .meta .pill{background:var(--bg-card);border:1px solid var(--line);padding:3px 12px;border-radius:12px;}
+  h2{font-family:var(--sans);font-weight:600;font-size:1.35em;color:var(--ink);margin:48px 0 16px;letter-spacing:-.005em;}
+  p{margin:0 0 1.1em;}
+  .lead{font-size:1.12em;color:var(--ink);line-height:1.55;margin-bottom:1.4em;}
+  em{font-style:italic;} strong{font-weight:600;color:var(--ink);}
+  .pull{border-left:3px solid var(--orange);padding:4px 0 4px 20px;margin:28px 0;color:var(--ink);font-style:italic;font-size:1.05em;line-height:1.5;}
+  .diagram{margin:36px 0 12px;}
+  .diagram img{width:100%;height:auto;border-radius:8px;display:block;}
+  .diagram-caption{font-family:var(--sans);font-size:.82em;color:var(--ink-faint);text-align:center;margin-top:10px;line-height:1.5;}
+  .diagram-labels{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:8px;font-family:var(--sans);font-size:.85em;color:var(--ink-soft);text-align:center;}
+  .diagram-labels span{padding:6px 4px;border-top:2px solid var(--orange);font-weight:500;}
+  .next{margin-top:56px;padding:22px 24px;background:var(--bg-card);border:1px solid var(--line);border-radius:10px;font-family:var(--sans);font-size:.95em;}
+  .next-label{text-transform:uppercase;letter-spacing:.07em;font-size:.78em;color:var(--orange-deep);font-weight:600;margin-bottom:6px;}
+  .next a{color:var(--ink);text-decoration:none;font-weight:600;} .next a:hover{color:var(--orange-deep);}
+  .compute{background:var(--bg-card);border:1px solid var(--line);border-radius:10px;padding:20px 24px;margin:28px 0;font-family:var(--sans);font-size:.94em;}
+  .compute-title{color:var(--orange-deep);font-weight:600;font-size:.86em;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;}
+  .compute-row{display:flex;justify-content:space-between;border-bottom:1px solid var(--line);padding:8px 0;color:var(--ink);}
+  .compute-row:last-child{border-bottom:none;font-weight:600;}
+  .exercises{margin:56px 0 32px;padding-top:36px;border-top:1px solid var(--line);}
+  .ex-title{font-family:var(--sans);font-size:1.25em;color:var(--ink);margin-bottom:20px;font-weight:600;}
+  .ex-card{background:var(--bg-card);border:1px solid var(--line);border-radius:8px;padding:16px 20px;margin-bottom:14px;font-family:var(--sans);font-size:.95em;}
+  .ex-card summary{cursor:pointer;list-style:none;display:flex;gap:12px;align-items:flex-start;color:var(--ink);}
+  .ex-card summary::-webkit-details-marker{display:none;}
+  .ex-card summary::before{content:"▸";color:var(--orange);font-size:.9em;transition:transform .2s;flex-shrink:0;margin-top:2px;}
+  .ex-card[open] summary::before{transform:rotate(90deg);}
+  .ex-tag{display:inline-block;font-size:.72em;font-weight:600;padding:2px 8px;border-radius:4px;text-transform:uppercase;letter-spacing:.04em;flex-shrink:0;margin-top:1px;}
+  .ex-tag-easy{background:#E6EDD8;color:#5A6E36;} .ex-tag-medium{background:#F4E4CC;color:#8C5E1F;} .ex-tag-hard{background:#F0D8CB;color:#A23215;}
+  .ex-q{line-height:1.45;}
+  .ex-answer{margin:16px 0 4px 32px;padding:14px 18px;background:#FFFEFA;border-left:3px solid var(--orange);color:#444;line-height:1.6;border-radius:0 6px 6px 0;}
+  .ex-answer p{margin:0 0 10px;} .ex-answer p:last-child{margin-bottom:0;} .ex-answer strong{color:var(--ink);}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress-bar"></div>
+
+<div class="layout">
+  <main class="main">
+    <div class="breadcrumb"><a href="../indice.html">Curso · Sistemas de energía en coches eléctricos</a> &nbsp;/&nbsp; Píldora 10</div>
+
+    <h1>400V vs 800V: qué cambia al subir el voltaje</h1>
+    <div class="meta">
+      <span class="pill">⏱ 10 min</span>
+      <span class="pill">Píldora 10 de 12</span>
+    </div>
+
+    <p class="lead">Casi todos los coches eléctricos modernos funcionan a unos 400 V de voltaje del pack. Algunos modelos recientes han doblado esa cifra a 800 V. Cuando lo lees en una ficha, suena a una mejora más, una cifra más grande es mejor. Pero el cambio es más profundo: 800 V no es "el doble de 400 V", es una arquitectura distinta con su propia lógica, sus propios costes y sus propios beneficios. Esta píldora te explica por qué ese paso ocurre y qué se gana realmente.</p>
+
+    <h2>La fórmula que lo cambia todo</h2>
+    <p>Toda la conversación sobre voltaje en un coche eléctrico se apoya en una fórmula simple, la que ya viste en la píldora 0:</p>
+
+    <p style="text-align:center;font-family:var(--sans);font-size:1.2em;color:var(--orange-deep);font-weight:600;margin:24px 0;">Potencia (W) = Voltaje (V) × Corriente (A)</p>
+
+    <p>Si quieres más potencia (cargar más rápido, acelerar más fuerte), tienes dos palancas: subir el voltaje, subir la corriente. Hagamos cuentas con un caso real: un cargador rápido entregando 250 kW.</p>
+
+    <div class="compute">
+      <div class="compute-title">Para entregar 250 kW</div>
+      <div class="compute-row"><span>A 400 V</span><span>625 A de corriente</span></div>
+      <div class="compute-row"><span>A 800 V</span><span>312 A de corriente</span></div>
+      <div class="compute-row"><span>Diferencia</span><span>la mitad de corriente, misma potencia</span></div>
+    </div>
+
+    <p>El sistema de 800 V hace lo mismo (mover 250 kW) con la mitad de corriente. Esa diferencia, que sobre el papel parece menor, tiene consecuencias enormes. Para entender por qué, hay que ver qué hace la corriente cuando viaja por un cable.</p>
+
+    <h2>El problema del calor en el cable</h2>
+    <p>Cuando una corriente eléctrica pasa por un cable, parte de su energía se pierde como <strong>calor</strong>. Esa pérdida no depende del voltaje: depende del cuadrado de la corriente. Doblar la corriente <em>cuadruplica</em> la pérdida en el cable. Mantener la corriente baja es, por tanto, una palanca brutal de eficiencia.</p>
+
+    <p>Hay dos formas de evitar que el cable se queme con corriente alta: hacer el cable más grueso (más cobre = menos resistencia = menos calor) o reducir la corriente. La primera vía tiene un techo: cables de cobre muy gruesos pesan mucho, son rígidos, ocupan espacio y son carísimos. La segunda vía es subir el voltaje, que te permite mover la misma potencia con menos corriente, y por tanto con cables más finos, ligeros y baratos.</p>
+
+    <div class="diagram">
+      <img src="pildora-10_diagrama-1.png" alt="Comparativa visual de dos sistemas: arriba 400V con cable grueso entre batería y motor y muchas señales de calor saliendo del cable; abajo 800V con cable mucho más fino y solo una pequeña señal de calor">
+      <div class="diagram-labels">
+        <span>400V: cable grueso, mucho calor</span>
+        <span>800V: cable fino, poco calor</span>
+      </div>
+      <div class="diagram-caption">La misma potencia, dos arquitecturas. Arriba: 400V exige cables gruesos y disipa más calor en el camino. Abajo: 800V usa cables finos y libera muchísimo menos calor para la misma potencia útil.</div>
+    </div>
+
+    <h2>Las cuatro consecuencias prácticas</h2>
+    <p>Pasar de 400 V a 800 V cambia cuatro cosas a la vez:</p>
+
+    <p><strong>1 · Carga más rápida.</strong> El techo de un cargador DC viene marcado por la corriente que el cable y el coche pueden aguantar. Con 800 V, esa corriente es la mitad para la misma potencia, así que se puede subir el techo. Cargadores capaces de 350 kW se aprovechan de verdad solo con coches de 800 V; un coche de 400 V conectado al mismo cargador rara vez pasa de 250 kW.</p>
+
+    <p><strong>2 · Cables más finos y ligeros.</strong> No solo en el cable de carga. Dentro del coche, el cableado de alta tensión que conecta el pack con el inversor y el motor también puede ser más fino. Eso ahorra varios kilos de cobre — y en un coche, cada kilo cuenta. El cable de carga rápida también es más manejable.</p>
+
+    <p><strong>3 · Menos pérdidas.</strong> Tanto en el cable de carga como en el cableado interno. La eficiencia mejora un par de puntos, lo que se traduce en autonomía adicional con la misma batería.</p>
+
+    <p><strong>4 · Menos calor que disipar.</strong> Si la corriente es la mitad, el calor generado en cables y conexiones es mucho menor. El sistema térmico del coche sufre menos, sobre todo durante carga rápida prolongada — el cuello de botella suele ser cuánto calor se puede sacar del pack y del cableado en cada minuto.</p>
+
+    <h2>Lo que cuesta</h2>
+    <p>Si los beneficios fueran gratis, todos los coches serían ya de 800 V. Pero no es así. El cambio tiene tres costes técnicos importantes:</p>
+
+    <p><strong>Semiconductores SiC.</strong> Los semiconductores de silicio tradicionales no aguantan bien tensiones tan altas. 800 V exige semiconductores de carburo de silicio (SiC) en el inversor, en el OBC y en el DC-DC. Son más caros que los de silicio puro, aunque también más eficientes. Por eso 800 V suele venir acompañado de SiC: van de la mano.</p>
+
+    <p><strong>Aislamientos especiales.</strong> El doble de voltaje exige más aislamiento en cables, conectores, contactores y cualquier punto donde haya riesgo de arco eléctrico. Cada componente eléctrico de alta tensión tiene que estar especificado para 800 V, lo que encarece la lista de materiales.</p>
+
+    <p><strong>Compatibilidad con cargadores.</strong> Un coche de 800 V conectado a un cargador DC de 400 V tiene que adaptar el voltaje internamente, normalmente vía el inversor o un convertidor dedicado. Eso añade complejidad. La buena noticia es que la mayoría de coches modernos de 800 V incluyen esa adaptación y cargan en cualquier cargador, solo que más lento que en uno nativo de 800 V.</p>
+
+    <p>Por todo esto, 800 V tiene sentido económico cuando el coche prioriza carga ultrarrápida y eficiencia (deportivos, premium, viajeros largos). Para un urbano modesto, donde la mayor parte de la carga es lenta en casa, 400 V sigue siendo la opción razonable. No es "mejor o peor": es "para qué".</p>
+
+    <div class="pull">800 V no es marketing. Es física: a más voltaje, menos corriente para la misma potencia, y menos corriente significa menos calor, menos cobre y más velocidad de carga.</div>
+
+    <h2>Por qué no se sube todavía más</h2>
+    <p>Si subir de 400 a 800 mejora tanto, ¿por qué no subir a 1500 V o 3000 V? Tres razones.</p>
+
+    <p><strong>Aislamiento exponencial.</strong> Cuanto mayor es el voltaje, más exigente es el aislamiento y más distancia hay que dejar entre conductores para evitar arcos. A partir de cierto punto, el coste y el volumen del aislamiento crecen más rápido que los beneficios.</p>
+
+    <p><strong>Seguridad para personas.</strong> Cualquier voltaje por encima de los 60 V DC se considera peligroso. Por encima de los 1 000 V, las normativas de seguridad (para reparación, intervención de bomberos en accidentes, instalación) se complican mucho. La industria ha acordado de facto que ~800 V es un buen techo práctico para vehículos de pasajeros.</p>
+
+    <p><strong>Vehículos pesados son otra cosa.</strong> En camiones eléctricos sí se está experimentando con 1 200 o 1 500 V, porque manejan potencias mucho mayores y la justificación cambia. Pero los turismos no necesitan ir más allá de 800 V con la tecnología actual.</p>
+
+    <h2>Cómo identificar la arquitectura</h2>
+    <p>Tres pistas prácticas para reconocer si un coche es de 400 V o 800 V sin abrir el manual:</p>
+
+    <p><strong>Velocidad máxima de carga DC anunciada.</strong> Por encima de 250 kW casi siempre es 800 V. Por debajo, casi siempre 400 V.</p>
+
+    <p><strong>Tiempo de carga 10-80% en cargador potente.</strong> Si está por debajo de 20 minutos, probablemente 800 V. Si ronda los 30 minutos, 400 V.</p>
+
+    <p><strong>Mención explícita en la ficha.</strong> Las marcas de los coches 800 V suelen presumir de la arquitectura, porque es un argumento de venta. Si no lo mencionan, suele ser 400 V.</p>
+
+    <p>No hay nada malo en ser de 400 V. La gran mayoría de coches eléctricos en circulación son de 400 V, cargan perfectamente para uso normal y tienen mucho recorrido por delante. Pero entender la diferencia te permite leer una ficha sin caer en las dos trampas habituales: pensar que 800 V es siempre mejor (no para todos los usos), o asumir que dos coches con cifras parecidas de carga pico son iguales en la práctica (la sostenida importa tanto como la pico).</p>
+
+    <div class="exercises">
+      <div class="ex-title">Comprueba que lo tienes</div>
+
+      <details class="ex-card">
+        <summary><span class="ex-tag ex-tag-easy">Fácil</span><span class="ex-q">Si la potencia es la misma, ¿por qué pasar de 400 V a 800 V baja la corriente a la mitad?</span></summary>
+        <div class="ex-answer">
+          <p>Porque potencia = voltaje × corriente. Si fijas la potencia y duplicas el voltaje, la corriente tiene que reducirse a la mitad para mantener el producto igual. Es aritmética directa.</p>
+        </div>
+      </details>
+
+      <details class="ex-card">
+        <summary><span class="ex-tag ex-tag-easy">Fácil</span><span class="ex-q">¿Por qué 800 V exige semiconductores SiC?</span></summary>
+        <div class="ex-answer">
+          <p>Porque los semiconductores de silicio tradicionales no soportan bien voltajes tan altos sin perder mucha energía como calor o sin romperse. SiC (carburo de silicio) está diseñado precisamente para tensiones altas y eficiencia: aguanta 800 V cómodamente y conmuta con menos pérdidas. Por eso 800 V y SiC suelen ir juntos en los coches modernos.</p>
+        </div>
+      </details>
+
+      <details class="ex-card">
+        <summary><span class="ex-tag ex-tag-medium">Medio</span><span class="ex-q">¿Por qué un coche de 400 V conectado a un cargador de 350 kW rara vez aprovecha esos 350 kW?</span></summary>
+        <div class="ex-answer">
+          <p>Porque para entregar 350 kW a 400 V hacen falta 875 A de corriente (350 000 ÷ 400). Esa corriente es altísima: requiere cables muy gruesos, mucho calor a disipar y conectores capaces. Tanto el coche como el cable de carga suelen tener un techo más bajo (típicamente 500-625 A), lo que limita la potencia real a 200-250 kW. Un coche de 800 V mueve los mismos 350 kW con la mitad de corriente, dentro de los límites prácticos del cable y del coche.</p>
+        </div>
+      </details>
+
+      <details class="ex-card">
+        <summary><span class="ex-tag ex-tag-hard">Difícil</span><span class="ex-q">¿Por qué la industria ha elegido 800 V como techo práctico para turismos en lugar de subir más?</span></summary>
+        <div class="ex-answer">
+          <p>Por dos motivos compatibles. Técnico: el aislamiento, los conectores y los semiconductores se vuelven exponencialmente caros y voluminosos por encima de cierto voltaje. Las ventajas decrecen y los costes se disparan. De seguridad: por encima de 1 000 V las normativas para reparación, mantenimiento e intervención (bomberos en accidentes, talleres) se complican mucho. 800 V queda en un punto óptimo: suficiente para mejorar carga y eficiencia notablemente, sin entrar en una zona de complicaciones desproporcionadas. Camiones y autobuses, que mueven más potencia, sí están explorando 1 200-1 500 V — pero los turismos no necesitan llegar tan arriba.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="next">
+      <div class="next-label">Siguiente</div>
+      <a href="../pildora-11_futuro-proximo/index.html">Píldora 11 — Futuro próximo →</a>
+    </div>
+  </main>
+
+  <aside class="aside">
+    <div class="note">
+      <span class="note-label">Ley de Joule</span>
+      Las pérdidas en un cable son proporcionales a I² × R, donde I es la corriente y R la resistencia. Doblar la corriente cuadruplica las pérdidas. Es la ley física que justifica todo el cambio a 800 V.
+    </div>
+    <div class="note">
+      <span class="note-label">800V no siempre da 800V</span>
+      Por arquitectura "800 V" se entiende un sistema con voltaje de pack entre ~650 V y ~900 V. La cifra exacta depende del estado de carga y del fabricante.
+    </div>
+    <div class="note">
+      <span class="note-label">Carga sostenida vs carga pico</span>
+      Un coche puede anunciar "250 kW pico" pero aguantar solo unos minutos en ese techo antes de que el sistema térmico le obligue a bajar. La cifra realista es la potencia media en una sesión 10-80%.
+    </div>
+    <div class="note">
+      <span class="note-label">Los componentes 12V siguen ahí</span>
+      Subir el pack a 800 V no cambia que las luces y la radio sigan siendo de 12 V. El convertidor DC-DC simplemente baja de 800 V a 12 V en lugar de 400 a 12. La compatibilidad histórica se mantiene.
+    </div>
+  </aside>
+</div>
+
+<script>
+  const bar=document.getElementById('progress-bar');
+  function up(){const h=document.documentElement;bar.style.width=((h.scrollTop)/(h.scrollHeight-h.clientHeight)*100)+'%';}
+  document.addEventListener('scroll',up,{passive:true}); up();
+</script>
+</body>
+</html>

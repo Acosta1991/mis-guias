@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sistemas de energía en coches eléctricos · Curso</title>
+<style>
+  :root { --bg:#F8F4EC; --bg-card:#FBF7EC; --ink:#2A2A2A; --ink-soft:#555; --ink-faint:#888; --line:#E5DFCF; --orange:#E07A3C; --orange-deep:#B8480F; --max-content:760px; --serif:"Iowan Old Style","Apple Garamond","Georgia","Times New Roman",serif; --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{background:var(--bg);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.7;-webkit-font-smoothing:antialiased;}
+  .wrapper{max-width:var(--max-content);margin:0 auto;padding:80px 32px 96px;}
+  .eyebrow{font-family:var(--sans);font-size:.82em;color:var(--orange-deep);text-transform:uppercase;letter-spacing:.12em;font-weight:600;margin-bottom:18px;}
+  h1{font-family:var(--sans);font-weight:700;font-size:2.6em;line-height:1.1;color:var(--ink);margin:0 0 14px;letter-spacing:-.02em;}
+  .sub{font-family:var(--serif);font-size:1.2em;color:var(--ink-soft);line-height:1.5;margin-bottom:42px;}
+  .meta{font-family:var(--sans);font-size:.88em;color:var(--ink-faint);margin-bottom:46px;display:flex;gap:14px;flex-wrap:wrap;}
+  .meta .pill{background:var(--bg-card);border:1px solid var(--line);padding:4px 12px;border-radius:14px;}
+  h2{font-family:var(--sans);font-weight:600;font-size:1.25em;color:var(--ink);margin:48px 0 14px;letter-spacing:-.005em;text-transform:uppercase;font-size:.9em;letter-spacing:.08em;color:var(--orange-deep);}
+  .intro{font-family:var(--serif);font-size:1.05em;color:var(--ink);line-height:1.7;}
+  .intro p{margin:0 0 1em;}
+  .toc{margin:14px 0 0;}
+  .toc-block{margin:36px 0 18px;}
+  .toc-block-title{font-family:var(--sans);font-size:.78em;color:var(--orange-deep);text-transform:uppercase;letter-spacing:.1em;font-weight:600;margin-bottom:14px;}
+  .toc-item{display:flex;gap:18px;padding:14px 16px;border-radius:8px;text-decoration:none;color:inherit;transition:background .15s,transform .15s;border:1px solid transparent;margin-bottom:6px;}
+  .toc-item:hover{background:var(--bg-card);border:1px solid var(--line);}
+  .toc-num{font-family:var(--sans);font-weight:700;color:var(--orange);font-size:1.15em;min-width:36px;text-align:right;line-height:1.4;}
+  .toc-num.bridge{color:var(--ink-faint);}
+  .toc-body{flex:1;}
+  .toc-title{font-family:var(--sans);font-size:1.02em;font-weight:600;color:var(--ink);margin:0 0 4px;line-height:1.35;}
+  .toc-desc{font-family:var(--serif);font-size:.94em;color:var(--ink-soft);margin:0;line-height:1.5;}
+  .toc-time{font-family:var(--sans);font-size:.78em;color:var(--ink-faint);min-width:64px;text-align:right;line-height:1.4;font-weight:500;letter-spacing:.02em;}
+  .final{margin-top:36px;padding:22px 24px;background:var(--bg-card);border:1px solid var(--line);border-radius:10px;font-family:var(--sans);font-size:.96em;}
+  .final a{color:var(--ink);text-decoration:none;font-weight:600;display:flex;justify-content:space-between;align-items:center;gap:14px;}
+  .final a:hover{color:var(--orange-deep);}
+  .final-label{text-transform:uppercase;letter-spacing:.07em;font-size:.78em;color:var(--orange-deep);font-weight:600;margin-bottom:6px;display:block;}
+  hr.sep{border:none;border-top:1px solid var(--line);margin:48px 0;}
+</style>
+</head>
+<body>
+<div class="wrapper">
+  <div class="eyebrow">Curso completo</div>
+  <h1>Sistemas de energía en coches eléctricos</h1>
+  <p class="sub">Una guía profunda, en 13 píldoras, que recorre todos los componentes del sistema de energía de un coche eléctrico — desde la celda química más pequeña hasta el papel del coche en la red eléctrica del país.</p>
+
+  <div class="meta">
+    <span class="pill">⏱ ~2 h 10 min</span>
+    <span class="pill">13 píldoras</span>
+    <span class="pill">10 diagramas</span>
+    <span class="pill">Nivel introductorio sólido</span>
+  </div>
+
+  <div class="intro">
+    <p>El curso está pensado para entender bien las cosas, no para convertirte en ingeniero. Cada píldora dura unos 10 minutos, es autónoma (puedes leerla suelta) y termina con preguntas para fijar lo aprendido. Las analogías son cotidianas (agua, casa, cocina). El lenguaje es directo. Los diagramas son editoriales, hechos para mirar.</p>
+    <p>Tres bloques: <strong>anatomía</strong> del sistema (qué hay dentro), <strong>movimiento e infraestructura</strong> (cómo se usa y se repone) y <strong>horizonte</strong> (hacia dónde va). La píldora 0 es un puente opcional: si dudas con la electricidad básica, hazla; si la dominas, sáltala sin remordimientos.</p>
+  </div>
+
+  <hr class="sep">
+
+  <div class="toc">
+
+    <div class="toc-block">
+      <div class="toc-block-title">Puente · Opcional</div>
+      <a class="toc-item" href="pildora-00_electricidad-minima-viable/index.html">
+        <div class="toc-num bridge">0</div>
+        <div class="toc-body">
+          <div class="toc-title">Electricidad mínima viable</div>
+          <div class="toc-desc">Voltio, amperio, kW, kWh, AC y DC con la analogía del agua. Sin matemáticas.</div>
+        </div>
+        <div class="toc-time">10 min</div>
+      </a>
+    </div>
+
+    <div class="toc-block">
+      <div class="toc-block-title">Bloque A · Anatomía del sistema</div>
+
+      <a class="toc-item" href="pildora-01_viaje-de-un-electron/index.html">
+        <div class="toc-num">1</div>
+        <div class="toc-body">
+          <div class="toc-title">El viaje de un electrón</div>
+          <div class="toc-desc">El mapa completo: del enchufe a la rueda, con todos los componentes nombrados.</div>
+        </div>
+        <div class="toc-time">10 min</div>
+      </a>
+
+      <a class="toc-item" href="pildora-02_bateria-por-dentro/index.html">
+        <div class="toc-num">2</div>
+        <div class="toc-body">
+          <div class="toc-title">La batería por dentro</div>
+          <div class="toc-desc">Celdas, módulos, packs. Los tres formatos (cilíndrica, prismática, pouch).</div>
+        </div>
+        <div class="toc-time">10 min</div>
+      </a>
+
+      <a class="toc-item" href="pildora-03_nmc-vs-lfp/index.html">
+        <div class="toc-num">3</div>
+        <div class="toc-body">
+          <div class="toc-title">NMC vs LFP</div>
+          <div class="toc-desc">Las dos químicas que dominan hoy. Densidad vs durabilidad vs coste.</div>
+        </div>
+        <div class="toc-time">10 min</div>
+      </a>
+
+      <a class="toc-item" href="pildora-04_bms-cerebro-silencioso/index.html">
+        <div class="toc-num">4</div>
+        <div class="toc-body">
+          <div class="toc-title">El BMS, cerebro silencioso</div>
+          <div class="toc-desc">Lo que hace para que la batería no se degrade ni se incendie.</div>
+        </div>
+        <div class="toc-time">10 min</div>
+      </a>
+
+      <a class="toc-item" href="pildora-05_sistema-termico/index.html">
+        <div class="toc-num">5</div>
+        <div class="toc-body">
+          <div class="toc-title">Sistema térmico</div>
+          <div class="toc-desc">Por qué la batería necesita aire acondicionado, y qué pasa cuando falla.</div>
+        </div>
+        <div class="toc-time">10 min</div>
+      </a>
+    </div>
+
+    <div class="toc-block">
+      <div class="toc-block-title">Bloque B · Movimiento e infraestructura</div>
+
+      <a class="toc-item" href="pildora-06_electronica-de-potencia/index.html">
+        <div class="toc-num">6</div>
+        <div class="toc-body">
+          <div class="toc-title">Electrónica de potencia</div>
+          <div class="toc-desc">OBC, DC-DC, inversor y los semiconductores SiC/GaN que los hacen posibles.</div>
+        </div>
+        <div class="toc-time">10 min</div>
+      </a>
+
+      <a class="toc-item" href="pildora-07_inversor-y-motor/index.html">
+        <div class="toc-num">7</div>
+        <div class="toc-body">
+          <div class="toc-title">Inversor y motor eléctrico</div>
+          <div class="toc-desc">Cómo se convierte DC en movimiento. Trifásico sin trauma.</div>
+        </div>
+        <div class="toc-time">10 min</div>
+      </a>
+
+      <a class="toc-item" href="pildora-08_frenado-regenerativo/index.html">
+        <div class="toc-num">8</div>
+        <div class="toc-body">
+          <div class="toc-title">Frenado regenerativo</div>
+          <div class="toc-desc">El motor como generador. Por qué se frena con el acelerador.</div>
+        </div>
+        <div class="toc-time">10 min</div>
+      </a>
+
+      <a class="toc-item" href="pildora-09_cargar-ac-vs-dc/index.html">
+        <div class="toc-num">9</div>
+        <div class="toc-body">
+          <div class="toc-title">Cargar el coche: AC vs DC</div>
+          <div class="toc-desc">Por qué el cargador de casa es lento y el de autopista rápido. Conectores y curva.</div>
+        </div>
+        <div class="toc-time">10 min</div>
+      </a>
+
+      <a class="toc-item" href="pildora-10_400v-vs-800v/index.html">
+        <div class="toc-num">10</div>
+        <div class="toc-body">
+          <div class="toc-title">400V vs 800V</div>
+          <div class="toc-desc">Qué cambia al subir el voltaje del sistema. Cables, calor, eficiencia.</div>
+        </div>
+        <div class="toc-time">10 min</div>
+      </a>
+    </div>
+
+    <div class="toc-block">
+      <div class="toc-block-title">Bloque C · Hacia dónde va</div>
+
+      <a class="toc-item" href="pildora-11_futuro-proximo/index.html">
+        <div class="toc-num">11</div>
+        <div class="toc-body">
+          <div class="toc-title">Futuro próximo</div>
+          <div class="toc-desc">Estado sólido, sodio-ion, baterías estructurales. Qué prometen y qué obstáculos quedan.</div>
+        </div>
+        <div class="toc-time">10 min</div>
+      </a>
+
+      <a class="toc-item" href="pildora-12_futuro-extendido/index.html">
+        <div class="toc-num">12</div>
+        <div class="toc-body">
+          <div class="toc-title">Futuro extendido</div>
+          <div class="toc-desc">V2G/V2H bidireccional, megawatt charging, el coche como nodo de la red.</div>
+        </div>
+        <div class="toc-time">10 min</div>
+      </a>
+    </div>
+
+    <div class="final">
+      <a href="evaluacion.html">
+        <div>
+          <span class="final-label">Evaluación final</span>
+          <span>Quiz integrador del curso completo →</span>
+        </div>
+        <div style="font-family:var(--sans);font-size:.84em;color:var(--ink-faint);">~15 min</div>
+      </a>
+    </div>
+
+  </div>
+
+</div>
+</body>
+</html>

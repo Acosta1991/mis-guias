@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Píldora 00 — Electricidad mínima viable</title>
+<style>
+  :root {
+    --bg: #F8F4EC;
+    --bg-card: #FBF7EC;
+    --ink: #2A2A2A;
+    --ink-soft: #555;
+    --ink-faint: #888;
+    --line: #E5DFCF;
+    --orange: #E07A3C;
+    --orange-deep: #B8480F;
+    --max-content: 680px;
+    --serif: "Iowan Old Style", "Apple Garamond", "Georgia", "Times New Roman", serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 18px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+  .progress-bar { position: fixed; top: 0; left: 0; width: 0%; height: 3px; background: var(--orange); z-index: 100; transition: width 0.05s linear; }
+  .layout { max-width: 1200px; margin: 0 auto; padding: 80px 32px 96px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 0; }
+  @media (min-width: 1024px) {
+    .layout { grid-template-columns: minmax(0, var(--max-content)) minmax(220px, 280px); gap: 56px; padding: 80px 48px 96px; }
+  }
+  .main { max-width: var(--max-content); }
+  .aside { font-family: var(--sans); font-size: 0.85em; color: var(--ink-soft); line-height: 1.55; }
+  .aside .note { border-left: 2px solid var(--orange); padding: 4px 0 4px 14px; margin-bottom: 28px; }
+  .aside .note-label { display: block; text-transform: uppercase; letter-spacing: 0.06em; font-size: 0.78em; color: var(--orange-deep); font-weight: 600; margin-bottom: 4px; }
+  @media (max-width: 1023px) {
+    .aside { margin-top: 32px; }
+    .aside .note { background: var(--bg-card); border: 1px solid var(--line); border-left: 3px solid var(--orange); border-radius: 0 8px 8px 0; padding: 12px 16px; }
+  }
+  .breadcrumb { font-family: var(--sans); font-size: 0.82em; color: var(--ink-faint); margin-bottom: 24px; letter-spacing: 0.02em; }
+  .breadcrumb a { color: var(--ink-soft); text-decoration: none; }
+  .breadcrumb a:hover { color: var(--orange-deep); }
+  h1 { font-family: var(--sans); font-weight: 700; font-size: 2.1em; line-height: 1.2; color: var(--ink); margin: 0 0 12px; letter-spacing: -0.01em; }
+  .meta { font-family: var(--sans); font-size: 0.85em; color: var(--ink-faint); margin-bottom: 36px; display: flex; gap: 16px; flex-wrap: wrap; }
+  .meta .pill { background: var(--bg-card); border: 1px solid var(--line); padding: 3px 12px; border-radius: 12px; }
+  h2 { font-family: var(--sans); font-weight: 600; font-size: 1.35em; color: var(--ink); margin: 48px 0 16px; letter-spacing: -0.005em; }
+  p { margin: 0 0 1.1em; }
+  .lead { font-size: 1.12em; color: var(--ink); line-height: 1.55; margin-bottom: 1.4em; }
+  em { font-style: italic; }
+  strong { font-weight: 600; color: var(--ink); }
+  .pull { border-left: 3px solid var(--orange); padding: 4px 0 4px 20px; margin: 28px 0; color: var(--ink); font-style: italic; font-size: 1.05em; line-height: 1.5; }
+  .diagram { margin: 36px 0 12px; }
+  .diagram img { width: 100%; height: auto; border-radius: 8px; display: block; }
+  .diagram-caption { font-family: var(--sans); font-size: 0.82em; color: var(--ink-faint); text-align: center; margin-top: 10px; line-height: 1.5; }
+  .diagram-labels { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 8px; font-family: var(--sans); font-size: 0.85em; color: var(--ink-soft); text-align: center; }
+  .diagram-labels span { padding: 6px 4px; border-top: 2px solid var(--orange); font-weight: 500; }
+  .next { margin-top: 56px; padding: 22px 24px; background: var(--bg-card); border: 1px solid var(--line); border-radius: 10px; font-family: var(--sans); font-size: 0.95em; }
+  .next-label { text-transform: uppercase; letter-spacing: 0.07em; font-size: 0.78em; color: var(--orange-deep); font-weight: 600; margin-bottom: 6px; }
+  .next a { color: var(--ink); text-decoration: none; font-weight: 600; }
+  .next a:hover { color: var(--orange-deep); }
+  .table { font-family: var(--sans); font-size: 0.95em; border-collapse: collapse; width: 100%; margin: 28px 0; }
+  .table th, .table td { text-align: left; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+  .table th { color: var(--orange-deep); text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.78em; font-weight: 600; }
+  .table tr:last-child td { border-bottom: none; }
+
+  /* Exercises */
+  .exercises { margin: 56px 0 32px; padding-top: 36px; border-top: 1px solid var(--line); }
+  .ex-title { font-family: var(--sans); font-size: 1.25em; color: var(--ink); margin-bottom: 20px; font-weight: 600; }
+  .ex-card { background: var(--bg-card); border: 1px solid var(--line); border-radius: 8px; padding: 16px 20px; margin-bottom: 14px; font-family: var(--sans); font-size: 0.95em; }
+  .ex-card summary { cursor: pointer; list-style: none; display: flex; gap: 12px; align-items: flex-start; color: var(--ink); }
+  .ex-card summary::-webkit-details-marker { display: none; }
+  .ex-card summary::before { content: "▸"; color: var(--orange); font-size: 0.9em; transition: transform 0.2s; flex-shrink: 0; margin-top: 2px; }
+  .ex-card[open] summary::before { transform: rotate(90deg); }
+  .ex-tag { display: inline-block; font-size: 0.72em; font-weight: 600; padding: 2px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.04em; flex-shrink: 0; margin-top: 1px; }
+  .ex-tag-easy { background: #E6EDD8; color: #5A6E36; }
+  .ex-tag-medium { background: #F4E4CC; color: #8C5E1F; }
+  .ex-tag-hard { background: #F0D8CB; color: #A23215; }
+  .ex-q { line-height: 1.45; }
+  .ex-options { margin: 16px 0 12px 32px; color: var(--ink-soft); line-height: 1.8; }
+  .ex-answer { margin: 16px 0 4px 32px; padding: 14px 18px; background: #FFFEFA; border-left: 3px solid var(--orange); color: #444; line-height: 1.6; border-radius: 0 6px 6px 0; }
+  .ex-answer p { margin: 0 0 10px; }
+  .ex-answer p:last-child { margin-bottom: 0; }
+  .ex-answer strong { color: var(--ink); }
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress-bar"></div>
+
+<div class="layout">
+  <main class="main">
+    <div class="breadcrumb"><a href="../indice.html">Curso · Sistemas de energía en coches eléctricos</a> &nbsp;/&nbsp; Píldora 00</div>
+
+    <h1>Electricidad mínima viable</h1>
+    <div class="meta">
+      <span class="pill">⏱ 10 min</span>
+      <span class="pill">Píldora 0 · Puente opcional</span>
+    </div>
+
+    <p class="lead">La electricidad cotidiana se entiende mucho mejor si la imaginas como agua. No es solo una metáfora bonita: las leyes que describen cómo fluye un líquido por una tubería se parecen tanto a las que describen cómo fluye la corriente por un cable que los ingenieros las usan a propósito para enseñar. Esta píldora aprovecha ese paralelo para que cuando luego oigas voltio, amperio o kilovatio-hora, no sean palabras vacías.</p>
+
+    <h2>Por qué empezamos por aquí</h2>
+    <p>El resto del curso habla todo el rato de energía: cuánta cabe en una batería, cuánta entra por un cable, cuánta se pierde como calor, cuánta sale por la rueda. Si los conceptos básicos no están claros, las píldoras siguientes se vuelven una sopa de unidades. Diez minutos invertidos aquí ahorran horas más adelante.</p>
+    <p>Si ya manejas con soltura voltio, amperio, kW, kWh, AC y DC — puedes saltar a la <a href="../pildora-01_viaje-de-un-electron/index.html">píldora 1</a> sin remordimientos. Si dudas en alguno, sigue leyendo: no hay matemáticas, solo una analogía y unos cuantos ejemplos.</p>
+
+    <h2>El circuito de agua</h2>
+    <p>Imagina un depósito de agua elevado, una tubería que baja desde el depósito, un grifo en mitad de la tubería y un molino al final que gira cuando le cae agua encima. Cuatro elementos, ningún misterio. Pues casi todo lo que necesitas saber de electricidad cabe en esa imagen.</p>
+
+    <div class="diagram">
+      <img src="pildora-00_diagrama-1.png" alt="Diagrama de circuito hidráulico: depósito elevado, tubería, grifo y molino que gira">
+      <div class="diagram-labels">
+        <span>presión = voltaje</span>
+        <span>caudal = amperaje</span>
+        <span>grifo = control</span>
+        <span>trabajo = potencia</span>
+      </div>
+      <div class="diagram-caption">Cada pieza del circuito hidráulico tiene su gemelo eléctrico exacto. Esta es la imagen de referencia para el resto de la píldora.</div>
+    </div>
+
+    <h2>Voltaje: la presión</h2>
+    <p>Cuanto más alto esté el depósito, más fuerza empuja el agua hacia abajo. Esa fuerza es <strong>presión</strong>. En electricidad, el equivalente es el <strong>voltaje</strong>, que se mide en <strong>voltios (V)</strong>: el "empujón" que un generador, una batería o un enchufe le da a los electrones para que se muevan por el cable.</p>
+    <p>El enchufe de tu casa empuja a 230 V. La batería de un coche eléctrico empuja a unos 400 V (algunos a 800 V, lo veremos en su píldora). Un cable USB empuja a 5 V. Una pila AA, a 1,5 V. La cifra te dice cuánto "ponche" tiene esa fuente — pero <em>aún no</em> te dice cuánta energía está moviendo. Para eso falta el caudal.</p>
+
+    <h2>Amperaje: el caudal</h2>
+    <p>Si abres el grifo a tope, sale mucha agua por segundo. Si lo abres apenas, sale un hilito. La cantidad de agua que pasa por un punto en cada segundo es el <strong>caudal</strong>. El equivalente eléctrico es el <strong>amperaje</strong> (también llamado intensidad), medido en <strong>amperios (A)</strong>: cuántos electrones pasan por el cable cada segundo.</p>
+    <p>Una bombilla LED de casa quizá necesite 0,1 A. Un microondas, unos 5 A. Un cargador rápido de coche puede meter 200, 300 o 500 A en la batería. La cifra te dice cuánta cantidad de electricidad está fluyendo en ese momento.</p>
+    <p>Aquí aparece la primera idea importante: <strong>una fuente puede tener mucho voltaje y poco amperaje, o al revés.</strong> Una valla eléctrica tiene altísimo voltaje pero apenas amperaje (por eso pega un susto pero no mata). Un cargador rápido tiene voltaje moderado pero muchísimo amperaje (por eso mueve cantidades brutales de energía sin freírte el cable... si lo diseñas bien).</p>
+
+    <h2>Potencia: el trabajo por segundo</h2>
+    <p>Lo que hace girar el molino del dibujo no es la presión sola, ni el caudal solo: es las dos cosas multiplicadas. Mucha presión y mucho caudal mueven un molino enorme. Poca presión o poco caudal, apenas lo rozan.</p>
+    <p>En electricidad pasa exactamente igual. La <strong>potencia</strong> — el trabajo eléctrico que se está haciendo en cada instante — es <strong>voltaje × amperaje</strong>. Se mide en <strong>vatios (W)</strong>, o más cómodamente en <strong>kilovatios (kW)</strong>, que son mil vatios.</p>
+    <p>Un cargador de móvil mueve unos 20 W. Una freidora, unos 2 000 W (= 2 kW). Un coche eléctrico circulando por autovía consume unos 20 kW. Un motor de coche eléctrico potente puede entregar 200 o 300 kW en aceleración. Un cargador rápido público entrega 50, 150 o 350 kW. Cuantos más vatios, más trabajo eléctrico está ocurriendo en ese segundo.</p>
+
+    <div class="pull">Voltaje × amperaje = potencia. La misma potencia se puede conseguir con mucho voltaje y poco amperaje, o al revés. Esa elección es uno de los grandes debates del coche eléctrico.</div>
+
+    <h2>Energía: el trabajo acumulado</h2>
+    <p>Ahora atención: <strong>potencia</strong> y <strong>energía</strong> no son lo mismo. La potencia es lo que ocurre en un instante. La energía es lo que ocurre acumulado durante un rato.</p>
+    <p>Volvamos al agua: si el grifo deja salir 10 litros por segundo, ese es su caudal. Pero si lo dejas abierto durante una hora, habrá salido un volumen total de agua mucho mayor. Caudal × tiempo = volumen.</p>
+    <p>En electricidad: potencia × tiempo = energía. Si un aparato funciona a 1 kW durante una hora, ha consumido <strong>1 kilovatio-hora (kWh)</strong> de energía. Si funciona a 2 kW durante media hora, también ha consumido 1 kWh. Si funciona a 100 W durante diez horas, igualmente 1 kWh. La cuenta es siempre la misma.</p>
+    <p>El <strong>kWh es la unidad reina</strong> del coche eléctrico, porque mide precisamente lo que cabe en una batería y lo que la red eléctrica te factura. Una batería típica almacena entre 50 y 100 kWh. Tu casa entera consume entre 7 y 15 kWh al día. La factura de la luz se cobra en céntimos por kWh.</p>
+
+    <h2>AC vs DC: dos formas de moverse</h2>
+    <p>Última pieza, y prepárate porque es contraintuitiva. La electricidad puede fluir de dos maneras distintas.</p>
+    <p>La <strong>corriente continua (DC, direct current)</strong> fluye siempre en el mismo sentido. Como el agua de nuestro depósito: baja, baja y baja. Las baterías producen DC. Los paneles solares producen DC. La batería de un coche eléctrico almacena DC.</p>
+    <p>La <strong>corriente alterna (AC, alternating current)</strong> oscila: va en un sentido, luego en el otro, luego en el primero, cincuenta veces por segundo (en Europa). Es como si el agua de nuestra tubería avanzara y retrocediera muy rápido. Suena raro, pero hay una razón: la AC se transporta a larga distancia con muchas menos pérdidas, así que la red eléctrica que llega a tu enchufe es AC.</p>
+    <p>De ahí surge un problema delicioso: el coche necesita DC para cargar la batería, pero el enchufe de casa da AC. Hay que convertir. Esa conversión la hace una pieza llamada <em>cargador a bordo</em> (OBC) que vive dentro del coche. Y aquí ya estás dentro del curso de verdad.</p>
+
+    <h2>Resumen en cinco líneas</h2>
+    <p>Si te llevas solo cinco frases de esta píldora, que sean estas:</p>
+    <p><strong>Voltio (V)</strong> es presión: cuánta fuerza empuja a los electrones. <strong>Amperio (A)</strong> es caudal: cuántos electrones pasan por segundo. <strong>Kilovatio (kW)</strong> es potencia: V × A, el trabajo eléctrico que ocurre en este instante. <strong>Kilovatio-hora (kWh)</strong> es energía: trabajo acumulado durante una hora. <strong>AC</strong> oscila, <strong>DC</strong> va en un sentido — las baterías son DC, la red es AC, y el coche necesita un traductor.</p>
+
+    <div class="exercises">
+      <div class="ex-title">Comprueba que lo tienes</div>
+
+      <details class="ex-card">
+        <summary><span class="ex-tag ex-tag-easy">Fácil</span><span class="ex-q">¿Qué unidad mide la energía que cabe en una batería: <strong>kW</strong> o <strong>kWh</strong>?</span></summary>
+        <div class="ex-answer">
+          <p><strong>kWh</strong>. El kW mide la <em>potencia</em> (trabajo por segundo, instantáneo); el kWh mide la <em>energía</em> total acumulada. Una batería se describe por cuánta energía puede almacenar — 50 kWh, 80 kWh, 100 kWh — no por la potencia que entrega.</p>
+        </div>
+      </details>
+
+      <details class="ex-card">
+        <summary><span class="ex-tag ex-tag-easy">Fácil</span><span class="ex-q">Una bombilla de 100 W encendida durante 10 horas, ¿cuánta energía consume?</span></summary>
+        <div class="ex-answer">
+          <p>1 kWh. Cien vatios durante diez horas son 1 000 vatios-hora, que es lo mismo que 1 kilovatio-hora. La cuenta es potencia × tiempo, sin más.</p>
+        </div>
+      </details>
+
+      <details class="ex-card">
+        <summary><span class="ex-tag ex-tag-medium">Medio</span><span class="ex-q">Si un cargador entrega 50 kW y la batería del coche tiene 75 kWh vacíos, ¿cuánto tarda en llenarla?</span></summary>
+        <div class="ex-answer">
+          <p>En teoría, 1,5 horas (75 ÷ 50). En la práctica, más, porque la potencia que el coche acepta no es constante: baja al acercarse al 100% (lo veremos en la píldora 9). Pero la cuenta básica energía ÷ potencia = tiempo es exacta.</p>
+        </div>
+      </details>
+
+      <details class="ex-card">
+        <summary><span class="ex-tag ex-tag-medium">Medio</span><span class="ex-q">¿Por qué la red eléctrica reparte AC en lugar de DC, si las baterías y los aparatos electrónicos funcionan con DC?</span></summary>
+        <div class="ex-answer">
+          <p>Porque la AC se puede subir y bajar de voltaje fácilmente con un transformador, lo que permite transportarla a altísimo voltaje (cientos de miles de voltios) por las líneas de alta tensión. A más voltaje, menos corriente, y menos pérdidas en el cable. Si la red fuera DC, esa transformación sería mucho más complicada con la tecnología histórica. Hoy ya empieza a haber transporte en DC de alto voltaje (HVDC) para casos especiales, pero la red sigue siendo principalmente AC por inercia y compatibilidad.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="next">
+      <div class="next-label">Siguiente</div>
+      <a href="../pildora-01_viaje-de-un-electron/index.html">Píldora 1 — El viaje de un electrón →</a>
+    </div>
+  </main>
+
+  <aside class="aside">
+    <div class="note">
+      <span class="note-label">Notación</span>
+      "k" minúscula significa "kilo" = mil. 1 kW = 1 000 W. 1 kWh = 1 000 Wh.
+    </div>
+    <div class="note">
+      <span class="note-label">Para visualizar</span>
+      Una pila AA almacena unos 0,003 kWh. Una batería de móvil, ~0,015 kWh. Una batería de coche eléctrico, ~75 kWh. Eso son <em>5 millones</em> de pilas AA en un solo coche.
+    </div>
+    <div class="note">
+      <span class="note-label">Cuidado</span>
+      Mucha gente confunde "potencia" y "energía". Un cargador rápido tiene mucha <em>potencia</em> (kW), pero la batería se mide en <em>energía</em> (kWh). Saber separar ambos conceptos es media batalla.
+    </div>
+    <div class="note">
+      <span class="note-label">Por qué AC oscila a 50 Hz</span>
+      En Europa la corriente alterna invierte el sentido 50 veces por segundo (50 Hz). En Estados Unidos, 60 Hz. La cifra es histórica: la eligieron los pioneros del siglo XIX y se quedó como estándar nacional.
+    </div>
+    <div class="note">
+      <span class="note-label">Otra pista útil</span>
+      Si una etiqueta da los <strong>voltios</strong> y los <strong>amperios</strong> de un aparato, los multiplicas mentalmente y sabes los vatios. Ejemplo: cargador de portátil de 20 V × 3 A = 60 W.
+    </div>
+  </aside>
+</div>
+
+<script>
+  const bar = document.getElementById('progress-bar');
+  function updateProgress() {
+    const h = document.documentElement;
+    const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight);
+    bar.style.width = (scrolled * 100) + '%';
+  }
+  document.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+</script>
+</body>
+</html>

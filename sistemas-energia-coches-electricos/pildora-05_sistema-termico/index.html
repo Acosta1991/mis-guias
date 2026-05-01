@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Píldora 05 — Sistema térmico</title>
+<style>
+  :root { --bg:#F8F4EC; --bg-card:#FBF7EC; --ink:#2A2A2A; --ink-soft:#555; --ink-faint:#888; --line:#E5DFCF; --orange:#E07A3C; --orange-deep:#B8480F; --max-content:680px; --serif:"Iowan Old Style","Apple Garamond","Georgia","Times New Roman",serif; --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{background:var(--bg);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.7;-webkit-font-smoothing:antialiased;}
+  .progress-bar{position:fixed;top:0;left:0;width:0%;height:3px;background:var(--orange);z-index:100;transition:width .05s linear;}
+  .layout{max-width:1200px;margin:0 auto;padding:80px 32px 96px;display:grid;grid-template-columns:minmax(0,1fr);gap:0;}
+  @media (min-width:1024px){.layout{grid-template-columns:minmax(0,var(--max-content)) minmax(220px,280px);gap:56px;padding:80px 48px 96px;}}
+  .main{max-width:var(--max-content);}
+  .aside{font-family:var(--sans);font-size:.85em;color:var(--ink-soft);line-height:1.55;}
+  .aside .note{border-left:2px solid var(--orange);padding:4px 0 4px 14px;margin-bottom:28px;}
+  .aside .note-label{display:block;text-transform:uppercase;letter-spacing:.06em;font-size:.78em;color:var(--orange-deep);font-weight:600;margin-bottom:4px;}
+  @media (max-width:1023px){.aside{margin-top:32px;} .aside .note{background:var(--bg-card);border:1px solid var(--line);border-left:3px solid var(--orange);border-radius:0 8px 8px 0;padding:12px 16px;}}
+  .breadcrumb{font-family:var(--sans);font-size:.82em;color:var(--ink-faint);margin-bottom:24px;letter-spacing:.02em;}
+  .breadcrumb a{color:var(--ink-soft);text-decoration:none;} .breadcrumb a:hover{color:var(--orange-deep);}
+  h1{font-family:var(--sans);font-weight:700;font-size:2.1em;line-height:1.2;color:var(--ink);margin:0 0 12px;letter-spacing:-.01em;}
+  .meta{font-family:var(--sans);font-size:.85em;color:var(--ink-faint);margin-bottom:36px;display:flex;gap:16px;flex-wrap:wrap;}
+  .meta .pill{background:var(--bg-card);border:1px solid var(--line);padding:3px 12px;border-radius:12px;}
+  h2{font-family:var(--sans);font-weight:600;font-size:1.35em;color:var(--ink);margin:48px 0 16px;letter-spacing:-.005em;}
+  p{margin:0 0 1.1em;}
+  .lead{font-size:1.12em;color:var(--ink);line-height:1.55;margin-bottom:1.4em;}
+  em{font-style:italic;} strong{font-weight:600;color:var(--ink);}
+  .pull{border-left:3px solid var(--orange);padding:4px 0 4px 20px;margin:28px 0;color:var(--ink);font-style:italic;font-size:1.05em;line-height:1.5;}
+  .diagram{margin:36px 0 12px;}
+  .diagram img{width:100%;height:auto;border-radius:8px;display:block;}
+  .diagram-caption{font-family:var(--sans);font-size:.82em;color:var(--ink-faint);text-align:center;margin-top:10px;line-height:1.5;}
+  .diagram-labels{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px;font-family:var(--sans);font-size:.85em;color:var(--ink-soft);text-align:center;}
+  .diagram-labels span{padding:6px 4px;border-top:2px solid var(--orange);font-weight:500;}
+  .next{margin-top:56px;padding:22px 24px;background:var(--bg-card);border:1px solid var(--line);border-radius:10px;font-family:var(--sans);font-size:.95em;}
+  .next-label{text-transform:uppercase;letter-spacing:.07em;font-size:.78em;color:var(--orange-deep);font-weight:600;margin-bottom:6px;}
+  .next a{color:var(--ink);text-decoration:none;font-weight:600;} .next a:hover{color:var(--orange-deep);}
+  .scale{margin:30px 0;font-family:var(--sans);font-size:.92em;}
+  .scale-bar{position:relative;height:36px;background:linear-gradient(to right,#7AA4D9 0%,#7AA4D9 18%,#A8C56A 28%,#E0C24E 50%,#E07A3C 72%,#B8480F 90%,#5C2008 100%);border-radius:6px;border:1px solid var(--line);}
+  .scale-marks{position:relative;display:flex;justify-content:space-between;color:var(--ink-faint);font-size:.85em;margin-top:6px;padding:0 4px;}
+  .scale-good{position:absolute;top:0;left:28%;width:44%;height:36px;border:2px solid var(--ink);border-radius:6px;box-sizing:border-box;}
+  .scale-good-label{position:absolute;top:42px;left:50%;transform:translateX(-50%);color:var(--ink);font-weight:600;font-size:.88em;white-space:nowrap;}
+  .exercises{margin:56px 0 32px;padding-top:36px;border-top:1px solid var(--line);}
+  .ex-title{font-family:var(--sans);font-size:1.25em;color:var(--ink);margin-bottom:20px;font-weight:600;}
+  .ex-card{background:var(--bg-card);border:1px solid var(--line);border-radius:8px;padding:16px 20px;margin-bottom:14px;font-family:var(--sans);font-size:.95em;}
+  .ex-card summary{cursor:pointer;list-style:none;display:flex;gap:12px;align-items:flex-start;color:var(--ink);}
+  .ex-card summary::-webkit-details-marker{display:none;}
+  .ex-card summary::before{content:"▸";color:var(--orange);font-size:.9em;transition:transform .2s;flex-shrink:0;margin-top:2px;}
+  .ex-card[open] summary::before{transform:rotate(90deg);}
+  .ex-tag{display:inline-block;font-size:.72em;font-weight:600;padding:2px 8px;border-radius:4px;text-transform:uppercase;letter-spacing:.04em;flex-shrink:0;margin-top:1px;}
+  .ex-tag-easy{background:#E6EDD8;color:#5A6E36;} .ex-tag-medium{background:#F4E4CC;color:#8C5E1F;} .ex-tag-hard{background:#F0D8CB;color:#A23215;}
+  .ex-q{line-height:1.45;}
+  .ex-answer{margin:16px 0 4px 32px;padding:14px 18px;background:#FFFEFA;border-left:3px solid var(--orange);color:#444;line-height:1.6;border-radius:0 6px 6px 0;}
+  .ex-answer p{margin:0 0 10px;} .ex-answer p:last-child{margin-bottom:0;} .ex-answer strong{color:var(--ink);}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress-bar"></div>
+
+<div class="layout">
+  <main class="main">
+    <div class="breadcrumb"><a href="../indice.html">Curso · Sistemas de energía en coches eléctricos</a> &nbsp;/&nbsp; Píldora 05</div>
+
+    <h1>Sistema térmico: aire acondicionado para baterías</h1>
+    <div class="meta">
+      <span class="pill">⏱ 10 min</span>
+      <span class="pill">Píldora 5 de 12</span>
+    </div>
+
+    <p class="lead">Si tuvieras que jugarte la longevidad de una batería a una sola variable, esa variable sería la <strong>temperatura</strong>. Más que la química, más que el número de ciclos, más que la velocidad de carga. Por eso un coche eléctrico moderno dedica un sistema entero, comparable en complejidad al de climatización del habitáculo, exclusivamente a mantener el pack de baterías dentro de un rango de temperatura estrecho. Esta píldora explica por qué importa tanto y cómo se hace.</p>
+
+    <h2>La ventana óptima</h2>
+    <p>Una celda de litio funciona bien en una franja sorprendentemente estrecha: aproximadamente <strong>de 20 °C a 40 °C</strong>. Por debajo de los 20 °C, los iones se mueven más despacio en el electrolito y la batería pierde potencia disponible (no autonomía total: la energía sigue ahí, pero sale más despacio). Por encima de los 40 °C, las reacciones químicas indeseadas se aceleran y el pack envejece más rápido. Por encima de los 60 °C, el envejecimiento acelerado pasa a daño permanente. Y por encima de los 80-90 °C en una sola celda, empieza el riesgo serio de fuga térmica.</p>
+
+    <div class="scale">
+      <div style="position:relative;">
+        <div class="scale-bar"></div>
+        <div class="scale-good"></div>
+        <div class="scale-good-label">ventana óptima</div>
+      </div>
+      <div class="scale-marks" style="margin-top:36px;">
+        <span>−20 °C</span><span>0 °C</span><span>20 °C</span><span>40 °C</span><span>60 °C</span><span>80 °C</span><span>+100 °C</span>
+      </div>
+      <p style="color:var(--ink-faint);font-size:.85em;margin-top:14px;text-align:center;">Por debajo, pérdida temporal de potencia. Por encima, envejecimiento acelerado y riesgo creciente.</p>
+    </div>
+
+    <p>Mantener el pack dentro de esa franja es trabajo del sistema térmico. Y no es trivial: una batería en uso intenso (aceleración fuerte o carga rápida) <em>genera</em> calor por sí misma, así que si la dejaras a su aire en un día caluroso podría pasar de los 25 °C a los 50 °C en cuestión de minutos.</p>
+
+    <h2>Refrigeración líquida: la solución dominante</h2>
+    <p>Casi todos los coches eléctricos modernos refrigeran el pack con un <strong>circuito líquido</strong>. Funciona como el refrigerante de un coche de combustión, pero con dos diferencias importantes: el líquido pasa <em>entre las celdas</em> a través de placas o canales, no por un radiador remoto, y va a temperaturas más bajas (típicamente entre 15 y 30 °C, no los 90 °C del motor de gasolina).</p>
+
+    <div class="diagram">
+      <img src="pildora-05_diagrama-1.png" alt="Vista cenital esquemática de un pack rectangular lleno de celdas con un tubo serpenteante naranja recorriendo el pack, conectado fuera a una bomba circular y a un radiador con aletas">
+      <div class="diagram-labels">
+        <span>circuito serpenteante</span>
+        <span>bomba</span>
+        <span>radiador</span>
+      </div>
+      <div class="diagram-caption">Vista cenital del pack. El refrigerante (en naranja) entra por un lado, recorre el pack en serpentina entre filas de celdas y sale por el otro extremo. Una bomba lo mueve, un radiador lo enfría con el aire exterior.</div>
+    </div>
+
+    <p>El circuito hace dos cosas según haga falta: <strong>enfriar</strong> el pack si está caliente (desviando el refrigerante por un radiador exterior) o <strong>calentarlo</strong> si está frío (pasándolo por un calentador eléctrico o aprovechando el calor residual del motor o de los frenos eléctricos). Es bidireccional. Algunos coches tienen también una <strong>refrigeración por aire</strong> auxiliar para casos extremos, o sistemas de inmersión en aceite dieléctrico para deportivos exigentes — pero el pilar es siempre líquido.</p>
+
+    <h2>Bomba de calor y precondicionamiento</h2>
+    <p>Calentar y enfriar consume energía, y esa energía sale de la propia batería. Aquí entra una pieza inteligente: la <strong>bomba de calor</strong>. En lugar de generar calor desde cero (caro), usa el principio del aire acondicionado al revés: extrae calor del aire exterior o del motor o de la propia electrónica de potencia, y lo concentra donde haga falta. Una bomba de calor bien diseñada puede gastar 1 kWh para mover 3 o 4 kWh de calor — multiplica por tres la eficiencia.</p>
+
+    <p>El otro truco moderno se llama <strong>precondicionamiento</strong>. Si tienes programada una carga rápida en autopista a las 17:00, el coche puede empezar a calentar (o enfriar) el pack 15-20 minutos antes para que llegue a la temperatura óptima de carga. Eso se traduce en cargas mucho más rápidas: una batería bien acondicionada puede aceptar el doble de potencia que una fría.</p>
+
+    <p>Sin precondicionamiento, en invierno conectas un cargador rápido y el coche solo acepta una fracción de la potencia disponible mientras va calentando el pack en paralelo. Con precondicionamiento, llegas con el pack ya tibio y puedes aprovechar el cargador desde el primer minuto.</p>
+
+    <h2>Fuga térmica: el escenario que hay que evitar</h2>
+    <p>La <strong>fuga térmica</strong> (en inglés, <em>thermal runaway</em>) es la pesadilla. Una sola celda alcanza una temperatura crítica, sus reacciones químicas internas se descontrolan, libera calor que calienta a las celdas vecinas, las cuales también se descontrolan, y así sucesivamente. En segundos, una zona del pack puede pasar de 60 a varios cientos de grados.</p>
+
+    <p>Hay tres niveles de defensa:</p>
+
+    <p><strong>Prevención.</strong> El BMS y el sistema térmico trabajan juntos para que ninguna celda llegue a la temperatura crítica. Esta es la mejor defensa: que el problema no empiece.</p>
+
+    <p><strong>Contención.</strong> Si una celda entra en fuga térmica, la geometría del pack y los materiales aislantes intentan impedir que el calor pase a las vecinas. Algunos diseños recientes incluyen barreras cerámicas entre módulos o entre filas de celdas para frenar la propagación.</p>
+
+    <p><strong>Evacuación.</strong> Si el evento se propaga, el pack tiene válvulas de venteo que dejan salir gases calientes hacia abajo (lejos del habitáculo), y el coche avisa a los ocupantes con tiempo. La normativa actual exige varios minutos entre la primera celda afectada y un escenario serio para el habitáculo.</p>
+
+    <p>La química importa aquí: las baterías LFP son notablemente más resistentes a la fuga térmica que las NMC. Es una de las razones por las que LFP gana terreno en flotas y vehículos donde la seguridad pesa más que la densidad.</p>
+
+    <div class="pull">El sistema térmico no es un accesorio: es lo que hace posible que la química delicada del litio funcione durante años en un objeto que circula por el mundo real. Si tuvieras que elegir un componente "infraestructural" del coche eléctrico, sería este.</div>
+
+    <h2>Por qué importa también para la carga rápida</h2>
+    <p>La carga rápida mete <em>mucha</em> energía en muy poco tiempo. Eso genera mucho calor. Sin un sistema térmico potente, la batería se calienta tanto que el BMS se ve obligado a reducir la potencia de carga para protegerla — el famoso "throttling". Por eso dos coches con la misma batería pueden cargar muy distinto: el que tiene mejor refrigeración puede sostener más potencia durante más tiempo.</p>
+
+    <p>Esto enlaza directamente con la píldora 9 (curva de carga) y la píldora 10 (800V): a más voltaje, más potencia, más calor instantáneo, más exigencia térmica. La sofisticación del sistema térmico es lo que separa un coche que "carga rápido en el papel" de uno que carga rápido <em>de verdad</em>, en autopista, en agosto.</p>
+
+    <div class="exercises">
+      <div class="ex-title">Comprueba que lo tienes</div>
+
+      <details class="ex-card">
+        <summary><span class="ex-tag ex-tag-easy">Fácil</span><span class="ex-q">¿Cuál es la franja de temperatura óptima para una batería de litio?</span></summary>
+        <div class="ex-answer">
+          <p>Aproximadamente entre 20 °C y 40 °C. Por debajo, baja la potencia disponible. Por encima, se acelera el envejecimiento y aumenta el riesgo de problemas térmicos.</p>
+        </div>
+      </details>
+
+      <details class="ex-card">
+        <summary><span class="ex-tag ex-tag-easy">Fácil</span><span class="ex-q">¿Por qué los coches eléctricos modernos prefieren refrigeración líquida a refrigeración por aire?</span></summary>
+        <div class="ex-answer">
+          <p>Porque el líquido transporta el calor mucho más eficientemente que el aire (mayor capacidad calorífica y mejor contacto). Permite mantener el pack dentro de la ventana óptima incluso con cargas rápidas o aceleraciones fuertes. La refrigeración por aire solo aguanta packs pequeños y exigencias modestas.</p>
+        </div>
+      </details>
+
+      <details class="ex-card">
+        <summary><span class="ex-tag ex-tag-medium">Medio</span><span class="ex-q">¿Por qué cargar en invierno suele ser más lento si no hay precondicionamiento?</span></summary>
+        <div class="ex-answer">
+          <p>Porque una batería fría no puede aceptar tanta potencia como una caliente: los iones se mueven más despacio y forzar más corriente la dañaría. El BMS limita la potencia de carga mientras el sistema térmico va calentando el pack. Con precondicionamiento, el pack llega caliente y se puede usar el cargador a tope desde el principio.</p>
+        </div>
+      </details>
+
+      <details class="ex-card">
+        <summary><span class="ex-tag ex-tag-hard">Difícil</span><span class="ex-q">Una bomba de calor es más eficiente que un calentador resistivo. ¿Por qué? ¿Cuál es la trampa?</span></summary>
+        <div class="ex-answer">
+          <p>Una bomba de calor no <em>genera</em> calor: lo <em>mueve</em> de un sitio a otro (típicamente del aire exterior al refrigerante interior). Por eso puede entregar 3 o 4 kWh de calor por cada 1 kWh eléctrico que consume — un calentador resistivo entrega 1 kWh por cada 1 kWh consumido. La trampa: la eficiencia cae cuando el aire exterior está muy frío (porque cuesta más extraer calor de él), así que en climas extremos su ventaja se reduce. Aún así, gana al resistivo en casi todas las condiciones reales.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="next">
+      <div class="next-label">Siguiente</div>
+      <a href="../pildora-06_electronica-de-potencia/index.html">Píldora 6 — Electrónica de potencia →</a>
+    </div>
+  </main>
+
+  <aside class="aside">
+    <div class="note">
+      <span class="note-label">Vocabulario</span>
+      <strong>Refrigerante</strong>: el líquido que circula. Suele ser una mezcla agua + glicol, similar al de un motor de combustión, pero formulada para los rangos del coche eléctrico.
+    </div>
+    <div class="note">
+      <span class="note-label">"Throttling"</span>
+      Cuando el BMS reduce la potencia de carga porque el pack se está calentando demasiado. Lo notas si la velocidad de carga baja sin razón aparente.
+    </div>
+    <div class="note">
+      <span class="note-label">Por qué la bomba de calor multiplica</span>
+      Porque transfiere calor existente en lugar de crearlo. El concepto se llama <em>COP</em> (Coefficient of Performance): la relación entre calor movido y energía consumida. Un buen COP es 3-4.
+    </div>
+    <div class="note">
+      <span class="note-label">Inmersión en aceite</span>
+      Un par de fabricantes deportivos sumergen las celdas en un aceite dieléctrico (no conduce electricidad) que las refrigera por contacto directo. Permite descargas brutales sin sobrecalentar. Es excepcional, no estándar.
+    </div>
+  </aside>
+</div>
+
+<script>
+  const bar=document.getElementById('progress-bar');
+  function up(){const h=document.documentElement;bar.style.width=((h.scrollTop)/(h.scrollHeight-h.clientHeight)*100)+'%';}
+  document.addEventListener('scroll',up,{passive:true}); up();
+</script>
+</body>
+</html>

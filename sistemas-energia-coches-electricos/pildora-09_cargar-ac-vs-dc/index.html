@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Píldora 09 — Cargar el coche: AC vs DC</title>
+<style>
+  :root { --bg:#F8F4EC; --bg-card:#FBF7EC; --ink:#2A2A2A; --ink-soft:#555; --ink-faint:#888; --line:#E5DFCF; --orange:#E07A3C; --orange-deep:#B8480F; --max-content:680px; --serif:"Iowan Old Style","Apple Garamond","Georgia","Times New Roman",serif; --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{background:var(--bg);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.7;-webkit-font-smoothing:antialiased;}
+  .progress-bar{position:fixed;top:0;left:0;width:0%;height:3px;background:var(--orange);z-index:100;transition:width .05s linear;}
+  .layout{max-width:1200px;margin:0 auto;padding:80px 32px 96px;display:grid;grid-template-columns:minmax(0,1fr);gap:0;}
+  @media (min-width:1024px){.layout{grid-template-columns:minmax(0,var(--max-content)) minmax(220px,280px);gap:56px;padding:80px 48px 96px;}}
+  .main{max-width:var(--max-content);}
+  .aside{font-family:var(--sans);font-size:.85em;color:var(--ink-soft);line-height:1.55;}
+  .aside .note{border-left:2px solid var(--orange);padding:4px 0 4px 14px;margin-bottom:28px;}
+  .aside .note-label{display:block;text-transform:uppercase;letter-spacing:.06em;font-size:.78em;color:var(--orange-deep);font-weight:600;margin-bottom:4px;}
+  @media (max-width:1023px){.aside{margin-top:32px;} .aside .note{background:var(--bg-card);border:1px solid var(--line);border-left:3px solid var(--orange);border-radius:0 8px 8px 0;padding:12px 16px;}}
+  .breadcrumb{font-family:var(--sans);font-size:.82em;color:var(--ink-faint);margin-bottom:24px;letter-spacing:.02em;}
+  .breadcrumb a{color:var(--ink-soft);text-decoration:none;} .breadcrumb a:hover{color:var(--orange-deep);}
+  h1{font-family:var(--sans);font-weight:700;font-size:2.1em;line-height:1.2;color:var(--ink);margin:0 0 12px;letter-spacing:-.01em;}
+  .meta{font-family:var(--sans);font-size:.85em;color:var(--ink-faint);margin-bottom:36px;display:flex;gap:16px;flex-wrap:wrap;}
+  .meta .pill{background:var(--bg-card);border:1px solid var(--line);padding:3px 12px;border-radius:12px;}
+  h2{font-family:var(--sans);font-weight:600;font-size:1.35em;color:var(--ink);margin:48px 0 16px;letter-spacing:-.005em;}
+  p{margin:0 0 1.1em;}
+  .lead{font-size:1.12em;color:var(--ink);line-height:1.55;margin-bottom:1.4em;}
+  em{font-style:italic;} strong{font-weight:600;color:var(--ink);}
+  .pull{border-left:3px solid var(--orange);padding:4px 0 4px 20px;margin:28px 0;color:var(--ink);font-style:italic;font-size:1.05em;line-height:1.5;}
+  .diagram{margin:36px 0 12px;}
+  .diagram img{width:100%;height:auto;border-radius:8px;display:block;}
+  .diagram-caption{font-family:var(--sans);font-size:.82em;color:var(--ink-faint);text-align:center;margin-top:10px;line-height:1.5;}
+  .diagram-labels{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px;font-family:var(--sans);font-size:.85em;color:var(--ink-soft);text-align:center;}
+  .diagram-labels span{padding:6px 4px;border-top:2px solid var(--orange);font-weight:500;}
+  .next{margin-top:56px;padding:22px 24px;background:var(--bg-card);border:1px solid var(--line);border-radius:10px;font-family:var(--sans);font-size:.95em;}
+  .next-label{text-transform:uppercase;letter-spacing:.07em;font-size:.78em;color:var(--orange-deep);font-weight:600;margin-bottom:6px;}
+  .next a{color:var(--ink);text-decoration:none;font-weight:600;} .next a:hover{color:var(--orange-deep);}
+  .ctable{font-family:var(--sans);font-size:.92em;border-collapse:collapse;width:100%;margin:28px 0;background:var(--bg-card);border:1px solid var(--line);border-radius:8px;overflow:hidden;}
+  .ctable th,.ctable td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--line);}
+  .ctable th{color:var(--orange-deep);text-transform:uppercase;letter-spacing:.05em;font-size:.78em;font-weight:600;background:var(--bg);}
+  .ctable tr:last-child td{border-bottom:none;}
+  .exercises{margin:56px 0 32px;padding-top:36px;border-top:1px solid var(--line);}
+  .ex-title{font-family:var(--sans);font-size:1.25em;color:var(--ink);margin-bottom:20px;font-weight:600;}
+  .ex-card{background:var(--bg-card);border:1px solid var(--line);border-radius:8px;padding:16px 20px;margin-bottom:14px;font-family:var(--sans);font-size:.95em;}
+  .ex-card summary{cursor:pointer;list-style:none;display:flex;gap:12px;align-items:flex-start;color:var(--ink);}
+  .ex-card summary::-webkit-details-marker{display:none;}
+  .ex-card summary::before{content:"▸";color:var(--orange);font-size:.9em;transition:transform .2s;flex-shrink:0;margin-top:2px;}
+  .ex-card[open] summary::before{transform:rotate(90deg);}
+  .ex-tag{display:inline-block;font-size:.72em;font-weight:600;padding:2px 8px;border-radius:4px;text-transform:uppercase;letter-spacing:.04em;flex-shrink:0;margin-top:1px;}
+  .ex-tag-easy{background:#E6EDD8;color:#5A6E36;} .ex-tag-medium{background:#F4E4CC;color:#8C5E1F;} .ex-tag-hard{background:#F0D8CB;color:#A23215;}
+  .ex-q{line-height:1.45;}
+  .ex-answer{margin:16px 0 4px 32px;padding:14px 18px;background:#FFFEFA;border-left:3px solid var(--orange);color:#444;line-height:1.6;border-radius:0 6px 6px 0;}
+  .ex-answer p{margin:0 0 10px;} .ex-answer p:last-child{margin-bottom:0;} .ex-answer strong{color:var(--ink);}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress-bar"></div>
+
+<div class="layout">
+  <main class="main">
+    <div class="breadcrumb"><a href="../indice.html">Curso · Sistemas de energía en coches eléctricos</a> &nbsp;/&nbsp; Píldora 09</div>
+
+    <h1>Cargar el coche: AC vs DC</h1>
+    <div class="meta">
+      <span class="pill">⏱ 10 min</span>
+      <span class="pill">Píldora 9 de 12</span>
+    </div>
+
+    <p class="lead">Hay dos formas radicalmente distintas de meter electricidad en una batería de coche eléctrico. Una es lenta, vive en el enchufe de tu casa y carga durante la noche. La otra es rápida, vive en estaciones de carretera y llena el coche en menos tiempo del que tarda un café. Las dos resuelven el mismo problema con filosofías opuestas. Esta píldora te enseña a leer la diferencia.</p>
+
+    <h2>El problema de fondo</h2>
+    <p>La batería del coche almacena DC. La red eléctrica reparte AC. En algún punto del camino, alguien tiene que traducir. La pregunta es <strong>quién traduce y dónde</strong>. Y de esa decisión salen dos modos de carga totalmente distintos.</p>
+
+    <p><strong>Carga AC.</strong> El coche recibe corriente alterna del enchufe y la traduce <em>a bordo</em> con su propio cargador (el OBC de la píldora 6). Es lento porque el OBC del coche es pequeño (típicamente entre 7 y 22 kW como mucho), pero compatible con cualquier enchufe del mundo, desde el doméstico hasta el industrial trifásico.</p>
+
+    <p><strong>Carga DC.</strong> El coche recibe directamente corriente continua del cargador, ya traducida. La traducción la hace una pieza enorme y cara <em>fuera</em> del coche, en la propia estación de carga. Como ese traductor exterior puede ser muchísimo más grande que el OBC, las potencias son brutales: 50, 150, 350 kW de forma rutinaria.</p>
+
+    <div class="diagram">
+      <img src="pildora-09_diagrama-1.png" alt="Comparativa de dos paneles: a la izquierda carga AC con casa, cable fino y conversión dentro del coche. A la derecha carga DC con estación grande y cable grueso directo al pack. Debajo, gráfica de curva de carga DC subiendo rápido al 20%, plana hasta el 80%, descendente hasta el 100%.">
+      <div class="diagram-labels">
+        <span>AC: traduce el coche</span>
+        <span>DC: traduce el cargador</span>
+        <span>curva real de carga DC</span>
+      </div>
+      <div class="diagram-caption">Izquierda: la carga AC depende del OBC del coche, lenta y limitada. Derecha: la carga DC se salta el OBC y va directa al pack, rápida y limitada por la batería. Debajo: la curva típica de carga rápida — sube, mantiene, cae al final.</div>
+    </div>
+
+    <h2>Las velocidades reales</h2>
+    <p>Para hacer pie con cifras realistas, esta es la tabla mental:</p>
+
+    <table class="ctable">
+      <tr><th>Tipo</th><th>Potencia típica</th><th>Tiempo (50 kWh)</th><th>Dónde lo encuentras</th></tr>
+      <tr><td>AC monofásica (enchufe doméstico)</td><td>2,3 kW</td><td>~22 horas</td><td>Cualquier enchufe schuko</td></tr>
+      <tr><td>AC monofásica reforzada</td><td>3,7-7 kW</td><td>~7-13 horas</td><td>Wallbox de casa básico</td></tr>
+      <tr><td>AC trifásica</td><td>11-22 kW</td><td>~2-5 horas</td><td>Wallbox industrial, parkings</td></tr>
+      <tr><td>DC media</td><td>50 kW</td><td>~1 hora</td><td>Cargadores antiguos en gasolineras</td></tr>
+      <tr><td>DC alta</td><td>150-250 kW</td><td>~15-30 min (al 80%)</td><td>Estaciones modernas en autopista</td></tr>
+      <tr><td>DC ultra</td><td>350 kW</td><td>~10-20 min (al 80%)</td><td>Estaciones premium en autopista</td></tr>
+    </table>
+
+    <p>Una observación clave: en AC, la potencia suele estar limitada por el OBC del coche. En DC, está limitada por lo que la batería puede aceptar (que depende de la química, la temperatura, el SoC y la arquitectura — todo lo que vimos en píldoras anteriores). Por eso conectar un coche con OBC de 7 kW a un cargador AC de 22 kW da 7 kW. Pero conectar el mismo coche a un cargador DC de 150 kW da lo que el coche acepte por DC, que puede ser 100 kW perfectamente.</p>
+
+    <h2>La curva de carga: por qué no es plana</h2>
+    <p>Si miras la potencia de carga DC durante una sesión típica, no verás una línea horizontal. Verás <em>una curva</em>: sube rápido al principio, mantiene un nivel alto entre el 20% y el 80% aproximadamente, y luego baja en el último tramo.</p>
+
+    <p>Hay tres razones para esa forma:</p>
+
+    <p><strong>Inicio cauteloso.</strong> La batería empieza fría o tibia y necesita "arrancar" sus reacciones químicas. Los primeros minutos el cargador da menos potencia que el techo, por seguridad.</p>
+
+    <p><strong>Plateau alto.</strong> Una vez la batería está caliente y entre el 20% y el 80% de carga, las celdas aceptan la potencia máxima sin estresarse. Es la zona "buena" de la carga rápida y la que justifica todas las cifras de marketing.</p>
+
+    <p><strong>Caída final.</strong> Pasado el 80%, el voltaje de las celdas se acerca al techo permitido y los iones se acumulan en sitios que ya están cerca de saturarse. Si forzaras la potencia, las dañarías. El BMS reduce progresivamente y, por encima del 90%, la carga es lentísima.</p>
+
+    <p>Por eso la regla práctica de la carga rápida en viaje es: <strong>cargar del 10% al 80%</strong>. Es donde el coche está en su zona dorada. Subir del 80% al 100% suele tardar tanto como bajar del 80% al 10%, y rara vez compensa salvo que necesites esos 100 km extras al final.</p>
+
+    <h2>Conectores: el zoo</h2>
+    <p>Los conectores son el detalle confuso del coche eléctrico. La buena noticia es que el panorama se ha simplificado mucho. La mala es que aún hay variedad regional.</p>
+
+    <p><strong>Tipo 2 (Mennekes).</strong> Conector AC estándar en Europa. Soporta monofásica y trifásica, hasta 22 kW. Es el conector "lento" que verás en wallbox y postes urbanos.</p>
+
+    <p><strong>CCS Combo (Combined Charging System).</strong> Combina el Tipo 2 (parte superior) con dos pines extra gruesos (parte inferior) para DC. Un solo enchufe sirve para AC y para DC. Es el estándar europeo de facto y el más extendido en cargadores rápidos.</p>
+
+    <p><strong>CHAdeMO.</strong> Conector DC japonés histórico. Está en clara retirada en Europa: cada vez menos coches lo llevan y cada vez menos cargadores nuevos lo incluyen.</p>
+
+    <p><strong>NACS (North American Charging Standard).</strong> Conector compacto que se está extendiendo en Estados Unidos como estándar único. En Europa convive con CCS y aún no es claro si lo desplazará a medio plazo.</p>
+
+    <p>Como conductor europeo, en la práctica solo necesitas saber Tipo 2 (para AC) y CCS Combo (para DC). Lo demás es trivia geográfica.</p>
+
+    <h2>El protocolo: una conversación antes de la electricidad</h2>
+    <p>Cuando conectas un cargador rápido, la primera media docena de segundos no pasa nada. En realidad sí: el coche y el cargador están <em>hablando</em>. Negocian voltaje, corriente máxima, identidad, autorización de pago, condiciones de la batería. Solo cuando ambos están de acuerdo, fluye la primera décima de amperio.</p>
+
+    <p>Esa conversación se llama <strong>protocolo de carga</strong>. Hay distintas versiones (CCS usa una llamada DIN/ISO, NACS usa otra basada en lo mismo) y van mejorando con el tiempo. Versiones modernas permiten cosas como <strong>plug & charge</strong> (enchufas y la sesión arranca sola, autenticando el coche, sin sacar tarjeta ni app) o <strong>carga bidireccional</strong> (el coche puede devolver energía al cargador, como veremos en la píldora 12).</p>
+
+    <p>Si alguna vez te has preguntado por qué la carga "tarda en arrancar" o por qué a veces falla con un mensaje raro, suele ser un problema de protocolo: incompatibilidad de versiones, autenticación que no llega, o el coche pidiendo algo que el cargador no entiende. No es la electricidad la que falla; es la conversación.</p>
+
+    <div class="pull">AC carga el coche con el traductor que lleva dentro. DC se salta ese traductor metiendo electricidad ya traducida. La frontera entre "lento" y "rápido" no la marca el cable, la marca dónde vive la conversión.</div>
+
+    <h2>Cuándo usar cuál</h2>
+    <p>Una regla pragmática:</p>
+
+    <p><strong>AC para el día a día.</strong> Si tienes acceso a wallbox en casa o en el trabajo, eso cubre el 95% de tu uso. Cargas mientras no usas el coche, sin pensar. La batería y la red lo agradecen (carga lenta = menos estrés químico, menos pico de demanda eléctrica).</p>
+
+    <p><strong>DC para viajes.</strong> En trayectos largos, paras en un cargador rápido del 10% al 80%, descansas 15-20 minutos, y sigues. Es lo que sustituye la parada en gasolinera. Hacerlo cada día sería innecesario, más caro y peor para la batería a largo plazo.</p>
+
+    <p>La carga rápida no daña la batería si se usa con cabeza. Pero un coche que vive de carga rápida diaria envejece más rápido que uno que carga lento por las noches. Por eso el plan ideal sigue siendo: <em>AC siempre que puedas, DC cuando lo necesites</em>.</p>
+
+    <div class="exercises">
+      <div class="ex-title">Comprueba que lo tienes</div>
+
+      <details class="ex-card">
+        <summary><span class="ex-tag ex-tag-easy">Fácil</span><span class="ex-q">¿Por qué la carga AC depende del coche y la carga DC depende del cargador?</span></summary>
+        <div class="ex-answer">
+          <p>Porque la conversión AC→DC tiene que ocurrir en algún sitio. En carga AC ocurre dentro del coche (con su OBC), y la velocidad la limita el OBC. En carga DC ocurre fuera del coche (en la estación), y la velocidad la limita lo que el cargador puede dar y lo que la batería puede aceptar — el coche se salta su OBC.</p>
+        </div>
+      </details>
+
+      <details class="ex-card">
+        <summary><span class="ex-tag ex-tag-easy">Fácil</span><span class="ex-q">¿Qué conector necesitas para carga DC rápida en Europa?</span></summary>
+        <div class="ex-answer">
+          <p>CCS Combo (Combined Charging System). Es el estándar europeo y el conector más extendido en autopistas. CHAdeMO está en retirada y NACS aún no es mayoritario en Europa.</p>
+        </div>
+      </details>
+
+      <details class="ex-card">
+        <summary><span class="ex-tag ex-tag-medium">Medio</span><span class="ex-q">En carga rápida, ¿por qué la potencia baja después del 80%?</span></summary>
+        <div class="ex-answer">
+          <p>Porque cerca del 100% el voltaje de las celdas se acerca al máximo permitido y los iones de litio se acumulan en zonas casi saturadas. Forzar más corriente las dañaría. El BMS reduce la potencia progresivamente para protegerlas. La consecuencia práctica: del 80% al 100% suele tardar casi tanto como del 10% al 80%.</p>
+        </div>
+      </details>
+
+      <details class="ex-card">
+        <summary><span class="ex-tag ex-tag-hard">Difícil</span><span class="ex-q">Vives en piso, sin garaje. Cargas el 100% de las veces en cargador rápido DC público. ¿Qué efecto tendrá esto a largo plazo en la batería y qué podrías hacer para mitigarlo?</span></summary>
+        <div class="ex-answer">
+          <p>La batería se degradará algo más rápido que en uso AC casero. La carga rápida frecuente estresa más las celdas (más calor, más corrientes altas) y acelera el envejecimiento, especialmente en NMC. Para mitigarlo: (1) parar al 80% en lugar de al 100% siempre que sea viable, (2) precondicionar el pack antes de cargar si el coche lo permite, (3) elegir, si puedes, un coche con química LFP, que aguanta mejor el uso intensivo y es habitual en flotas precisamente por esto. La degradación no es catastrófica, pero un coche que carga rápido a diario puede perder un par de puntos de SoH al año más que uno que carga lento.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="next">
+      <div class="next-label">Siguiente</div>
+      <a href="../pildora-10_400v-vs-800v/index.html">Píldora 10 — 400V vs 800V →</a>
+    </div>
+  </main>
+
+  <aside class="aside">
+    <div class="note">
+      <span class="note-label">Vocabulario</span>
+      <strong>OBC</strong> = Onboard Charger. <strong>CCS</strong> = Combined Charging System. <strong>kW</strong> = potencia (instantáneo). <strong>kWh</strong> = energía (acumulado).
+    </div>
+    <div class="note">
+      <span class="note-label">Plug &amp; Charge</span>
+      Versión moderna del protocolo: el coche se identifica solo, la sesión se cobra automáticamente, no necesitas tarjeta ni app. Ya está disponible en muchas redes; el conductor enchufa y se va.
+    </div>
+    <div class="note">
+      <span class="note-label">¿Por qué AC trifásica carga más rápido que monofásica?</span>
+      Porque entrega tres ondas en lugar de una, multiplicando la potencia disponible. Una toma trifásica de 16 A da ~11 kW; una monofásica de 16 A da ~3,7 kW. El triple, con el mismo amperaje.
+    </div>
+    <div class="note">
+      <span class="note-label">El cable de DC pesa</span>
+      Un cable de carga rápida lleva muchísima corriente. Por eso es tan grueso, a veces refrigerado por líquido en su interior. Si has cogido uno, sabes que pesa varios kilos.
+    </div>
+  </aside>
+</div>
+
+<script>
+  const bar=document.getElementById('progress-bar');
+  function up(){const h=document.documentElement;bar.style.width=((h.scrollTop)/(h.scrollHeight-h.clientHeight)*100)+'%';}
+  document.addEventListener('scroll',up,{passive:true}); up();
+</script>
+</body>
+</html>

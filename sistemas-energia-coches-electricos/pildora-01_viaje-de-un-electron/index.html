@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Píldora 01 — El viaje de un electrón</title>
+<style>
+  :root { --bg:#F8F4EC; --bg-card:#FBF7EC; --ink:#2A2A2A; --ink-soft:#555; --ink-faint:#888; --line:#E5DFCF; --orange:#E07A3C; --orange-deep:#B8480F; --max-content:680px; --serif:"Iowan Old Style","Apple Garamond","Georgia","Times New Roman",serif; --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{background:var(--bg);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.7;-webkit-font-smoothing:antialiased;}
+  .progress-bar{position:fixed;top:0;left:0;width:0%;height:3px;background:var(--orange);z-index:100;transition:width .05s linear;}
+  .layout{max-width:1200px;margin:0 auto;padding:80px 32px 96px;display:grid;grid-template-columns:minmax(0,1fr);gap:0;}
+  @media (min-width:1024px){.layout{grid-template-columns:minmax(0,var(--max-content)) minmax(220px,280px);gap:56px;padding:80px 48px 96px;}}
+  .main{max-width:var(--max-content);}
+  .aside{font-family:var(--sans);font-size:.85em;color:var(--ink-soft);line-height:1.55;}
+  .aside .note{border-left:2px solid var(--orange);padding:4px 0 4px 14px;margin-bottom:28px;}
+  .aside .note-label{display:block;text-transform:uppercase;letter-spacing:.06em;font-size:.78em;color:var(--orange-deep);font-weight:600;margin-bottom:4px;}
+  @media (max-width:1023px){.aside{margin-top:32px;} .aside .note{background:var(--bg-card);border:1px solid var(--line);border-left:3px solid var(--orange);border-radius:0 8px 8px 0;padding:12px 16px;}}
+  .breadcrumb{font-family:var(--sans);font-size:.82em;color:var(--ink-faint);margin-bottom:24px;letter-spacing:.02em;}
+  .breadcrumb a{color:var(--ink-soft);text-decoration:none;} .breadcrumb a:hover{color:var(--orange-deep);}
+  h1{font-family:var(--sans);font-weight:700;font-size:2.1em;line-height:1.2;color:var(--ink);margin:0 0 12px;letter-spacing:-.01em;}
+  .meta{font-family:var(--sans);font-size:.85em;color:var(--ink-faint);margin-bottom:36px;display:flex;gap:16px;flex-wrap:wrap;}
+  .meta .pill{background:var(--bg-card);border:1px solid var(--line);padding:3px 12px;border-radius:12px;}
+  h2{font-family:var(--sans);font-weight:600;font-size:1.35em;color:var(--ink);margin:48px 0 16px;letter-spacing:-.005em;}
+  p{margin:0 0 1.1em;}
+  .lead{font-size:1.12em;color:var(--ink);line-height:1.55;margin-bottom:1.4em;}
+  em{font-style:italic;} strong{font-weight:600;color:var(--ink);}
+  .pull{border-left:3px solid var(--orange);padding:4px 0 4px 20px;margin:28px 0;color:var(--ink);font-style:italic;font-size:1.05em;line-height:1.5;}
+  .diagram{margin:36px 0 12px;}
+  .diagram img{width:100%;height:auto;border-radius:8px;display:block;}
+  .diagram-caption{font-family:var(--sans);font-size:.82em;color:var(--ink-faint);text-align:center;margin-top:10px;line-height:1.5;}
+  .diagram-labels{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:8px;font-family:var(--sans);font-size:.82em;color:var(--ink-soft);text-align:center;}
+  .diagram-labels span{padding:6px 4px;border-top:2px solid var(--orange);font-weight:500;}
+  .next{margin-top:56px;padding:22px 24px;background:var(--bg-card);border:1px solid var(--line);border-radius:10px;font-family:var(--sans);font-size:.95em;}
+  .next-label{text-transform:uppercase;letter-spacing:.07em;font-size:.78em;color:var(--orange-deep);font-weight:600;margin-bottom:6px;}
+  .next a{color:var(--ink);text-decoration:none;font-weight:600;} .next a:hover{color:var(--orange-deep);}
+  .exercises{margin:56px 0 32px;padding-top:36px;border-top:1px solid var(--line);}
+  .ex-title{font-family:var(--sans);font-size:1.25em;color:var(--ink);margin-bottom:20px;font-weight:600;}
+  .ex-card{background:var(--bg-card);border:1px solid var(--line);border-radius:8px;padding:16px 20px;margin-bottom:14px;font-family:var(--sans);font-size:.95em;}
+  .ex-card summary{cursor:pointer;list-style:none;display:flex;gap:12px;align-items:flex-start;color:var(--ink);}
+  .ex-card summary::-webkit-details-marker{display:none;}
+  .ex-card summary::before{content:"▸";color:var(--orange);font-size:.9em;transition:transform .2s;flex-shrink:0;margin-top:2px;}
+  .ex-card[open] summary::before{transform:rotate(90deg);}
+  .ex-tag{display:inline-block;font-size:.72em;font-weight:600;padding:2px 8px;border-radius:4px;text-transform:uppercase;letter-spacing:.04em;flex-shrink:0;margin-top:1px;}
+  .ex-tag-easy{background:#E6EDD8;color:#5A6E36;} .ex-tag-medium{background:#F4E4CC;color:#8C5E1F;} .ex-tag-hard{background:#F0D8CB;color:#A23215;}
+  .ex-q{line-height:1.45;}
+  .ex-answer{margin:16px 0 4px 32px;padding:14px 18px;background:#FFFEFA;border-left:3px solid var(--orange);color:#444;line-height:1.6;border-radius:0 6px 6px 0;}
+  .ex-answer p{margin:0 0 10px;} .ex-answer p:last-child{margin-bottom:0;} .ex-answer strong{color:var(--ink);}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress-bar"></div>
+
+<div class="layout">
+  <main class="main">
+    <div class="breadcrumb"><a href="../indice.html">Curso · Sistemas de energía en coches eléctricos</a> &nbsp;/&nbsp; Píldora 01</div>
+
+    <h1>El viaje de un electrón</h1>
+    <div class="meta">
+      <span class="pill">⏱ 10 min</span>
+      <span class="pill">Píldora 1 de 12</span>
+    </div>
+
+    <p class="lead">Antes de meternos en cada componente con detalle, necesitas un mapa del territorio. Esta píldora dibuja el viaje completo de la energía desde el enchufe de la pared hasta que la rueda gira en el asfalto. Solo el plano. Las habitaciones las visitamos una a una en las píldoras siguientes.</p>
+
+    <h2>El plano completo, en un párrafo</h2>
+    <p>Conectas el coche a un enchufe. La electricidad entra. Si viene del enchufe de tu casa, está en un formato (AC) que la batería no acepta, así que pasa por una pieza llamada <strong>cargador a bordo</strong> (OBC) que la traduce. Si viene de un cargador rápido público, ya viene traducida. La electricidad llega entonces al <strong>pack de baterías</strong>, un tablón plano y pesado bajo el suelo del coche, donde se almacena. Mientras está ahí, dos guardianes invisibles la cuidan: el <strong>BMS</strong> (cerebro electrónico que vigila celda a celda) y el <strong>sistema térmico</strong> (refrigeración líquida que mantiene la temperatura adecuada). Cuando aprietas el acelerador, esa energía sale del pack, pasa por el <strong>inversor</strong> (otro traductor), llega al <strong>motor</strong> y este hace girar las ruedas. Cuando levantas el pie, el motor funciona al revés: actúa como generador, frena el coche y devuelve algo de energía al pack. Eso es <strong>frenada regenerativa</strong>. Y eso es todo.</p>
+
+    <p>Si has leído ese párrafo y has entendido la mitad, perfecto: el resto del curso es desarrollar cada pieza. Si no has entendido nada, aún mejor: a eso venimos.</p>
+
+    <div class="diagram">
+      <img src="pildora-01_diagrama-1.png" alt="Mapa horizontal del flujo de energía: enchufe → cargador OBC → pack de baterías → inversor → rueda, con BMS arriba y flecha de regeneración volviendo">
+      <div class="diagram-labels">
+        <span>enchufe</span>
+        <span>cargador OBC</span>
+        <span>pack batería</span>
+        <span>inversor</span>
+        <span>motor + rueda</span>
+      </div>
+      <div class="diagram-caption">El mapa del territorio: cinco bloques principales, una flecha de regeneración volviendo del motor a la batería, y arriba el BMS supervisando todo. Cada píldora siguiente desarrolla uno de estos bloques.</div>
+    </div>
+
+    <h2>Las cinco familias de componentes</h2>
+    <p>Si agrupas todo lo que hay en un coche eléctrico relacionado con la energía, sale en cinco familias bien definidas:</p>
+
+    <p><strong>1. Almacenamiento.</strong> Una sola cosa: el pack de baterías. Es el depósito. Pesa entre 300 y 700 kg. Va plano bajo el suelo del coche, ocupando casi toda su huella. Es lo más caro del coche y lo más importante.</p>
+
+    <p><strong>2. Gestión.</strong> Dos cosas: el BMS y el sistema térmico. Trabajan juntos para que la batería no se degrade ni se incendie. Son invisibles desde fuera pero sin ellos la batería duraría meses, no años.</p>
+
+    <p><strong>3. Transformación.</strong> Tres cosas: el cargador a bordo (OBC), el convertidor DC-DC y el inversor. Las tres son piezas de electrónica de potencia que traducen la electricidad de un formato a otro. Imagínalas como tres traductores especializados.</p>
+
+    <p><strong>4. Uso.</strong> El motor eléctrico. Coge electricidad y la convierte en giro. Hay distintos tipos (síncrono de imanes permanentes, asíncrono de inducción), pero conceptualmente hace lo mismo.</p>
+
+    <p><strong>5. Recuperación.</strong> El frenado regenerativo, que no es una pieza física separada — es el motor funcionando al revés. Cuando frenas, el motor se convierte en generador y devuelve algo de energía al pack.</p>
+
+    <div class="pull">Almacenar, gestionar, transformar, usar, recuperar. Toda la complejidad del sistema cabe en cinco verbos.</div>
+
+    <h2>Por qué hace falta tanto traductor</h2>
+    <p>Quizá te haya llamado la atención que entre la batería y casi todo lo demás aparezca un traductor. Es la pregunta correcta. La razón es que cada pieza del coche habla un dialecto eléctrico distinto:</p>
+
+    <p>El <strong>enchufe de casa</strong> da AC a 230 V. La <strong>batería</strong> almacena DC a unos 400 V. El <strong>motor</strong> necesita AC trifásica (de tres canales desfasados) a un voltaje variable según cuán rápido quieras ir. La <strong>radio, las luces, los limpiaparabrisas</strong> y demás electrónica accesoria funcionan a DC pero a 12 V — el mismo voltaje que tenía un coche tradicional.</p>
+
+    <p>Para que todo conviva, hace falta traducir de un dialecto a otro. El <strong>OBC</strong> traduce AC del enchufe a DC para la batería. El <strong>convertidor DC-DC</strong> baja los 400 V de la batería a los 12 V de los accesorios. El <strong>inversor</strong> convierte DC de la batería a AC trifásica para el motor. Tres traductores, tres direcciones, una sola batería en el centro.</p>
+
+    <h2>El viaje en frenada</h2>
+    <p>El truco más elegante del coche eléctrico es que el viaje no es de un solo sentido. Cuando aceleras, la energía va de la batería al motor. Cuando levantas el pie del acelerador, ocurre lo contrario: el motor se opone al giro de las ruedas (lo que frena el coche) y esa fuerza de frenado se convierte en electricidad que vuelve a la batería.</p>
+    <p>Es la misma maquinaria — motor + inversor — funcionando en sentido inverso. Por eso un coche eléctrico bien conducido casi nunca usa los frenos mecánicos en ciudad: el motor hace casi todo el trabajo de frenar y, además, recupera energía. Lo desarrollamos en la píldora 8.</p>
+
+    <h2>Lo que vas a ir aprendiendo</h2>
+    <p>A partir de aquí, cada píldora se mete en un componente del mapa:</p>
+
+    <ul style="font-family: var(--sans); font-size: .98em; color: var(--ink-soft); line-height: 1.8;">
+      <li><strong>Píldoras 2 a 5</strong>: la batería por dentro y los dos guardianes (BMS + térmica).</li>
+      <li><strong>Píldora 6</strong>: los tres traductores (OBC, DC-DC, inversor) y los semiconductores que los hacen posibles.</li>
+      <li><strong>Píldoras 7 y 8</strong>: el motor eléctrico y la frenada regenerativa.</li>
+      <li><strong>Píldoras 9 y 10</strong>: cargar el coche y por qué algunos cargan más rápido que otros (400V vs 800V).</li>
+      <li><strong>Píldoras 11 y 12</strong>: lo que viene en los próximos años (estado sólido, sodio-ion, V2G/V2H, megawatt charging).</li>
+    </ul>
+
+    <p>Si te pierdes en algún momento, vuelve a este mapa. Todo lo demás cuelga de aquí.</p>
+
+    <div class="exercises">
+      <div class="ex-title">Comprueba que lo tienes</div>
+
+      <details class="ex-card">
+        <summary><span class="ex-tag ex-tag-easy">Fácil</span><span class="ex-q">Nombra los cinco bloques del mapa, en orden, desde el enchufe hasta la rueda.</span></summary>
+        <div class="ex-answer">
+          <p>Enchufe → cargador a bordo (OBC) → pack de baterías → inversor → motor + rueda. Con dos elementos extra: el BMS supervisando la batería y la flecha de regeneración volviendo del motor a la batería.</p>
+        </div>
+      </details>
+
+      <details class="ex-card">
+        <summary><span class="ex-tag ex-tag-easy">Fácil</span><span class="ex-q">¿Por qué hace falta el OBC si el enchufe ya da electricidad?</span></summary>
+        <div class="ex-answer">
+          <p>Porque el enchufe da AC (corriente alterna) y la batería solo acepta DC (corriente continua). El OBC traduce de AC a DC. En carga rápida, esa traducción la hace el cargador exterior y por eso el coche no necesita su OBC; el flujo va directo al pack.</p>
+        </div>
+      </details>
+
+      <details class="ex-card">
+        <summary><span class="ex-tag ex-tag-medium">Medio</span><span class="ex-q">¿Cuál es la única pieza que también funciona "al revés", y qué hace en ese caso?</span></summary>
+        <div class="ex-answer">
+          <p>El motor eléctrico. Cuando recibe electricidad, gira y mueve el coche. Cuando lo obligas a girar (porque el coche tiene inercia y tú levantas el pie del acelerador), produce electricidad y la devuelve al pack. Es la base del frenado regenerativo.</p>
+        </div>
+      </details>
+
+      <details class="ex-card">
+        <summary><span class="ex-tag ex-tag-medium">Medio</span><span class="ex-q">¿Por qué un coche eléctrico tiene un convertidor DC-DC además del OBC y el inversor?</span></summary>
+        <div class="ex-answer">
+          <p>Porque dentro del coche conviven dos voltajes muy distintos: la batería principal (~400 V) y la electrónica accesoria de toda la vida (12 V). Las luces, la radio, los limpiaparabrisas, los elevalunas — todo eso sigue funcionando a 12 V por compatibilidad histórica. El DC-DC baja el voltaje de la batería principal a 12 V para alimentar todo ese ecosistema.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="next">
+      <div class="next-label">Siguiente</div>
+      <a href="../pildora-02_bateria-por-dentro/index.html">Píldora 2 — La batería por dentro →</a>
+    </div>
+  </main>
+
+  <aside class="aside">
+    <div class="note">
+      <span class="note-label">El plano en una frase</span>
+      Enchufe → traductor → batería → traductor → motor → rueda. Y todo vigilado por BMS + térmica.
+    </div>
+    <div class="note">
+      <span class="note-label">Por qué el pack va abajo</span>
+      Pesa cientos de kilos. Ponerlo en el suelo baja el centro de gravedad y aprovecha el espacio que en un coche tradicional ocupa el túnel de transmisión.
+    </div>
+    <div class="note">
+      <span class="note-label">Una palabra que oirás mucho</span>
+      <em>"Tracción"</em>. Significa "lo que mueve el coche". El "sistema de tracción" eléctrica es: pack + inversor + motor. El resto (carga, gestión) es el ecosistema alrededor.
+    </div>
+    <div class="note">
+      <span class="note-label">Dato sorprendente</span>
+      Un coche eléctrico tiene <em>menos</em> piezas móviles que uno de combustión. No hay cigüeñal, ni pistones, ni cambio de marchas, ni embrague. El motor eléctrico tiene una sola pieza que gira: el rotor.
+    </div>
+  </aside>
+</div>
+
+<script>
+  const bar=document.getElementById('progress-bar');
+  function up(){const h=document.documentElement;bar.style.width=((h.scrollTop)/(h.scrollHeight-h.clientHeight)*100)+'%';}
+  document.addEventListener('scroll',up,{passive:true}); up();
+</script>
+</body>
+</html>

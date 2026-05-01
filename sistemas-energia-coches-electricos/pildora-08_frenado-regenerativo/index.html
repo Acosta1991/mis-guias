@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Píldora 08 — Frenado regenerativo</title>
+<style>
+  :root { --bg:#F8F4EC; --bg-card:#FBF7EC; --ink:#2A2A2A; --ink-soft:#555; --ink-faint:#888; --line:#E5DFCF; --orange:#E07A3C; --orange-deep:#B8480F; --max-content:680px; --serif:"Iowan Old Style","Apple Garamond","Georgia","Times New Roman",serif; --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{background:var(--bg);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.7;-webkit-font-smoothing:antialiased;}
+  .progress-bar{position:fixed;top:0;left:0;width:0%;height:3px;background:var(--orange);z-index:100;transition:width .05s linear;}
+  .layout{max-width:1200px;margin:0 auto;padding:80px 32px 96px;display:grid;grid-template-columns:minmax(0,1fr);gap:0;}
+  @media (min-width:1024px){.layout{grid-template-columns:minmax(0,var(--max-content)) minmax(220px,280px);gap:56px;padding:80px 48px 96px;}}
+  .main{max-width:var(--max-content);}
+  .aside{font-family:var(--sans);font-size:.85em;color:var(--ink-soft);line-height:1.55;}
+  .aside .note{border-left:2px solid var(--orange);padding:4px 0 4px 14px;margin-bottom:28px;}
+  .aside .note-label{display:block;text-transform:uppercase;letter-spacing:.06em;font-size:.78em;color:var(--orange-deep);font-weight:600;margin-bottom:4px;}
+  @media (max-width:1023px){.aside{margin-top:32px;} .aside .note{background:var(--bg-card);border:1px solid var(--line);border-left:3px solid var(--orange);border-radius:0 8px 8px 0;padding:12px 16px;}}
+  .breadcrumb{font-family:var(--sans);font-size:.82em;color:var(--ink-faint);margin-bottom:24px;letter-spacing:.02em;}
+  .breadcrumb a{color:var(--ink-soft);text-decoration:none;} .breadcrumb a:hover{color:var(--orange-deep);}
+  h1{font-family:var(--sans);font-weight:700;font-size:2.1em;line-height:1.2;color:var(--ink);margin:0 0 12px;letter-spacing:-.01em;}
+  .meta{font-family:var(--sans);font-size:.85em;color:var(--ink-faint);margin-bottom:36px;display:flex;gap:16px;flex-wrap:wrap;}
+  .meta .pill{background:var(--bg-card);border:1px solid var(--line);padding:3px 12px;border-radius:12px;}
+  h2{font-family:var(--sans);font-weight:600;font-size:1.35em;color:var(--ink);margin:48px 0 16px;letter-spacing:-.005em;}
+  p{margin:0 0 1.1em;}
+  .lead{font-size:1.12em;color:var(--ink);line-height:1.55;margin-bottom:1.4em;}
+  em{font-style:italic;} strong{font-weight:600;color:var(--ink);}
+  .pull{border-left:3px solid var(--orange);padding:4px 0 4px 20px;margin:28px 0;color:var(--ink);font-style:italic;font-size:1.05em;line-height:1.5;}
+  .flow{background:var(--bg-card);border:1px solid var(--line);border-radius:10px;padding:24px;margin:28px 0;font-family:var(--sans);font-size:.93em;color:var(--ink);}
+  .flow-row{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:18px;}
+  .flow-row:last-child{margin-bottom:0;}
+  .flow-block{flex:1;text-align:center;background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 12px;}
+  .flow-block .b1{color:var(--orange-deep);font-weight:600;font-size:.82em;text-transform:uppercase;letter-spacing:.04em;}
+  .flow-block .b2{color:var(--ink-soft);font-size:.84em;margin-top:4px;}
+  .flow-arrow{color:var(--orange);font-size:1.4em;flex-shrink:0;}
+  .flow-label{font-style:italic;font-size:.84em;color:var(--ink-faint);text-align:center;margin-top:10px;}
+  .next{margin-top:56px;padding:22px 24px;background:var(--bg-card);border:1px solid var(--line);border-radius:10px;font-family:var(--sans);font-size:.95em;}
+  .next-label{text-transform:uppercase;letter-spacing:.07em;font-size:.78em;color:var(--orange-deep);font-weight:600;margin-bottom:6px;}
+  .next a{color:var(--ink);text-decoration:none;font-weight:600;} .next a:hover{color:var(--orange-deep);}
+  .exercises{margin:56px 0 32px;padding-top:36px;border-top:1px solid var(--line);}
+  .ex-title{font-family:var(--sans);font-size:1.25em;color:var(--ink);margin-bottom:20px;font-weight:600;}
+  .ex-card{background:var(--bg-card);border:1px solid var(--line);border-radius:8px;padding:16px 20px;margin-bottom:14px;font-family:var(--sans);font-size:.95em;}
+  .ex-card summary{cursor:pointer;list-style:none;display:flex;gap:12px;align-items:flex-start;color:var(--ink);}
+  .ex-card summary::-webkit-details-marker{display:none;}
+  .ex-card summary::before{content:"▸";color:var(--orange);font-size:.9em;transition:transform .2s;flex-shrink:0;margin-top:2px;}
+  .ex-card[open] summary::before{transform:rotate(90deg);}
+  .ex-tag{display:inline-block;font-size:.72em;font-weight:600;padding:2px 8px;border-radius:4px;text-transform:uppercase;letter-spacing:.04em;flex-shrink:0;margin-top:1px;}
+  .ex-tag-easy{background:#E6EDD8;color:#5A6E36;} .ex-tag-medium{background:#F4E4CC;color:#8C5E1F;} .ex-tag-hard{background:#F0D8CB;color:#A23215;}
+  .ex-q{line-height:1.45;}
+  .ex-answer{margin:16px 0 4px 32px;padding:14px 18px;background:#FFFEFA;border-left:3px solid var(--orange);color:#444;line-height:1.6;border-radius:0 6px 6px 0;}
+  .ex-answer p{margin:0 0 10px;} .ex-answer p:last-child{margin-bottom:0;} .ex-answer strong{color:var(--ink);}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress-bar"></div>
+
+<div class="layout">
+  <main class="main">
+    <div class="breadcrumb"><a href="../indice.html">Curso · Sistemas de energía en coches eléctricos</a> &nbsp;/&nbsp; Píldora 08</div>
+
+    <h1>Frenado regenerativo: el motor como generador</h1>
+    <div class="meta">
+      <span class="pill">⏱ 10 min</span>
+      <span class="pill">Píldora 8 de 12</span>
+    </div>
+
+    <p class="lead">Frenar es desperdiciar. En un coche tradicional, cada vez que pisas el freno conviertes el movimiento del coche en calor, ese calor se va al aire por las pinzas y los discos, y el dinero del combustible que te llevó hasta esa velocidad se evapora. Un coche eléctrico hace algo distinto: <em>recupera</em> parte de ese movimiento y lo devuelve a la batería. El truco es elegante y tiene una consecuencia inesperada — cambia la forma de conducir.</p>
+
+    <h2>El motor que también es generador</h2>
+    <p>En la píldora anterior vimos que el inversor envía corriente al motor para hacerlo girar. La pregunta inversa es interesante: ¿qué pasa si fuerzas al motor a girar <em>desde fuera</em>, sin meterle corriente?</p>
+
+    <p>Pasa lo contrario. El motor se convierte en <strong>generador</strong>: produce corriente. Es la misma máquina, físicamente la misma, funcionando al revés. La razón es simple: si una corriente que pasa por una bobina genera un campo magnético, también es cierto al revés — un imán que se mueve cerca de una bobina genera corriente en esa bobina. Es el principio de toda la generación eléctrica del mundo (turbinas, dinamos, alternadores). Y es exactamente lo que ocurre en el motor de un coche eléctrico cuando levantas el pie del acelerador.</p>
+
+    <p>Cuando aceleras, el inversor empuja corriente hacia el motor y este empuja al coche hacia adelante. Cuando levantas el pie, el coche tiene inercia: las ruedas siguen girando, y como el motor está unido a las ruedas, el motor sigue girando también. Pero ahora gira <em>arrastrado</em> por la inercia. Esa rotación forzada genera corriente. Y esa corriente fluye en sentido contrario por el inversor, que la traduce y la manda de vuelta al pack.</p>
+
+    <div class="flow">
+      <div class="flow-row">
+        <div class="flow-block"><div class="b1">Aceleras</div><div class="b2">batería → motor</div></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-block"><div class="b1">Coches en marcha</div><div class="b2">energía cinética acumulada</div></div>
+      </div>
+      <div class="flow-row">
+        <div class="flow-block"><div class="b1">Levantas el pie</div><div class="b2">motor frena el giro</div></div>
+        <div class="flow-arrow">←</div>
+        <div class="flow-block"><div class="b1">Vuelve energía</div><div class="b2">motor → inversor → batería</div></div>
+      </div>
+      <div class="flow-label">El mismo recorrido, en ambos sentidos. La regeneración es una vía de retorno, no una pieza extra.</div>
+    </div>
+
+    <h2>Por qué frena el coche</h2>
+    <p>La parte que sorprende es esta: <em>generar corriente requiere fuerza</em>. Cuesta hacer girar un imán cerca de una bobina si esa bobina está conectada a algo que se trague la corriente que produce. Cuanto más se traga la corriente, más cuesta girar.</p>
+
+    <p>Cuando el motor gira arrastrado por las ruedas y manda corriente al pack, esa corriente "tira" del motor — le ofrece resistencia al giro. Esa resistencia se transmite a las ruedas. Y las ruedas se frenan. <strong>Así frena un coche eléctrico cuando recupera energía</strong>: convirtiendo movimiento en electricidad y haciendo que esa conversión cueste, al motor, esfuerzo.</p>
+
+    <p>El inversor controla cuánta corriente "se traga" — es decir, cuánta resistencia ofrece el motor al giro. Si el inversor pide poco, el frenado regenerativo es suave (parecido a soltar el gas de un coche normal). Si pide mucho, el frenado es fuerte (parecido a pisar el freno). En coches modernos, ese nivel se puede ajustar.</p>
+
+    <h2>One-pedal driving: el cambio cultural</h2>
+    <p>Cuando la regeneración es agresiva, el coche frena visiblemente solo con levantar el pie del acelerador. Sin tocar el freno. Lo suficiente como para detenerse por completo si vas con tiempo. A esto se le llama <strong>conducción a un solo pedal</strong> (one-pedal driving en inglés).</p>
+
+    <p>La sensación es contraintuitiva al principio: tu pie izquierdo deja de tener trabajo en ciudad. El derecho hace todo: aceleras pisando, decelerá levantando, mantienes velocidad ajustando. El freno mecánico solo aparece para frenazos fuertes o paradas finales con precisión. La mayoría de la gente que se acostumbra ya no quiere volver atrás: es más cómodo, más predecible y reduce la fatiga del pie izquierdo en atascos.</p>
+
+    <p>No todos los coches lo activan por defecto. Algunos lo dejan opcional para no sorprender al conductor que viene de combustión. Otros lo combinan con regeneración progresiva (suave a baja deceleración, fuerte a alta). Es una de las opciones que más cambia la experiencia de conducción de un eléctrico — y suele ser materia de gusto personal.</p>
+
+    <h2>Cuánto se recupera de verdad</h2>
+    <p>La regeneración no recupera todo. Hay tres pérdidas:</p>
+
+    <p><strong>Pérdidas en el motor.</strong> Cuando funciona como generador, sigue habiendo resistencia eléctrica en las bobinas y fricción en los rodamientos. Una parte del movimiento se sigue convirtiendo en calor.</p>
+
+    <p><strong>Pérdidas en el inversor.</strong> La conversión AC trifásica → DC también tiene pérdidas por conmutación, las mismas que vimos al ir en el otro sentido.</p>
+
+    <p><strong>Pérdidas en la batería.</strong> Meter energía en la batería es ligeramente menos eficiente que sacarla. Hay una pequeña pérdida química en cada ciclo.</p>
+
+    <p>El resultado: en un coche bien diseñado, la regeneración recupera alrededor del <strong>60-70%</strong> de la energía cinética que se está disipando en una deceleración. El resto se va como calor. No es el 100%, pero es muchísimo más que el 0% de un coche tradicional.</p>
+
+    <p>En conducción urbana real, la regeneración puede aportar entre un <strong>10% y un 30%</strong> de la energía total consumida. En autopista, donde apenas se frena, el efecto es mucho menor (porque casi no hay deceleración que recuperar). Por eso un coche eléctrico siempre tiene mejor consumo en ciudad que en autopista — al revés que uno de combustión.</p>
+
+    <div class="pull">La regeneración no inventa energía: convierte parte de la que ibas a tirar como calor en electricidad reusable. Es ahorro silencioso, pero acumulado a lo largo de un año cuenta para varios miles de kilómetros gratis.</div>
+
+    <h2>Los límites importantes</h2>
+    <p>Hay tres situaciones donde la regeneración no funciona o funciona mal, y conviene saberlo:</p>
+
+    <p><strong>Batería llena.</strong> Si vas con el pack al 100%, no hay sitio para meter más energía. El BMS bloquea la regeneración para no sobrecargar las celdas. Resultado: el coche apenas frena al levantar el pie, y los frenos mecánicos asumen el trabajo. Es por seguridad, no por capricho. Si has cargado al máximo y empiezas un trayecto cuesta abajo, lo notarás.</p>
+
+    <p><strong>Frenado fuerte.</strong> La regeneración tiene un techo de potencia (cuánta energía puede aceptar el pack por segundo). En un frenazo brusco, ese techo no basta y los frenos mecánicos entran a complementar. El conductor no nota el cambio: el sistema de frenos electrónico mezcla regenerativo y mecánico de forma transparente.</p>
+
+    <p><strong>Baja velocidad.</strong> A velocidades muy bajas, la regeneración pierde eficacia (la dinamo gira poco y produce poca corriente). En el último par de km/h hasta detenerse, casi todo el frenado es mecánico, aunque vayas en un coche con one-pedal driving extremo.</p>
+
+    <p>Estos tres límites explican por qué un coche eléctrico sigue necesitando frenos mecánicos completos. No son redundancia: son la red que cubre los huecos donde la regeneración no llega.</p>
+
+    <h2>Una consecuencia inesperada</h2>
+    <p>Como los frenos mecánicos se usan mucho menos que en un coche de combustión, las pastillas y los discos duran <em>muchísimo</em> más. No es raro que un coche eléctrico llegue a 200 000 km con los frenos originales todavía dentro de tolerancia. Esto es otra de las pequeñas economías invisibles del coche eléctrico — junto con que no necesita aceite, ni cambio de marchas, ni tantos consumibles. Lo que cambia es que ahora el componente que se "gasta" más rápido es la batería, y eso nos lleva a las píldoras del bloque C.</p>
+
+    <div class="exercises">
+      <div class="ex-title">Comprueba que lo tienes</div>
+
+      <details class="ex-card">
+        <summary><span class="ex-tag ex-tag-easy">Fácil</span><span class="ex-q">¿Qué pieza física se "convierte" en generador cuando se activa la regeneración?</span></summary>
+        <div class="ex-answer">
+          <p>El propio motor eléctrico, sin cambiar nada físicamente. Cuando es arrastrado por las ruedas en lugar de impulsarlas, la misma máquina produce corriente en lugar de consumirla. La diferencia la marca el inversor, que cambia el sentido del flujo de corriente.</p>
+        </div>
+      </details>
+
+      <details class="ex-card">
+        <summary><span class="ex-tag ex-tag-easy">Fácil</span><span class="ex-q">¿Por qué un coche eléctrico tiene mejor consumo en ciudad que en autopista?</span></summary>
+        <div class="ex-answer">
+          <p>Porque en ciudad se acelera y se frena constantemente, y la regeneración devuelve energía cada vez que frenas. En autopista apenas se frena (vas a velocidad sostenida), así que la regeneración apenas aporta y el consumo lo manda la resistencia aerodinámica, que crece muy rápido con la velocidad. En un coche de combustión es al revés: la marcha sostenida en autopista es eficiente y la ciudad mata el consumo.</p>
+        </div>
+      </details>
+
+      <details class="ex-card">
+        <summary><span class="ex-tag ex-tag-medium">Medio</span><span class="ex-q">¿Por qué con la batería al 100% el coche frena menos al levantar el pie?</span></summary>
+        <div class="ex-answer">
+          <p>Porque el BMS no permite que la regeneración meta más energía en un pack ya lleno (sería sobrecarga). Sin regeneración, la única fuerza que frena es la fricción aerodinámica y la rodadura, mucho menores. El coche compensa el resto con freno mecánico cuando pisas el pedal, pero al levantar el pie no frena casi.</p>
+        </div>
+      </details>
+
+      <details class="ex-card">
+        <summary><span class="ex-tag ex-tag-hard">Difícil</span><span class="ex-q">Si bajas un puerto de montaña largo (10 km de descenso continuo), ¿qué le conviene al coche, salir con la batería al 30% o al 95%?</span></summary>
+        <div class="ex-answer">
+          <p>Al 30%, mucho mejor. Bajar el puerto va a generar regeneración continua durante un buen rato, lo que va a ir cargando la batería. Si arrancas al 95%, en seguida la batería se llenará y el sistema cortará la regeneración, obligando a frenar todo con freno mecánico — que se calienta, fatiga y desgasta. Si arrancas al 30%, tienes margen para que toda la regeneración del descenso se aproveche, y llegas abajo con la batería más cargada y los frenos descansados. Es un truco que conoce bien quien vive en zonas montañosas.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="next">
+      <div class="next-label">Siguiente</div>
+      <a href="../pildora-09_cargar-ac-vs-dc/index.html">Píldora 9 — Cargar el coche: AC vs DC →</a>
+    </div>
+  </main>
+
+  <aside class="aside">
+    <div class="note">
+      <span class="note-label">Vocabulario</span>
+      <strong>Regeneración</strong>: recuperar energía cinética convirtiéndola en eléctrica. <strong>One-pedal driving</strong>: conducir solo con el acelerador, dejando que la regeneración haga el trabajo de freno.
+    </div>
+    <div class="note">
+      <span class="note-label">No es invento del eléctrico</span>
+      Los trenes eléctricos llevan décadas regenerando al frenar, devolviendo energía a la catenaria. Los coches híbridos lo introdujeron al gran público a finales de los 90.
+    </div>
+    <div class="note">
+      <span class="note-label">¿Y si el pack no acepta?</span>
+      Algunos coches dirigen el sobrante a la resistencia que calienta el habitáculo (calefacción gratis) o lo queman en una resistencia "de freno". Pero la solución más común es bloquear la regeneración y dejar que actúen los frenos mecánicos.
+    </div>
+    <div class="note">
+      <span class="note-label">Frenos que casi no se gastan</span>
+      Por eso muchos eléctricos llevan revisiones de frenos cada muchos kilómetros y los discos pueden oxidarse por falta de uso. Algunos sistemas activan los frenos mecánicos a propósito de vez en cuando para mantenerlos en forma.
+    </div>
+  </aside>
+</div>
+
+<script>
+  const bar=document.getElementById('progress-bar');
+  function up(){const h=document.documentElement;bar.style.width=((h.scrollTop)/(h.scrollHeight-h.clientHeight)*100)+'%';}
+  document.addEventListener('scroll',up,{passive:true}); up();
+</script>
+</body>
+</html>

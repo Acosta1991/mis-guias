@@ -1,0 +1,4 @@
+# Pildora 05 — Diagrama 1: Circuito térmico del pack
+Sin texto. Etiquetas en HTML.
+gpt-image-2-text-to-image vía KIE.ai · 3:2 · 1K
+Editorial-style infographic illustration in the visual language of distill.pub. Background: warm cream / off-white (#F8F4EC). Top-down schematic view of a battery pack drawn with thin gray strokes (#666666): a large flat horizontal rectangle filled with smaller cell rectangles in a grid pattern. Winding through the cells, a serpentine pipe loop drawn in soft warm orange (#E07A3C) representing the cooling circuit. The pipe enters on the left, snakes back and forth between rows of cells, and exits on the right. Outside the pack, on the side, a small circular pump symbol and a rectangular heat exchanger / radiator with thin fin lines, both connected to the pipe loop. Tiny droplets along the pipe suggest liquid coolant flow.

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Píldora 03 — NMC vs LFP</title>
+<style>
+  :root { --bg:#F8F4EC; --bg-card:#FBF7EC; --ink:#2A2A2A; --ink-soft:#555; --ink-faint:#888; --line:#E5DFCF; --orange:#E07A3C; --orange-deep:#B8480F; --max-content:680px; --serif:"Iowan Old Style","Apple Garamond","Georgia","Times New Roman",serif; --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{background:var(--bg);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.7;-webkit-font-smoothing:antialiased;}
+  .progress-bar{position:fixed;top:0;left:0;width:0%;height:3px;background:var(--orange);z-index:100;transition:width .05s linear;}
+  .layout{max-width:1200px;margin:0 auto;padding:80px 32px 96px;display:grid;grid-template-columns:minmax(0,1fr);gap:0;}
+  @media (min-width:1024px){.layout{grid-template-columns:minmax(0,var(--max-content)) minmax(220px,280px);gap:56px;padding:80px 48px 96px;}}
+  .main{max-width:var(--max-content);}
+  .aside{font-family:var(--sans);font-size:.85em;color:var(--ink-soft);line-height:1.55;}
+  .aside .note{border-left:2px solid var(--orange);padding:4px 0 4px 14px;margin-bottom:28px;}
+  .aside .note-label{display:block;text-transform:uppercase;letter-spacing:.06em;font-size:.78em;color:var(--orange-deep);font-weight:600;margin-bottom:4px;}
+  @media (max-width:1023px){.aside{margin-top:32px;} .aside .note{background:var(--bg-card);border:1px solid var(--line);border-left:3px solid var(--orange);border-radius:0 8px 8px 0;padding:12px 16px;}}
+  .breadcrumb{font-family:var(--sans);font-size:.82em;color:var(--ink-faint);margin-bottom:24px;letter-spacing:.02em;}
+  .breadcrumb a{color:var(--ink-soft);text-decoration:none;} .breadcrumb a:hover{color:var(--orange-deep);}
+  h1{font-family:var(--sans);font-weight:700;font-size:2.1em;line-height:1.2;color:var(--ink);margin:0 0 12px;letter-spacing:-.01em;}
+  .meta{font-family:var(--sans);font-size:.85em;color:var(--ink-faint);margin-bottom:36px;display:flex;gap:16px;flex-wrap:wrap;}
+  .meta .pill{background:var(--bg-card);border:1px solid var(--line);padding:3px 12px;border-radius:12px;}
+  h2{font-family:var(--sans);font-weight:600;font-size:1.35em;color:var(--ink);margin:48px 0 16px;letter-spacing:-.005em;}
+  p{margin:0 0 1.1em;}
+  .lead{font-size:1.12em;color:var(--ink);line-height:1.55;margin-bottom:1.4em;}
+  em{font-style:italic;} strong{font-weight:600;color:var(--ink);}
+  .pull{border-left:3px solid var(--orange);padding:4px 0 4px 20px;margin:28px 0;color:var(--ink);font-style:italic;font-size:1.05em;line-height:1.5;}
+  .diagram{margin:36px 0 12px;}
+  .diagram img{width:100%;height:auto;border-radius:8px;display:block;}
+  .diagram-caption{font-family:var(--sans);font-size:.82em;color:var(--ink-faint);text-align:center;margin-top:10px;line-height:1.5;}
+  .diagram-labels{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px;font-family:var(--sans);font-size:.82em;color:var(--ink-soft);text-align:center;}
+  .diagram-labels span{padding:6px 4px;border-top:2px solid var(--orange);font-weight:500;}
+  .next{margin-top:56px;padding:22px 24px;background:var(--bg-card);border:1px solid var(--line);border-radius:10px;font-family:var(--sans);font-size:.95em;}
+  .next-label{text-transform:uppercase;letter-spacing:.07em;font-size:.78em;color:var(--orange-deep);font-weight:600;margin-bottom:6px;}
+  .next a{color:var(--ink);text-decoration:none;font-weight:600;} .next a:hover{color:var(--orange-deep);}
+  .compare{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:32px 0;font-family:var(--sans);font-size:.94em;}
+  .compare .col{background:var(--bg-card);border:1px solid var(--line);border-radius:10px;padding:18px 20px;}
+  .compare .col h3{margin:0 0 10px;font-size:1.05em;color:var(--orange-deep);font-weight:700;letter-spacing:.02em;}
+  .compare .col ul{padding-left:18px;margin:0;color:var(--ink-soft);line-height:1.6;}
+  .compare .col li{margin-bottom:6px;}
+  @media (max-width:600px){.compare{grid-template-columns:1fr;}}
+  .exercises{margin:56px 0 32px;padding-top:36px;border-top:1px solid var(--line);}
+  .ex-title{font-family:var(--sans);font-size:1.25em;color:var(--ink);margin-bottom:20px;font-weight:600;}
+  .ex-card{background:var(--bg-card);border:1px solid var(--line);border-radius:8px;padding:16px 20px;margin-bottom:14px;font-family:var(--sans);font-size:.95em;}
+  .ex-card summary{cursor:pointer;list-style:none;display:flex;gap:12px;align-items:flex-start;color:var(--ink);}
+  .ex-card summary::-webkit-details-marker{display:none;}
+  .ex-card summary::before{content:"▸";color:var(--orange);font-size:.9em;transition:transform .2s;flex-shrink:0;margin-top:2px;}
+  .ex-card[open] summary::before{transform:rotate(90deg);}
+  .ex-tag{display:inline-block;font-size:.72em;font-weight:600;padding:2px 8px;border-radius:4px;text-transform:uppercase;letter-spacing:.04em;flex-shrink:0;margin-top:1px;}
+  .ex-tag-easy{background:#E6EDD8;color:#5A6E36;} .ex-tag-medium{background:#F4E4CC;color:#8C5E1F;} .ex-tag-hard{background:#F0D8CB;color:#A23215;}
+  .ex-q{line-height:1.45;}
+  .ex-answer{margin:16px 0 4px 32px;padding:14px 18px;background:#FFFEFA;border-left:3px solid var(--orange);color:#444;line-height:1.6;border-radius:0 6px 6px 0;}
+  .ex-answer p{margin:0 0 10px;} .ex-answer p:last-child{margin-bottom:0;} .ex-answer strong{color:var(--ink);}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress-bar"></div>
+
+<div class="layout">
+  <main class="main">
+    <div class="breadcrumb"><a href="../indice.html">Curso · Sistemas de energía en coches eléctricos</a> &nbsp;/&nbsp; Píldora 03</div>
+
+    <h1>NMC vs LFP: las dos químicas que dominan hoy</h1>
+    <div class="meta">
+      <span class="pill">⏱ 10 min</span>
+      <span class="pill">Píldora 3 de 12</span>
+    </div>
+
+    <p class="lead">Cuando alguien dice "batería de litio", no está siendo del todo preciso. Hay muchas químicas distintas que usan litio, y cada una tiene su propio carácter. Hoy, en coches eléctricos, casi todo es una de dos: <strong>NMC</strong> o <strong>LFP</strong>. Saber distinguirlas y entender qué prioriza cada una es el atajo para leer cualquier ficha técnica con criterio.</p>
+
+    <h2>Qué pasa dentro de una celda</h2>
+    <p>Antes de comparar químicas, el truco básico de una batería de litio. Imagina dos esponjas separadas por una rejilla. Una esponja tiene un sitio cómodo para que vivan los iones de litio (es el <strong>cátodo</strong>); la otra esponja también, pero menos cómodo (el <strong>ánodo</strong>). Entre ambas hay un líquido (el <strong>electrolito</strong>) por el que los iones pueden viajar de una esponja a la otra. Y hay una membrana fina (el <strong>separador</strong>) que deja pasar a los iones pero no deja que las esponjas se toquen.</p>
+
+    <p>Cuando <strong>cargas</strong> la batería, fuerzas a los iones a viajar del cátodo (cómodo) al ánodo (incómodo). Eso requiere energía: la que tú metes desde el enchufe. Cuando <strong>descargas</strong> la batería (o sea, conduces), los iones aprovechan la oportunidad y vuelven a su sitio cómodo, soltando esa energía por el camino. Esa energía es la que llega al motor.</p>
+
+    <p>La diferencia entre NMC y LFP está en de qué está hecho el cátodo. Y eso, que parece un detalle químico menor, cambia <em>todo</em>: cuánta energía cabe, cuánto cuesta, cuánto dura, qué temperatura aguanta, qué pasa si tiene un accidente.</p>
+
+    <div class="diagram">
+      <img src="pildora-03_diagrama-1.png" alt="Corte horizontal de una celda de litio mostrando el cátodo (capa naranja arriba), el separador (línea discreta), el ánodo (capa gris abajo), iones flotando en el electrolito y dos terminales en los extremos">
+      <div class="diagram-labels">
+        <span>cátodo</span>
+        <span>separador</span>
+        <span>ánodo</span>
+        <span>terminales</span>
+      </div>
+      <div class="diagram-caption">Corte de una celda de litio. Los iones (puntos naranjas) viajan entre cátodo y ánodo a través del separador. Cargar = empujar iones hacia el ánodo. Descargar = dejar que vuelvan al cátodo. La química del cátodo es lo que distingue NMC de LFP.</div>
+    </div>
+
+    <h2>NMC: densidad antes que durabilidad</h2>
+    <p><strong>NMC</strong> son las iniciales de los tres metales del cátodo: <strong>N</strong>íquel, <strong>M</strong>anganeso y <strong>C</strong>obalto. Es la química histórica del coche eléctrico premium. Su gran virtud es la <strong>densidad energética</strong>: cabe mucha energía en poco peso. Si quieres 600 km de autonomía sin que el coche pese tres toneladas, NMC es tu opción.</p>
+
+    <p>Sus inconvenientes son tres y van de la mano. <strong>Es cara</strong> (el níquel y sobre todo el cobalto son metales caros y polémicos por sus condiciones de extracción). <strong>Es más sensible al calor</strong> (degrada más rápido si la temperatura del pack se descontrola, y en escenarios extremos puede entrar en fuga térmica con más facilidad). <strong>Aguanta menos ciclos de carga</strong> (típicamente entre 1 000 y 2 500 ciclos hasta perder un 20% de capacidad).</p>
+
+    <p>El argumento "vendedor" de NMC es siempre el mismo: <em>más kilómetros por kilo</em>.</p>
+
+    <h2>LFP: durabilidad antes que densidad</h2>
+    <p><strong>LFP</strong> son las iniciales de <strong>L</strong>itio, <strong>F</strong>ierro (hierro en inglés) y <strong>F</strong>osfato. Sustituye los metales caros y delicados por hierro y fósforo, baratos y abundantes. La consecuencia es casi una réplica espejo de NMC.</p>
+
+    <p>Su gran virtud son tres ventajas a la vez. <strong>Es barata</strong> (no usa cobalto ni níquel). <strong>Es estable térmicamente</strong> (mucho más resistente a la fuga térmica; en muchos ensayos perforando una celda LFP no pasa nada espectacular, mientras una NMC arde). <strong>Aguanta muchos más ciclos</strong> (3 000 a 6 000 fácil, algunos diseños pasan los 10 000).</p>
+
+    <p>Su inconveniente principal es la otra cara de la moneda: <strong>menos densidad energética</strong>. Para los mismos kWh, una batería LFP pesa y ocupa entre un 20% y un 30% más que una NMC. Y en frío extremo pierde más autonomía temporal.</p>
+
+    <p>El argumento vendedor de LFP es: <em>la batería más segura, más duradera y más barata, a costa de algo de peso y autonomía</em>.</p>
+
+    <div class="compare">
+      <div class="col">
+        <h3>NMC</h3>
+        <ul>
+          <li>Más densidad energética (autonomía con menos peso).</li>
+          <li>Más cara, usa metales escasos.</li>
+          <li>Más sensible al calor.</li>
+          <li>~1 000–2 500 ciclos hasta el 80%.</li>
+          <li>Encaja en gama alta y largas autonomías.</li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>LFP</h3>
+        <ul>
+          <li>Más durable (3 000–10 000 ciclos).</li>
+          <li>Más barata, sin cobalto ni níquel.</li>
+          <li>Más estable térmicamente.</li>
+          <li>Menos densidad (más peso por kWh).</li>
+          <li>Encaja en gama de acceso, urbano y flotas.</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>Cuándo se elige cada una</h2>
+    <p>La elección no es estética: cada química responde a un encargo concreto.</p>
+
+    <p><strong>NMC se elige cuando manda la autonomía y el peso.</strong> Coche premium de 500-700 km de autonomía. Coches deportivos donde un kilo extra en la batería cuesta una décima en la pista. SUV grandes donde reducir peso es difícil pero importa.</p>
+
+    <p><strong>LFP se elige cuando manda el coste, la durabilidad o la seguridad.</strong> Coches urbanos pequeños donde 300 km de autonomía sobran. Flotas de taxi y reparto que cargan y descargan miles de veces y necesitan que la batería aguante años. Almacenamiento estacionario en casas o plantas (donde el peso da igual y la seguridad es lo primero).</p>
+
+    <p>Hay otra regla de oro práctica: en LFP, los fabricantes a menudo recomiendan cargarla al 100% de forma rutinaria, porque la química lo aguanta sin penalización. En NMC, lo habitual es quedarse en 80-90% para alargar vida, y solo subir al 100% cuando vas a hacer un viaje largo. Si te dicen "carga a tope siempre" probablemente tu coche es LFP. Si te dicen "carga al 80% en el día a día", es NMC.</p>
+
+    <div class="pull">No hay química "mejor". Hay química "adecuada para X". El error es comparar densidades sin mirar a quién va dirigido el coche.</div>
+
+    <h2>Lo que viene después</h2>
+    <p>NMC y LFP cubren hoy el ~95% del mercado, pero no van a ser eternas. Hay tres apuestas que las complementan o las sustituyen:</p>
+
+    <p><strong>Sodio-ion</strong> aprieta a LFP por abajo: aún más barata, basada en sal en lugar de litio, ideal para urbanos cortos y almacenamiento. <strong>Estado sólido</strong> aprieta a NMC por arriba: cambia el electrolito líquido por uno sólido, prometiendo más densidad y más seguridad. <strong>Baterías estructurales</strong> no cambian la química, sino que integran el pack en el chasis para ahorrar peso. Las tres llegan en la píldora 11.</p>
+
+    <p>Pero atención: por mucho ruido mediático que tengan, en la próxima década NMC y LFP seguirán siendo la columna vertebral. Saber diferenciarlas no es opcional.</p>
+
+    <div class="exercises">
+      <div class="ex-title">Comprueba que lo tienes</div>
+
+      <details class="ex-card">
+        <summary><span class="ex-tag ex-tag-easy">Fácil</span><span class="ex-q">¿Qué metales lleva el cátodo de una NMC?</span></summary>
+        <div class="ex-answer">
+          <p>Níquel, manganeso y cobalto. La proporción concreta varía según el fabricante (NMC 622, NMC 811…), pero los tres están siempre presentes.</p>
+        </div>
+      </details>
+
+      <details class="ex-card">
+        <summary><span class="ex-tag ex-tag-easy">Fácil</span><span class="ex-q">¿Cuál de las dos químicas suele recomendarse cargar al 100% rutinariamente?</span></summary>
+        <div class="ex-answer">
+          <p>LFP. Su química aguanta cargas completas frecuentes sin penalización notable de vida útil. NMC se cuida limitando la carga diaria al 80-90%, salvo viajes largos.</p>
+        </div>
+      </details>
+
+      <details class="ex-card">
+        <summary><span class="ex-tag ex-tag-medium">Medio</span><span class="ex-q">Un fabricante te ofrece dos versiones del mismo coche: una con 60 kWh LFP y una con 60 kWh NMC, ambas con la misma autonomía declarada. ¿Cómo es posible?</span></summary>
+        <div class="ex-answer">
+          <p>Porque la autonomía depende de los kWh disponibles, no de la química directamente. Si ambas declaran 60 kWh, ambas tienen la misma cantidad de energía. La diferencia será otra: la versión LFP probablemente pesará más (porque LFP tiene menos densidad por kg), aguantará más ciclos y será más barata. La NMC pesará menos, podrá ofrecer una variante de mayor autonomía y costará más. Misma autonomía, distinto perfil de propietario.</p>
+        </div>
+      </details>
+
+      <details class="ex-card">
+        <summary><span class="ex-tag ex-tag-hard">Difícil</span><span class="ex-q">Una flota de reparto urbana hace 200 km al día, 6 días a la semana, durante 8 años. ¿Qué química eliges y por qué?</span></summary>
+        <div class="ex-answer">
+          <p>LFP, casi seguro. Hagamos cuentas: 200 km/día × 6 días × 52 semanas × 8 años ≈ 500 000 km. Si la batería se descarga del 80% al 20% cada día, son ~2 500 ciclos completos en esa vida útil. Una NMC podría llegar justa al final con degradación notable; una LFP llega holgada (3 000-6 000 ciclos típicos) y además es más barata, más segura y aguanta cargas rápidas frecuentes mejor en el día a día. Para flotas la cuenta sale casi siempre LFP.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="next">
+      <div class="next-label">Siguiente</div>
+      <a href="../pildora-04_bms-cerebro-silencioso/index.html">Píldora 4 — El BMS, cerebro silencioso →</a>
+    </div>
+  </main>
+
+  <aside class="aside">
+    <div class="note">
+      <span class="note-label">Otras químicas</span>
+      Existen NCA (níquel-cobalto-aluminio), LMFP (manganeso-fosfato), titanato y más. Pero NMC + LFP cubren hoy ~95% del mercado de coches eléctricos.
+    </div>
+    <div class="note">
+      <span class="note-label">"Sin cobalto"</span>
+      Cuando un fabricante presume de "química sin cobalto", suele referirse a LFP. El cobalto es polémico por sus condiciones de extracción (gran parte viene de la República Democrática del Congo), y eliminarlo es un gancho de marketing legítimo.
+    </div>
+    <div class="note">
+      <span class="note-label">Cómo se cuenta un "ciclo"</span>
+      Un ciclo no es "una recarga". Es descargar una cantidad equivalente al 100% de la batería. Si descargas dos veces al 50%, eso cuenta como un ciclo. La cuenta importa para la vida útil.
+    </div>
+    <div class="note">
+      <span class="note-label">Por qué LFP pierde con frío</span>
+      A temperaturas muy bajas (~bajo cero), los iones de litio se mueven mucho más despacio en el electrolito de LFP que en el de NMC. Resultado: menos potencia disponible y menos autonomía temporal. Al recuperar temperatura, vuelve a la normalidad.
+    </div>
+  </aside>
+</div>
+
+<script>
+  const bar=document.getElementById('progress-bar');
+  function up(){const h=document.documentElement;bar.style.width=((h.scrollTop)/(h.scrollHeight-h.clientHeight)*100)+'%';}
+  document.addEventListener('scroll',up,{passive:true}); up();
+</script>
+</body>
+</html>

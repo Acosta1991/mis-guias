@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Píldora 12 — Futuro extendido: V2G/V2H y megawatt charging</title>
+<style>
+  :root { --bg:#F8F4EC; --bg-card:#FBF7EC; --ink:#2A2A2A; --ink-soft:#555; --ink-faint:#888; --line:#E5DFCF; --orange:#E07A3C; --orange-deep:#B8480F; --max-content:680px; --serif:"Iowan Old Style","Apple Garamond","Georgia","Times New Roman",serif; --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{background:var(--bg);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.7;-webkit-font-smoothing:antialiased;}
+  .progress-bar{position:fixed;top:0;left:0;width:0%;height:3px;background:var(--orange);z-index:100;transition:width .05s linear;}
+  .layout{max-width:1200px;margin:0 auto;padding:80px 32px 96px;display:grid;grid-template-columns:minmax(0,1fr);gap:0;}
+  @media (min-width:1024px){.layout{grid-template-columns:minmax(0,var(--max-content)) minmax(220px,280px);gap:56px;padding:80px 48px 96px;}}
+  .main{max-width:var(--max-content);}
+  .aside{font-family:var(--sans);font-size:.85em;color:var(--ink-soft);line-height:1.55;}
+  .aside .note{border-left:2px solid var(--orange);padding:4px 0 4px 14px;margin-bottom:28px;}
+  .aside .note-label{display:block;text-transform:uppercase;letter-spacing:.06em;font-size:.78em;color:var(--orange-deep);font-weight:600;margin-bottom:4px;}
+  @media (max-width:1023px){.aside{margin-top:32px;} .aside .note{background:var(--bg-card);border:1px solid var(--line);border-left:3px solid var(--orange);border-radius:0 8px 8px 0;padding:12px 16px;}}
+  .breadcrumb{font-family:var(--sans);font-size:.82em;color:var(--ink-faint);margin-bottom:24px;letter-spacing:.02em;}
+  .breadcrumb a{color:var(--ink-soft);text-decoration:none;} .breadcrumb a:hover{color:var(--orange-deep);}
+  h1{font-family:var(--sans);font-weight:700;font-size:2.1em;line-height:1.2;color:var(--ink);margin:0 0 12px;letter-spacing:-.01em;}
+  .meta{font-family:var(--sans);font-size:.85em;color:var(--ink-faint);margin-bottom:36px;display:flex;gap:16px;flex-wrap:wrap;}
+  .meta .pill{background:var(--bg-card);border:1px solid var(--line);padding:3px 12px;border-radius:12px;}
+  h2{font-family:var(--sans);font-weight:600;font-size:1.35em;color:var(--ink);margin:48px 0 16px;letter-spacing:-.005em;}
+  h3{font-family:var(--sans);font-weight:600;font-size:1.1em;color:var(--ink);margin:32px 0 8px;}
+  p{margin:0 0 1.1em;}
+  .lead{font-size:1.12em;color:var(--ink);line-height:1.55;margin-bottom:1.4em;}
+  em{font-style:italic;} strong{font-weight:600;color:var(--ink);}
+  .pull{border-left:3px solid var(--orange);padding:4px 0 4px 20px;margin:28px 0;color:var(--ink);font-style:italic;font-size:1.05em;line-height:1.5;}
+  .diagram{margin:36px 0 12px;}
+  .diagram img{width:100%;height:auto;border-radius:8px;display:block;}
+  .diagram-caption{font-family:var(--sans);font-size:.82em;color:var(--ink-faint);text-align:center;margin-top:10px;line-height:1.5;}
+  .diagram-labels{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:8px;font-family:var(--sans);font-size:.82em;color:var(--ink-soft);text-align:center;}
+  .diagram-labels span{padding:6px 4px;border-top:2px solid var(--orange);font-weight:500;}
+  .next{margin-top:56px;padding:22px 24px;background:var(--bg-card);border:1px solid var(--line);border-radius:10px;font-family:var(--sans);font-size:.95em;}
+  .next-label{text-transform:uppercase;letter-spacing:.07em;font-size:.78em;color:var(--orange-deep);font-weight:600;margin-bottom:6px;}
+  .next a{color:var(--ink);text-decoration:none;font-weight:600;} .next a:hover{color:var(--orange-deep);}
+  .exercises{margin:56px 0 32px;padding-top:36px;border-top:1px solid var(--line);}
+  .ex-title{font-family:var(--sans);font-size:1.25em;color:var(--ink);margin-bottom:20px;font-weight:600;}
+  .ex-card{background:var(--bg-card);border:1px solid var(--line);border-radius:8px;padding:16px 20px;margin-bottom:14px;font-family:var(--sans);font-size:.95em;}
+  .ex-card summary{cursor:pointer;list-style:none;display:flex;gap:12px;align-items:flex-start;color:var(--ink);}
+  .ex-card summary::-webkit-details-marker{display:none;}
+  .ex-card summary::before{content:"▸";color:var(--orange);font-size:.9em;transition:transform .2s;flex-shrink:0;margin-top:2px;}
+  .ex-card[open] summary::before{transform:rotate(90deg);}
+  .ex-tag{display:inline-block;font-size:.72em;font-weight:600;padding:2px 8px;border-radius:4px;text-transform:uppercase;letter-spacing:.04em;flex-shrink:0;margin-top:1px;}
+  .ex-tag-easy{background:#E6EDD8;color:#5A6E36;} .ex-tag-medium{background:#F4E4CC;color:#8C5E1F;} .ex-tag-hard{background:#F0D8CB;color:#A23215;}
+  .ex-q{line-height:1.45;}
+  .ex-answer{margin:16px 0 4px 32px;padding:14px 18px;background:#FFFEFA;border-left:3px solid var(--orange);color:#444;line-height:1.6;border-radius:0 6px 6px 0;}
+  .ex-answer p{margin:0 0 10px;} .ex-answer p:last-child{margin-bottom:0;} .ex-answer strong{color:var(--ink);}
+  .closing{margin:56px 0 0;padding:26px 28px;background:var(--bg-card);border:1px solid var(--line);border-radius:10px;font-family:var(--sans);font-size:.95em;}
+  .closing-title{color:var(--orange-deep);font-weight:700;font-size:.86em;text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;}
+  .closing p{margin:0 0 .8em;color:var(--ink);line-height:1.6;}
+  .closing p:last-child{margin-bottom:0;}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress-bar"></div>
+
+<div class="layout">
+  <main class="main">
+    <div class="breadcrumb"><a href="../indice.html">Curso · Sistemas de energía en coches eléctricos</a> &nbsp;/&nbsp; Píldora 12</div>
+
+    <h1>Futuro extendido: V2G/V2H y megawatt charging</h1>
+    <div class="meta">
+      <span class="pill">⏱ 10 min</span>
+      <span class="pill">Píldora 12 de 12 · Final</span>
+    </div>
+
+    <p class="lead">Hasta ahora hemos hablado del coche como un consumidor de energía: la batería se llena, el coche la usa, vuelves a casa, vuelves a llenar. La frontera siguiente cambia ese rol. Un coche eléctrico tiene una batería tan grande que pensar en ella solo como "depósito del propio coche" empieza a desperdiciar potencial. Las dos grandes apuestas del horizonte: que el coche <em>devuelva</em> energía al ecosistema (V2G/V2H) y que cuando cargue, lo haga a velocidades que hoy parecen ciencia ficción (megawatt charging).</p>
+
+    <h2>Bidireccionalidad: el coche que devuelve energía</h2>
+    <p>Hasta ahora, la electricidad ha viajado siempre en un solo sentido: de la red al coche. La carga bidireccional rompe esa unidireccionalidad. El coche no solo recibe: también puede entregar. Tres siglas describen casos de uso distintos del mismo principio físico:</p>
+
+    <p><strong>V2L (Vehicle-to-Load).</strong> El más sencillo: el coche alimenta directamente un aparato eléctrico que enchufas a un toma del propio coche. Útil para una nevera de camping, herramientas eléctricas en una obra, café para una caravana. Ya está disponible en bastantes coches actuales y la integración es relativamente simple.</p>
+
+    <p><strong>V2H (Vehicle-to-Home).</strong> El coche alimenta tu casa. Si hay un apagón, el coche se convierte en generador de emergencia. Si la electricidad de la red está cara (por ejemplo, en horario punta), tu casa puede consumir del coche en lugar de la red, y este se recarga cuando la electricidad esté barata (madrugada). Una batería de coche típica (60-80 kWh) puede alimentar una casa media durante varios días.</p>
+
+    <p><strong>V2G (Vehicle-to-Grid).</strong> El paso final: el coche devuelve energía a <em>la red eléctrica</em>, no solo a tu casa. La compañía eléctrica te paga por esa energía cuando la necesita (por ejemplo, en picos de demanda). Tu coche se vuelve un nodo activo del sistema eléctrico nacional, no solo un consumidor.</p>
+
+    <div class="diagram">
+      <img src="pildora-12_diagrama-1.png" alt="Cadena de cuatro elementos: torre de la red eléctrica, casa, coche, cargador. Entre cada pareja, dos flechas curvas en sentidos opuestos (gris y naranja) indicando flujo bidireccional de energía">
+      <div class="diagram-labels">
+        <span>red</span>
+        <span>casa</span>
+        <span>coche</span>
+        <span>cargador</span>
+      </div>
+      <div class="diagram-caption">Toda la cadena se vuelve bidireccional. La energía puede fluir en cualquier dirección: de la red al coche para cargarlo, del coche a la casa para consumir cuando la red está cara, de la casa o del coche a la red cuando hay déficit y se paga bien.</div>
+    </div>
+
+    <h2>Por qué todo esto importa para la red</h2>
+    <p>La red eléctrica tiene un problema: la generación renovable (solar y eólica) es <strong>intermitente</strong>. Hay momentos del día en que se produce más electricidad de la que se consume (mediodía soleado), y otros en los que ocurre lo contrario (noche sin viento, picos de consumo). Para amortiguar esos vaivenes, hace falta almacenamiento.</p>
+
+    <p>Si cada coche eléctrico aparcado fuera una batería conectada a la red, el problema cambia de naturaleza. Imagina diez millones de coches eléctricos aparcados en una ciudad. Si todos tienen 60 kWh, eso son 600 000 MWh de almacenamiento distribuido — una capacidad descomunal, mucho mayor que la de cualquier planta de baterías estacionarias. Aprovechar solo una fracción permitiría a la red gestionar las renovables de forma muchísimo más estable.</p>
+
+    <p>Esa es la promesa estructural de V2G. Es la razón por la que reguladores, eléctricas y fabricantes están alineados, aunque los detalles técnicos y económicos aún se estén cocinando.</p>
+
+    <h2>Lo que falta para que sea normal</h2>
+    <p>Tres frentes están casi listos, uno todavía no:</p>
+
+    <p><strong>Coche.</strong> Cada vez más modelos modernos vienen preparados para carga bidireccional, especialmente con CCS Combo en su versión bidireccional. La electrónica está. Falta abrir la función desde el firmware.</p>
+
+    <p><strong>Cargador / wallbox.</strong> Los cargadores bidireccionales existen ya y bajan de precio cada año. Su instalación es como la de un wallbox normal pero algo más cara.</p>
+
+    <p><strong>Protocolos.</strong> ISO 15118 (la versión moderna de la norma de comunicación entre coche y cargador) ya soporta bidireccionalidad. La industria converge.</p>
+
+    <p><strong>Marco regulatorio y comercial.</strong> Esto es lo que más cuelga. Para que V2G sea atractivo necesitas una tarifa eléctrica que premie correctamente la energía devuelta, contratos con la eléctrica que permitan la operación, y garantías para el conductor sobre cuánta vida útil pierde su batería al participar (porque sí: usar la batería para V2G suma ciclos y la envejece). Esos detalles regulatorios se están desarrollando país por país, y es lo que marca el ritmo real de adopción más allá de pilotos.</p>
+
+    <p>Una cosa importante: los coches con química <strong>LFP</strong> son especialmente buenos candidatos para V2G porque su química aguanta muchísimos más ciclos sin degradarse. Si tu coche es LFP, perder un poco de vida útil por participar en V2G compensa más fácil que si es NMC, donde cada ciclo cuenta más. Esto enlaza con lo que vimos en la píldora 3 y muestra cómo las decisiones químicas de hace cinco años están encajando con los casos de uso de los próximos cinco.</p>
+
+    <h2>Megawatt Charging System (MCS)</h2>
+    <p>El otro gran cambio del horizonte va en sentido opuesto pero relacionado: cargas <em>aún más rápidas</em>.</p>
+
+    <p>Hoy, los cargadores rápidos top entregan ~350 kW. Bastante para que un turismo cargue del 10 al 80% en 15-20 minutos. Pero hay un mundo donde esto no basta: el de los <strong>vehículos pesados eléctricos</strong> (camiones, autobuses interurbanos). Un camión eléctrico tiene una batería de 500-1000 kWh; cargarlo a 350 kW tarda dos o tres horas, lo que destruye su modelo logístico.</p>
+
+    <p>Para eso se está desarrollando el <strong>MCS (Megawatt Charging System)</strong>: cargadores capaces de entregar 1 MW (1 000 kW) o incluso 3 MW. Con 1 MW, un camión carga lo que necesita para una jornada en menos de 30 minutos. Con 3 MW, en menos de 10.</p>
+
+    <p>¿Y qué tiene esto que ver con un turismo? Que la tecnología no se queda en el camión. Una vez que existen cargadores de 1 MW desplegados (especialmente en grandes corredores y áreas de servicio para flotas), los turismos de 800 V que puedan aceptar 500-700 kW empezarán a aparecer. Con esa velocidad, un coche se carga en 5-7 minutos. Es decir, lo que tarda repostar gasolina <em>hoy</em>.</p>
+
+    <p>Cuando esto se generalice, una de las objeciones clásicas al coche eléctrico (la "ansiedad de carga") se vuelve obsoleta. No será necesario planificar paradas: paras donde y cuando te apetezca, el coche carga lo que necesitas en lo que tardas en estirarte.</p>
+
+    <div class="pull">El coche eléctrico de los próximos años no es una versión más rápida del actual. Es una pieza activa de un ecosistema energético: a veces consume, a veces aporta, y cuando carga, lo hace en el tiempo de un café.</div>
+
+    <h2>Lo que cierra el círculo</h2>
+    <p>Si juntas las dos tendencias de esta píldora con todo lo que hemos visto, se forma una imagen coherente de hacia dónde va el sistema:</p>
+
+    <p>Las baterías mejoran (píldora 11): más densidad, más durabilidad, más opciones químicas. Los componentes mejoran (píldoras 6 y 10): SiC y 800 V hacen los coches más eficientes y permiten cargas más altas. La infraestructura mejora (esta píldora): MCS multiplica las velocidades, y V2G convierte cada coche en un nodo del sistema. Y todo lo gestiona electrónica cada vez más fina (píldora 4 y 7): BMS más inteligentes, inversores más precisos.</p>
+
+    <p>Lo que estás aprendiendo no son piezas sueltas. Es una transición sistémica donde el coche deja de ser un aparato aislado y se vuelve parte de la red eléctrica, casi un electrodoméstico móvil. Las decisiones de diseño que toma un fabricante hoy (química, voltaje, semiconductores, capacidad de bidireccionalidad) son las que definirán qué casos de uso podrá ofrecer mañana. Y las decisiones de los reguladores y de las eléctricas son las que definirán si esos casos de uso se adoptan o se quedan en pilotos perpetuos.</p>
+
+    <p>Has llegado al final del curso con suficiente vocabulario y estructura mental para leer ese debate con criterio. Ya no necesitas que nadie te lo cuente — ahora puedes seguir el partido tú solo.</p>
+
+    <div class="exercises">
+      <div class="ex-title">Comprueba que lo tienes</div>
+
+      <details class="ex-card">
+        <summary><span class="ex-tag ex-tag-easy">Fácil</span><span class="ex-q">Distingue V2L, V2H y V2G en una frase cada una.</span></summary>
+        <div class="ex-answer">
+          <p><strong>V2L</strong>: el coche alimenta directamente un aparato enchufado a él. <strong>V2H</strong>: el coche alimenta tu casa. <strong>V2G</strong>: el coche devuelve energía a la red eléctrica nacional, normalmente a cambio de un pago.</p>
+        </div>
+      </details>
+
+      <details class="ex-card">
+        <summary><span class="ex-tag ex-tag-easy">Fácil</span><span class="ex-q">¿Para qué tipo de vehículo se está desarrollando primero el MCS (Megawatt Charging System)?</span></summary>
+        <div class="ex-answer">
+          <p>Para vehículos pesados, especialmente camiones eléctricos. Tienen baterías muy grandes (500-1 000 kWh) y necesitan cargas mucho más rápidas que los cargadores actuales para mantener viable su modelo logístico. La tecnología luego se filtrará a turismos.</p>
+        </div>
+      </details>
+
+      <details class="ex-card">
+        <summary><span class="ex-tag ex-tag-medium">Medio</span><span class="ex-q">¿Por qué un coche con química LFP es buen candidato para V2G?</span></summary>
+        <div class="ex-answer">
+          <p>Porque participar en V2G suma ciclos a la batería: la cargas y la descargas más veces de las que harías solo conduciendo. Las celdas LFP aguantan muchos más ciclos (típicamente 3 000-6 000) que las NMC, así que el desgaste extra del V2G se nota mucho menos en la vida útil. En NMC, cada ciclo cuenta más, por lo que el cálculo coste-beneficio del V2G es más ajustado.</p>
+        </div>
+      </details>
+
+      <details class="ex-card">
+        <summary><span class="ex-tag ex-tag-hard">Difícil</span><span class="ex-q">¿Por qué la masificación de V2G podría cambiar la economía de las energías renovables?</span></summary>
+        <div class="ex-answer">
+          <p>Porque las renovables (solar, eólica) son intermitentes: producen mucha electricidad cuando hay sol o viento, y poca cuando no. La red necesita almacenamiento masivo para amortiguar esos vaivenes. Si millones de coches eléctricos aparcados pueden funcionar como almacenamiento distribuido (cargando cuando sobra electricidad renovable y devolviéndola cuando falta), la red gana una capacidad enorme sin construir nuevas plantas de baterías estacionarias. Eso baja el coste sistémico de integrar renovables y vuelve más viable depender de ellas a gran escala. La pregunta no es si V2G es técnicamente posible (lo es), sino si los marcos regulatorios y las tarifas se diseñan para que sea económicamente atractivo a la vez para conductores y eléctricas.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="closing">
+      <div class="closing-title">Hasta aquí el curso</div>
+      <p>Has recorrido los doce bloques del sistema de energía de un coche eléctrico, desde la celda química más pequeña hasta el papel que cada coche puede jugar en la red eléctrica del país. Ya tienes el mapa, los componentes, los traductores, los guardianes, las químicas y los horizontes.</p>
+      <p>Todo lo que leas a partir de ahora sobre coches eléctricos lo vas a entender mejor — fichas técnicas, noticias del sector, debates en foros, conversaciones de bar. Si quieres seguir profundizando, los temas que naturalmente vienen a continuación son: gestión de flotas eléctricas, modelos de negocio de la carga, reciclado y segunda vida de baterías, integración con la generación doméstica solar.</p>
+      <p>Buen viaje. Y si te queda alguna duda concreta de algo que hayas leído, vuelve a la píldora correspondiente: están todas pensadas para ser autónomas y poder consultarse de forma suelta cuando haga falta.</p>
+    </div>
+
+    <div class="next">
+      <div class="next-label">Cierra el curso</div>
+      <a href="../evaluacion.html">Ir a la evaluación final →</a>
+    </div>
+  </main>
+
+  <aside class="aside">
+    <div class="note">
+      <span class="note-label">Vocabulario</span>
+      <strong>V2X</strong> = "Vehicle-to-everything", paraguas que engloba V2L, V2H y V2G. <strong>MCS</strong> = Megawatt Charging System.
+    </div>
+    <div class="note">
+      <span class="note-label">ISO 15118</span>
+      Norma de comunicación entre coche y cargador. Su versión moderna (15118-20) soporta plug & charge y carga bidireccional. Es la base técnica de buena parte de lo que viene.
+    </div>
+    <div class="note">
+      <span class="note-label">¿Cuánto vale la energía devuelta?</span>
+      Depende del país y del esquema tarifario. En algunos pilotos, se paga al conductor entre 0,10 y 0,50 €/kWh por la energía devuelta en horas punta. Pero el cálculo real incluye la pérdida de vida útil de la batería, que hay que descontar.
+    </div>
+    <div class="note">
+      <span class="note-label">El MCS también tiene su conector</span>
+      No usa CCS sino un conector específico, más grande y con refrigeración líquida en el cable. Solo así se aguantan los miles de amperios necesarios para 1 MW.
+    </div>
+  </aside>
+</div>
+
+<script>
+  const bar=document.getElementById('progress-bar');
+  function up(){const h=document.documentElement;bar.style.width=((h.scrollTop)/(h.scrollHeight-h.clientHeight)*100)+'%';}
+  document.addEventListener('scroll',up,{passive:true}); up();
+</script>
+</body>
+</html>

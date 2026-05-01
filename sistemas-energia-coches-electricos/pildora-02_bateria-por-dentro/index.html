@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Píldora 02 — La batería por dentro</title>
+<style>
+  :root { --bg:#F8F4EC; --bg-card:#FBF7EC; --ink:#2A2A2A; --ink-soft:#555; --ink-faint:#888; --line:#E5DFCF; --orange:#E07A3C; --orange-deep:#B8480F; --max-content:680px; --serif:"Iowan Old Style","Apple Garamond","Georgia","Times New Roman",serif; --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{background:var(--bg);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.7;-webkit-font-smoothing:antialiased;}
+  .progress-bar{position:fixed;top:0;left:0;width:0%;height:3px;background:var(--orange);z-index:100;transition:width .05s linear;}
+  .layout{max-width:1200px;margin:0 auto;padding:80px 32px 96px;display:grid;grid-template-columns:minmax(0,1fr);gap:0;}
+  @media (min-width:1024px){.layout{grid-template-columns:minmax(0,var(--max-content)) minmax(220px,280px);gap:56px;padding:80px 48px 96px;}}
+  .main{max-width:var(--max-content);}
+  .aside{font-family:var(--sans);font-size:.85em;color:var(--ink-soft);line-height:1.55;}
+  .aside .note{border-left:2px solid var(--orange);padding:4px 0 4px 14px;margin-bottom:28px;}
+  .aside .note-label{display:block;text-transform:uppercase;letter-spacing:.06em;font-size:.78em;color:var(--orange-deep);font-weight:600;margin-bottom:4px;}
+  @media (max-width:1023px){.aside{margin-top:32px;} .aside .note{background:var(--bg-card);border:1px solid var(--line);border-left:3px solid var(--orange);border-radius:0 8px 8px 0;padding:12px 16px;}}
+  .breadcrumb{font-family:var(--sans);font-size:.82em;color:var(--ink-faint);margin-bottom:24px;letter-spacing:.02em;}
+  .breadcrumb a{color:var(--ink-soft);text-decoration:none;} .breadcrumb a:hover{color:var(--orange-deep);}
+  h1{font-family:var(--sans);font-weight:700;font-size:2.1em;line-height:1.2;color:var(--ink);margin:0 0 12px;letter-spacing:-.01em;}
+  .meta{font-family:var(--sans);font-size:.85em;color:var(--ink-faint);margin-bottom:36px;display:flex;gap:16px;flex-wrap:wrap;}
+  .meta .pill{background:var(--bg-card);border:1px solid var(--line);padding:3px 12px;border-radius:12px;}
+  h2{font-family:var(--sans);font-weight:600;font-size:1.35em;color:var(--ink);margin:48px 0 16px;letter-spacing:-.005em;}
+  p{margin:0 0 1.1em;}
+  .lead{font-size:1.12em;color:var(--ink);line-height:1.55;margin-bottom:1.4em;}
+  em{font-style:italic;} strong{font-weight:600;color:var(--ink);}
+  .pull{border-left:3px solid var(--orange);padding:4px 0 4px 20px;margin:28px 0;color:var(--ink);font-style:italic;font-size:1.05em;line-height:1.5;}
+  .diagram{margin:36px 0 12px;}
+  .diagram img{width:100%;height:auto;border-radius:8px;display:block;}
+  .diagram-caption{font-family:var(--sans);font-size:.82em;color:var(--ink-faint);text-align:center;margin-top:10px;line-height:1.5;}
+  .diagram-labels{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px;font-family:var(--sans);font-size:.85em;color:var(--ink-soft);text-align:center;}
+  .diagram-labels span{padding:6px 4px;border-top:2px solid var(--orange);font-weight:500;}
+  .next{margin-top:56px;padding:22px 24px;background:var(--bg-card);border:1px solid var(--line);border-radius:10px;font-family:var(--sans);font-size:.95em;}
+  .next-label{text-transform:uppercase;letter-spacing:.07em;font-size:.78em;color:var(--orange-deep);font-weight:600;margin-bottom:6px;}
+  .next a{color:var(--ink);text-decoration:none;font-weight:600;} .next a:hover{color:var(--orange-deep);}
+  .exercises{margin:56px 0 32px;padding-top:36px;border-top:1px solid var(--line);}
+  .ex-title{font-family:var(--sans);font-size:1.25em;color:var(--ink);margin-bottom:20px;font-weight:600;}
+  .ex-card{background:var(--bg-card);border:1px solid var(--line);border-radius:8px;padding:16px 20px;margin-bottom:14px;font-family:var(--sans);font-size:.95em;}
+  .ex-card summary{cursor:pointer;list-style:none;display:flex;gap:12px;align-items:flex-start;color:var(--ink);}
+  .ex-card summary::-webkit-details-marker{display:none;}
+  .ex-card summary::before{content:"▸";color:var(--orange);font-size:.9em;transition:transform .2s;flex-shrink:0;margin-top:2px;}
+  .ex-card[open] summary::before{transform:rotate(90deg);}
+  .ex-tag{display:inline-block;font-size:.72em;font-weight:600;padding:2px 8px;border-radius:4px;text-transform:uppercase;letter-spacing:.04em;flex-shrink:0;margin-top:1px;}
+  .ex-tag-easy{background:#E6EDD8;color:#5A6E36;} .ex-tag-medium{background:#F4E4CC;color:#8C5E1F;} .ex-tag-hard{background:#F0D8CB;color:#A23215;}
+  .ex-q{line-height:1.45;}
+  .ex-answer{margin:16px 0 4px 32px;padding:14px 18px;background:#FFFEFA;border-left:3px solid var(--orange);color:#444;line-height:1.6;border-radius:0 6px 6px 0;}
+  .ex-answer p{margin:0 0 10px;} .ex-answer p:last-child{margin-bottom:0;} .ex-answer strong{color:var(--ink);}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress-bar"></div>
+
+<div class="layout">
+  <main class="main">
+    <div class="breadcrumb"><a href="../indice.html">Curso · Sistemas de energía en coches eléctricos</a> &nbsp;/&nbsp; Píldora 02</div>
+
+    <h1>La batería por dentro</h1>
+    <div class="meta">
+      <span class="pill">⏱ 10 min</span>
+      <span class="pill">Píldora 2 de 12</span>
+    </div>
+
+    <p class="lead">La palabra "batería" se usa con tanta soltura que parece designar una sola cosa, como si bajo el coche hubiera un único bloque mágico de almacenamiento. La realidad es bastante más interesante: una batería de coche eléctrico es un sistema con tres niveles de profundidad, hecho con miles de unidades pequeñas que vienen en tres formatos muy distintos. Esta píldora abre la caja.</p>
+
+    <h2>Tres niveles, una sola palabra</h2>
+    <p>Cuando alguien dice "la batería del coche pesa 500 kg", está hablando del nivel más alto: el <strong>pack</strong>. Cuando alguien dice "una celda dura 3 000 ciclos", está hablando del nivel más bajo: la <strong>celda</strong>. Y entre ambos hay un nivel intermedio: el <strong>módulo</strong>. Una batería de coche eléctrico es siempre la misma jerarquía: muchas celdas se agrupan en módulos, y varios módulos se ensamblan en un pack.</p>
+
+    <p>La <strong>celda</strong> es la unidad indivisible. Es el bloque de construcción químico básico: dos electrodos (cátodo y ánodo), un líquido que los conecta (electrolito), una membrana que los separa, y un envoltorio. Una celda sola entrega entre 3 y 4 voltios y, según su tamaño, puede almacenar entre 5 y 100 vatios-hora. Para hacerte una idea: una celda de coche eléctrico típica almacena más o menos lo mismo que una pila de mando a distancia gigante.</p>
+
+    <p>El <strong>módulo</strong> es un grupo de celdas dentro de una carcasa rígida. Se conectan entre sí (algunas en serie para sumar voltaje, otras en paralelo para sumar capacidad) y comparten una placa de gestión que vigila las celdas que tiene dentro. Un módulo es lo que un técnico puede sustituir si una celda interior falla — siempre que el coche esté diseñado para eso.</p>
+
+    <p>El <strong>pack</strong> es el conjunto completo. Reúne varios módulos dentro de una caja metálica plana, con conexiones internas, un sistema térmico que recorre todo el bloque, y un cerebro electrónico (el BMS, próxima píldora) que vigila el conjunto. Es lo que ves al levantar un coche eléctrico: una bandeja del tamaño del piso entero del vehículo.</p>
+
+    <div class="diagram">
+      <img src="pildora-02_diagrama-1.png" alt="Diagrama jerárquico mostrando una celda individual, un módulo de varias celdas, y un pack completo de varios módulos. Abajo, los tres formatos de celda: cilíndrica, prismática y pouch.">
+      <div class="diagram-labels">
+        <span>celda</span>
+        <span>módulo</span>
+        <span>pack</span>
+      </div>
+      <div class="diagram-caption">Arriba: la jerarquía celda → módulo → pack. Abajo: los tres formatos de celda dominantes (cilíndrica, prismática, pouch). El pack puede tener cualquiera de los tres formatos por dentro.</div>
+    </div>
+
+    <h2>Por qué tantos niveles</h2>
+    <p>Podría parecer un capricho de ingeniero. ¿No sería más simple meter celdas sueltas directamente en un pack, sin la capa intermedia de los módulos? Tres razones para mantener la jerarquía:</p>
+
+    <p><strong>Mantenimiento.</strong> Si una celda falla en un pack de 4 000 celdas sueltas, hay que vaciar el pack entero. Si esa celda está dentro de un módulo de 100, basta con cambiar el módulo. Es como cambiar un eslabón de cadena en lugar de hacer una cadena nueva.</p>
+
+    <p><strong>Seguridad.</strong> Si una celda entra en fuga térmica (se calienta sin control), el módulo la encierra y limita la propagación al resto. Sin módulos, un solo problema podría arrasar el pack entero.</p>
+
+    <p><strong>Fabricación.</strong> Es más fácil ensamblar y testear módulos pequeños en una línea industrial y luego unirlos, que montar miles de celdas directamente en una bandeja gigante.</p>
+
+    <p>Hay una excepción interesante: algunos diseños recientes saltan el nivel intermedio y van directos de celda a pack ("cell-to-pack" o "cell-to-chassis"). Ahorra peso y espacio, pero complica las tres cosas anteriores. Es una compensación, no una mejora pura — y la profundizamos en la píldora 11 cuando hablemos de baterías estructurales.</p>
+
+    <h2>Los tres formatos de celda</h2>
+    <p>Una celda puede tener tres formas físicas distintas. Cambia bastante por dentro y mucho por fuera, pero todas hacen lo mismo: almacenar energía electroquímica.</p>
+
+    <p><strong>Cilíndrica.</strong> Forma de pila gigante. La estructura interna es un "rollito" de capas que se enrolla como un sushi y se mete en un tubo metálico. Las dos cifras famosas son las cilíndricas tipo "18650" (18 mm de diámetro, 65 mm de alto), las "21700" y las más recientes "4680". Ventaja: son baratas, robustas y muy probadas. Inconveniente: empaquetar miles de cilindros en una bandeja plana deja huecos vacíos entre ellos.</p>
+
+    <p><strong>Prismática.</strong> Forma de ladrillo rectangular metálico. Mismo principio interno (capas) pero plegadas o apiladas en lugar de enrolladas. Ventaja: aprovechan mejor el espacio, son robustas y fáciles de gestionar térmicamente. Inconveniente: si una celda se hincha (cosa que pasa con el envejecimiento), no tiene mucho sitio para deformarse y eso puede comprometer al módulo entero.</p>
+
+    <p><strong>Pouch (bolsa).</strong> Forma de "sobre" flexible: las capas internas se meten en una bolsa de aluminio laminado, sellada al vacío. Ventaja: muy ligera, muy delgada, formas variables. Inconveniente: necesita una estructura externa que la sujete bien (las bolsas no se aguantan solas) y es más sensible a daños mecánicos.</p>
+
+    <div class="pull">No hay un formato "mejor": cada uno encaja en una estrategia distinta. La elección la hace el fabricante en función de prioridades como coste, densidad o facilidad de fabricación.</div>
+
+    <h2>Las cifras importantes</h2>
+    <p>Tres números describen casi todo lo que necesitas saber sobre un pack de baterías:</p>
+
+    <p><strong>Capacidad</strong>, en kWh. Cuánta energía cabe. Los packs típicos hoy van desde unos 40 kWh (urbanos pequeños) hasta unos 100 kWh (turismos grandes y SUV), con casos extremos por encima de 150 kWh.</p>
+
+    <p><strong>Voltaje nominal</strong>, en V. La "presión" eléctrica del pack. Casi todos hoy están entre 350 y 450 V (la familia "400 V"). Algunos modernos están en torno a 800 V (lo veremos en la píldora 10).</p>
+
+    <p><strong>Densidad energética</strong>, en Wh/kg. Cuánta energía cabe por cada kilo de batería. Hoy un pack completo está entre 150 y 200 Wh/kg. Una celda aislada puede llegar a 250 o 300 Wh/kg, pero al sumar las carcasas, el cableado y la estructura del pack, se baja al rango anterior.</p>
+
+    <p>Esa densidad es la cifra que define el problema central del coche eléctrico: cuanta más necesitas, más pesa y más cuesta. Y por eso la batalla industrial está toda en mejorarla, sin sacrificar durabilidad ni seguridad. Lo veremos con detalle en las píldoras de químicas.</p>
+
+    <div class="exercises">
+      <div class="ex-title">Comprueba que lo tienes</div>
+
+      <details class="ex-card">
+        <summary><span class="ex-tag ex-tag-easy">Fácil</span><span class="ex-q">Ordena de menor a mayor: módulo, pack, celda.</span></summary>
+        <div class="ex-answer">
+          <p>Celda → módulo → pack. La celda es la unidad mínima electroquímica. Un grupo de celdas forma un módulo. Un grupo de módulos forma un pack. Cada nivel añade carcasa, conexiones y gestión.</p>
+        </div>
+      </details>
+
+      <details class="ex-card">
+        <summary><span class="ex-tag ex-tag-easy">Fácil</span><span class="ex-q">Si una celda interior falla, ¿qué se sustituye normalmente?</span></summary>
+        <div class="ex-answer">
+          <p>El módulo completo, no la celda suelta. Por eso existe la capa intermedia: para que una avería localizada no obligue a tirar el pack entero. (En diseños "cell-to-pack" sin módulos esta facilidad se pierde.)</p>
+        </div>
+      </details>
+
+      <details class="ex-card">
+        <summary><span class="ex-tag ex-tag-medium">Medio</span><span class="ex-q">¿Por qué la densidad energética del pack es menor que la de una celda aislada?</span></summary>
+        <div class="ex-answer">
+          <p>Porque al pasar de la celda al pack hay que añadir varias cosas que también pesan pero no almacenan energía: las carcasas de los módulos, el cableado, la caja del pack, los sensores, los conectores y el sistema térmico. Toda esa estructura "muerta" baja el ratio Wh/kg del conjunto. Una celda puede ir a 280 Wh/kg, pero el pack acaba en 170-200 Wh/kg.</p>
+        </div>
+      </details>
+
+      <details class="ex-card">
+        <summary><span class="ex-tag ex-tag-hard">Difícil</span><span class="ex-q">Tienes una celda de 3,7 V y 5 Ah. Si quieres construir un pack de 400 V y 75 kWh aproximadamente, ¿cuántas celdas necesitas, mínimo?</span></summary>
+        <div class="ex-answer">
+          <p>Cada celda almacena 3,7 V × 5 Ah = 18,5 Wh. Un pack de 75 kWh = 75 000 Wh. Por tanto necesitas 75 000 ÷ 18,5 ≈ <strong>4 054 celdas</strong>. Para llegar a 400 V conectarías unas 108 celdas en serie (400 ÷ 3,7 ≈ 108) y haces que esas series se repitan unas 38 veces en paralelo (38 × 108 ≈ 4 100 celdas, dando ~75 kWh). Es la cuenta básica detrás de cualquier pack cilíndrico.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="next">
+      <div class="next-label">Siguiente</div>
+      <a href="../pildora-03_nmc-vs-lfp/index.html">Píldora 3 — NMC vs LFP →</a>
+    </div>
+  </main>
+
+  <aside class="aside">
+    <div class="note">
+      <span class="note-label">Vocabulario</span>
+      <strong>Pack</strong>: el bloque entero. <strong>Módulo</strong>: subgrupo de celdas. <strong>Celda</strong>: la unidad mínima.
+    </div>
+    <div class="note">
+      <span class="note-label">"Cell-to-pack"</span>
+      Tendencia reciente: saltar el módulo y meter las celdas directamente en el pack. Ahorra peso pero complica el mantenimiento y la seguridad.
+    </div>
+    <div class="note">
+      <span class="note-label">Por qué se conectan en serie y en paralelo</span>
+      Las celdas en <em>serie</em> suman su voltaje (3,7 + 3,7 = 7,4 V…). Las celdas en <em>paralelo</em> suman su capacidad (5 + 5 = 10 Ah). Un pack combina ambas configuraciones para llegar al voltaje y a la capacidad deseados.
+    </div>
+    <div class="note">
+      <span class="note-label">El truco del nombre 18650</span>
+      Las celdas cilíndricas se nombran por sus medidas en mm: 18 (diámetro) × 65 (alto), con un cero al final. Una "21700" es 21 mm × 70 mm. Una "4680" es 46 mm × 80 mm.
+    </div>
+  </aside>
+</div>
+
+<script>
+  const bar=document.getElementById('progress-bar');
+  function up(){const h=document.documentElement;bar.style.width=((h.scrollTop)/(h.scrollHeight-h.clientHeight)*100)+'%';}
+  document.addEventListener('scroll',up,{passive:true}); up();
+</script>
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Píldora 04 — El BMS, cerebro silencioso</title>
+<style>
+  :root { --bg:#F8F4EC; --bg-card:#FBF7EC; --ink:#2A2A2A; --ink-soft:#555; --ink-faint:#888; --line:#E5DFCF; --orange:#E07A3C; --orange-deep:#B8480F; --max-content:680px; --serif:"Iowan Old Style","Apple Garamond","Georgia","Times New Roman",serif; --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; }
+  *{box-sizing:border-box;} html,body{margin:0;padding:0;}
+  body{background:var(--bg);color:var(--ink);font-family:var(--serif);font-size:18px;line-height:1.7;-webkit-font-smoothing:antialiased;}
+  .progress-bar{position:fixed;top:0;left:0;width:0%;height:3px;background:var(--orange);z-index:100;transition:width .05s linear;}
+  .layout{max-width:1200px;margin:0 auto;padding:80px 32px 96px;display:grid;grid-template-columns:minmax(0,1fr);gap:0;}
+  @media (min-width:1024px){.layout{grid-template-columns:minmax(0,var(--max-content)) minmax(220px,280px);gap:56px;padding:80px 48px 96px;}}
+  .main{max-width:var(--max-content);}
+  .aside{font-family:var(--sans);font-size:.85em;color:var(--ink-soft);line-height:1.55;}
+  .aside .note{border-left:2px solid var(--orange);padding:4px 0 4px 14px;margin-bottom:28px;}
+  .aside .note-label{display:block;text-transform:uppercase;letter-spacing:.06em;font-size:.78em;color:var(--orange-deep);font-weight:600;margin-bottom:4px;}
+  @media (max-width:1023px){.aside{margin-top:32px;} .aside .note{background:var(--bg-card);border:1px solid var(--line);border-left:3px solid var(--orange);border-radius:0 8px 8px 0;padding:12px 16px;}}
+  .breadcrumb{font-family:var(--sans);font-size:.82em;color:var(--ink-faint);margin-bottom:24px;letter-spacing:.02em;}
+  .breadcrumb a{color:var(--ink-soft);text-decoration:none;} .breadcrumb a:hover{color:var(--orange-deep);}
+  h1{font-family:var(--sans);font-weight:700;font-size:2.1em;line-height:1.2;color:var(--ink);margin:0 0 12px;letter-spacing:-.01em;}
+  .meta{font-family:var(--sans);font-size:.85em;color:var(--ink-faint);margin-bottom:36px;display:flex;gap:16px;flex-wrap:wrap;}
+  .meta .pill{background:var(--bg-card);border:1px solid var(--line);padding:3px 12px;border-radius:12px;}
+  h2{font-family:var(--sans);font-weight:600;font-size:1.35em;color:var(--ink);margin:48px 0 16px;letter-spacing:-.005em;}
+  p{margin:0 0 1.1em;}
+  .lead{font-size:1.12em;color:var(--ink);line-height:1.55;margin-bottom:1.4em;}
+  em{font-style:italic;} strong{font-weight:600;color:var(--ink);}
+  .pull{border-left:3px solid var(--orange);padding:4px 0 4px 20px;margin:28px 0;color:var(--ink);font-style:italic;font-size:1.05em;line-height:1.5;}
+  .funcs{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:28px 0;font-family:var(--sans);font-size:.94em;}
+  .funcs .f{background:var(--bg-card);border:1px solid var(--line);border-radius:10px;padding:16px 18px;}
+  .funcs .f .ftit{color:var(--orange-deep);font-weight:700;font-size:.86em;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;}
+  .funcs .f .fb{color:var(--ink-soft);line-height:1.55;}
+  @media (max-width:600px){.funcs{grid-template-columns:1fr;}}
+  .next{margin-top:56px;padding:22px 24px;background:var(--bg-card);border:1px solid var(--line);border-radius:10px;font-family:var(--sans);font-size:.95em;}
+  .next-label{text-transform:uppercase;letter-spacing:.07em;font-size:.78em;color:var(--orange-deep);font-weight:600;margin-bottom:6px;}
+  .next a{color:var(--ink);text-decoration:none;font-weight:600;} .next a:hover{color:var(--orange-deep);}
+  .exercises{margin:56px 0 32px;padding-top:36px;border-top:1px solid var(--line);}
+  .ex-title{font-family:var(--sans);font-size:1.25em;color:var(--ink);margin-bottom:20px;font-weight:600;}
+  .ex-card{background:var(--bg-card);border:1px solid var(--line);border-radius:8px;padding:16px 20px;margin-bottom:14px;font-family:var(--sans);font-size:.95em;}
+  .ex-card summary{cursor:pointer;list-style:none;display:flex;gap:12px;align-items:flex-start;color:var(--ink);}
+  .ex-card summary::-webkit-details-marker{display:none;}
+  .ex-card summary::before{content:"▸";color:var(--orange);font-size:.9em;transition:transform .2s;flex-shrink:0;margin-top:2px;}
+  .ex-card[open] summary::before{transform:rotate(90deg);}
+  .ex-tag{display:inline-block;font-size:.72em;font-weight:600;padding:2px 8px;border-radius:4px;text-transform:uppercase;letter-spacing:.04em;flex-shrink:0;margin-top:1px;}
+  .ex-tag-easy{background:#E6EDD8;color:#5A6E36;} .ex-tag-medium{background:#F4E4CC;color:#8C5E1F;} .ex-tag-hard{background:#F0D8CB;color:#A23215;}
+  .ex-q{line-height:1.45;}
+  .ex-answer{margin:16px 0 4px 32px;padding:14px 18px;background:#FFFEFA;border-left:3px solid var(--orange);color:#444;line-height:1.6;border-radius:0 6px 6px 0;}
+  .ex-answer p{margin:0 0 10px;} .ex-answer p:last-child{margin-bottom:0;} .ex-answer strong{color:var(--ink);}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="progress-bar"></div>
+
+<div class="layout">
+  <main class="main">
+    <div class="breadcrumb"><a href="../indice.html">Curso · Sistemas de energía en coches eléctricos</a> &nbsp;/&nbsp; Píldora 04</div>
+
+    <h1>El BMS: cerebro silencioso de la batería</h1>
+    <div class="meta">
+      <span class="pill">⏱ 10 min</span>
+      <span class="pill">Píldora 4 de 12</span>
+    </div>
+
+    <p class="lead">Si miras una batería de coche eléctrico desde fuera, parece un bloque inerte. No lo es. Dentro hay un sistema electrónico complejo trabajando todo el rato — incluso cuando el coche está parado en el garaje y crees que duerme. Ese sistema se llama BMS (<em>Battery Management System</em>), y sin él una batería de litio no aguantaría ni un mes en buen estado. Probablemente acabaría en llamas.</p>
+
+    <h2>El problema que resuelve</h2>
+    <p>Una celda de litio sola es manejable: la conectas, la cargas, la descargas, y se porta. El problema empieza cuando juntas miles de celdas. Por mucho que estén fabricadas igual, no son idénticas. Una tiene un poquito más de capacidad, otra se calienta un poquito más, otra envejece un poquito más rápido. Si las dejas a su aire, esas pequeñas diferencias se acumulan: las celdas más débiles se descargan antes que las fuertes, las fuertes se cargan más allá de su límite intentando alimentar al conjunto, y el sistema entero se desequilibra.</p>
+
+    <p>En el mejor caso, la batería pierde capacidad rápido. En el peor, una celda débil se sobrecalienta tanto que entra en <strong>fuga térmica</strong> — una reacción química que se autoalimenta, dispara la temperatura cientos de grados en segundos y puede contagiar a las celdas vecinas. Es lo que en titulares se llama "incendio de batería de litio".</p>
+
+    <p>El BMS existe para que ninguna de esas dos cosas pase. Es el cerebro que vigila celda a celda y toma decisiones todo el tiempo.</p>
+
+    <h2>Las cuatro funciones del BMS</h2>
+    <p>Cualquier BMS, por básico que sea, hace cuatro cosas. Las tres primeras son operativas; la cuarta es informativa.</p>
+
+    <div class="funcs">
+      <div class="f">
+        <div class="ftit">1 · Monitorizar</div>
+        <div class="fb">Lee voltaje, temperatura y corriente en cada celda (o pequeño grupo) de forma continua. Es el "sentido del tacto" del pack: sabe qué pasa en cada rincón.</div>
+      </div>
+      <div class="f">
+        <div class="ftit">2 · Equilibrar</div>
+        <div class="fb">Si una celda se carga más que las demás, el BMS la frena (o quema un pelín de su carga en una resistencia) para que todas vayan a la par. Sin este equilibrado, las desviaciones se disparan.</div>
+      </div>
+      <div class="f">
+        <div class="ftit">3 · Proteger</div>
+        <div class="fb">Si detecta sobrecarga, descarga excesiva, sobrecorriente o sobrecalentamiento, corta. En casos graves, desconecta el pack del resto del coche por contactores físicos. Su trabajo es elegir un fallo controlado antes que uno descontrolado.</div>
+      </div>
+      <div class="f">
+        <div class="ftit">4 · Estimar</div>
+        <div class="fb">Calcula el <strong>SoC</strong> (state of charge: cuánta carga queda) y el <strong>SoH</strong> (state of health: cuánto le queda de vida útil). Es lo que el coche te muestra por pantalla y lo que el cargador rápido necesita saber para no pasarse.</div>
+      </div>
+    </div>
+
+    <h2>Por qué el equilibrado es la función estrella</h2>
+    <p>Es la menos visible y la más importante a largo plazo. Imagina ocho corredores atados por la cintura corriendo juntos. Si todos van a la misma velocidad, perfecto. Pero el grupo siempre va a la velocidad del más lento — y el más lento, sin querer, frena al resto. En una batería pasa igual: el voltaje del pack baja a la velocidad de la celda más débil, y cuando esa celda llega a su mínimo seguro, el BMS tiene que cortar el pack entero, aunque las demás celdas tengan todavía energía.</p>
+
+    <p>El equilibrado lo arregla en cada carga. Mientras el pack se está cargando, el BMS detecta qué celdas van por delante y las frena hasta que las rezagadas las alcancen. Hay dos formas: <strong>equilibrado pasivo</strong> (la energía sobrante se quema en una pequeña resistencia, sencillo y barato pero desperdicia algo de energía) y <strong>equilibrado activo</strong> (la energía sobrante se redistribuye a otras celdas, más eficiente pero más complejo y caro).</p>
+
+    <p>Un buen equilibrado puede alargar la vida útil de un pack en años. Por eso, mientras la celda mejor del mundo te da 3 000 ciclos teóricos, un pack mal equilibrado puede acabar en mil. Y un buen pack con buen BMS llega a los 3 000 reales.</p>
+
+    <h2>El SoC no es lo que parece</h2>
+    <p>Cuando el coche te dice "queda 67% de batería", esa cifra <em>no</em> sale de medir directamente cuánta energía hay. No hay un sensor que mida eso porque no existe. El BMS la <strong>estima</strong>, combinando varias pistas: el voltaje actual de las celdas, la corriente que ha entrado y salido (integrada en el tiempo), la temperatura, la edad estimada del pack, y modelos químicos de cómo se comporta cada química.</p>
+
+    <p>Esa estimación es muy buena en condiciones normales pero tiene márgenes de error. Por eso a veces el coche, después de una carga completa o una calibración, "salta" de un porcentaje a otro: el BMS está corrigiendo su estimación contra una medición más fiable. No es un fallo, es honestidad.</p>
+
+    <p>El <strong>SoH</strong> es la primera derivada de todo esto: a partir del comportamiento histórico, el BMS estima cuánta capacidad útil le queda al pack respecto a la nominal. Un pack al 100% de SoH es nuevo; al 80%, ha perdido un quinto de capacidad y suele considerarse el final de su vida útil para coche (aunque puede seguir trabajando perfectamente como almacenamiento estático en una casa).</p>
+
+    <div class="pull">El BMS no es un complemento. Es lo que convierte miles de celdas químicas inestables en una batería usable durante una década. Sin él, todo lo demás de este curso no existiría.</div>
+
+    <h2>Por qué nunca duerme</h2>
+    <p>Aunque dejes el coche parado en el garaje, el BMS sigue activo en modo de bajo consumo. Comprueba si alguna celda está derivando a un voltaje peligroso (una celda de litio que baja por debajo de cierto umbral se daña <em>permanentemente</em>), si la temperatura del pack se descontrola por causas externas, si hay corrientes parásitas internas que indiquen un fallo. Por eso un coche eléctrico aparcado largas temporadas conviene dejarlo enchufado o, si no, con un nivel de carga intermedio (~50%) que dé margen al BMS para gestionar variaciones lentas sin entrar en zona crítica.</p>
+
+    <p>Esa vigilancia eterna también explica que la app del coche pueda decirte el porcentaje de batería desde el móvil aunque el coche esté apagado. No está apagado del todo: el BMS está despierto.</p>
+
+    <div class="exercises">
+      <div class="ex-title">Comprueba que lo tienes</div>
+
+      <details class="ex-card">
+        <summary><span class="ex-tag ex-tag-easy">Fácil</span><span class="ex-q">Nombra las cuatro funciones del BMS.</span></summary>
+        <div class="ex-answer">
+          <p>Monitorizar, equilibrar, proteger y estimar (SoC y SoH).</p>
+        </div>
+      </details>
+
+      <details class="ex-card">
+        <summary><span class="ex-tag ex-tag-easy">Fácil</span><span class="ex-q">¿Por qué un BMS sin equilibrado provocaría que un pack durara mucho menos?</span></summary>
+        <div class="ex-answer">
+          <p>Porque las celdas no son idénticas. Sin equilibrado, las pequeñas diferencias entre ellas se amplifican con cada ciclo. La celda más débil obliga a cortar el pack entero antes de tiempo, dando la sensación de que la batería ha perdido capacidad — cuando en realidad la mayoría de celdas están bien y solo unas pocas están "frenando al grupo".</p>
+        </div>
+      </details>
+
+      <details class="ex-card">
+        <summary><span class="ex-tag ex-tag-medium">Medio</span><span class="ex-q">¿Por qué el porcentaje de batería del coche puede saltar bruscamente después de una carga completa?</span></summary>
+        <div class="ex-answer">
+          <p>Porque el porcentaje no es una medición directa: es una estimación. Una carga completa permite al BMS recalibrar contra un punto conocido (el pack está realmente al 100%) y ajustar su modelo. Si la estimación previa estaba un poco desviada, al recalibrar "salta" al valor correcto. Es una corrección honesta, no un error.</p>
+        </div>
+      </details>
+
+      <details class="ex-card">
+        <summary><span class="ex-tag ex-tag-hard">Difícil</span><span class="ex-q">Si dejas un coche eléctrico aparcado tres meses sin enchufar, ¿qué le conviene más al pack: dejarlo al 100%, al 50% o al 10%?</span></summary>
+        <div class="ex-answer">
+          <p>Al <strong>50%</strong>, aproximadamente. Dejarlo al 100% durante meses estresa químicamente las celdas (especialmente en NMC) y acelera la degradación. Dejarlo al 10% deja al BMS sin margen: si el autoconsumo del coche descarga el pack por debajo del umbral seguro de alguna celda, esa celda se daña permanentemente. El 50% da margen al BMS para gestionar variaciones lentas sin acercarse a ninguno de los dos extremos peligrosos.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="next">
+      <div class="next-label">Siguiente</div>
+      <a href="../pildora-05_sistema-termico/index.html">Píldora 5 — Sistema térmico →</a>
+    </div>
+  </main>
+
+  <aside class="aside">
+    <div class="note">
+      <span class="note-label">Vocabulario</span>
+      <strong>SoC</strong> = State of Charge (porcentaje de carga). <strong>SoH</strong> = State of Health (porcentaje de salud respecto al nuevo). Verás ambos términos en cualquier diagnóstico.
+    </div>
+    <div class="note">
+      <span class="note-label">¿Cuántos sensores?</span>
+      Un BMS típico monitoriza cada grupo de celdas en paralelo y muchos puntos de temperatura. En un pack de 4 000 celdas, eso son cientos de medidas leídas varias veces por segundo.
+    </div>
+    <div class="note">
+      <span class="note-label">Contactores</span>
+      Son los grandes "interruptores" que conectan o desconectan el pack del resto del coche. Cuando el BMS decide cortar, los abre. Hacen un "clic" característico y son lo último que protege al sistema.
+    </div>
+    <div class="note">
+      <span class="note-label">El BMS aprende</span>
+      Los BMS modernos van afinando su modelo con datos del propio coche. Por eso un coche eléctrico nuevo "calibra" sus estimaciones durante las primeras semanas y mejora la precisión del kilometraje restante con el uso.
+    </div>
+  </aside>
+</div>
+
+<script>
+  const bar=document.getElementById('progress-bar');
+  function up(){const h=document.documentElement;bar.style.width=((h.scrollTop)/(h.scrollHeight-h.clientHeight)*100)+'%';}
+  document.addEventListener('scroll',up,{passive:true}); up();
+</script>
+</body>
+</html>
