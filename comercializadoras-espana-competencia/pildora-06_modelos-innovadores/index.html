@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Píldora 6 — Modelos innovadores</title>
+<style>
+  :root { --bg:#FAF7F1; --text:#2C2A26; --muted:#6B655C; --accent:#E07A1F; --rule:#E5DFD3; --note-bg:#F3EEDF; --serif:Georgia,"Iowan Old Style","Palatino Linotype",serif; --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; }
+  *{box-sizing:border-box} html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--serif);font-size:18px;line-height:1.65}
+  #progressBar{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:100;transition:width .1s}
+  header,main,footer,nav.pildora-nav{max-width:1100px;margin:0 auto;padding:0 24px}
+  header{padding-top:60px;padding-bottom:28px}
+  .meta{font-family:var(--sans);font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
+  h1{font-family:var(--sans);font-weight:700;font-size:38px;line-height:1.15;margin:0 0 18px}
+  .lede{font-size:21px;color:var(--muted);margin:0 0 12px;max-width:700px;font-style:italic}
+  h2{font-family:var(--sans);font-weight:600;font-size:24px;margin:48px 0 14px}
+  h3{font-family:var(--sans);font-weight:600;font-size:18px;margin:28px 0 8px}
+  main article{padding:16px 0 40px}
+  .row{display:grid;grid-template-columns:minmax(0,680px) minmax(0,280px);gap:56px;margin:0 0 24px}
+  .row.single{grid-template-columns:minmax(0,680px)}
+  .col-main p,.col-main ul,.col-main ol{margin:0 0 16px}
+  aside.margin-note{font-family:var(--sans);font-size:14px;line-height:1.55;color:var(--muted);border-left:2px solid var(--accent);padding:4px 0 4px 14px;margin-top:6px}
+  aside.margin-note strong{color:var(--text);font-weight:600}
+  @media(max-width:900px){.row,.row.single{grid-template-columns:1fr;gap:16px}aside.margin-note{background:var(--note-bg);border-left:3px solid var(--accent);padding:10px 14px;border-radius:0 4px 4px 0}h1{font-size:30px}.lede{font-size:18px}}
+  .callout{background:var(--note-bg);border-radius:6px;padding:18px 22px;margin:24px 0;font-size:17px}
+  .callout strong{color:var(--accent)}
+  hr{border:0;border-top:1px solid var(--rule);margin:48px 0}
+  .ejercicios{background:#FFFDF8;border:1px solid var(--rule);border-radius:8px;padding:20px 24px;margin:32px 0}
+  .ejercicios h2{margin-top:0}
+  details{border-top:1px solid var(--rule);padding:12px 0} details:first-of-type{border-top:0}
+  summary{font-family:var(--sans);font-weight:600;cursor:pointer;padding:4px 0}
+  summary:hover,details[open] summary{color:var(--accent)}
+  details p{margin:10px 0 4px}
+  nav.pildora-nav{display:flex;justify-content:space-between;align-items:center;padding-top:24px;padding-bottom:60px;font-family:var(--sans);font-size:15px;border-top:1px solid var(--rule);margin-top:40px}
+  nav.pildora-nav a{color:var(--accent);text-decoration:none;font-weight:500}
+  nav.pildora-nav a:hover{text-decoration:underline}
+  .fuentes{font-family:var(--sans);font-size:13.5px;color:var(--muted);background:#FFFDF8;border:1px solid var(--rule);border-radius:8px;padding:14px 20px;margin:32px 0;line-height:1.6}
+  .fuentes h3{font-family:var(--sans);font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.06em;margin:0 0 8px;color:var(--text)}
+  .fuentes ul{margin:0;padding-left:18px}
+  .fuentes a{color:var(--accent);text-decoration:none}
+  .fuentes a:hover{text-decoration:underline}
+  .fecha-datos{font-family:var(--sans);font-size:13px;color:var(--muted);font-style:italic;margin:-4px 0 22px}
+  .modelo{background:#fff;border:1px solid var(--rule);border-left:5px solid var(--accent);border-radius:0 8px 8px 0;padding:18px 22px;margin:18px 0}
+  .modelo h3{margin-top:0;color:var(--accent);font-size:18px;display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap}
+  .modelo .badge{font-family:var(--sans);font-size:12px;color:#fff;background:var(--accent);padding:3px 9px;border-radius:10px;text-transform:uppercase;letter-spacing:.04em;font-weight:600}
+  .modelo .ejemplos{font-family:var(--sans);font-size:13px;color:var(--muted);margin:4px 0 10px;font-style:italic}
+  .modelo p{margin:6px 0;font-size:16px}
+  .modelo .punto{font-family:var(--sans);font-size:14.5px;background:var(--note-bg);padding:10px 14px;border-radius:4px;margin-top:10px}
+  .modelo .punto strong{color:var(--accent)}
+</style>
+</head>
+<body>
+<div id="progressBar"></div>
+
+<header>
+  <div class="meta">Píldora 6 · ⏱ 12 min · Panorama competitivo</div>
+  <h1>Modelos innovadores</h1>
+  <p class="lede">Mientras las grandes se reparten el grueso del mercado, hay seis modelos emergentes que están cambiando lo que significa "comercializar electricidad". Algunos ya facturan; otros aún son experimentos. Todos abren oportunidad para nuevas entrantes.</p>
+  <p class="fecha-datos">Marco normativo actualizado al RD-l 7/2025 (junio 2025). Algunos modelos siguen en fase regulatoria de "sandbox".</p>
+</header>
+
+<main>
+<article>
+
+<div class="row">
+  <div class="col-main">
+    <h2>El sector ya no es solo "comprar al pool y vender al cliente"</h2>
+    <p>Durante muchos años, comercializar electricidad significaba esa cosa simple: comprar en mercado y vender en factura. Hoy hay al menos seis modelos distintos que combinan comercialización con otras palancas: producción local, comunidad, software, almacenamiento, servicios. Ninguno está obligado a coexistir con los demás; pero los que ganan tracción suelen mezclar dos o tres a la vez.</p>
+  </div>
+  <aside class="margin-note">
+    El motor común detrás de muchos de estos modelos es la <strong>caída del coste del panel solar</strong> y la <strong>llegada del coche eléctrico</strong>. Ambos descentralizan la electricidad y abren huecos que antes no existían.
+  </aside>
+</div>
+
+<div class="modelo">
+<h3>1. Cooperativas energéticas <span class="badge">Maduro</span></h3>
+<p class="ejemplos">Ejemplos: <strong>Som Energia</strong> (la mayor cooperativa energética de Europa), Goiener, Energética Coop, EnergÉtica.</p>
+<p>El modelo: una asociación de socios que aporta capital (en Som Energia, 100 € reembolsables), elige democráticamente la dirección y contrata electricidad 100% renovable certificada. Som Energia tiene <strong>86.248 socios</strong> (mayo 2025) y <strong>133.260 contratos</strong> activos. No tiene "clientes": todo el que contrata es socio.</p>
+<div class="punto"><strong>Por qué importa:</strong> demuestra que hay un segmento de consumidores dispuesto a pagar un sobreprecio modesto a cambio de propiedad colectiva y trazabilidad ambiental. Es un modelo de margen escaso pero sostenible, con fidelidad altísima y churn bajísimo.</div>
+</div>
+
+<div class="modelo">
+<h3>2. Comunidades energéticas locales <span class="badge">En despegue</span></h3>
+<p class="ejemplos">Ejemplos: TEK Zerain (Gipuzkoa, 27 familias), Efiduero (77 municipios con 200 instalaciones de autoconsumo colectivo).</p>
+<p>El modelo: vecinos, empresas o un municipio se asocian para generar y consumir electricidad localmente. Pueden adoptar forma de cooperativa, asociación o sociedad. Producen con paneles solares en cubiertas, comparten la energía entre los participantes y, si sobra, la venden al pool a través de una comercializadora intermediaria (que puede ser de la propia comunidad).</p>
+<p>El <strong>RD-l 7/2025</strong> ha cambiado el juego: amplió la distancia máxima entre la generación y los puntos de consumo de 2 a 5 km, lo que multiplica el número de instalaciones viables y abre el modelo a territorios rurales y semiurbanos donde antes no encajaba.</p>
+<div class="punto"><strong>Por qué importa:</strong> es un nicho donde una comercializadora pequeña puede aportar valor real (asesoría, gestión de balance, comercialización de excedentes) y construir relación directa con un cliente complejo pero leal. Andalucía creció un 50% en instalaciones de autoconsumo compartido en 2025.</div>
+</div>
+
+<div class="modelo">
+<h3>3. Comercialización + autoconsumo gestionado <span class="badge">Escalando</span></h3>
+<p class="ejemplos">Ejemplos: Iberdrola Comunidades Solares (1.000 activas, 100.000 hogares), Repsol Solar, Naturgy Saves; el modelo que intentó Holaluz.</p>
+<p>El modelo: la comercializadora no solo vende electricidad, también instala, financia o gestiona paneles solares en el tejado del cliente. Cobra por la energía consumida de red más por un servicio asociado (suscripción de placas, leasing, mantenimiento). Convierte al cliente en productor-consumidor.</p>
+<div class="punto"><strong>Por qué importa:</strong> aumenta el ARPU (ingreso medio por usuario), reduce churn y diferencia frente a la competencia. Pero también es operativamente complejo: requiere instaladores, financiación, gestión técnica. Holaluz lo intentó a gran escala y fue parte de lo que la puso en crisis. Iberdrola lo está escalando con éxito porque tiene músculo financiero y operativo para soportarlo.</div>
+</div>
+
+<div class="modelo">
+<h3>4. PPAs corporativos <span class="badge">Maduro en B2B grande</span></h3>
+<p class="ejemplos">Ejemplos: contratos directos entre grandes empresas (Amazon, Microsoft, Meta, El Corte Inglés, Mercadona) y desarrolladores de parques solares o eólicos.</p>
+<p>El modelo: una gran empresa firma directamente con un parque renovable la compra de toda o parte de su producción durante 10-15 años, a precio fijo conocido. La comercializadora interviene como intermediario que gestiona el balance (cuadrar generación intermitente con consumo continuo), las garantías y los desvíos.</p>
+<div class="punto"><strong>Por qué importa:</strong> es el nicho B2B con más actividad de los últimos cinco años. Para una comercializadora especializada, este es un mercado abierto: las grandes integradas no le dedican atención prioritaria porque sus márgenes son menores que los del retail, pero el volumen y la estabilidad son altos.</div>
+</div>
+
+<div class="modelo">
+<h3>5. Plataformas tecnológicas energéticas <span class="badge">Disrupción</span></h3>
+<p class="ejemplos">Ejemplo paradigma: <strong>Kraken</strong> (la plataforma de software de Octopus Energy), licenciada a otras eléctricas globales.</p>
+<p>El modelo: la comercializadora desarrolla internamente un sistema operativo de gestión energética (CRM + billing + gestión de mercado + analítica + cliente) que luego vende como SaaS a otras eléctricas. La comercialización deja de ser el único producto: el software se convierte en línea de negocio paralela.</p>
+<div class="punto"><strong>Por qué importa:</strong> rompe la lógica del sector. La comercializadora con la mejor tecnología puede monetizarla doblemente (operación propia + licencia a terceros). Es un patrón importado del software empresarial. Octopus es el caso visible, pero hay startups españolas trabajando en algo similar a escala más pequeña.</div>
+</div>
+
+<div class="modelo">
+<h3>6. Comercialización + servicios de movilidad eléctrica <span class="badge">En crecimiento</span></h3>
+<p class="ejemplos">Ejemplos: Repsol (electrolineras + tarifa para coche eléctrico), Iberdrola, Endesa X, comercializadoras especializadas en flotas.</p>
+<p>El modelo: la comercializadora ofrece tarifas específicas para el vehículo eléctrico (precios bajos en horas valle), instalación y gestión del punto de recarga doméstico, acceso a red pública de recarga, y modelos B2B para flotas. Algunas exploran ya servicios <strong>V2G</strong> (Vehicle-to-Grid), donde el coche devuelve energía a la red cuando hace falta y el dueño cobra por ello.</p>
+<div class="punto"><strong>Por qué importa:</strong> el parque de coches eléctricos en España crece rápido (más de 600.000 unidades a finales de 2025 entre BEV y PHEV). Cada cliente con EV es un cliente "premium" para la comercializadora: consume más, paga más, exige más servicio y suele tener mayor poder adquisitivo. El nicho está en plena formación.</div>
+</div>
+
+<div class="row">
+  <div class="col-main">
+    <h2>Lo que comparten estos seis modelos</h2>
+    <p>Si miras los seis con perspectiva, hay tres rasgos comunes que vale la pena interiorizar:</p>
+    <ol>
+      <li><strong>Vinculación más alta con el cliente.</strong> En todos, el cliente está más enganchado: por propiedad (cooperativa), por instalación física (autoconsumo), por contrato largo (PPA), por hardware (EV charger). Eso baja churn y eleva margen por cliente.</li>
+      <li><strong>Producto más complejo que la simple tarifa.</strong> Vender "kWh barato" es competencia pura por precio, una carrera al fondo. Vender un servicio energético integrado es vender algo donde se compite con criterios distintos.</li>
+      <li><strong>Más cerca de la economía local.</strong> Cinco de los seis tienen un componente territorial fuerte (comunidad, autoconsumo, EV charging, PPA con parque cercano). Quien tenga buen anclaje en una zona puede competir mejor que un nacional indiferenciado.</li>
+    </ol>
+  </div>
+  <aside class="margin-note">
+    Para una nueva entrante: el espacio interesante <strong>no es replicar el modelo de comercializadora tradicional</strong> (saturado, riesgo alto, márgenes estrechos), sino encajar en uno de estos seis modelos donde la propuesta de valor sea distinta y el churn más bajo.
+  </aside>
+</div>
+
+<div class="callout">
+<strong>Lo que llevarte:</strong> seis modelos innovadores en distintas fases de madurez (cooperativas, comunidades energéticas, autoconsumo gestionado, PPAs corporativos, plataformas tecnológicas, movilidad eléctrica). Todos comparten algo: producto más complejo, cliente más vinculado, churn más bajo. Aquí es donde está la oportunidad real para una entrante nueva, no en pelear cuota a las grandes en su terreno.
+</div>
+
+<hr>
+
+<div class="ejercicios">
+<h2>Ejercicios rápidos</h2>
+
+<details>
+<summary>1. Una cooperativa como Som Energia tiene 86.000 socios y 133.000 contratos. ¿Por qué no crece más rápido si su propuesta es valiosa?</summary>
+<p>Porque su modelo exige una participación activa del cliente: ser socio, pagar una cuota inicial, votar en asambleas, asumir la lógica cooperativa. Eso filtra mucho público potencial. Su crecimiento es sostenido pero acotado al segmento de consumidores comprometidos con economía cooperativa y sostenibilidad. La virtud del modelo es la estabilidad y el alto compromiso, no la masa.</p>
+</details>
+
+<details>
+<summary>2. ¿Por qué Holaluz fracasó intentando comercializar luz + autoconsumo y Iberdrola lo está consiguiendo?</summary>
+<p>Por escala financiera y operativa. El autoconsumo gestionado exige instalar miles de paneles, financiar al cliente, montar logística de instaladores, gestionar incidencias técnicas... todo eso consume caja durante años antes de generar margen. Iberdrola lo puede soportar con su balance; Holaluz, sin grupo respaldando, vio cómo el coste de escalar el negocio le drenó la liquidez al mismo tiempo que la crisis del gas castigaba su comercialización. No es que el modelo sea malo: es que requiere músculo financiero que Holaluz no tenía.</p>
+</details>
+
+<details>
+<summary>3. Si tuvieras que apostar por el modelo con más potencial para una nueva entrante con poco capital, ¿cuál elegirías?</summary>
+<p>Razonable: el de comunidades energéticas locales o PPAs corporativos de tamaño medio. Comunidades porque el RD-l 7/2025 acaba de abrir el mercado, los actores grandes aún no han ocupado el terreno y el cliente (municipio o comunidad) valora un interlocutor cercano y especializado. PPAs medios porque es un segmento B2B en crecimiento y las grandes no le dan prioridad. Ambos permiten arrancar con cartera pequeña, márgenes razonables y poca exposición a la espiral del pool. Lo poco realista es intentar replicar a Octopus desde cero: requiere desarrollo tecnológico mucho mayor y captación masiva.</p>
+</details>
+</div>
+
+<div class="fuentes">
+<h3>Fuentes</h3>
+<ul>
+<li>Som Energia — <a href="https://www.somenergia.coop/es/quienes-somos/" target="_blank" rel="noopener">Datos institucionales (86.248 socios, 133.260 contratos)</a>.</li>
+<li>Merca2 — <a href="https://www.merca2.es/2025/05/19/mayor-cooperativa-energetica-som-2192214/" target="_blank" rel="noopener">Som Energia, la mayor cooperativa energética de Europa</a>.</li>
+<li>OPS Global — <a href="https://www.opsglobal.es/blog/autoconsumo-colectivo-guia-completa-para-comunidades-de-vecinos-y-energeticas" target="_blank" rel="noopener">RD-l 7/2025 y autoconsumo colectivo</a>.</li>
+<li>Interempresas — <a href="https://www.interempresas.net/Autoconsumo/Articulos/594941-modelo-autoconsumo-compartido-Iberdrola-extiende-toda-Espana-1000-Comunidades-Solares.html" target="_blank" rel="noopener">Iberdrola Comunidades Solares: 1.000 instalaciones activas</a>.</li>
+<li>Energías Renovables — <a href="https://www.energias-renovables.com/autoconsumo/una-comunidad-energ-tica-de-200-autoconsumos-20250619" target="_blank" rel="noopener">Efiduero: comunidad energética con 200 autoconsumos colectivos</a>.</li>
+<li>Agencia Andaluza de la Energía — <a href="https://www.agenciaandaluzadelaenergia.es/en/node/3751" target="_blank" rel="noopener">Andalucía crece 50% en autoconsumo compartido en 2025</a>.</li>
+</ul>
+</div>
+
+</article>
+</main>
+
+<nav class="pildora-nav">
+  <a href="../pildora-05_cementerio-quiebras/index.html">← Anterior</a>
+  <a href="../indice.html">Índice del curso</a>
+  <a href="../pildora-07_marco-diferenciacion/index.html">Siguiente: Marco de diferenciación →</a>
+</nav>
+
+<script>
+  const bar=document.getElementById('progressBar');
+  function p(){const h=document.documentElement;bar.style.width=Math.min(100,Math.max(0,(h.scrollTop)/(h.scrollHeight-h.clientHeight)*100))+'%'}
+  document.addEventListener('scroll',p,{passive:true});p();
+</script>
+</body>
+</html>

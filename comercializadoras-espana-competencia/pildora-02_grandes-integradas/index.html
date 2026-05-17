@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Píldora 2 — Las grandes integradas: Endesa, Iberdrola, Naturgy</title>
+<style>
+  :root { --bg:#FAF7F1; --text:#2C2A26; --muted:#6B655C; --accent:#E07A1F; --rule:#E5DFD3; --note-bg:#F3EEDF; --serif:Georgia,"Iowan Old Style","Palatino Linotype",serif; --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; }
+  *{box-sizing:border-box} html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--serif);font-size:18px;line-height:1.65}
+  #progressBar{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:100;transition:width .1s}
+  header,main,footer,nav.pildora-nav{max-width:1100px;margin:0 auto;padding:0 24px}
+  header{padding-top:60px;padding-bottom:28px}
+  .meta{font-family:var(--sans);font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
+  h1{font-family:var(--sans);font-weight:700;font-size:38px;line-height:1.15;margin:0 0 18px}
+  .lede{font-size:21px;color:var(--muted);margin:0 0 12px;max-width:700px;font-style:italic}
+  h2{font-family:var(--sans);font-weight:600;font-size:24px;margin:48px 0 14px}
+  h3{font-family:var(--sans);font-weight:600;font-size:18px;margin:28px 0 8px}
+  main article{padding:16px 0 40px}
+  .row{display:grid;grid-template-columns:minmax(0,680px) minmax(0,280px);gap:56px;margin:0 0 24px}
+  .row.single{grid-template-columns:minmax(0,680px)}
+  .col-main p,.col-main ul,.col-main ol{margin:0 0 16px}
+  aside.margin-note{font-family:var(--sans);font-size:14px;line-height:1.55;color:var(--muted);border-left:2px solid var(--accent);padding:4px 0 4px 14px;margin-top:6px}
+  aside.margin-note strong{color:var(--text);font-weight:600}
+  @media(max-width:900px){.row,.row.single{grid-template-columns:1fr;gap:16px}aside.margin-note{background:var(--note-bg);border-left:3px solid var(--accent);padding:10px 14px;border-radius:0 4px 4px 0}h1{font-size:30px}.lede{font-size:18px}}
+  .callout{background:var(--note-bg);border-radius:6px;padding:18px 22px;margin:24px 0;font-size:17px}
+  .callout strong{color:var(--accent)}
+  figure{margin:28px 0;text-align:center} figcaption{font-family:var(--sans);font-size:13px;color:var(--muted);margin-top:10px}
+  svg.diagram{max-width:100%;height:auto}
+  hr{border:0;border-top:1px solid var(--rule);margin:48px 0}
+  .ejercicios{background:#FFFDF8;border:1px solid var(--rule);border-radius:8px;padding:20px 24px;margin:32px 0}
+  .ejercicios h2{margin-top:0}
+  details{border-top:1px solid var(--rule);padding:12px 0} details:first-of-type{border-top:0}
+  summary{font-family:var(--sans);font-weight:600;cursor:pointer;padding:4px 0}
+  summary:hover,details[open] summary{color:var(--accent)}
+  details p{margin:10px 0 4px}
+  nav.pildora-nav{display:flex;justify-content:space-between;align-items:center;padding-top:24px;padding-bottom:60px;font-family:var(--sans);font-size:15px;border-top:1px solid var(--rule);margin-top:40px}
+  nav.pildora-nav a{color:var(--accent);text-decoration:none;font-weight:500}
+  nav.pildora-nav a:hover{text-decoration:underline}
+  .fuentes{font-family:var(--sans);font-size:13.5px;color:var(--muted);background:#FFFDF8;border:1px solid var(--rule);border-radius:8px;padding:14px 20px;margin:32px 0;line-height:1.6}
+  .fuentes h3{font-family:var(--sans);font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.06em;margin:0 0 8px;color:var(--text)}
+  .fuentes ul{margin:0;padding-left:18px}
+  .fuentes a{color:var(--accent);text-decoration:none}
+  .fuentes a:hover{text-decoration:underline}
+  .fecha-datos{font-family:var(--sans);font-size:13px;color:var(--muted);font-style:italic;margin:-4px 0 22px}
+  .empresa{background:#fff;border:1px solid var(--rule);border-left:5px solid var(--accent);border-radius:0 8px 8px 0;padding:20px 24px;margin:20px 0}
+  .empresa h3{margin-top:0;color:var(--accent)}
+  .cifras{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin:14px 0;font-family:var(--sans)}
+  .cifras .c{background:var(--note-bg);padding:10px 14px;border-radius:4px}
+  .cifras .num{display:block;font-size:20px;font-weight:700;color:var(--text);line-height:1.1}
+  .cifras .lbl{font-size:12px;color:var(--muted);margin-top:2px;display:block}
+  .empresa p{margin:8px 0;font-size:16.5px}
+</style>
+</head>
+<body>
+<div id="progressBar"></div>
+
+<header>
+  <div class="meta">Píldora 2 · ⏱ 12 min · Panorama competitivo</div>
+  <h1>Las grandes integradas: Endesa, Iberdrola, Naturgy</h1>
+  <p class="lede">Tres empresas que tienen central, red y comercializadora bajo el mismo paraguas. Esa integración les da una ventaja estructural difícil de replicar, y se nota en las cuentas.</p>
+  <p class="fecha-datos">Cifras del cierre del ejercicio 2024 (publicadas en febrero-marzo 2025).</p>
+</header>
+
+<main>
+<article>
+
+<div class="row">
+  <div class="col-main">
+    <h2>El modelo: tres motores en la misma máquina</h2>
+    <p>Una "comercializadora integrada" no es solo una comercializadora con más tamaño: es una empresa que combina tres negocios distintos del sector eléctrico. Esa combinación cambia su economía y, por tanto, su forma de competir.</p>
+    <ol>
+      <li><strong>Generación</strong>: centrales nucleares, hidráulicas, ciclos combinados, parques eólicos y solares. Venden energía al pool. Cuando el pool sube, ganan más.</li>
+      <li><strong>Distribución</strong>: la red de media y baja tensión en su zona. Es un negocio regulado: ingresos estables, prácticamente independientes del precio del pool. Endesa con e-distribución, Iberdrola con i-DE, Naturgy con UFD.</li>
+      <li><strong>Comercialización</strong>: la marca que ves en tu factura. Compra al pool y vende al cliente. Cuando el pool baja, gana margen comercial.</li>
+    </ol>
+    <p>El truco está en que <strong>los tres negocios se compensan</strong>. Si sube el pool, la generación va de maravilla pero la comercialización aprieta el margen. Si baja, al revés. Y la distribución va a su ritmo, regulada. Las grandes integradas son menos vulnerables a la volatilidad del mercado porque internamente la diversifican.</p>
+  </div>
+  <aside class="margin-note">
+    Por ley, los tres negocios están <strong>societariamente separados</strong> (unbundling): cada uno con su sociedad, sus cuentas y su contabilidad analítica. Pero todos comparten dueño en el holding. Lo que se separa es la operación legal, no la lógica económica del grupo.
+  </aside>
+</div>
+
+<div class="row">
+  <div class="col-main">
+    <h2>Las tres empresas en 2024</h2>
+  </div>
+</div>
+
+<div class="empresa">
+<h3>Iberdrola</h3>
+<p>La mayor de las tres por tamaño absoluto. Con presencia global muy fuerte (Reino Unido, EE. UU., Brasil, México), España es solo una parte de su negocio. Tiene la mayor capacidad instalada renovable de España y un peso enorme en redes (i-DE).</p>
+<div class="cifras">
+  <div class="c"><span class="num">5.612 M€</span><span class="lbl">Beneficio neto (+17%)</span></div>
+  <div class="c"><span class="num">16.848 M€</span><span class="lbl">EBITDA (+17%)</span></div>
+  <div class="c"><span class="num">17.000 M€</span><span class="lbl">Inversión (+50%)</span></div>
+</div>
+<p><strong>Posicionamiento:</strong> apuesta total por inversión en renovables y redes, internacionalización, oferta combinada luz + gas + autoconsumo. Líder en comunidades solares (1.000 activas, 100.000 hogares).</p>
+</div>
+
+<div class="empresa">
+<h3>Endesa</h3>
+<p>Históricamente la mayor en electricidad en España (era la antigua eléctrica estatal). Propiedad mayoritaria del grupo italiano Enel desde 2009. Mucho peso en sistemas insulares (Baleares, Canarias) y en distribución (e-distribución).</p>
+<div class="cifras">
+  <div class="c"><span class="num">1.888 M€</span><span class="lbl">Beneficio neto (+154%)</span></div>
+  <div class="c"><span class="num">5.293 M€</span><span class="lbl">EBITDA (+40%)</span></div>
+  <div class="c"><span class="num">~10,4 M</span><span class="lbl">Clientes (luz+gas)</span></div>
+</div>
+<p><strong>Posicionamiento:</strong> normalización de resultados tras los años de turbulencia 2021-2023. Refuerza la marca comercial absorbiendo independientes (compra de Lucera a MasOrange por 90 M€ en sept 2025, sumando 350.000 clientes).</p>
+</div>
+
+<div class="empresa">
+<h3>Naturgy</h3>
+<p>Procede de la antigua Gas Natural Fenosa. Su fortaleza histórica es el gas, pero ha consolidado posición en electricidad. Líder del mercado integrado (luz + gas) por puntos de suministro. Distribuidora UFD en Galicia, parte de Castilla y León y otras zonas.</p>
+<div class="cifras">
+  <div class="c"><span class="num">1.901 M€</span><span class="lbl">Beneficio neto (-4,3%)</span></div>
+  <div class="c"><span class="num">5.365 M€</span><span class="lbl">EBITDA (-2%)</span></div>
+  <div class="c"><span class="num">~3,6 M</span><span class="lbl">Puntos de suministro</span></div>
+</div>
+<p><strong>Posicionamiento:</strong> apuesta por la oferta dual luz+gas (donde su cuota es líder), digitalización del servicio y crecimiento internacional selectivo.</p>
+</div>
+
+<div class="row">
+  <div class="col-main">
+    <h2>Las ventajas estructurales</h2>
+    <p>Detrás de esas cifras hay cuatro ventajas que una nueva entrante no puede replicar fácilmente:</p>
+    <ul>
+      <li><strong>Cobertura natural sin coste financiero.</strong> No necesitan comprar futuros para cubrirse: su generación les cubre. Eso ahorra millones en comisiones y libera caja.</li>
+      <li><strong>Coste de capital bajo.</strong> Acceso a financiación masiva y barata gracias a su balance, su rating crediticio y su flujo de caja. Pueden aguantar años de pérdidas en un segmento mientras consolidan.</li>
+      <li><strong>Canales propios densos.</strong> Oficinas físicas, fuerza comercial, app instalada en millones de móviles, cross-selling con gas, telecomunicaciones (en algunos casos) y servicios añadidos.</li>
+      <li><strong>Marca histórica reconocida.</strong> Para muchos clientes domésticos, "la luz" sigue siendo Iberdrola, Endesa o Naturgy por inercia cultural.</li>
+    </ul>
+    <h2>Las debilidades estructurales</h2>
+    <p>Y, sin embargo, las grandes pierden cuota frente a los nuevos entrantes. Iberdrola, Endesa y Naturgy perdieron <strong>782.000 contratos</strong> en 2024 en luz+gas, según datos de la CNMC. ¿Por qué?</p>
+    <ul>
+      <li><strong>Imagen erosionada.</strong> Décadas de quejas sobre atención al cliente, facturas opacas y subidas inesperadas. Para un segmento creciente de clientes "la antigua eléctrica" suena a marca a evitar.</li>
+      <li><strong>Inercia organizativa.</strong> Sistemas legacy, procesos complejos, mucho personal histórico. Innovar a la velocidad de un Octopus o una Plenitude es difícil.</li>
+      <li><strong>Conflicto interno entre negocios.</strong> Cuando comercializadora y generación pertenecen al mismo grupo, hay tensiones sobre quién captura el margen y cómo se reparte el coste del capital interno.</li>
+      <li><strong>Regulación específica que las limita.</strong> Por su tamaño y por ser las únicas que ofrecen PVPC, están más vigiladas y con más obligaciones que un independiente pequeño.</li>
+    </ul>
+  </div>
+  <aside class="margin-note">
+    Las cinco <strong>comercializadoras de referencia</strong> (COR), únicas autorizadas a ofrecer PVPC, son Endesa Energía XXI, Iberdrola Clientes, Naturgy Iberia, Total Energies COR y EDP Comercializadora. Son una capa adicional del negocio, mayoritariamente en pérdidas porque el PVPC tiene márgenes muy ajustados. La CNMC compensa parte del sobrecoste.
+  </aside>
+</div>
+
+<div class="callout">
+<strong>Lo que llevarte:</strong> tres empresas integradas con tres motores (generación, red, comercialización) que se compensan internamente. Beneficios combinados de más de 9.000 M€ en 2024. Ventajas estructurales muy difíciles de replicar (cobertura natural, coste de capital, canales, marca), pero pierden cuota porque su imagen y velocidad de innovación están por debajo de los nuevos entrantes. Una nueva comercializadora no puede competir <em>contra</em> ellas en su terreno; tiene que competir <em>donde ellas son más débiles</em>.
+</div>
+
+<hr>
+
+<div class="ejercicios">
+<h2>Ejercicios rápidos</h2>
+
+<details>
+<summary>1. ¿Por qué decimos que la integración da "cobertura natural" sin comprar futuros?</summary>
+<p>Porque cuando el grupo tiene generación propia, lo que pierde la comercializadora cuando sube el pool lo gana la generación al venderlo más caro. El resultado neto del holding es menos volátil. Una comercializadora pura necesita comprar futuros en OMIP o cerrar PPAs para conseguir el mismo efecto, y eso tiene coste financiero (comisiones, garantías, márgenes del broker). La integración lo ahorra.</p>
+</details>
+
+<details>
+<summary>2. Si las grandes integradas son tan eficientes, ¿por qué pierden clientes?</summary>
+<p>Porque la eficiencia financiera no se traduce automáticamente en propuesta de valor para el cliente. Tienen un legado de imagen (atención al cliente percibida como mala, facturas confusas, sensación de "te están cobrando demasiado") y una organización pesada que reacciona lenta. Los nuevos entrantes compiten en la dimensión "experiencia" donde las grandes han renunciado durante años. La pérdida de 782.000 contratos en 2024 muestra que el mercado castiga ese hueco.</p>
+</details>
+
+<details>
+<summary>3. ¿Por qué Endesa compra Lucera por 90 M€ si ya tiene 10 millones de clientes propios?</summary>
+<p>Porque comprar 350.000 clientes a 90 M€ supone unos 260 € por cliente, y captar orgánicamente cada uno cuesta una cifra similar o más en marketing, comisión comercial y proceso de onboarding. La compra es una vía rápida de recuperar cuota perdida en el segmento que las grandes están abandonando: clientes digital-first y jóvenes que ya estaban en una marca alternativa. Es M&A defensivo: si no puedes innovar rápido, compras la innovación de otros.</p>
+</details>
+</div>
+
+<div class="fuentes">
+<h3>Fuentes</h3>
+<ul>
+<li>Iberdrola — <a href="https://www.iberdrola.com/sala-comunicacion/noticias/detalle/inversion-record-17000-millones-impulsa-beneficio-neto-iberdrola-hasta-5612-millones-17-mas" target="_blank" rel="noopener">Resultados 2024 (beneficio 5.612 M€)</a>.</li>
+<li>Endesa — <a href="https://www.endesa.com/en/press/press-room/news/economic-information/results-2024" target="_blank" rel="noopener">Resultados anuales 2024 (EBITDA 5.293 M€)</a>.</li>
+<li>Naturgy / Energías Renovables — <a href="https://www.energias-renovables.com/panorama/naturgy-declara-mas-de-1-900-millones-20250220" target="_blank" rel="noopener">Naturgy declara 1.901 M€ de beneficio en 2024</a>.</li>
+<li>El Independiente — <a href="https://www.elindependiente.com/economia/2025/08/05/repsol-roba-277-000-clientes-de-luz-y-gas-a-iberdrola-endesa-y-naturgy-que-perdieron-782-000-contratos-en-2024/" target="_blank" rel="noopener">Iberdrola, Endesa y Naturgy pierden 782.000 contratos en 2024</a>.</li>
+<li>El Español — <a href="https://www.elespanol.com/invertia/empresas/energia/20250930/endesa-compra-masorange-comercializadora-energetica-millones-sumara-clientes/1003743947343_0.html" target="_blank" rel="noopener">Endesa compra Lucera por 90 M€ (sept 2025)</a>.</li>
+</ul>
+</div>
+
+</article>
+</main>
+
+<nav class="pildora-nav">
+  <a href="../pildora-01_mapa-del-mercado/index.html">← Anterior</a>
+  <a href="../indice.html">Índice del curso</a>
+  <a href="../pildora-03_retadores-petroleros-telecos/index.html">Siguiente: Los retadores serios →</a>
+</nav>
+
+<script>
+  const bar=document.getElementById('progressBar');
+  function p(){const h=document.documentElement;bar.style.width=Math.min(100,Math.max(0,(h.scrollTop)/(h.scrollHeight-h.clientHeight)*100))+'%'}
+  document.addEventListener('scroll',p,{passive:true});p();
+</script>
+</body>
+</html>

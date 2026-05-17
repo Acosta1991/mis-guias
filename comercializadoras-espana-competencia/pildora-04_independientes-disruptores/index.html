@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Píldora 4 — Independientes y disruptores</title>
+<style>
+  :root { --bg:#FAF7F1; --text:#2C2A26; --muted:#6B655C; --accent:#E07A1F; --rule:#E5DFD3; --note-bg:#F3EEDF; --serif:Georgia,"Iowan Old Style","Palatino Linotype",serif; --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; }
+  *{box-sizing:border-box} html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--serif);font-size:18px;line-height:1.65}
+  #progressBar{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:100;transition:width .1s}
+  header,main,footer,nav.pildora-nav{max-width:1100px;margin:0 auto;padding:0 24px}
+  header{padding-top:60px;padding-bottom:28px}
+  .meta{font-family:var(--sans);font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
+  h1{font-family:var(--sans);font-weight:700;font-size:38px;line-height:1.15;margin:0 0 18px}
+  .lede{font-size:21px;color:var(--muted);margin:0 0 12px;max-width:700px;font-style:italic}
+  h2{font-family:var(--sans);font-weight:600;font-size:24px;margin:48px 0 14px}
+  h3{font-family:var(--sans);font-weight:600;font-size:18px;margin:28px 0 8px}
+  main article{padding:16px 0 40px}
+  .row{display:grid;grid-template-columns:minmax(0,680px) minmax(0,280px);gap:56px;margin:0 0 24px}
+  .row.single{grid-template-columns:minmax(0,680px)}
+  .col-main p,.col-main ul,.col-main ol{margin:0 0 16px}
+  aside.margin-note{font-family:var(--sans);font-size:14px;line-height:1.55;color:var(--muted);border-left:2px solid var(--accent);padding:4px 0 4px 14px;margin-top:6px}
+  aside.margin-note strong{color:var(--text);font-weight:600}
+  @media(max-width:900px){.row,.row.single{grid-template-columns:1fr;gap:16px}aside.margin-note{background:var(--note-bg);border-left:3px solid var(--accent);padding:10px 14px;border-radius:0 4px 4px 0}h1{font-size:30px}.lede{font-size:18px}}
+  .callout{background:var(--note-bg);border-radius:6px;padding:18px 22px;margin:24px 0;font-size:17px}
+  .callout strong{color:var(--accent)}
+  hr{border:0;border-top:1px solid var(--rule);margin:48px 0}
+  .ejercicios{background:#FFFDF8;border:1px solid var(--rule);border-radius:8px;padding:20px 24px;margin:32px 0}
+  .ejercicios h2{margin-top:0}
+  details{border-top:1px solid var(--rule);padding:12px 0} details:first-of-type{border-top:0}
+  summary{font-family:var(--sans);font-weight:600;cursor:pointer;padding:4px 0}
+  summary:hover,details[open] summary{color:var(--accent)}
+  details p{margin:10px 0 4px}
+  nav.pildora-nav{display:flex;justify-content:space-between;align-items:center;padding-top:24px;padding-bottom:60px;font-family:var(--sans);font-size:15px;border-top:1px solid var(--rule);margin-top:40px}
+  nav.pildora-nav a{color:var(--accent);text-decoration:none;font-weight:500}
+  nav.pildora-nav a:hover{text-decoration:underline}
+  .fuentes{font-family:var(--sans);font-size:13.5px;color:var(--muted);background:#FFFDF8;border:1px solid var(--rule);border-radius:8px;padding:14px 20px;margin:32px 0;line-height:1.6}
+  .fuentes h3{font-family:var(--sans);font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.06em;margin:0 0 8px;color:var(--text)}
+  .fuentes ul{margin:0;padding-left:18px}
+  .fuentes a{color:var(--accent);text-decoration:none}
+  .fuentes a:hover{text-decoration:underline}
+  .fecha-datos{font-family:var(--sans);font-size:13px;color:var(--muted);font-style:italic;margin:-4px 0 22px}
+  .empresa{background:#fff;border:1px solid var(--rule);border-left:5px solid var(--accent);border-radius:0 8px 8px 0;padding:18px 22px;margin:16px 0}
+  .empresa h3{margin-top:0;color:var(--accent);display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;font-size:18px}
+  .empresa h3 .origen{font-family:var(--sans);font-size:13px;color:var(--muted);font-weight:400;text-transform:uppercase;letter-spacing:.05em}
+  .empresa .kpi{font-family:var(--sans);font-size:14px;color:var(--muted);margin:6px 0 8px}
+  .empresa .kpi strong{color:var(--text)}
+  .empresa p{margin:6px 0;font-size:16px}
+  .empresa .destacado{background:var(--note-bg);padding:10px 14px;border-radius:4px;margin-top:10px;font-family:var(--sans);font-size:14.5px}
+  .empresa .destacado strong{color:var(--accent)}
+</style>
+</head>
+<body>
+<div id="progressBar"></div>
+
+<header>
+  <div class="meta">Píldora 4 · ⏱ 12 min · Panorama competitivo</div>
+  <h1>Independientes y disruptores</h1>
+  <p class="lede">Sin red propia, sin generación masiva, sin marca histórica. Y aun así, algunas crecen a doble dígito mientras las grandes pierden clientes. La razón rara vez es el precio.</p>
+  <p class="fecha-datos">Cifras a junio 2025, salvo indicación. Las cuotas de cada empresa son aproximadas y cambian trimestre a trimestre.</p>
+</header>
+
+<main>
+<article>
+
+<div class="row">
+  <div class="col-main">
+    <h2>Una categoría con cuatro perfiles</h2>
+    <p>El concepto "comercializadora independiente" agrupa a empresas muy distintas. No tienen la integración vertical de las grandes ni la marca cruzada de los retadores petroleros/telecos. Compiten desde la propuesta de valor: digitalización, servicio, sostenibilidad, nicho o agilidad. Cuatro perfiles que merece la pena distinguir, porque cada uno enseña una vía distinta de entrar en el sector.</p>
+  </div>
+  <aside class="margin-note">
+    Las independientes son donde más experimentación de modelo de negocio se ve, y donde también muere más gente. La píldora 5 mira el cementerio; esta mira los supervivientes que están funcionando.
+  </aside>
+</div>
+
+<div class="empresa">
+<h3>Factor Energía <span class="origen">Veterana independiente española</span></h3>
+<div class="kpi"><strong>~212.000</strong> clientes · activa desde <strong>1999</strong> · enfoque <strong>B2B y residencial</strong></div>
+<p>Es la comercializadora independiente más longeva del país. Empezó cuando se liberalizó el mercado y ha mantenido un crecimiento sostenido sin ruido, sin compras agresivas y sin sustos públicos. Atiende empresas y particulares con tarifas indexadas y fijas. No es la más visible ni la más comentada, pero es de las pocas independientes que llevan más de dos décadas operando rentablemente. Su valor de mercado: la combinación de tamaño suficiente, foco en B2B (donde el cliente compara con criterios técnicos, no de marca) y disciplina operativa.</p>
+<div class="destacado"><strong>Lección:</strong> en este sector, llevar 25 años en pie es más raro que crecer rápido. La supervivencia es una propuesta de valor en sí misma.</div>
+</div>
+
+<div class="empresa">
+<h3>Audax Renovables <span class="origen">Independiente española con presencia europea</span></h3>
+<div class="kpi"><strong>~436.000</strong> clientes en 7 países (España, Portugal, Italia, Alemania, Polonia, Países Bajos, Hungría) · cartera <strong>16,5 TWh</strong> · capacidad propia <strong>267 MW</strong> renovables</div>
+<p>Audax es un caso atípico: comercializadora independiente que ha construido una base internacional y cierta integración vertical en renovables. Pertenece al grupo de José Elías. En 2024 facturó 1.988 M€ (-13,3% por caída del precio energético) pero <strong>dobló su beneficio neto a 63 M€</strong> y subió EBITDA a 115 M€ (+20%). Su modelo combina comercialización agresiva en varios mercados, generación propia limitada pero relevante (sirve de cobertura natural parcial) y exposición a B2B industrial.</p>
+<p>Su historia incluye episodios de tensión financiera y reestructuración, pero ha logrado lo difícil: superar el medio millón de clientes sin pertenecer a una integrada ni a una petrolera. Cotiza en bolsa.</p>
+<div class="destacado"><strong>Lección:</strong> el camino más largo para una independiente que quiere durar es construir algo de integración (renovables propias, contratos PPA largos, diversificación geográfica) en lugar de quedarse solo en el reventa de pool.</div>
+</div>
+
+<div class="empresa">
+<h3>Plenitude (Eni) <span class="origen">Filial del grupo petrolero italiano Eni</span></h3>
+<div class="kpi"><strong>&gt;260.000</strong> contratos en España · marca creada por la fusión de Aldro y otras adquisiciones de Eni</div>
+<p>Plenitude es el vehículo del grupo Eni para comercializar energía descarbonizada en Europa. Llegó a España absorbiendo entre otras a Aldro Energía y consolidando una oferta de luz, gas, autoconsumo y movilidad eléctrica. Combina respaldo financiero masivo de la matriz, propuesta de marca "limpia" y producto digital-first. Crecimiento sostenido aunque algo más discreto que Octopus.</p>
+<div class="destacado"><strong>Lección:</strong> los grupos petroleros europeos (Eni, TotalEnergies, BP) están entrando en electricidad como apuesta de transición. Tienen capital y horizonte largo.</div>
+</div>
+
+<div class="empresa">
+<h3>Octopus Energy <span class="origen">Comercializadora británica nacida en 2016</span></h3>
+<div class="kpi"><strong>~205.000</strong> clientes en España (datos de comunicación corporativa, 2025) · plataforma tecnológica <strong>Kraken</strong> licenciada a otras energéticas</div>
+<p>Octopus es probablemente el caso más interesante de "comercializadora que parece una tech". Nació en Reino Unido en 2016, llegó a España en 2021 y crece rápido sin canal físico, sin marca previa local y sin precios necesariamente más baratos que los de las grandes. Su propuesta:</p>
+<ul style="font-size:15px;font-family:var(--sans);margin:8px 0 10px;padding-left:18px">
+<li>Interfaz limpia, transparencia de precios, comunicación cercana (correos electrónicos sin jerga, atención al cliente que ha ganado premios).</li>
+<li>Tarifas indexadas al pool con explicación clara de cómo funcionan, dirigidas a clientes informados.</li>
+<li>Productos especializados (tarifa para coche eléctrico que se aprovecha de las horas baratas).</li>
+<li>Plataforma tecnológica propia (Kraken) que también se vende a otras comercializadoras globales como software, generando un negocio paralelo.</li>
+</ul>
+<p>Su cuota individual en España todavía es pequeña, pero el crecimiento es de las más rápidas del mercado y, sobre todo, está educando un segmento de cliente que antes no existía: el doméstico que entiende su tarifa indexada y la elige conscientemente.</p>
+<div class="destacado"><strong>Lección:</strong> el producto puede ser una propuesta competitiva, no solo el precio. Octopus compite por experiencia y por segmento cultural (cliente informado, ambientalmente consciente, digital), no por ser el más barato.</div>
+</div>
+
+<div class="row">
+  <div class="col-main">
+    <h2>Otros nombres que conviene conocer</h2>
+    <p>Además de los cuatro perfiles principales, hay otros independientes con peso o presencia destacable:</p>
+    <ul>
+      <li><strong>Iberdrola Clientes y Endesa Energía XXI</strong> aparecen también en algunas comparativas porque son las comercializadoras del PVPC, distintas societariamente de las marcas comerciales de mercado libre. Ya cubiertas en la píldora 2.</li>
+      <li><strong>Aldro</strong>: fue una independiente importante, absorbida por Eni para crear Plenitude.</li>
+      <li><strong>Lucera</strong>: tratada en la píldora 3 como caso de "teleco que entra y sale".</li>
+      <li><strong>Imagina Energía, Curenergía, Holaluz</strong>: comercializadoras de tamaño medio, con destinos muy distintos. Holaluz se cubre como caso de quiebra en la píldora 5.</li>
+      <li><strong>Som Energia, Goiener, Energética coop</strong>: cooperativas energéticas. Se tratan en la píldora 6 porque su modelo es estructuralmente distinto.</li>
+    </ul>
+  </div>
+  <aside class="margin-note">
+    El listado completo de comercializadoras activas en CNMC está en su sede electrónica y se actualiza trimestralmente. Conviene consultarlo si estás haciendo análisis de competencia detallado: cada trimestre se inscriben nuevas y otras se dan de baja.
+  </aside>
+</div>
+
+<div class="callout">
+<strong>Lo que llevarte:</strong> las independientes y disruptores cubren cuatro perfiles muy distintos: la veterana (Factor), la diversificada europea (Audax), la petrolera "verde" (Plenitude) y la nativa digital (Octopus). Comparten algo: no compiten contra las grandes en su propio terreno; eligen una dimensión (B2B técnico, multinacional, ESG, experiencia digital) donde el cliente paga por algo distinto al precio.
+</div>
+
+<hr>
+
+<div class="ejercicios">
+<h2>Ejercicios rápidos</h2>
+
+<details>
+<summary>1. Octopus dobla beneficios siendo más pequeña que Endesa. ¿Cómo es posible?</summary>
+<p>Trampa de la pregunta: Octopus no dobla beneficios siendo más pequeña que Endesa. Quien dobló beneficios en 2024 fue Audax (de 31 M€ a 63 M€), y Octopus aún tiene cuota muy pequeña en España (alrededor de 0,2%). El concepto importante: las cifras absolutas pueden engañar. Lo que crecen los independientes con éxito es <em>cuota</em> y <em>velocidad de crecimiento</em>, no necesariamente beneficios absolutos. Mientras Endesa gana 1.888 M€ en una cartera estable o decreciente, Octopus o Plenitude pueden estar perdiendo dinero en España pero ganando posicionamiento. Son juegos distintos en horizontes distintos.</p>
+</details>
+
+<details>
+<summary>2. ¿Por qué Audax tiene más probabilidades de durar que la mayoría de independientes?</summary>
+<p>Por tres motivos principales: diversificación geográfica (siete países, no depende solo del mercado español), algo de integración vertical (267 MW renovables propios reducen exposición al pool) y disciplina de cartera medida por TWh y por evolución de EBITDA. No es una comercializadora pura especulando con el pool: es un grupo energético en escala media. Eso reduce el riesgo de quiebra típico de los puros, aunque tiene a cambio una complejidad operativa mayor.</p>
+</details>
+
+<details>
+<summary>3. ¿Qué diferencia conceptual hay entre Octopus y Repsol como nuevas entrantes?</summary>
+<p>Repsol entra apoyándose en su base existente (clientes de gasolinera, marca consolidada, capilaridad física) para cross-selling. Octopus entra construyendo todo desde cero, pero con un producto distinto al de las grandes (experiencia digital + tarifas indexadas explicadas + atención reconocida). Repsol vende confianza extendida; Octopus vende experiencia nueva. Ambas crecen, pero captan tipos de cliente distintos: Repsol al cliente conservador con relación previa con la marca; Octopus al cliente informado y digital que busca algo diferente. Coexisten porque atacan segmentos diferentes del mercado.</p>
+</details>
+</div>
+
+<div class="fuentes">
+<h3>Fuentes</h3>
+<ul>
+<li>Audax Renovables — <a href="https://www.audaxrenovables.es/en/audax-results-2024/" target="_blank" rel="noopener">Resultados 2024 (beneficio 63 M€)</a>.</li>
+<li>El Económico — <a href="https://www.eleconomista.es/energia/noticias/13243626/02/25/audax-dobla-beneficios-hasta-63-millones-pese-a-la-caida-de-ingresos.html" target="_blank" rel="noopener">Audax dobla beneficios pese a caída de ingresos</a>.</li>
+<li>El Español — <a href="https://www.elespanol.com/invertia/empresas/energia/20250311/comercializadoras-luz-crecen-espana-mercado-libre-octopus-energy-factorenergia-masorange-eni/930157318_0.html" target="_blank" rel="noopener">Las comercializadoras que más crecen: Octopus, Factor, MasOrange, Eni</a>.</li>
+<li>Octopus Energy / El Español — <a href="https://www.elespanol.com/eventos/2025/observatorio-de-la-energia/20251112/giner-octopus-espana-pais-atipico-millones-suministros-electricos-tarifa-regulada/1003744010288_0.html" target="_blank" rel="noopener">Octopus sobre el mercado español</a>.</li>
+</ul>
+</div>
+
+</article>
+</main>
+
+<nav class="pildora-nav">
+  <a href="../pildora-03_retadores-petroleros-telecos/index.html">← Anterior</a>
+  <a href="../indice.html">Índice del curso</a>
+  <a href="../pildora-05_cementerio-quiebras/index.html">Siguiente: El cementerio →</a>
+</nav>
+
+<script>
+  const bar=document.getElementById('progressBar');
+  function p(){const h=document.documentElement;bar.style.width=Math.min(100,Math.max(0,(h.scrollTop)/(h.scrollHeight-h.clientHeight)*100))+'%'}
+  document.addEventListener('scroll',p,{passive:true});p();
+</script>
+</body>
+</html>

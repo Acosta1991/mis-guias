@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Píldora 3 — Los retadores serios: petroleros y telecos</title>
+<style>
+  :root { --bg:#FAF7F1; --text:#2C2A26; --muted:#6B655C; --accent:#E07A1F; --rule:#E5DFD3; --note-bg:#F3EEDF; --serif:Georgia,"Iowan Old Style","Palatino Linotype",serif; --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; }
+  *{box-sizing:border-box} html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--serif);font-size:18px;line-height:1.65}
+  #progressBar{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:100;transition:width .1s}
+  header,main,footer,nav.pildora-nav{max-width:1100px;margin:0 auto;padding:0 24px}
+  header{padding-top:60px;padding-bottom:28px}
+  .meta{font-family:var(--sans);font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
+  h1{font-family:var(--sans);font-weight:700;font-size:38px;line-height:1.15;margin:0 0 18px}
+  .lede{font-size:21px;color:var(--muted);margin:0 0 12px;max-width:700px;font-style:italic}
+  h2{font-family:var(--sans);font-weight:600;font-size:24px;margin:48px 0 14px}
+  h3{font-family:var(--sans);font-weight:600;font-size:18px;margin:28px 0 8px}
+  main article{padding:16px 0 40px}
+  .row{display:grid;grid-template-columns:minmax(0,680px) minmax(0,280px);gap:56px;margin:0 0 24px}
+  .row.single{grid-template-columns:minmax(0,680px)}
+  .col-main p,.col-main ul,.col-main ol{margin:0 0 16px}
+  aside.margin-note{font-family:var(--sans);font-size:14px;line-height:1.55;color:var(--muted);border-left:2px solid var(--accent);padding:4px 0 4px 14px;margin-top:6px}
+  aside.margin-note strong{color:var(--text);font-weight:600}
+  @media(max-width:900px){.row,.row.single{grid-template-columns:1fr;gap:16px}aside.margin-note{background:var(--note-bg);border-left:3px solid var(--accent);padding:10px 14px;border-radius:0 4px 4px 0}h1{font-size:30px}.lede{font-size:18px}}
+  .callout{background:var(--note-bg);border-radius:6px;padding:18px 22px;margin:24px 0;font-size:17px}
+  .callout strong{color:var(--accent)}
+  hr{border:0;border-top:1px solid var(--rule);margin:48px 0}
+  .ejercicios{background:#FFFDF8;border:1px solid var(--rule);border-radius:8px;padding:20px 24px;margin:32px 0}
+  .ejercicios h2{margin-top:0}
+  details{border-top:1px solid var(--rule);padding:12px 0} details:first-of-type{border-top:0}
+  summary{font-family:var(--sans);font-weight:600;cursor:pointer;padding:4px 0}
+  summary:hover,details[open] summary{color:var(--accent)}
+  details p{margin:10px 0 4px}
+  nav.pildora-nav{display:flex;justify-content:space-between;align-items:center;padding-top:24px;padding-bottom:60px;font-family:var(--sans);font-size:15px;border-top:1px solid var(--rule);margin-top:40px}
+  nav.pildora-nav a{color:var(--accent);text-decoration:none;font-weight:500}
+  nav.pildora-nav a:hover{text-decoration:underline}
+  .fuentes{font-family:var(--sans);font-size:13.5px;color:var(--muted);background:#FFFDF8;border:1px solid var(--rule);border-radius:8px;padding:14px 20px;margin:32px 0;line-height:1.6}
+  .fuentes h3{font-family:var(--sans);font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.06em;margin:0 0 8px;color:var(--text)}
+  .fuentes ul{margin:0;padding-left:18px}
+  .fuentes a{color:var(--accent);text-decoration:none}
+  .fuentes a:hover{text-decoration:underline}
+  .fecha-datos{font-family:var(--sans);font-size:13px;color:var(--muted);font-style:italic;margin:-4px 0 22px}
+  .empresa{background:#fff;border:1px solid var(--rule);border-left:5px solid var(--accent);border-radius:0 8px 8px 0;padding:18px 22px;margin:16px 0}
+  .empresa h3{margin-top:0;color:var(--accent);display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;font-size:18px}
+  .empresa h3 .origen{font-family:var(--sans);font-size:13px;color:var(--muted);font-weight:400;text-transform:uppercase;letter-spacing:.05em}
+  .empresa .kpi{font-family:var(--sans);font-size:14px;color:var(--muted);margin:6px 0 8px}
+  .empresa .kpi strong{color:var(--text)}
+  .empresa p{margin:6px 0;font-size:16px}
+</style>
+</head>
+<body>
+<div id="progressBar"></div>
+
+<header>
+  <div class="meta">Píldora 3 · ⏱ 10 min · Panorama competitivo</div>
+  <h1>Los retadores serios: petroleros y telecos</h1>
+  <p class="lede">No vienen del sector eléctrico, pero llevan años entrando con fuerza. Tienen marca, canales y bolsillo. Y están convirtiendo el segundo escalón del mercado en su escenario.</p>
+  <p class="fecha-datos">Cifras a junio 2025, salvo indicación. Operaciones de M&A actualizadas a noviembre 2025.</p>
+</header>
+
+<main>
+<article>
+
+<div class="row">
+  <div class="col-main">
+    <h2>La estrategia común: cross-selling sobre lo que ya tienes</h2>
+    <p>Cuando un grupo petrolero, un grupo eléctrico extranjero o una teleco deciden entrar en comercialización eléctrica española, no parten de cero. Parten de millones de clientes a los que ya están cobrando otra cosa: gasolina, gas, internet, móvil. La luz se convierte en <strong>una venta cruzada barata</strong>: el coste de captación cae a la mitad o menos, porque la marca ya está vendida y el canal ya existe.</p>
+    <p>Esa lógica explica por qué los cuatro grandes retadores comparten patrón: marca fuerte, balance grande, oferta combinada, y cuotas todavía pequeñas en luz pero creciendo a doble dígito anual mientras las grandes integradas pierden.</p>
+  </div>
+  <aside class="margin-note">
+    El <strong>coste de adquisición de cliente</strong> (CAC) en electricidad doméstica ronda los 80-150 € por contrato según fuente y canal. Para un petrolero que ya tiene 8 millones de clientes en sus estaciones de servicio, el incremental para venderles luz puede caer a 30-50 €.
+  </aside>
+</div>
+
+<div class="empresa">
+<h3>Repsol <span class="origen">Origen: grupo petrolero español</span></h3>
+<div class="kpi"><strong>~3,0 M</strong> clientes luz+gas · cuota integrada <strong>~5,2%</strong> · objetivo declarado <strong>5 M en 2030</strong></div>
+<p>Entró en el sector eléctrico en 2018 comprando Viesgo (negocio de comercialización; la red distribuidora quedó separada). Desde entonces ha multiplicado clientes año tras año combinando captación en su red de gasolineras (más de 3.000 estaciones), ventas digitales agresivas y oferta combinada con gas, electricidad y servicios de movilidad eléctrica.</p>
+<p>Es el caso más visible de "fuera del sector entra y empuja": pasó de 344.892 clientes en junio de 2024 a 415.733 en junio de 2025 (solo electricidad nuevos contratos individuales). Si cumple su objetivo declarado de cinco millones en 2030, será el cuarto operador del mercado y habrá comido cuota fundamentalmente al trío histórico.</p>
+</div>
+
+<div class="empresa">
+<h3>TotalEnergies <span class="origen">Origen: petrolero francés (Total)</span></h3>
+<div class="kpi"><strong>~3%</strong> cuota integrada · activo desde 2019 en el minorista español</div>
+<p>Entró en el mercado español comprando primero la antigua Compañía Eléctrica del Sur (CES), después la división de comercialización de Viesgo Energía y luego absorbiendo otros activos. Mantiene la marca TotalEnergies y compite con propuesta de "energía descarbonizada" + servicios añadidos (puntos de recarga, autoconsumo). Hereda además, como antigua Viesgo, la distribuidora en Cantabria que ahora opera bajo nombre propio (TotalEnergies tiene la marca; el activo de distribución pasó por varias manos).</p>
+</div>
+
+<div class="empresa">
+<h3>EDP <span class="origen">Origen: grupo eléctrico portugués</span></h3>
+<div class="kpi"><strong>~2%</strong> cuota integrada · distribuidora propia en Asturias (e-Redes)</div>
+<p>Energias de Portugal opera en España desde hace décadas, con base histórica en Asturias (donde tiene la distribuidora). Compite en el mercado libre español combinando marca panibérica, fuerte presencia en renovables y propuesta de servicios añadidos. Crecimiento más estable que el de Repsol, pero menos espectacular.</p>
+</div>
+
+<div class="empresa">
+<h3>MasOrange (vía Lucera) <span class="origen">Origen: operador de telecomunicaciones</span></h3>
+<div class="kpi"><strong>~200.000</strong> clientes (Lucera) · vendida a Endesa por <strong>90 M€</strong> (sept 2025)</div>
+<p>Caso ilustrativo del modelo "teleco entra en luz". Lucera era una comercializadora 100% digital fundada en 2014; en 2021 fue adquirida por el grupo Masmóvil, después integrado en MasOrange (la fusión con Orange). Llevaron a Lucera a crecer rápidamente (de 17.921 clientes en jun 2024 a 42.311 en jun 2025) apoyándose en su base de clientes de telecomunicaciones, pero en septiembre de 2025 fue vendida a Endesa por 90 M€, lo que reincorpora esa cartera al bloque de las grandes integradas.</p>
+<p>La venta cuenta dos historias a la vez: para MasOrange, monetizar una apuesta que no encajaba con su core. Para Endesa, recuperar segmento digital sin tener que innovar internamente.</p>
+</div>
+
+<div class="row">
+  <div class="col-main">
+    <h2>Lo que hacen distinto</h2>
+    <p>Tres patrones comunes que se repiten en los retadores:</p>
+    <ul>
+      <li><strong>Oferta combinada multisectorial.</strong> Repsol vincula luz con servicios de movilidad eléctrica (recarga en estaciones, descuentos en carburante). MasOrange vinculaba luz con tarifas de móvil. EDP combina luz, gas y soluciones de autoconsumo. Cada combo reduce churn (rotación de clientes) y captura más cuota por cliente.</li>
+      <li><strong>Marca generalista, no "eléctrica".</strong> El cliente ya conoce y confía en Repsol o Total para otras cosas. La luz hereda esa confianza sin tener que construirla.</li>
+      <li><strong>Bolsillo grande, paciencia larga.</strong> Pueden aguantar segmentos en pérdidas durante años. Es una apuesta estratégica del grupo, no la cuenta de resultados anual.</li>
+    </ul>
+    <h2>El riesgo asociado: M&A constante</h2>
+    <p>Una característica del segmento es la <strong>actividad de compraventa permanente</strong>. Empresas que parecen consolidadas se venden o compran cada pocos años. Repsol compró Viesgo en 2018; MasOrange compró Lucera en 2021; Endesa compró Lucera en 2025. Esto significa que el mapa que dibujamos hoy puede no ser el de mañana. Para alguien que quiera entrar al sector, conviene leer estos movimientos como señal: dónde alguien grande está consolidando, hay menos espacio para una nueva entrante; dónde alguien está saliendo, puede abrirse hueco.</p>
+  </div>
+  <aside class="margin-note">
+    Las grandes operaciones de M&A en comercialización en España de los últimos cinco años: <strong>Repsol-Viesgo</strong> (2018), <strong>TotalEnergies-CES</strong> (2019), <strong>MasOrange-Lucera</strong> (2021), <strong>Endesa-Lucera</strong> (2025). El precio por cliente oscila entre 200 y 350 € en mercado, según calidad de cartera y servicios asociados.
+  </aside>
+</div>
+
+<div class="callout">
+<strong>Lo que llevarte:</strong> Repsol, TotalEnergies, EDP y MasOrange (esta última saliendo del sector vía Endesa) son los retadores serios. Comparten estrategia: usar marca y canal de otro sector para vender luz con bajo coste de captación. Repsol es el caso más agresivo (objetivo 5 M en 2030). El segmento es muy activo en M&A: el mapa de aquí a dos años puede ser distinto al actual.
+</div>
+
+<hr>
+
+<div class="ejercicios">
+<h2>Ejercicios rápidos</h2>
+
+<details>
+<summary>1. ¿Por qué a Repsol le sale más barato captar un cliente eléctrico que a una comercializadora nueva sin clientes previos?</summary>
+<p>Porque Repsol ya tiene relación con varios millones de clientes a través de sus estaciones de servicio y de sus tarjetas de fidelización. Para venderles luz solo tiene que mostrarles una oferta en un canal donde ya están (la app, las estaciones, el call center). El coste incremental por cliente captado puede caer un 50-70% respecto a una comercializadora que tiene que construir notoriedad de marca y canal desde cero.</p>
+</details>
+
+<details>
+<summary>2. Si MasOrange logró crecer Lucera hasta 200.000 clientes, ¿por qué la vende?</summary>
+<p>Probablemente porque la rentabilidad por cliente en electricidad es menor que en telecomunicaciones, y la integración operativa entre ambos sectores es más complicada de lo previsto. Mantener Lucera exige inversión continua en sistemas, mesa de mercado y cumplimiento regulatorio, mientras que vendiéndola monetiza la apuesta a un precio justo (90 M€ por unos 350.000 clientes integrados incluyendo otros activos) y libera foco. Es un patrón típico: las telecos entran con expectativas altas, las ajustan a la realidad del sector y, si no encajan, salen.</p>
+</details>
+
+<details>
+<summary>3. ¿En qué se diferencia la estrategia de Repsol de la de Octopus Energy (que veremos en la píldora 4)?</summary>
+<p>Repsol apuesta por convertir su base de clientes existente en clientes eléctricos vía cross-selling, apoyándose en marca y canal físico. Octopus apuesta por captar clientes nuevos con propuesta digital diferencial (tarifa indexada al pool, interfaz amigable, comunicación cercana) sin marca previa pero con propuesta de producto innovadora. Repsol vende confianza extendida; Octopus vende experiencia distinta. Ambos compiten con las grandes integradas pero por flancos diferentes.</p>
+</details>
+</div>
+
+<div class="fuentes">
+<h3>Fuentes</h3>
+<ul>
+<li>El Español — <a href="https://www.elespanol.com/invertia/empresas/energia/20260223/repsol-aprieta-iberdrola-endesa-apunta-conquistar-millones-clientes-luz-gas/1003744139462_0.html" target="_blank" rel="noopener">Repsol apunta a 5 M de clientes en 2030</a>.</li>
+<li>Cantabria Económica — <a href="https://www.cantabriaeconomica.com/reportaje/siete-anos-despues-de-comprar-viesgo-repsol-se-acerca-a-los-3-millones-de-clientes-electricos/" target="_blank" rel="noopener">Repsol se acerca a 3 M clientes 7 años después de Viesgo</a>.</li>
+<li>El Español — <a href="https://www.elespanol.com/invertia/empresas/energia/20250930/endesa-compra-masorange-comercializadora-energetica-millones-sumara-clientes/1003743947343_0.html" target="_blank" rel="noopener">Endesa compra Lucera a MasOrange por 90 M€</a>.</li>
+<li>El Independiente — <a href="https://www.elindependiente.com/economia/2025/08/05/repsol-roba-277-000-clientes-de-luz-y-gas-a-iberdrola-endesa-y-naturgy-que-perdieron-782-000-contratos-en-2024/" target="_blank" rel="noopener">Repsol "roba" 277.000 clientes a las grandes</a>.</li>
+</ul>
+</div>
+
+</article>
+</main>
+
+<nav class="pildora-nav">
+  <a href="../pildora-02_grandes-integradas/index.html">← Anterior</a>
+  <a href="../indice.html">Índice del curso</a>
+  <a href="../pildora-04_independientes-disruptores/index.html">Siguiente: Independientes y disruptores →</a>
+</nav>
+
+<script>
+  const bar=document.getElementById('progressBar');
+  function p(){const h=document.documentElement;bar.style.width=Math.min(100,Math.max(0,(h.scrollTop)/(h.scrollHeight-h.clientHeight)*100))+'%'}
+  document.addEventListener('scroll',p,{passive:true});p();
+</script>
+</body>
+</html>
