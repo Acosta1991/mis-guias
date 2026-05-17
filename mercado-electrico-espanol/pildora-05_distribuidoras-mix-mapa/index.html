@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Píldora 5 — Mapa de España: distribuidoras y mix por CCAA</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<style>
+  :root { --bg:#FAF7F1; --text:#2C2A26; --muted:#6B655C; --accent:#E07A1F; --rule:#E5DFD3; --note-bg:#F3EEDF; --serif:Georgia,"Iowan Old Style","Palatino Linotype",serif; --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; }
+  *{box-sizing:border-box} html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--serif);font-size:18px;line-height:1.65}
+  #progressBar{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:100;transition:width .1s}
+  header,main,footer,nav.pildora-nav{max-width:1100px;margin:0 auto;padding:0 24px}
+  header{padding-top:60px;padding-bottom:28px}
+  .meta{font-family:var(--sans);font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
+  h1{font-family:var(--sans);font-weight:700;font-size:38px;line-height:1.15;margin:0 0 18px}
+  .lede{font-size:21px;color:var(--muted);margin:0 0 12px;max-width:700px;font-style:italic}
+  h2{font-family:var(--sans);font-weight:600;font-size:24px;margin:48px 0 14px}
+  h3{font-family:var(--sans);font-weight:600;font-size:18px;margin:28px 0 8px}
+  main article{padding:16px 0 40px}
+  .row{display:grid;grid-template-columns:minmax(0,680px) minmax(0,280px);gap:56px;margin:0 0 24px}
+  .row.single{grid-template-columns:minmax(0,680px)}
+  .col-main p,.col-main ul,.col-main ol{margin:0 0 16px}
+  aside.margin-note{font-family:var(--sans);font-size:14px;line-height:1.55;color:var(--muted);border-left:2px solid var(--accent);padding:4px 0 4px 14px;margin-top:6px}
+  aside.margin-note strong{color:var(--text);font-weight:600}
+  @media(max-width:900px){.row,.row.single{grid-template-columns:1fr;gap:16px}aside.margin-note{background:var(--note-bg);border-left:3px solid var(--accent);padding:10px 14px;border-radius:0 4px 4px 0}h1{font-size:30px}.lede{font-size:18px}}
+  .callout{background:var(--note-bg);border-radius:6px;padding:18px 22px;margin:24px 0;font-size:17px}
+  .callout strong{color:var(--accent)}
+  figure{margin:28px 0;text-align:center} figcaption{font-family:var(--sans);font-size:13px;color:var(--muted);margin-top:10px}
+  hr{border:0;border-top:1px solid var(--rule);margin:48px 0}
+  .ejercicios{background:#FFFDF8;border:1px solid var(--rule);border-radius:8px;padding:20px 24px;margin:32px 0}
+  .ejercicios h2{margin-top:0}
+  details{border-top:1px solid var(--rule);padding:12px 0} details:first-of-type{border-top:0}
+  summary{font-family:var(--sans);font-weight:600;cursor:pointer;padding:4px 0}
+  summary:hover,details[open] summary{color:var(--accent)}
+  details p{margin:10px 0 4px}
+  nav.pildora-nav{display:flex;justify-content:space-between;align-items:center;padding-top:24px;padding-bottom:60px;font-family:var(--sans);font-size:15px;border-top:1px solid var(--rule);margin-top:40px}
+  nav.pildora-nav a{color:var(--accent);text-decoration:none;font-weight:500}
+  nav.pildora-nav a:hover{text-decoration:underline}
+
+  /* Mapa */
+  .mapa-wrap{background:#fff;border:1px solid var(--rule);border-radius:10px;padding:18px;margin:24px 0}
+  .mapa-wrap h3{margin-top:0}
+  .mapa-grid{display:grid;grid-template-columns:1fr 240px;gap:16px;margin-top:10px}
+  @media(max-width:760px){.mapa-grid{grid-template-columns:1fr}}
+  #mapa{height:480px;border-radius:6px;background:#EEE9DD}
+  .leyenda-distribs{font-family:var(--sans);font-size:14px}
+  .leyenda-distribs h4{margin:6px 0 10px;font-size:14px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+  .leyenda-distribs button{display:flex;align-items:center;gap:8px;width:100%;background:#fff;border:1px solid var(--rule);border-radius:5px;padding:8px 10px;margin-bottom:6px;cursor:pointer;text-align:left;font-family:var(--sans);font-size:14px;color:var(--text);transition:background .15s}
+  .leyenda-distribs button:hover{background:var(--note-bg)}
+  .leyenda-distribs button.active{background:var(--note-bg);border-color:var(--accent)}
+  .leyenda-distribs i{display:inline-block;width:14px;height:14px;border-radius:3px;flex-shrink:0}
+  .mix-tabla{width:100%;border-collapse:collapse;margin:16px 0;font-family:var(--sans);font-size:14px}
+  .mix-tabla th,.mix-tabla td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--rule)}
+  .mix-tabla th{background:var(--note-bg);font-weight:600}
+  .mensaje-error{padding:10px;background:#FFF5EC;border:1px solid #E07A1F;border-radius:4px;color:#9E4F0F;font-family:var(--sans);font-size:13px;margin-top:8px}
+</style>
+</head>
+<body>
+<div id="progressBar"></div>
+
+<header>
+  <div class="meta">Píldora 5 · ⏱ 10 min · Mercado eléctrico español</div>
+  <h1>Mapa de España: distribuidoras y mix por CCAA</h1>
+  <p class="lede">Cinco grandes distribuidoras se reparten España en zonas casi exclusivas. Y cada comunidad produce su electricidad de una forma distinta. Verlo en un mapa lo hace concreto.</p>
+</header>
+
+<main>
+<article>
+
+<div class="row">
+  <div class="col-main">
+    <h2>El mapa de las cinco grandes</h2>
+    <p>Llevar la electricidad por media y baja tensión desde la subestación de cabecera hasta tu cuadro es trabajo de la <strong>distribuidora</strong>. Y como es un monopolio zonal, en cada zona del país solo hay una. Históricamente la distribuidora era la misma empresa que también te vendía la luz, pero la separación regulatoria obligó a "desempaquetarlas". Hoy comparten dueño con su grupo (Endesa con e-distribución, Iberdrola con i-DE...) pero son sociedades distintas, con cuentas y obligaciones propias.</p>
+    <p>Cuando montes tu comercializadora, vas a tener que firmar contrato ATR con la distribuidora de cada zona donde tengas clientes. Que sean cinco grandes es buena noticia: con cinco contratos cubres prácticamente toda la península.</p>
+  </div>
+  <aside class="margin-note">
+    Hay alrededor de 350 distribuidoras pequeñas adicionales en municipios concretos (sobre todo en Castilla y León, Galicia y Valencia), pero el 95% de los consumidores está cubierto por las cinco grandes.
+  </aside>
+</div>
+
+<div class="mapa-wrap">
+<h3>Zonas de distribución aproximadas</h3>
+<p style="font-family:var(--sans);font-size:14px;color:var(--muted);margin:0 0 6px">Pulsa un botón para resaltar la zona de cada distribuidora. La asignación es aproximada a nivel de provincia (en la realidad hay solapamientos y excepciones a nivel municipal).</p>
+
+<div class="mapa-grid">
+  <div>
+    <div id="mapa"></div>
+    <div id="mensajeError" class="mensaje-error" style="display:none">No se ha podido cargar el mapa base. Comprueba la conexión a internet.</div>
+  </div>
+  <div class="leyenda-distribs">
+    <h4>Distribuidora</h4>
+    <button data-dist="endesa" class="active"><i style="background:#3F8FCB"></i>e-distribución (Endesa)</button>
+    <button data-dist="iberdrola"><i style="background:#7BAD3A"></i>i-DE (Iberdrola)</button>
+    <button data-dist="ufd"><i style="background:#E07A1F"></i>UFD (Naturgy)</button>
+    <button data-dist="eredes"><i style="background:#9C5BB7"></i>e-Redes (EDP)</button>
+    <button data-dist="viesgo"><i style="background:#D14B68"></i>Viesgo (TotalEnergies)</button>
+    <button data-dist="todas"><i style="background:#999999"></i>Mostrar todas</button>
+  </div>
+</div>
+</div>
+
+<div class="row">
+  <div class="col-main">
+    <h2>Cada zona produce con lo que tiene</h2>
+    <p>España no produce electricidad de forma homogénea. Cada comunidad autónoma tiene su propio mix: las que tienen sierra y agua tienen hidráulica, las que tienen viento tienen eólica, las que tuvieron la suerte de albergar una central nuclear histórica todavía la tienen. Esto importa porque condiciona dónde se generan los excedentes y dónde se consume más de lo que se produce: la red transporta de unas zonas a otras constantemente.</p>
+  </div>
+  <aside class="margin-note">
+    Los porcentajes cambian año a año (más sol, menos viento, parada de una nuclear...). Las cifras de la tabla son del orden típico de los últimos años: pintan tendencia, no precisión decimal.
+  </aside>
+</div>
+
+<table class="mix-tabla">
+<thead><tr><th>Comunidad</th><th>Tecnología dominante</th><th>Mix característico</th></tr></thead>
+<tbody>
+<tr><td>Castilla y León</td><td>Eólica + nuclear</td><td>Una de las grandes "exportadoras" de electricidad del país.</td></tr>
+<tr><td>Aragón</td><td>Eólica + hidráulica</td><td>Mucho viento del valle del Ebro, mucha agua del Pirineo.</td></tr>
+<tr><td>Galicia</td><td>Eólica + hidráulica</td><td>Costa atlántica y embalses; también algo de ciclo combinado.</td></tr>
+<tr><td>Andalucía</td><td>Solar + ciclo combinado</td><td>El sur acapara gran parte de la solar fotovoltaica española.</td></tr>
+<tr><td>Cataluña</td><td>Nuclear + hidráulica</td><td>Ascó y Vandellós aún en operación; embalses del Pirineo.</td></tr>
+<tr><td>Comunidad Valenciana</td><td>Nuclear (Cofrentes) + solar</td><td>Despliegue fotovoltaico fuerte de los últimos años.</td></tr>
+<tr><td>Extremadura</td><td>Nuclear (Almaraz) + solar</td><td>Producción muy alta en relación a su consumo.</td></tr>
+<tr><td>Madrid</td><td>Casi nula generación propia</td><td>Importa la práctica totalidad. La capital es consumidora pura.</td></tr>
+<tr><td>Baleares y Canarias</td><td>Combustión + creciente renovable</td><td>Sistemas no peninsulares; sobrecostes asumidos por todo el sistema.</td></tr>
+</tbody>
+</table>
+
+<div class="row">
+  <div class="col-main">
+    <h2>Qué significa esto para una comercializadora</h2>
+    <p>Si vas a atender clientes en todo el país, hay tres cosas operativas que cambian según la zona:</p>
+    <ul>
+      <li><strong>Quién te da el contrato ATR</strong>: distinto interlocutor, distintos plazos, distintos canales técnicos. Aprendes a tratar con cinco interlocutores grandes.</li>
+      <li><strong>Cuánto cobras de peajes</strong>: el peaje es nacional (lo fija CNMC), igual para todos. Aquí no cambia nada. Sí cambia, ligeramente, el coste de pérdidas y desvíos asignado a tu cartera según dónde estén tus clientes.</li>
+      <li><strong>Qué clientes potenciales encuentras</strong>: una industria electrointensiva en Aragón tiene un perfil distinto a un usuario doméstico en Madrid. Las renovables locales también pueden abrir oportunidades de PPAs cercanos.</li>
+    </ul>
+  </div>
+  <aside class="margin-note">
+    En Canarias y Baleares el operador del sistema (REE) gestiona seis sistemas eléctricos separados, no uno solo. Operar allí tiene reglas específicas: si tu comercializadora va a atender islas, dedícale tiempo aparte.
+  </aside>
+</div>
+
+<div class="callout">
+<strong>Lo que llevarte:</strong> cinco distribuidoras grandes (Endesa, Iberdrola, Naturgy, EDP, Viesgo) se reparten España en zonas casi exclusivas; con cinco contratos ATR cubres prácticamente la península. El mix de generación varía mucho por comunidad: hay zonas exportadoras (Castilla y León, Extremadura) y zonas importadoras (Madrid). Y los sistemas insulares son un mundo aparte.
+</div>
+
+<hr>
+
+<div class="ejercicios">
+<h2>Ejercicios rápidos</h2>
+
+<details>
+<summary>1. Si una comercializadora nueva quiere captar clientes solo en Cataluña, ¿con cuántas distribuidoras tendrá que firmar contrato ATR?</summary>
+<p>Principalmente con una: e-distribución (Endesa), que cubre la práctica totalidad de Cataluña. En algunos municipios puede aparecer alguna distribuidora local pequeña, pero a efectos del negocio el contrato con Endesa cubre casi todo el territorio catalán. La estrategia "una zona, una firma ATR" es por eso muy común al arrancar.</p>
+</details>
+
+<details>
+<summary>2. ¿Por qué Madrid casi no produce electricidad?</summary>
+<p>Porque no tiene los recursos físicos (no hay grandes embalses, no hay viento aprovechable a gran escala, no hay sol especialmente intenso) ni espacio para grandes centrales térmicas o nucleares cerca del consumo. Históricamente las regiones con generación se han colocado donde hay recurso (sierra, costa, valle del Ebro). Madrid importa lo que consume vía red de transporte desde otras CCAA.</p>
+</details>
+
+<details>
+<summary>3. ¿Por qué el peaje que paga un cliente tuyo es igual en Galicia que en Cádiz?</summary>
+<p>Porque el peaje de redes lo fija la CNMC con criterio nacional, no zonal. Es un coste regulado uniforme. Lo único que puede variar ligeramente entre zonas es el coeficiente de pérdidas en distribución (la energía que se pierde por el camino), que se asigna técnicamente y afecta a tu cartera. Pero para el cliente final, mismo peaje en toda España.</p>
+</details>
+</div>
+
+</article>
+</main>
+
+<nav class="pildora-nav">
+  <a href="../pildora-04_mercado-minorista-factura/index.html">← Anterior</a>
+  <a href="../indice.html">Índice del curso</a>
+  <a href="../pildora-06_constitucion-cnmc/index.html">Siguiente: Constitución y CNMC →</a>
+</nav>
+
+<script>
+  const bar = document.getElementById('progressBar');
+  function p(){const h=document.documentElement;bar.style.width=Math.min(100,Math.max(0,(h.scrollTop)/(h.scrollHeight-h.clientHeight)*100))+'%';}
+  document.addEventListener('scroll',p,{passive:true}); p();
+</script>
+
+<script>
+  // Mapa Leaflet con provincias coloreadas por distribuidora dominante.
+  // Asignación didáctica aproximada (no es la realidad legal exacta, hay excepciones a nivel municipal).
+
+  // Mapeo: nombre de provincia (como suele aparecer en GeoJSON) -> distribuidora
+  const distribPorProv = {
+    // ENDESA / e-distribución
+    'Almería':'endesa','Cádiz':'endesa','Córdoba':'endesa','Granada':'endesa','Huelva':'endesa','Jaén':'endesa','Málaga':'endesa','Sevilla':'endesa',
+    'Barcelona':'endesa','Girona':'endesa','Lleida':'endesa','Tarragona':'endesa',
+    'Zaragoza':'endesa','Teruel':'endesa','Huesca':'endesa',
+    'Illes Balears':'endesa','Balears':'endesa','Islas Baleares':'endesa','Baleares':'endesa',
+    'Badajoz':'endesa',
+    'Las Palmas':'endesa','Santa Cruz de Tenerife':'endesa',
+
+    // IBERDROLA / i-DE
+    'Álava':'iberdrola','Araba/Álava':'iberdrola','Bizkaia':'iberdrola','Vizcaya':'iberdrola','Gipuzkoa':'iberdrola','Guipúzcoa':'iberdrola',
+    'Madrid':'iberdrola',
+    'Toledo':'iberdrola','Ciudad Real':'iberdrola','Albacete':'iberdrola','Cuenca':'iberdrola','Guadalajara':'iberdrola',
+    'Valencia':'iberdrola','València':'iberdrola','Castellón':'iberdrola','Castelló':'iberdrola','Alicante':'iberdrola','Alacant':'iberdrola',
+    'Murcia':'iberdrola','Navarra':'iberdrola','Nafarroa':'iberdrola',
+    'Burgos':'iberdrola','Soria':'iberdrola','La Rioja':'iberdrola','Rioja':'iberdrola',
+    'Cáceres':'iberdrola',
+    'Valladolid':'iberdrola','Segovia':'iberdrola','Ávila':'iberdrola','Palencia':'iberdrola',
+
+    // UFD / Naturgy
+    'A Coruña':'ufd','Coruña':'ufd','Lugo':'ufd','Ourense':'ufd','Orense':'ufd','Pontevedra':'ufd',
+    'Salamanca':'ufd','Zamora':'ufd','León':'ufd',
+
+    // E-REDES / EDP
+    'Asturias':'eredes','Principado de Asturias':'eredes',
+
+    // VIESGO
+    'Cantabria':'viesgo',
+
+    // Ceuta y Melilla
+    'Ceuta':'endesa','Melilla':'endesa'
+  };
+
+  const colores = {
+    endesa: '#3F8FCB',
+    iberdrola: '#7BAD3A',
+    ufd: '#E07A1F',
+    eredes: '#9C5BB7',
+    viesgo: '#D14B68'
+  };
+
+  const nombres = {
+    endesa: 'e-distribución (Endesa)',
+    iberdrola: 'i-DE (Iberdrola)',
+    ufd: 'UFD (Naturgy)',
+    eredes: 'e-Redes (EDP)',
+    viesgo: 'Viesgo (TotalEnergies)'
+  };
+
+  let activa = 'endesa';
+  let capaGeo = null;
+
+  const mapa = L.map('mapa', { zoomControl: true, scrollWheelZoom: false }).setView([40.0, -3.7], 5);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 10,
+    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(mapa);
+
+  function estiloProv(feature) {
+    const nombre = feature.properties.name || feature.properties.NAME_2 || feature.properties.provincia || '';
+    const dist = distribPorProv[nombre];
+    if (!dist) {
+      return { fillColor: '#EEE9DD', color: '#888', weight: 0.6, fillOpacity: 0.25 };
+    }
+    if (activa === 'todas') {
+      return { fillColor: colores[dist], color: '#fff', weight: 0.6, fillOpacity: 0.65 };
+    }
+    if (dist === activa) {
+      return { fillColor: colores[dist], color: '#333', weight: 1, fillOpacity: 0.75 };
+    }
+    return { fillColor: '#EEE9DD', color: '#888', weight: 0.4, fillOpacity: 0.2 };
+  }
+
+  function popupProv(feature, layer) {
+    const nombre = feature.properties.name || feature.properties.NAME_2 || 'Provincia';
+    const dist = distribPorProv[nombre];
+    const distName = dist ? nombres[dist] : 'Distribuidora no asignada en este mapa';
+    layer.bindPopup(`<strong>${nombre}</strong><br>${distName}`);
+  }
+
+  fetch('https://raw.githubusercontent.com/codeforgermany/click_that_hood/main/public/data/spain-provinces.geojson')
+    .then(r => {
+      if (!r.ok) throw new Error('No data');
+      return r.json();
+    })
+    .then(data => {
+      capaGeo = L.geoJSON(data, {
+        style: estiloProv,
+        onEachFeature: popupProv
+      }).addTo(mapa);
+      try { mapa.fitBounds(capaGeo.getBounds(), { padding: [10,10] }); } catch(e){}
+    })
+    .catch(err => {
+      document.getElementById('mensajeError').style.display = 'block';
+      document.getElementById('mensajeError').textContent = 'No se ha podido cargar el GeoJSON de provincias. Comprueba la conexión a internet o intenta recargar.';
+    });
+
+  document.querySelectorAll('.leyenda-distribs button').forEach(b => {
+    b.addEventListener('click', () => {
+      document.querySelectorAll('.leyenda-distribs button').forEach(x => x.classList.remove('active'));
+      b.classList.add('active');
+      activa = b.dataset.dist;
+      if (capaGeo) capaGeo.setStyle(estiloProv);
+    });
+  });
+</script>
+</body>
+</html>

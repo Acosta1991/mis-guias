@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Evaluación final — Mercado eléctrico español</title>
+<style>
+  :root { --bg:#FAF7F1; --text:#2C2A26; --muted:#6B655C; --accent:#E07A1F; --rule:#E5DFD3; --note-bg:#F3EEDF; --serif:Georgia,"Iowan Old Style","Palatino Linotype",serif; --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; }
+  *{box-sizing:border-box} html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--serif);font-size:18px;line-height:1.65}
+  #progressBar{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:100;transition:width .1s}
+  header,main,footer,nav.pildora-nav{max-width:1100px;margin:0 auto;padding:0 24px}
+  header{padding-top:60px;padding-bottom:28px}
+  .meta{font-family:var(--sans);font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
+  h1{font-family:var(--sans);font-weight:700;font-size:38px;line-height:1.15;margin:0 0 18px}
+  .lede{font-size:21px;color:var(--muted);margin:0 0 12px;max-width:700px;font-style:italic}
+  h2{font-family:var(--sans);font-weight:600;font-size:22px;margin:36px 0 10px}
+  main article{padding:16px 0 40px;max-width:760px;margin:0 auto}
+  .pregunta{background:#fff;border:1px solid var(--rule);border-radius:8px;padding:20px 24px;margin:18px 0}
+  .pregunta-num{font-family:var(--sans);font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px}
+  .pregunta h3{font-family:var(--serif);font-weight:400;font-size:19px;margin:0 0 6px;line-height:1.4}
+  .pregunta details{border:0;padding:0;margin-top:14px}
+  .pregunta summary{font-family:var(--sans);font-weight:600;cursor:pointer;color:var(--accent);font-size:14.5px;padding:6px 0}
+  .pregunta summary:hover{text-decoration:underline}
+  .pregunta details p{font-family:var(--sans);font-size:15.5px;background:var(--note-bg);padding:14px 18px;border-radius:6px;margin:10px 0 0;line-height:1.55}
+  .tag{display:inline-block;background:var(--note-bg);font-family:var(--sans);font-size:12px;color:var(--muted);padding:2px 8px;border-radius:10px;margin-left:8px;text-transform:uppercase;letter-spacing:.04em}
+  hr{border:0;border-top:1px solid var(--rule);margin:48px 0}
+  nav.pildora-nav{display:flex;justify-content:space-between;align-items:center;padding-top:24px;padding-bottom:60px;font-family:var(--sans);font-size:15px;border-top:1px solid var(--rule);margin-top:40px;max-width:760px;margin-left:auto;margin-right:auto}
+  nav.pildora-nav a{color:var(--accent);text-decoration:none;font-weight:500}
+  nav.pildora-nav a:hover{text-decoration:underline}
+  .callout{background:var(--note-bg);border-radius:6px;padding:18px 22px;margin:24px 0;font-size:17px;max-width:760px;margin-left:auto;margin-right:auto}
+  .callout strong{color:var(--accent)}
+</style>
+</head>
+<body>
+<div id="progressBar"></div>
+
+<header style="max-width:760px;margin:0 auto;padding:60px 24px 28px">
+  <div class="meta">Evaluación final · ⏱ 15 min · Mercado eléctrico español</div>
+  <h1>Evaluación final integradora</h1>
+  <p class="lede">Doce preguntas que cruzan varias píldoras. La respuesta está plegada: intenta contestar tú primero, despliega después. Si fallas alguna, vuelve a la píldora relacionada.</p>
+</header>
+
+<main>
+<article>
+
+<h2>Bloque 1 — Cómo funciona el sistema</h2>
+
+<div class="pregunta">
+<div class="pregunta-num">Pregunta 1 <span class="tag">Píldoras 1-2</span></div>
+<h3>¿Qué dos características físicas de la electricidad obligan a separar las actividades del sector y a tener un operador del sistema en tiempo real?</h3>
+<details><summary>Ver respuesta</summary><p>La electricidad <strong>no se puede almacenar</strong> a gran escala de forma barata, y <strong>circula por una red única</strong> donde se mezcla. La primera obliga a tener alguien (REE) que case oferta y demanda en tiempo real, cada segundo. La segunda hace que la red sea un monopolio natural y obliga a separarla legalmente de las actividades en competencia (generación y comercialización), para que el propietario de la red no perjudique a los competidores. Sin esas dos rarezas físicas, el sector eléctrico se parecería a cualquier otro sector industrial.</p></details>
+</div>
+
+<div class="pregunta">
+<div class="pregunta-num">Pregunta 2 <span class="tag">Píldora 2</span></div>
+<h3>Diferencia entre REE como transportista y REE como operador del sistema. ¿Y OMIE?</h3>
+<details><summary>Ver respuesta</summary><p>Red Eléctrica es <strong>transportista</strong> (mueve electricidad en muy alta tensión por toda España, monopolio nacional) y a la vez <strong>operador del sistema</strong> (casa oferta y demanda en tiempo real, gestiona servicios de ajuste, garantiza la estabilidad de la red). Son dos roles separados legalmente que coinciden en la misma empresa. OMIE es el <strong>operador del mercado mayorista</strong>: organiza la subasta diaria e intradiaria donde se forman los precios horarios. REE es el árbitro técnico-físico; OMIE es el árbitro económico.</p></details>
+</div>
+
+<div class="pregunta">
+<div class="pregunta-num">Pregunta 3 <span class="tag">Píldora 3</span></div>
+<h3>El precio del pool subió mucho en 2022 aunque la mayor parte de la electricidad consumida en España no era de gas. ¿Por qué?</h3>
+<details><summary>Ver respuesta</summary><p>Porque la casación marginalista fija el precio a partir de la última oferta necesaria para cubrir la demanda. Bastaba con que el gas (ciclos combinados) fuera la tecnología marginal en una hora para que <strong>todas las casadas</strong> (incluidas eólica, nuclear, hidráulica, solar) cobraran ese precio, mucho más alto por el coste del gas natural disparado. El consumo físico de gas no aumentó proporcionalmente, pero el precio que marca el sistema, sí. Por eso se aplicó el "tope al gas" ibérico como medida excepcional para romper temporalmente esa transmisión.</p></details>
+</div>
+
+<h2>Bloque 2 — Mercado, factura y geografía</h2>
+
+<div class="pregunta">
+<div class="pregunta-num">Pregunta 4 <span class="tag">Píldora 4</span></div>
+<h3>Diferencia entre PVPC y mercado libre, y por qué un cliente con 50 kW contratados no puede estar en PVPC.</h3>
+<details><summary>Ver respuesta</summary><p>El PVPC es la tarifa regulada del Gobierno, ofrecida únicamente por las comercializadoras de referencia, con precio horario que sigue al pool. El mercado libre es cualquier oferta de comercializadoras privadas, con precio y condiciones libres (fijos, indexados, mixtos). El PVPC está limitado por ley a potencias contratadas iguales o inferiores a 10 kW (consumidores domésticos y muy pequeños comercios). Cualquiera con potencia superior solo puede contratar en mercado libre.</p></details>
+</div>
+
+<div class="pregunta">
+<div class="pregunta-num">Pregunta 5 <span class="tag">Píldora 4</span></div>
+<h3>Una factura doméstica española se compone, a grandes rasgos, de cuatro bloques. ¿Cuáles?</h3>
+<details><summary>Ver respuesta</summary><p>(1) <strong>Energía</strong>: lo que cuesta la electricidad consumida según el contrato. (2) <strong>Peajes</strong> de transporte y distribución: pago a las redes, regulado por la CNMC. (3) <strong>Cargos</strong>: financiación de políticas energéticas (primas a renovables antiguas, sobrecostes de sistemas no peninsulares, déficit tarifario, bono social...). (4) <strong>Impuestos</strong>: impuesto eléctrico, IVA y otros. Solo la primera la decide la comercializadora; el resto los cobra el sistema.</p></details>
+</div>
+
+<div class="pregunta">
+<div class="pregunta-num">Pregunta 6 <span class="tag">Píldora 5</span></div>
+<h3>Si tu comercializadora quiere captar clientes en Galicia y Asturias, ¿con cuántas distribuidoras grandes necesitará firmar contratos ATR?</h3>
+<details><summary>Ver respuesta</summary><p>Con dos: <strong>UFD</strong> (Naturgy) para Galicia y <strong>e-Redes</strong> (EDP) para Asturias. Con esos dos contratos cubres prácticamente todo el norte-occidente de la península. Es uno de los motivos por los que las comercializadoras nuevas suelen empezar por una o dos zonas: cada contrato ATR requiere personal, integración técnica y aprendizaje de los procesos específicos de cada interlocutor.</p></details>
+</div>
+
+<h2>Bloque 3 — Montar la empresa</h2>
+
+<div class="pregunta">
+<div class="pregunta-num">Pregunta 7 <span class="tag">Píldora 6</span></div>
+<h3>¿Qué significa que la CNMC ya no "autoriza" comercializadoras desde 2013?</h3>
+<details><summary>Ver respuesta</summary><p>Significa que se ha sustituido la autorización administrativa previa por una <strong>comunicación responsable de inicio de actividad</strong>. Tú declaras que cumples los requisitos (capacidad legal, económica, técnica y cumplimiento), la CNMC te inscribe en el listado y puedes operar. La revisión es a posteriori: si después se detecta que no cumples, la CNMC te da de baja. La barrera de entrada legal ha bajado, pero los requisitos sustanciales siguen exigiéndose.</p></details>
+</div>
+
+<div class="pregunta">
+<div class="pregunta-num">Pregunta 8 <span class="tag">Píldoras 6-7</span></div>
+<h3>¿Por qué constituir una S.L. con el capital mínimo de 3.000 € no es suficiente para empezar a operar como comercializadora?</h3>
+<details><summary>Ver respuesta</summary><p>Porque el capital social mínimo no tiene relación con la capacidad económica real exigida por el sector. OMIE y REE pedirán <strong>garantías financieras</strong> (avales bancarios o depósitos) de orden de cientos de miles de euros, ajustables según volumen y posición. Las distribuidoras pueden pedir garantías adicionales por los contratos ATR. Sin esa capacidad, la inscripción en CNMC es legalmente válida pero operativamente inútil: no puedes comprar ni entregar energía.</p></details>
+</div>
+
+<div class="pregunta">
+<div class="pregunta-num">Pregunta 9 <span class="tag">Píldora 7</span></div>
+<h3>¿Qué ventaja tiene operar "vía representante" al arrancar y cuándo deja de tener sentido?</h3>
+<details><summary>Ver respuesta</summary><p>El representante ya tiene constituidas las garantías y los sistemas de OMIE y REE, y opera el mercado por ti a cambio de una comisión por MWh. La ventaja: arrancas en semanas, con caja mucho menor. Deja de tener sentido cuando tu volumen es grande: la comisión del representante se vuelve significativa y pasa a compensar la inversión en operar directamente (mesa de mercado propia, garantías propias, control total). El umbral típico es cuando la comisión del representante supera el coste anual fijo de operar directamente.</p></details>
+</div>
+
+<h2>Bloque 4 — Operativa y supervivencia</h2>
+
+<div class="pregunta">
+<div class="pregunta-num">Pregunta 10 <span class="tag">Píldora 8</span></div>
+<h3>Una comercializadora vende a precio fijo durante un año a 80 €/MWh. ¿Qué debería hacer ese mismo día para no asumir riesgo de precio?</h3>
+<details><summary>Ver respuesta</summary><p>Comprar inmediatamente en el mercado a plazo (OMIP, OTC o vía PPA) el <strong>mismo volumen</strong> y el <strong>mismo horizonte</strong> a un precio inferior a 80 €/MWh, que cubra ese consumo previsto. Así fija el coste de la energía y se garantiza el margen entre el precio de venta (80) y el precio de cobertura (digamos 75). Cualquier movimiento posterior del pool se compensa con la liquidación del futuro. Esto se llama "matched book" o trabajar con la cartera cubierta. Vender precio fijo sin cubrir es especular con el pool, no comercializar.</p></details>
+</div>
+
+<div class="pregunta">
+<div class="pregunta-num">Pregunta 11 <span class="tag">Píldora 9</span></div>
+<h3>Enumera los cuatro grandes riesgos del negocio de comercialización y un ejemplo de mitigación para cada uno.</h3>
+<details><summary>Ver respuesta</summary><p>(1) <strong>Riesgo de precio</strong> — mitigación: cobertura en mercado a plazo (matched book). (2) <strong>Riesgo de volumen</strong> — mitigación: previsión realista basada en SIPS y coberturas escalonadas en lugar de cubrir el 100% de golpe. (3) <strong>Riesgo de crédito</strong> — mitigación: scoring al alta, depósitos para clientes sin histórico, domiciliación, baja ágil al impago. (4) <strong>Riesgo regulatorio</strong> — mitigación: cláusulas de revisión por cambios regulatorios en los contratos a cliente, monitorización activa de BOE/CNMC/MITECO y reservas de capital.</p></details>
+</div>
+
+<div class="pregunta">
+<div class="pregunta-num">Pregunta 12 <span class="tag">Visión global</span></div>
+<h3>Si tuvieras que resumir en tres frases qué se necesita para arrancar una comercializadora con probabilidades razonables de sobrevivir el primer año, ¿qué dirías?</h3>
+<details><summary>Ver respuesta</summary><p>Una respuesta razonable: <em>"Primero, capacidad económica real para garantías de mercado y para aguantar 18-24 meses con potenciales pérdidas, no solo el capital social legal. Segundo, sistemas, equipo y procesos montados antes de captar al primer cliente, no después. Tercero, disciplina absoluta en cubrir todo lo vendido a precio fijo el mismo día con el mismo volumen, y vigilancia diaria de cartera, garantías y márgenes."</em> El sector premia la prudencia y aburre a propósito. Quien busca emociones encuentra cierres.</p></details>
+</div>
+
+<div class="callout">
+<strong>Si has llegado hasta aquí:</strong> tienes el mapa completo del sector y los pasos para crear una comercializadora en España. Los siguientes pasos prácticos serían: validar un modelo de negocio (segmento, propuesta, márgenes), preparar un plan económico con escenarios de pool, decidir si arrancas vía representante o directo, y empezar a estructurar el equipo. Y muy importante: rodearse de asesoría regulatoria y financiera especializada en sector eléctrico, porque hay matices que cambian de un mes a otro.
+</div>
+
+</article>
+</main>
+
+<nav class="pildora-nav">
+  <a href="pildora-09_riesgos-supervivencia/index.html">← Última píldora</a>
+  <a href="indice.html">Volver al índice</a>
+  <a href="#">Fin del curso</a>
+</nav>
+
+<script>
+  const bar = document.getElementById('progressBar');
+  function p(){const h=document.documentElement;bar.style.width=Math.min(100,Math.max(0,(h.scrollTop)/(h.scrollHeight-h.clientHeight)*100))+'%';}
+  document.addEventListener('scroll',p,{passive:true}); p();
+</script>
+</body>
+</html>

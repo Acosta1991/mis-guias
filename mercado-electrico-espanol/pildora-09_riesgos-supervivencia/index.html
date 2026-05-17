@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Píldora 9 — Riesgos y supervivencia del negocio</title>
+<style>
+  :root { --bg:#FAF7F1; --text:#2C2A26; --muted:#6B655C; --accent:#E07A1F; --rule:#E5DFD3; --note-bg:#F3EEDF; --serif:Georgia,"Iowan Old Style","Palatino Linotype",serif; --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; }
+  *{box-sizing:border-box} html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--serif);font-size:18px;line-height:1.65}
+  #progressBar{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:100;transition:width .1s}
+  header,main,footer,nav.pildora-nav{max-width:1100px;margin:0 auto;padding:0 24px}
+  header{padding-top:60px;padding-bottom:28px}
+  .meta{font-family:var(--sans);font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
+  h1{font-family:var(--sans);font-weight:700;font-size:38px;line-height:1.15;margin:0 0 18px}
+  .lede{font-size:21px;color:var(--muted);margin:0 0 12px;max-width:700px;font-style:italic}
+  h2{font-family:var(--sans);font-weight:600;font-size:24px;margin:48px 0 14px}
+  h3{font-family:var(--sans);font-weight:600;font-size:18px;margin:28px 0 8px}
+  main article{padding:16px 0 40px}
+  .row{display:grid;grid-template-columns:minmax(0,680px) minmax(0,280px);gap:56px;margin:0 0 24px}
+  .row.single{grid-template-columns:minmax(0,680px)}
+  .col-main p,.col-main ul,.col-main ol{margin:0 0 16px}
+  aside.margin-note{font-family:var(--sans);font-size:14px;line-height:1.55;color:var(--muted);border-left:2px solid var(--accent);padding:4px 0 4px 14px;margin-top:6px}
+  aside.margin-note strong{color:var(--text);font-weight:600}
+  @media(max-width:900px){.row,.row.single{grid-template-columns:1fr;gap:16px}aside.margin-note{background:var(--note-bg);border-left:3px solid var(--accent);padding:10px 14px;border-radius:0 4px 4px 0}h1{font-size:30px}.lede{font-size:18px}}
+  .callout{background:var(--note-bg);border-radius:6px;padding:18px 22px;margin:24px 0;font-size:17px}
+  .callout strong{color:var(--accent)}
+  figure{margin:28px 0;text-align:center} figcaption{font-family:var(--sans);font-size:13px;color:var(--muted);margin-top:10px}
+  svg.diagram{max-width:100%;height:auto}
+  hr{border:0;border-top:1px solid var(--rule);margin:48px 0}
+  .ejercicios{background:#FFFDF8;border:1px solid var(--rule);border-radius:8px;padding:20px 24px;margin:32px 0}
+  .ejercicios h2{margin-top:0}
+  details{border-top:1px solid var(--rule);padding:12px 0} details:first-of-type{border-top:0}
+  summary{font-family:var(--sans);font-weight:600;cursor:pointer;padding:4px 0}
+  summary:hover,details[open] summary{color:var(--accent)}
+  details p{margin:10px 0 4px}
+  nav.pildora-nav{display:flex;justify-content:space-between;align-items:center;padding-top:24px;padding-bottom:60px;font-family:var(--sans);font-size:15px;border-top:1px solid var(--rule);margin-top:40px}
+  nav.pildora-nav a{color:var(--accent);text-decoration:none;font-weight:500}
+  nav.pildora-nav a:hover{text-decoration:underline}
+  .riesgo{background:#fff;border:1px solid var(--rule);border-left:5px solid var(--accent);border-radius:0 8px 8px 0;padding:18px 22px;margin:18px 0}
+  .riesgo h3{margin-top:0;color:var(--accent);font-size:18px}
+  .riesgo p{margin:8px 0}
+  .riesgo .mitigacion{font-family:var(--sans);font-size:14.5px;background:var(--note-bg);padding:10px 14px;border-radius:4px;margin-top:10px}
+  .riesgo .mitigacion strong{color:var(--text)}
+  .checklist{background:#fff;border:1px solid var(--rule);border-radius:8px;padding:20px 24px;margin:28px 0}
+  .checklist h3{margin-top:0;font-family:var(--sans)}
+  .checklist ul{list-style:none;padding-left:0;font-family:var(--sans);font-size:15.5px;line-height:1.8}
+  .checklist li::before{content:"✓ ";color:var(--accent);font-weight:700;margin-right:6px}
+</style>
+</head>
+<body>
+<div id="progressBar"></div>
+
+<header>
+  <div class="meta">Píldora 9 · ⏱ 10 min · Mercado eléctrico español</div>
+  <h1>Riesgos y supervivencia del negocio</h1>
+  <p class="lede">El sector eléctrico se ha tragado a comercializadoras grandes y pequeñas en los últimos años. No por mala suerte: por desentender alguno de cuatro riesgos. Aquí están los cuatro y cómo no morir el primer año.</p>
+</header>
+
+<main>
+<article>
+
+<div class="row">
+  <div class="col-main">
+    <h2>El negocio en una frase</h2>
+    <p>Una comercializadora gana una <strong>franja delgada</strong> entre lo que cobra al cliente y lo que paga en el mercado. Pequeña, repetida muchas veces, durante años. Para que esa franja siga siendo positiva tienen que ir bien cuatro cosas simultáneamente: el precio, el volumen, los cobros y la regulación. Cada una de ellas tiene su propio riesgo, y los cuatro pueden hundirte por separado.</p>
+  </div>
+  <aside class="margin-note">
+    No hay "una sola cosa importante" en este negocio. Es exactamente lo contrario: importan varias cosas a la vez, y descuidar una sola las puede empeorar todas las demás (un fallo de cobro deteriora la caja, que deteriora las garantías, que deteriora la capacidad de comprar, etc.).
+  </aside>
+</div>
+
+<div class="riesgo">
+<h3>Riesgo 1 — Precio</h3>
+<p>Vendes a un precio (fijo, indexado o mixto) y compras a otro. Si compras al pool y el pool sube fuerte, pero tu venta a cliente sigue al precio firmado, pierdes dinero por cada MWh. Es el riesgo más visible y el que ha tumbado a más empresas.</p>
+<div class="mitigacion"><strong>Mitigación:</strong> regla del matched book. Vendes precio fijo, compras cobertura en el mismo momento, mismo volumen y mismo horizonte (futuros OMIP, OTC o PPA). Vendes indexado, no necesitas cobertura porque trasladas el precio al cliente.</div>
+</div>
+
+<div class="riesgo">
+<h3>Riesgo 2 — Volumen</h3>
+<p>Has cubierto compras para 100 GWh anuales, calculando con tu cartera prevista. Pero los clientes consumen menos de lo esperado (un verano frío, una recesión, una fábrica que cierra). Tienes energía comprada que no vas a vender, y tienes que liquidarla al pool al precio que sea. Si has cubierto a 80 y el pool está a 50, pierdes 30 por cada MWh sobrante.</p>
+<div class="mitigacion"><strong>Mitigación:</strong> previsión de demanda realista, basada en histórico SIPS de tu cartera y modelos por tipo de cliente. Coberturas escalonadas (no toda la posición de golpe). Cláusulas en los contratos a cliente que limiten desviaciones extremas.</div>
+</div>
+
+<div class="riesgo">
+<h3>Riesgo 3 — Crédito (impagos)</h3>
+<p>Has comprado y entregado la electricidad. La distribuidora cobra sus peajes igualmente. Hacienda cobra los impuestos. Tú has facturado al cliente, pero el cliente no paga. La pérdida es completa para ti: pagas el resto y no cobras nada. En carteras de baja calidad, la tasa de impago puede comerse todo el margen del año.</p>
+<div class="mitigacion"><strong>Mitigación:</strong> scoring de clientes en alta, depósitos en garantía para clientes nuevos sin histórico, domiciliación bancaria, proceso ágil de aviso y baja en impago. Seguro de crédito comercial para clientes empresas. Especialización en segmentos con buen comportamiento de pago.</div>
+</div>
+
+<div class="riesgo">
+<h3>Riesgo 4 — Regulatorio</h3>
+<p>El sector cambia de reglas con frecuencia. Cambios de peajes, nuevos cargos, reformas del PVPC, modificaciones del bono social, topes al gas, nuevas obligaciones de información. Cada cambio puede convertir un contrato firmado ayer en perdedor mañana. Es el riesgo más difícil de cubrir porque no se puede.</p>
+<div class="mitigacion"><strong>Mitigación:</strong> cláusulas de revisión en los contratos a cliente (típicamente "revisión por cambios regulatorios"). Equipo o asesoría que monitoriza CNMC y MITECO. Provisión para sanciones por incumplimientos formales. Reservas de capital para encajar cambios imprevistos.</div>
+</div>
+
+<div class="row">
+  <div class="col-main">
+    <h2>Cómo se mueren las comercializadoras</h2>
+    <p>Los últimos años han dejado un patrón bastante claro de cómo fracasan estos negocios. No hay un solo motivo; hay una secuencia típica:</p>
+    <ol>
+      <li><strong>Crecimiento rápido</strong> con precio agresivo para ganar cuota.</li>
+      <li><strong>Cobertura insuficiente</strong> para no encarecer la oferta y "ganar el contrato".</li>
+      <li><strong>Subida del pool</strong> mantenida (ejemplo paradigmático: la crisis del gas de 2022).</li>
+      <li><strong>Llamadas de margen</strong>: OMIE/REE piden más garantías porque la posición está en pérdidas.</li>
+      <li><strong>Crisis de caja</strong>: no hay liquidez para reforzar garantías ni para pagar los desvíos.</li>
+      <li><strong>Cierre</strong> o cesión forzosa de la cartera a otra comercializadora.</li>
+    </ol>
+    <p>Si esta secuencia te suena prudente y aburrida, es porque la prudencia y el aburrimiento son la clave de la supervivencia en este negocio. Las comercializadoras que llevan décadas funcionando comparten una característica: son menos rentables en los buenos años y mucho menos vulnerables en los malos.</p>
+  </div>
+  <aside class="margin-note">
+    En España entre 2021 y 2024 han salido del registro de comercializadoras decenas de empresas, especialmente de menor tamaño. La crisis del gas de 2022 fue el primer detonante; las turbulencias posteriores (caída del pool con desplome de cobertura cara) afectaron también a comercializadoras que se habían cubierto demasiado caro pensando que la crisis duraría más.
+  </aside>
+</div>
+
+<div class="row">
+  <div class="col-main">
+    <h2>Una checklist de supervivencia para el año 1</h2>
+  </div>
+</div>
+
+<div class="checklist">
+<h3>Mínimos para no morir antes de tiempo</h3>
+<ul>
+<li>Capital y líneas de crédito suficientes para 18-24 meses de operación a pérdidas (no es paranoia: es la duración media de una crisis grave).</li>
+<li>Política escrita de cobertura. Cualquier venta a precio fijo se cubre el mismo día, mismo volumen, mismo horizonte.</li>
+<li>Sistemas operativos antes de captar cliente. Nada de "ya lo montaremos cuando haya volumen".</li>
+<li>Procedimiento de scoring y depósito en alta. Aceptar todo no es crecer, es acumular impagos.</li>
+<li>Persona o función responsable de cumplimiento desde el día uno. CNMC sanciona.</li>
+<li>Reporte interno semanal: posición de mercado (cubierta vs descubierta), antigüedad de cobros, garantías disponibles, márgenes por contrato.</li>
+<li>Plan de contingencia escrito para una subida brusca del pool: qué se hace, en qué orden, quién decide.</li>
+<li>Asesoría regulatoria activa: alguien que lea cada cambio del BOE relevante en menos de 48 horas.</li>
+<li>Concentración de cartera vigilada. Si un solo cliente es más del 5% de tu volumen, tu negocio depende demasiado de él.</li>
+</ul>
+</div>
+
+<div class="callout">
+<strong>Lo que llevarte:</strong> cuatro riesgos a la vez (precio, volumen, crédito, regulatorio), cada uno capaz de hundir el negocio por separado. La supervivencia depende de cubrir compras, de prever demanda con realismo, de seleccionar y vigilar clientes, y de monitorizar regulación en tiempo real. El sector premia más a la prudencia que a la agresividad. Las comercializadoras viejas son aburridas a propósito.
+</div>
+
+<hr>
+
+<div class="ejercicios">
+<h2>Ejercicios rápidos</h2>
+
+<details>
+<summary>1. ¿Por qué los modelos de negocio "low cost" tan agresivos tienen baja supervivencia en este sector?</summary>
+<p>Porque el margen unitario ya es estrecho de por sí (pocos euros por MWh). Una estrategia low cost reduce ese margen aún más, lo que deja cero colchón para absorber cualquier choque: subida del pool, ola de impagos, cambio regulatorio. Quien gana mercado con precio agresivo asume volatilidad sin caja para soportarla; al primer susto, no hay margen para reaccionar y se entra en la espiral de garantías → caja → cierre.</p>
+</details>
+
+<details>
+<summary>2. Una comercializadora ha cubierto el 100% de su cartera prevista a precio fijo. La demanda real del año es un 20% inferior a la prevista. ¿Qué pasa?</summary>
+<p>Tiene un 20% de energía comprada que no consume nadie. Esa energía sobrante se "vende" automáticamente al pool al precio del momento. Si el pool está por encima del precio al que la cubrió, gana algo. Si está por debajo, pierde. La cobertura solo es perfecta si la previsión de volumen también lo es. Por eso conviene cubrir por escalones y dejar un margen sin cubrir como amortiguador del riesgo de volumen.</p>
+</details>
+
+<details>
+<summary>3. ¿Por qué la concentración de cartera es un riesgo?</summary>
+<p>Porque si un cliente concentra demasiado volumen, su impago, su quiebra o su cambio a otra comercializadora deja un agujero enorme. Si ese cliente era el 30% de tu cartera, perderlo significa quedarte con energía cubierta sin destino y con un 30% menos de ingresos al mes siguiente. Para una comercializadora pequeña, eso puede ser fatal. La regla artesanal es no superar concentraciones del 5-10% en un solo cliente.</p>
+</details>
+</div>
+
+</article>
+</main>
+
+<nav class="pildora-nav">
+  <a href="../pildora-08_operativa-compras-cobertura/index.html">← Anterior</a>
+  <a href="../indice.html">Índice del curso</a>
+  <a href="../evaluacion.html">Evaluación final →</a>
+</nav>
+
+<script>
+  const bar = document.getElementById('progressBar');
+  function p(){const h=document.documentElement;bar.style.width=Math.min(100,Math.max(0,(h.scrollTop)/(h.scrollHeight-h.clientHeight)*100))+'%';}
+  document.addEventListener('scroll',p,{passive:true}); p();
+</script>
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Píldora 6 — Constitución y autorización CNMC</title>
+<style>
+  :root { --bg:#FAF7F1; --text:#2C2A26; --muted:#6B655C; --accent:#E07A1F; --rule:#E5DFD3; --note-bg:#F3EEDF; --serif:Georgia,"Iowan Old Style","Palatino Linotype",serif; --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; }
+  *{box-sizing:border-box} html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--serif);font-size:18px;line-height:1.65}
+  #progressBar{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:100;transition:width .1s}
+  header,main,footer,nav.pildora-nav{max-width:1100px;margin:0 auto;padding:0 24px}
+  header{padding-top:60px;padding-bottom:28px}
+  .meta{font-family:var(--sans);font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
+  h1{font-family:var(--sans);font-weight:700;font-size:38px;line-height:1.15;margin:0 0 18px}
+  .lede{font-size:21px;color:var(--muted);margin:0 0 12px;max-width:700px;font-style:italic}
+  h2{font-family:var(--sans);font-weight:600;font-size:24px;margin:48px 0 14px}
+  h3{font-family:var(--sans);font-weight:600;font-size:18px;margin:28px 0 8px}
+  main article{padding:16px 0 40px}
+  .row{display:grid;grid-template-columns:minmax(0,680px) minmax(0,280px);gap:56px;margin:0 0 24px}
+  .row.single{grid-template-columns:minmax(0,680px)}
+  .col-main p,.col-main ul,.col-main ol{margin:0 0 16px}
+  aside.margin-note{font-family:var(--sans);font-size:14px;line-height:1.55;color:var(--muted);border-left:2px solid var(--accent);padding:4px 0 4px 14px;margin-top:6px}
+  aside.margin-note strong{color:var(--text);font-weight:600}
+  @media(max-width:900px){.row,.row.single{grid-template-columns:1fr;gap:16px}aside.margin-note{background:var(--note-bg);border-left:3px solid var(--accent);padding:10px 14px;border-radius:0 4px 4px 0}h1{font-size:30px}.lede{font-size:18px}}
+  .callout{background:var(--note-bg);border-radius:6px;padding:18px 22px;margin:24px 0;font-size:17px}
+  .callout strong{color:var(--accent)}
+  figure{margin:28px 0;text-align:center} figcaption{font-family:var(--sans);font-size:13px;color:var(--muted);margin-top:10px}
+  svg.diagram{max-width:100%;height:auto}
+  hr{border:0;border-top:1px solid var(--rule);margin:48px 0}
+  .ejercicios{background:#FFFDF8;border:1px solid var(--rule);border-radius:8px;padding:20px 24px;margin:32px 0}
+  .ejercicios h2{margin-top:0}
+  details{border-top:1px solid var(--rule);padding:12px 0} details:first-of-type{border-top:0}
+  summary{font-family:var(--sans);font-weight:600;cursor:pointer;padding:4px 0}
+  summary:hover,details[open] summary{color:var(--accent)}
+  details p{margin:10px 0 4px}
+  nav.pildora-nav{display:flex;justify-content:space-between;align-items:center;padding-top:24px;padding-bottom:60px;font-family:var(--sans);font-size:15px;border-top:1px solid var(--rule);margin-top:40px}
+  nav.pildora-nav a{color:var(--accent);text-decoration:none;font-weight:500}
+  nav.pildora-nav a:hover{text-decoration:underline}
+  .pasos{counter-reset:paso;margin:24px 0;list-style:none;padding:0}
+  .pasos li{counter-increment:paso;background:#fff;border:1px solid var(--rule);border-radius:8px;padding:16px 20px 16px 64px;margin-bottom:12px;position:relative}
+  .pasos li::before{content:counter(paso);position:absolute;left:18px;top:18px;width:32px;height:32px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--sans);font-weight:700}
+  .pasos h4{font-family:var(--sans);margin:0 0 6px;font-size:17px}
+  .pasos p{margin:0;font-size:16px}
+  .trampa{background:#FFF5EC;border-left:4px solid var(--accent);padding:14px 18px;margin:18px 0;border-radius:0 6px 6px 0;font-size:16px}
+  .trampa strong{color:var(--accent)}
+</style>
+</head>
+<body>
+<div id="progressBar"></div>
+
+<header>
+  <div class="meta">Píldora 6 · ⏱ 10 min · Mercado eléctrico español</div>
+  <h1>Montar la empresa I: constitución y autorización</h1>
+  <p class="lede">Buena noticia: la CNMC no te autoriza, solo te registra. Mala noticia: detrás de esa "comunicación responsable" hay que tener todo de verdad. Aquí está el camino real.</p>
+</header>
+
+<main>
+<article>
+
+<div class="row">
+  <div class="col-main">
+    <h2>No es una concesión, es una comunicación</h2>
+    <p>Hasta 2013, montar una comercializadora era un trámite pesado: autorización administrativa previa, depósito de garantía obligatoria, expediente, resolución. La Ley 24/2013, todavía vigente, cambió el modelo. Hoy basta con una <strong>comunicación responsable de inicio de actividad</strong> a la CNMC. Tú declaras que cumples los requisitos, te inscriben en el listado y puedes operar. La CNMC podrá revisar después; si no cumples, te dará de baja.</p>
+    <p>Esto baja la barrera de entrada legal pero <strong>no la operativa</strong>. Los requisitos sustanciales (capacidad económica, técnica, sistemas, equipo humano) siguen ahí. La comunicación responsable no es un trámite mágico: es declarar que tienes lo que se te pide. Si lo declaras sin tenerlo, la inspección posterior te tumba.</p>
+  </div>
+  <aside class="margin-note">
+    <strong>Comunicación responsable</strong> es una figura del derecho administrativo: en vez de pedir permiso, declaras bajo responsabilidad que cumples. Se usa en muchísimas actividades reguladas. La trampa es creer que "ya está": es solo la puerta, no el examen.
+  </aside>
+</div>
+
+<div class="row">
+  <div class="col-main">
+    <h2>Los cuatro requisitos sustanciales</h2>
+    <p>La ley exige cuatro cosas para que una comercializadora pueda operar:</p>
+    <ol>
+      <li><strong>Capacidad legal</strong>: ser una persona jurídica (sociedad mercantil) constituida en España o en otro Estado miembro de la UE.</li>
+      <li><strong>Capacidad económica</strong>: poder afrontar las garantías que te van a pedir OMIE y REE (varios cientos de miles de euros, escalables con tu volumen), y los desfases típicos de caja de la actividad.</li>
+      <li><strong>Capacidad técnica</strong>: equipo humano competente, sistemas informáticos capaces de gestionar contratos, lecturas, facturación, intercambios con distribuidoras (CRM y back-office).</li>
+      <li><strong>Cumplimiento normativo</strong>: protección de datos (RGPD), prevención de blanqueo, contabilidad separada, fiscalidad eléctrica, modelos de contrato adaptados al sector.</li>
+    </ol>
+    <p>La capacidad económica es la que más sorpresas da. Hablamos de garantías de mercado, no de capital social mínimo legal. El siguiente apartado lo explica.</p>
+  </div>
+  <aside class="margin-note">
+    No hay un capital social mínimo específico para comercializadoras: aplica el de la forma jurídica que elijas (3.000 € para S.L., 60.000 € para S.A.). Pero el <em>capital social real</em> para operar es mucho mayor por las garantías de mercado.
+  </aside>
+</div>
+
+<div class="row">
+  <div class="col-main">
+    <h2>El camino, paso a paso</h2>
+    <p>Esta es la ruta administrativa real, en el orden que tiene sentido hacerla. Algunos pasos se solapan en el tiempo, pero conceptualmente este es el flujo:</p>
+  </div>
+</div>
+
+<ol class="pasos">
+<li>
+  <h4>Constituir la sociedad</h4>
+  <p>S.L. en la mayoría de los casos (3.000 € de capital mínimo, más rápida y barata). S.A. solo si necesitas estructura accionarial compleja. Objeto social que incluya expresamente "la comercialización de energía eléctrica" y todo lo accesorio (contratación de servicios energéticos, intermediación, etc.). Notaría + Registro Mercantil + CIF.</p>
+</li>
+<li>
+  <h4>Dar de alta la actividad fiscal y operativa</h4>
+  <p>Alta en Hacienda (modelo 036), epígrafe IAE correspondiente, alta en Seguridad Social, cuenta bancaria operativa con líneas de crédito o aval ya negociadas con la entidad para las garantías que vienen después.</p>
+</li>
+<li>
+  <h4>Montar la capacidad técnica</h4>
+  <p>Sistemas (CRM, facturación, integración con SIPS, gestión de telemedida, contabilidad analítica), equipo (al menos: dirección general, responsable comercial, responsable de operaciones/mercado, responsable de back-office) y procesos documentados. Conviene tener ya operativos los acuerdos con proveedores tecnológicos.</p>
+</li>
+<li>
+  <h4>Preparar la documentación de la comunicación responsable</h4>
+  <p>La CNMC publica el modelo y el listado de documentos exigidos: estatutos, escritura, CIF, identificación de socios y administradores, declaraciones de capacidad económica y técnica, acreditación de equipo y sistemas. Es una carpeta con bastante papel; conviene preparar todo antes de empezar el trámite electrónico.</p>
+</li>
+<li>
+  <h4>Presentar la comunicación a la CNMC</h4>
+  <p>Se hace por sede electrónica. La CNMC lo procesa y publica tu sociedad en el listado oficial de comercializadoras. A partir de la inscripción, ya eres comercializadora a efectos legales y puedes empezar los trámites de mercado.</p>
+</li>
+<li>
+  <h4>(En paralelo) Notificar a otras administraciones</h4>
+  <p>Comunidad autónoma si va a haber clientes regulados, notificación al MITECO para algunos fines estadísticos, y normativas específicas (protección de consumidores, contratación a distancia, etc.).</p>
+</li>
+</ol>
+
+<div class="row">
+  <div class="col-main">
+    <h2>Las trampas típicas al arrancar</h2>
+  </div>
+</div>
+
+<div class="trampa">
+<strong>Trampa 1: confundir capital social con dinero operativo.</strong> Constituir una S.L. con 3.000 € es legal pero ridículo para esta actividad. Las garantías que te van a pedir OMIE y REE empiezan en cientos de miles de euros incluso para una cartera pequeña. Si no tienes liquidez o aval, no puedes operar aunque estés inscrito.
+</div>
+
+<div class="trampa">
+<strong>Trampa 2: contratar el sistema informático "después" de inscribirse.</strong> La comunicación responsable exige declarar capacidad técnica real. Si te inspeccionan en los primeros meses y no tienes sistemas operativos, te dan de baja y pierdes la inversión. El CRM/facturación/integraciones tienen que estar montados antes, no después.
+</div>
+
+<div class="trampa">
+<strong>Trampa 3: olvidar la contabilidad separada y los reportes a la CNMC.</strong> La CNMC pide informes periódicos (estadísticos, financieros, de cartera). No hacerlos en plazo es sanción. Necesitas un responsable de cumplimiento desde el día uno, no cuando llega la primera carta.
+</div>
+
+<div class="callout">
+<strong>Lo que llevarte:</strong> ya no se necesita autorización previa, solo una comunicación responsable a la CNMC. Pero detrás hay cuatro requisitos sustanciales (capacidad legal, económica, técnica y cumplimiento) que sí se exigen y se revisan. La parte difícil no es el papeleo de la inscripción, sino tener montada la empresa de verdad antes de declararlo.
+</div>
+
+<hr>
+
+<div class="ejercicios">
+<h2>Ejercicios rápidos</h2>
+
+<details>
+<summary>1. ¿Por qué no basta con constituir una S.L. con 3.000 € para empezar a vender luz?</summary>
+<p>Porque el capital social mínimo legal de la S.L. no tiene nada que ver con el dinero que necesitas operativamente. OMIE y REE exigirán garantías financieras de orden de cientos de miles de euros (aval bancario o depósito) escaladas con tu volumen. Sin esa capacidad, no puedes ser sujeto de mercado ni liquidar, por mucho que tu inscripción en CNMC esté hecha.</p>
+</details>
+
+<details>
+<summary>2. La comunicación responsable a la CNMC, ¿es una autorización?</summary>
+<p>No. Es una declaración tuya de que cumples los requisitos. Te inscriben sin valorarte previamente; la valoración viene después, en posibles inspecciones. Esto baja la barrera de entrada legal pero te traslada el riesgo: si declaras algo que no es cierto, la sanción y la baja son posibles.</p>
+</details>
+
+<details>
+<summary>3. ¿Por qué importa tanto la "contabilidad separada"?</summary>
+<p>Porque la ley quiere evitar subvenciones cruzadas: que una actividad no regulada (otra línea de negocio del grupo) financie o se beneficie indebidamente de la actividad regulada (comercialización). Si tu sociedad solo hace comercialización, es trivial. Si forma parte de un grupo que hace más cosas, la contabilidad separada y los reportes a la CNMC se vuelven complejos pero obligatorios.</p>
+</details>
+</div>
+
+</article>
+</main>
+
+<nav class="pildora-nav">
+  <a href="../pildora-05_distribuidoras-mix-mapa/index.html">← Anterior</a>
+  <a href="../indice.html">Índice del curso</a>
+  <a href="../pildora-07_omie-ree-atr/index.html">Siguiente: OMIE, REE y ATR →</a>
+</nav>
+
+<script>
+  const bar = document.getElementById('progressBar');
+  function p(){const h=document.documentElement;bar.style.width=Math.min(100,Math.max(0,(h.scrollTop)/(h.scrollHeight-h.clientHeight)*100))+'%';}
+  document.addEventListener('scroll',p,{passive:true}); p();
+</script>
+</body>
+</html>

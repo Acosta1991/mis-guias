@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Píldora 3 — El mercado mayorista: cómo se forma el precio</title>
+<style>
+  :root { --bg:#FAF7F1; --text:#2C2A26; --muted:#6B655C; --accent:#E07A1F; --rule:#E5DFD3; --note-bg:#F3EEDF; --serif:Georgia,"Iowan Old Style","Palatino Linotype",serif; --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; }
+  *{box-sizing:border-box} html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--serif);font-size:18px;line-height:1.65}
+  #progressBar{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:100;transition:width .1s}
+  header,main,footer,nav.pildora-nav{max-width:1100px;margin:0 auto;padding:0 24px}
+  header{padding-top:60px;padding-bottom:28px}
+  .meta{font-family:var(--sans);font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
+  h1{font-family:var(--sans);font-weight:700;font-size:38px;line-height:1.15;margin:0 0 18px}
+  .lede{font-size:21px;color:var(--muted);margin:0 0 12px;max-width:700px;font-style:italic}
+  h2{font-family:var(--sans);font-weight:600;font-size:24px;margin:48px 0 14px}
+  h3{font-family:var(--sans);font-weight:600;font-size:18px;margin:28px 0 8px}
+  main article{padding:16px 0 40px}
+  .row{display:grid;grid-template-columns:minmax(0,680px) minmax(0,280px);gap:56px;margin:0 0 24px}
+  .row.single{grid-template-columns:minmax(0,680px)}
+  .col-main p,.col-main ul,.col-main ol{margin:0 0 16px}
+  aside.margin-note{font-family:var(--sans);font-size:14px;line-height:1.55;color:var(--muted);border-left:2px solid var(--accent);padding:4px 0 4px 14px;margin-top:6px}
+  aside.margin-note strong{color:var(--text);font-weight:600}
+  @media(max-width:900px){.row,.row.single{grid-template-columns:1fr;gap:16px}aside.margin-note{background:var(--note-bg);border-left:3px solid var(--accent);padding:10px 14px;border-radius:0 4px 4px 0}h1{font-size:30px}.lede{font-size:18px}}
+  .callout{background:var(--note-bg);border-radius:6px;padding:18px 22px;margin:24px 0;font-size:17px}
+  .callout strong{color:var(--accent)}
+  figure{margin:28px 0;text-align:center} figcaption{font-family:var(--sans);font-size:13px;color:var(--muted);margin-top:10px}
+  svg.diagram{max-width:100%;height:auto}
+  hr{border:0;border-top:1px solid var(--rule);margin:48px 0}
+  .ejercicios{background:#FFFDF8;border:1px solid var(--rule);border-radius:8px;padding:20px 24px;margin:32px 0}
+  .ejercicios h2{margin-top:0}
+  details{border-top:1px solid var(--rule);padding:12px 0} details:first-of-type{border-top:0}
+  summary{font-family:var(--sans);font-weight:600;cursor:pointer;padding:4px 0}
+  summary:hover,details[open] summary{color:var(--accent)}
+  details p{margin:10px 0 4px}
+  nav.pildora-nav{display:flex;justify-content:space-between;align-items:center;padding-top:24px;padding-bottom:60px;font-family:var(--sans);font-size:15px;border-top:1px solid var(--rule);margin-top:40px}
+  nav.pildora-nav a{color:var(--accent);text-decoration:none;font-weight:500}
+  nav.pildora-nav a:hover{text-decoration:underline}
+
+  /* Interactivo */
+  .interactivo{background:#fff;border:1px solid var(--rule);border-radius:10px;padding:24px;margin:32px 0}
+  .interactivo h3{margin-top:0;font-size:20px}
+  .controles{display:flex;align-items:center;gap:16px;margin:16px 0 4px;flex-wrap:wrap;font-family:var(--sans);font-size:15px}
+  .controles label{display:flex;align-items:center;gap:10px;color:var(--muted)}
+  .controles input[type=range]{accent-color:var(--accent);width:280px}
+  .resultado{font-family:var(--sans);font-size:15px;margin-top:14px;padding:14px 18px;background:var(--note-bg);border-radius:6px}
+  .resultado .precio{font-size:32px;color:var(--accent);font-weight:700;display:block;line-height:1.1;margin:4px 0}
+  .interactivo-svg{display:block;margin:18px 0 4px}
+  .leyenda{display:flex;gap:18px;flex-wrap:wrap;font-family:var(--sans);font-size:13px;color:var(--muted);margin-top:6px}
+  .leyenda span{display:inline-flex;align-items:center;gap:6px}
+  .leyenda i{display:inline-block;width:12px;height:12px;border-radius:2px}
+</style>
+</head>
+<body>
+<div id="progressBar"></div>
+
+<header>
+  <div class="meta">Píldora 3 · ⏱ 12 min · Mercado eléctrico español</div>
+  <h1>El mercado mayorista: cómo se forma el precio</h1>
+  <p class="lede">El precio de la luz se decide cada día en una subasta. Una subasta con una regla curiosa: el último que entra fija el precio que cobran todos. Mejor verlo que leerlo.</p>
+</header>
+
+<main>
+<article>
+
+<div class="row">
+  <div class="col-main">
+    <h2>Una bolsa para algo que se consume mañana</h2>
+    <p>Cada día, hacia las 12:00, ocurre una subasta en España y Portugal. Los generadores envían a OMIE sus ofertas de venta: "yo puedo poner 200 MW a 50 €/MWh", "yo 80 MW a 120 €/MWh", etc. Los compradores (sobre todo comercializadoras) envían sus ofertas de compra. OMIE las junta, las cruza y calcula <strong>un precio para cada una de las 24 horas del día siguiente</strong>.</p>
+    <p>Eso es el <strong>mercado diario</strong>, también llamado <em>pool</em>. Es el corazón económico del sistema: ahí se decide cuánto vale la luz hora a hora.</p>
+  </div>
+  <aside class="margin-note">
+    <strong>OMIE</strong> es el operador del mercado ibérico (España + Portugal). El mercado es único entre los dos países (MIBEL). Si hay congestión en la interconexión, los precios se separan; si no, son iguales en ambos lados.
+  </aside>
+</div>
+
+<div class="row">
+  <div class="col-main">
+    <h2>La regla rara: precio marginal</h2>
+    <p>Aquí está el truco que hay que entender. OMIE ordena todas las ofertas de venta <strong>de la más barata a la más cara</strong>. Va aceptando ofertas, una a una, hasta que cubre toda la demanda de esa hora. La oferta que cierra la subasta (la última necesaria para cubrir la demanda) marca el precio. <strong>Todas las ofertas aceptadas cobran ese mismo precio</strong>, no el que pidieron.</p>
+    <p>Suena extraño, pero tiene una lógica: incentiva a cada generador a ofertar a su coste real. Si pides menos, igual te dejas dinero encima de la mesa. Si pides más, te quedas fuera. Te conviene decir la verdad.</p>
+  </div>
+  <aside class="margin-note">
+    A este modelo se le llama <strong>pay-as-clear</strong> o <strong>precio marginalista</strong>. El alternativo, <em>pay-as-bid</em> (cada uno cobra lo que pidió), parece más justo a primera vista pero crea peores incentivos: cada uno intenta adivinar el precio de cierre. Casi todos los pools europeos son marginalistas.
+  </aside>
+</div>
+
+<!-- INTERACTIVO -->
+<div class="interactivo">
+<h3>Prueba tú: mueve la demanda y mira qué pasa</h3>
+<p style="font-family:var(--sans);font-size:15px;color:var(--muted);margin-top:0">Cada columna es una tecnología que ofrece una cantidad de energía a un precio. Mueve el deslizador de la demanda y observa qué tecnologías casan, cuál marca el precio (la "marginal") y cuánto cobran todas.</p>
+
+<svg id="meritsvg" class="interactivo-svg" viewBox="0 0 720 360" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;background:#FFFDF8;border-radius:6px">
+  <g id="ejes" font-family="system-ui" font-size="11" fill="#6B655C"></g>
+  <g id="barras"></g>
+  <g id="demanda"></g>
+  <g id="etiqueta-precio"></g>
+</svg>
+
+<div class="leyenda">
+  <span><i style="background:#3F8FCB"></i>Renovables y nuclear (baratas)</span>
+  <span><i style="background:#E07A1F"></i>Tecnología marginal (fija el precio)</span>
+  <span><i style="background:#BFBAB0"></i>Casadas pero no marginales</span>
+  <span><i style="background:#EEE9DD"></i>No casadas</span>
+</div>
+
+<div class="controles">
+  <label>Demanda total: <input type="range" id="demSlider" min="100" max="2200" step="50" value="1400"> <span id="demVal" style="color:var(--text);font-weight:600;min-width:90px;display:inline-block">1400 MW</span></label>
+</div>
+
+<div class="resultado">
+  <strong>Precio que cobran todas las casadas:</strong>
+  <span class="precio" id="precioMarginal">— €/MWh</span>
+  <span id="explicacion">—</span>
+</div>
+</div>
+<!-- FIN INTERACTIVO -->
+
+<div class="row">
+  <div class="col-main">
+    <h2>Por qué se mueve tanto el precio</h2>
+    <p>Cuando hace mucho viento y mucho sol, la curva de ofertas baratas (renovables, nuclear) es enorme. La demanda se cubre con tecnologías de coste bajo y el precio cae, a veces a cero o incluso negativo. Cuando no hay viento ni sol, hay que tirar de gas; el precio del gas marca casi todas las horas. Por eso una crisis del gas (como 2022) dispara la factura eléctrica aunque no se queme más gas que antes: con que sea la tecnología marginal una hora, basta para que todos cobren ese precio.</p>
+  </div>
+  <aside class="margin-note">
+    En 2022 España aplicó un mecanismo de "tope al gas" (el famoso <em>cap</em> ibérico) que rompía el marginalismo: compensaba a las centrales de gas para que ofertaran más barato, separando precio de pool del de gas. Excepción temporal, no la regla general.
+  </aside>
+</div>
+
+<div class="row">
+  <div class="col-main">
+    <h2>Y después del diario, los flecos</h2>
+    <p>El precio se calcula el día anterior, pero las cosas cambian. Quizá una central se cae, o sopla más viento de lo previsto, o un cliente consume más. Para eso hay más mercados, más cortos:</p>
+    <ul>
+      <li><strong>Mercado intradiario</strong>: varias sesiones a lo largo del día siguiente para ajustar posiciones. También gestionado por OMIE.</li>
+      <li><strong>Servicios de ajuste</strong> (banda, reserva, regulación): mercados muy cortos que opera REE para equilibrar la red minuto a minuto. Aquí cobran las centrales que pueden subir o bajar potencia rápido.</li>
+      <li><strong>Mercado a plazo</strong> (OMIP, OTC, futuros): meses o años antes. No casa entrega física en el momento, sino contratos financieros que cubren riesgo de precio.</li>
+    </ul>
+  </div>
+  <aside class="margin-note">
+    Para una comercializadora pequeña, el grueso del consumo se cubre en el diario. Los intradiarios y ajustes son herramientas finas. El mercado a plazo es lo que usarás para "cubrirte" si vendes precio fijo a tus clientes.
+  </aside>
+</div>
+
+<div class="callout">
+<strong>Lo que llevarte:</strong> hay una subasta diaria gestionada por OMIE que fija precios horarios para el día siguiente. La regla es precio marginal: todas las casadas cobran el precio del último que entró. Esto explica por qué el precio de la luz se mueve tanto y depende del gas aunque queme poco. Hay mercados complementarios para ajustar (intradiario, ajustes de REE) y para cubrir riesgo (mercado a plazo).
+</div>
+
+<hr>
+
+<div class="ejercicios">
+<h2>Ejercicios rápidos</h2>
+
+<details>
+<summary>1. Si hay una hora con muchísimo viento y poca demanda (madrugada de domingo de primavera), ¿qué le pasa al precio?</summary>
+<p>Cae mucho, a veces a cero. La eólica oferta cerca de 0 € porque su coste variable es prácticamente nulo (no quema combustible). Si la demanda es baja y entra solo eólica + nuclear + hidráulica, el precio marginal lo marca alguna de ellas y queda muy bajo. En ocasiones se han visto precios negativos: el generador <em>paga</em> por colocar su energía, porque parar y arrancar le sale más caro.</p>
+</details>
+
+<details>
+<summary>2. Una comercializadora ha vendido a sus clientes a precio fijo (40 €/MWh fijo durante un año) y solo compra en el pool. ¿Qué riesgo tiene?</summary>
+<p>Riesgo enorme. Si el pool se le pone a 200 €/MWh durante varias semanas (cosa que ha pasado), está comprando a 200 lo que vende a 40, pierde dinero en cada kWh y quiebra. Por eso quien vende precio fijo a clientes <strong>tiene que cubrirse</strong> en el mercado a plazo o con PPAs, comprando con antelación a un precio conocido. Esta es la diferencia entre comercializar y especular sin querer.</p>
+</details>
+
+<details>
+<summary>3. ¿Por qué el precio marginal incentiva a ofertar al coste real?</summary>
+<p>Porque si ofertas <em>más caro</em> que tu coste, puedes quedarte fuera de la casación y no ganar nada. Si ofertas <em>más barato</em> que tu coste, entras pero quizá te toca producir a pérdidas. El equilibrio óptimo es ofertar a tu coste variable: si te casan, ganas el margen entre el precio marginal y tu coste; si no te casan, no pierdes. Es la lógica de la "merit order" o lista de mérito.</p>
+</details>
+</div>
+
+</article>
+</main>
+
+<nav class="pildora-nav">
+  <a href="../pildora-02_mapa-actores/index.html">← Anterior</a>
+  <a href="../indice.html">Índice del curso</a>
+  <a href="../pildora-04_mercado-minorista-factura/index.html">Siguiente: El mercado minorista →</a>
+</nav>
+
+<script>
+  // Barra de progreso
+  const bar = document.getElementById('progressBar');
+  function p(){const h=document.documentElement;bar.style.width=Math.min(100,Math.max(0,(h.scrollTop)/(h.scrollHeight-h.clientHeight)*100))+'%';}
+  document.addEventListener('scroll',p,{passive:true}); p();
+
+  // Interactivo de casación marginal
+  const tecs = [
+    { nombre: 'Nuclear',     mw: 350, precio: 5,   color: '#3F8FCB' },
+    { nombre: 'Eólica',      mw: 450, precio: 8,   color: '#3F8FCB' },
+    { nombre: 'Solar',       mw: 300, precio: 12,  color: '#3F8FCB' },
+    { nombre: 'Hidráulica',  mw: 200, precio: 25,  color: '#3F8FCB' },
+    { nombre: 'Gas CCGT',    mw: 500, precio: 65,  color: '#3F8FCB' },
+    { nombre: 'Bombeo',      mw: 250, precio: 110, color: '#3F8FCB' },
+    { nombre: 'Cogeneración',mw: 200, precio: 180, color: '#3F8FCB' }
+  ];
+
+  const W = 720, H = 360;
+  const margenIzq = 50, margenDer = 30, margenSup = 20, margenInf = 60;
+  const plotW = W - margenIzq - margenDer;
+  const plotH = H - margenSup - margenInf;
+  const mwMax = tecs.reduce((a,t)=>a+t.mw,0);
+  const precioMax = 220;
+
+  function escX(mw){ return margenIzq + (mw / mwMax) * plotW; }
+  function escY(p){ return margenSup + plotH - (p / precioMax) * plotH; }
+
+  function ejes(){
+    let g = document.getElementById('ejes');
+    g.innerHTML = '';
+    // Eje X
+    g.insertAdjacentHTML('beforeend', `<line x1="${margenIzq}" y1="${margenSup+plotH}" x2="${margenIzq+plotW}" y2="${margenSup+plotH}" stroke="#C7C0B3"/>`);
+    // Eje Y
+    g.insertAdjacentHTML('beforeend', `<line x1="${margenIzq}" y1="${margenSup}" x2="${margenIzq}" y2="${margenSup+plotH}" stroke="#C7C0B3"/>`);
+    // Marcas X (cada 500 MW)
+    for (let mw = 0; mw <= mwMax; mw += 500) {
+      const x = escX(mw);
+      g.insertAdjacentHTML('beforeend', `<line x1="${x}" y1="${margenSup+plotH}" x2="${x}" y2="${margenSup+plotH+4}" stroke="#C7C0B3"/>`);
+      g.insertAdjacentHTML('beforeend', `<text x="${x}" y="${margenSup+plotH+18}" text-anchor="middle">${mw}</text>`);
+    }
+    g.insertAdjacentHTML('beforeend', `<text x="${margenIzq+plotW/2}" y="${margenSup+plotH+40}" text-anchor="middle" fill="#2C2A26">Energía ofertada acumulada (MW)</text>`);
+    // Marcas Y
+    for (let pr = 0; pr <= precioMax; pr += 50) {
+      const y = escY(pr);
+      g.insertAdjacentHTML('beforeend', `<line x1="${margenIzq-4}" y1="${y}" x2="${margenIzq}" y2="${y}" stroke="#C7C0B3"/>`);
+      g.insertAdjacentHTML('beforeend', `<text x="${margenIzq-8}" y="${y+4}" text-anchor="end">${pr}</text>`);
+    }
+    g.insertAdjacentHTML('beforeend', `<text x="${margenIzq-38}" y="${margenSup+plotH/2}" text-anchor="middle" fill="#2C2A26" transform="rotate(-90 ${margenIzq-38} ${margenSup+plotH/2})">Precio (€/MWh)</text>`);
+  }
+
+  function render(demanda) {
+    document.getElementById('demVal').textContent = demanda + ' MW';
+    const tecsOrd = [...tecs].sort((a,b)=>a.precio-b.precio);
+    let acumulado = 0;
+    let marginal = null;
+    let cubierto = false;
+
+    const gBarras = document.getElementById('barras');
+    gBarras.innerHTML = '';
+
+    tecsOrd.forEach(t => {
+      const xInicio = escX(acumulado);
+      const xFin = escX(acumulado + t.mw);
+      const yTop = escY(t.precio);
+      const yBot = escY(0);
+      const w = xFin - xInicio;
+      const h = yBot - yTop;
+      let color = '#EEE9DD'; // no casada
+      let strokeColor = '#D8D2C2';
+      const esMarginal = !cubierto && acumulado + t.mw >= demanda;
+      if (esMarginal) {
+        color = '#E07A1F';
+        strokeColor = '#B45F11';
+        marginal = t;
+        cubierto = true;
+      } else if (!cubierto) {
+        color = '#3F8FCB';
+        strokeColor = '#2F6F9F';
+      } else {
+        color = '#EEE9DD';
+        strokeColor = '#D8D2C2';
+      }
+      // Si está parcialmente casada cuando es la marginal, lo dejamos del color marginal entero (simplificación didáctica)
+      gBarras.insertAdjacentHTML('beforeend', `<rect x="${xInicio}" y="${yTop}" width="${w}" height="${h}" fill="${color}" stroke="${strokeColor}"/>`);
+      const labelX = xInicio + w/2;
+      const labelY = yTop - 6;
+      if (w > 40) {
+        gBarras.insertAdjacentHTML('beforeend', `<text x="${labelX}" y="${labelY}" text-anchor="middle" font-family="system-ui" font-size="11" fill="#2C2A26">${t.nombre}</text>`);
+        gBarras.insertAdjacentHTML('beforeend', `<text x="${labelX}" y="${yTop+h/2+4}" text-anchor="middle" font-family="system-ui" font-size="11" fill="#fff" font-weight="600">${t.precio} €</text>`);
+      }
+      acumulado += t.mw;
+    });
+
+    // Línea de demanda
+    const xDem = escX(demanda);
+    const gDem = document.getElementById('demanda');
+    gDem.innerHTML = `
+      <line x1="${xDem}" y1="${margenSup}" x2="${xDem}" y2="${margenSup+plotH}" stroke="#2C2A26" stroke-width="2" stroke-dasharray="4 4"/>
+      <text x="${xDem+6}" y="${margenSup+14}" font-family="system-ui" font-size="12" fill="#2C2A26" font-weight="600">Demanda = ${demanda} MW</text>
+    `;
+
+    // Etiqueta del precio
+    const gEt = document.getElementById('etiqueta-precio');
+    if (marginal) {
+      const yPrecio = escY(marginal.precio);
+      gEt.innerHTML = `
+        <line x1="${margenIzq}" y1="${yPrecio}" x2="${xDem}" y2="${yPrecio}" stroke="#E07A1F" stroke-width="1.5" stroke-dasharray="2 3"/>
+        <circle cx="${xDem}" cy="${yPrecio}" r="5" fill="#E07A1F"/>
+      `;
+      document.getElementById('precioMarginal').textContent = marginal.precio + ' €/MWh';
+      document.getElementById('explicacion').textContent = `La ${marginal.nombre.toLowerCase()} es la marginal: fija el precio. Las tecnologías más baratas casadas también cobran ${marginal.precio} €/MWh aunque hayan ofertado menos.`;
+    } else {
+      gEt.innerHTML = '';
+      document.getElementById('precioMarginal').textContent = 'Demanda no cubierta';
+      document.getElementById('explicacion').textContent = 'No hay ofertas suficientes. En la realidad esto se evita con reservas de emergencia o, en último caso, con cortes programados.';
+    }
+  }
+
+  ejes();
+  const slider = document.getElementById('demSlider');
+  slider.addEventListener('input', e => render(parseInt(e.target.value)));
+  render(parseInt(slider.value));
+</script>
+</body>
+</html>

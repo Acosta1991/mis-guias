@@ -6,6 +6,7 @@ Cada curso vive en su propia carpeta y contiene una serie de píldoras (leccione
 
 ## Cursos publicados
 
+- **[Mercado eléctrico español y cómo montar una comercializadora](mercado-electrico-espanol/indice.html)** — Cómo funciona el sector eléctrico en España y los pasos prácticos para crear una comercializadora. 9 píldoras × 10 min + evaluación.
 - **[Sistemas de energía en coches eléctricos](sistemas-energia-coches-electricos/indice.html)** — Guía profunda en 13 píldoras × 10 min sobre todos los componentes del sistema de energía de un coche eléctrico (batería, BMS, sistema térmico, inversor, motor, electrónica de potencia, carga) y las tecnologías actuales y futuras.
 - **[Frenos de coches](frenos-de-coches/indice.html)** — De la idea raíz a la lente de cliente. 8 píldoras × 10 min sobre cómo frena un coche moderno y cómo se traduce eso a la experiencia del cliente.
 - **[Diseñar y animar con Blender](blender-disenar-y-animar/indice.html)** — De abrir el programa por primera vez a exportar tu primera escena 3D animada. 10 píldoras × 10 min.

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Píldora 7 — Acceso a OMIE, REE y contratos ATR</title>
+<style>
+  :root { --bg:#FAF7F1; --text:#2C2A26; --muted:#6B655C; --accent:#E07A1F; --rule:#E5DFD3; --note-bg:#F3EEDF; --serif:Georgia,"Iowan Old Style","Palatino Linotype",serif; --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; }
+  *{box-sizing:border-box} html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--serif);font-size:18px;line-height:1.65}
+  #progressBar{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:100;transition:width .1s}
+  header,main,footer,nav.pildora-nav{max-width:1100px;margin:0 auto;padding:0 24px}
+  header{padding-top:60px;padding-bottom:28px}
+  .meta{font-family:var(--sans);font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
+  h1{font-family:var(--sans);font-weight:700;font-size:38px;line-height:1.15;margin:0 0 18px}
+  .lede{font-size:21px;color:var(--muted);margin:0 0 12px;max-width:700px;font-style:italic}
+  h2{font-family:var(--sans);font-weight:600;font-size:24px;margin:48px 0 14px}
+  h3{font-family:var(--sans);font-weight:600;font-size:18px;margin:28px 0 8px}
+  main article{padding:16px 0 40px}
+  .row{display:grid;grid-template-columns:minmax(0,680px) minmax(0,280px);gap:56px;margin:0 0 24px}
+  .row.single{grid-template-columns:minmax(0,680px)}
+  .col-main p,.col-main ul,.col-main ol{margin:0 0 16px}
+  aside.margin-note{font-family:var(--sans);font-size:14px;line-height:1.55;color:var(--muted);border-left:2px solid var(--accent);padding:4px 0 4px 14px;margin-top:6px}
+  aside.margin-note strong{color:var(--text);font-weight:600}
+  @media(max-width:900px){.row,.row.single{grid-template-columns:1fr;gap:16px}aside.margin-note{background:var(--note-bg);border-left:3px solid var(--accent);padding:10px 14px;border-radius:0 4px 4px 0}h1{font-size:30px}.lede{font-size:18px}}
+  .callout{background:var(--note-bg);border-radius:6px;padding:18px 22px;margin:24px 0;font-size:17px}
+  .callout strong{color:var(--accent)}
+  figure{margin:28px 0;text-align:center} figcaption{font-family:var(--sans);font-size:13px;color:var(--muted);margin-top:10px}
+  svg.diagram{max-width:100%;height:auto}
+  hr{border:0;border-top:1px solid var(--rule);margin:48px 0}
+  .ejercicios{background:#FFFDF8;border:1px solid var(--rule);border-radius:8px;padding:20px 24px;margin:32px 0}
+  .ejercicios h2{margin-top:0}
+  details{border-top:1px solid var(--rule);padding:12px 0} details:first-of-type{border-top:0}
+  summary{font-family:var(--sans);font-weight:600;cursor:pointer;padding:4px 0}
+  summary:hover,details[open] summary{color:var(--accent)}
+  details p{margin:10px 0 4px}
+  nav.pildora-nav{display:flex;justify-content:space-between;align-items:center;padding-top:24px;padding-bottom:60px;font-family:var(--sans);font-size:15px;border-top:1px solid var(--rule);margin-top:40px}
+  nav.pildora-nav a{color:var(--accent);text-decoration:none;font-weight:500}
+  nav.pildora-nav a:hover{text-decoration:underline}
+  .opciones{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0}
+  .opciones .card{background:#fff;border:1px solid var(--rule);border-radius:8px;padding:20px 22px}
+  .opciones .card.acento{border-color:var(--accent);background:#FFFDF8}
+  .opciones h3{margin-top:0;font-size:18px}
+  .opciones .card.acento h3{color:var(--accent)}
+  .opciones ul{font-family:var(--sans);font-size:14.5px;padding-left:18px}
+  @media(max-width:700px){.opciones{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div id="progressBar"></div>
+
+<header>
+  <div class="meta">Píldora 7 · ⏱ 12 min · Mercado eléctrico español</div>
+  <h1>Montar la empresa II: acceso a OMIE, REE y ATR</h1>
+  <p class="lede">Ya estás inscrita en la CNMC. Para de verdad poder comprar y entregar electricidad, te faltan tres llaves: el mercado mayorista, el sistema de liquidación y los contratos con cada red de distribución.</p>
+</header>
+
+<main>
+<article>
+
+<div class="row">
+  <div class="col-main">
+    <h2>Tres llaves para operar</h2>
+    <p>Hasta aquí tu comercializadora existe legalmente. Pero para que un cliente real pueda firmar contigo y para que la electricidad le llegue, hacen falta tres acuerdos más, en orden lógico:</p>
+    <ol>
+      <li><strong>OMIE</strong> — para poder comprar energía al por mayor (precio horario).</li>
+      <li><strong>REE</strong> — para que se te liquiden los consumos de tus clientes y se cuadren con las compras.</li>
+      <li><strong>Distribuidoras (ATR)</strong> — para que la red lleve esa electricidad a cada punto de suministro y te dé las lecturas de consumo.</li>
+    </ol>
+    <p>Cada una de las tres tiene su propio expediente, sus propias garantías y sus propios sistemas técnicos. Una comercializadora pequeña recién montada suele tardar entre tres y seis meses en tener las tres llaves operativas a la vez.</p>
+  </div>
+  <aside class="margin-note">
+    Hay una opción "express" para arrancar antes y con menos capital: contratar a un <strong>representante</strong> que ya tenga las tres llaves. Tú le delegas operación de mercado y liquidación; tú te concentras en captar y atender clientes. Es muy habitual al empezar.
+  </aside>
+</div>
+
+<div class="opciones">
+  <div class="card">
+    <h3>Acceso directo</h3>
+    <ul>
+      <li>Te das de alta tú directamente en OMIE y REE.</li>
+      <li>Constituyes garantías y depósitos a tu nombre.</li>
+      <li>Operas con personal propio en mesa de mercado.</li>
+      <li>Más coste, más control, más margen.</li>
+      <li>Tiene sentido cuando ya tienes volumen y equipo.</li>
+    </ul>
+  </div>
+  <div class="card acento">
+    <h3>Representado (recomendado para empezar)</h3>
+    <ul>
+      <li>Firmas con un representante autorizado (otra comercializadora o agente).</li>
+      <li>Las garantías y la operativa de mercado las pone él.</li>
+      <li>Tú le pagas una comisión por MWh gestionado.</li>
+      <li>Arrancas en semanas, no en meses.</li>
+      <li>Cuando creces, te puedes "independizar" y pasar al modelo directo.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-main">
+    <h2>Llave 1 — OMIE: ser Agente del Mercado</h2>
+    <p>OMIE te da de alta como <strong>Agente del Mercado</strong>. A partir de ese momento puedes enviar ofertas de compra y venta a la subasta diaria y a las sesiones intradiarias. El proceso incluye:</p>
+    <ul>
+      <li>Firma del contrato de adhesión a las reglas del mercado.</li>
+      <li>Constitución de <strong>garantía financiera</strong> (aval bancario o depósito) calculada según tu volumen previsto y el riesgo de tus posiciones.</li>
+      <li>Acreditación de operadores formados y sistemas técnicos que se conecten a la plataforma SIOM.</li>
+      <li>Pruebas técnicas antes de operar en producción.</li>
+    </ul>
+    <p>La garantía mínima ronda los cientos de miles de euros, y crece con tu volumen. OMIE puede ajustarla diariamente según tus posiciones abiertas: si sube el precio, tu garantía necesaria sube. Si no la repones, te suspenden la operación.</p>
+  </div>
+  <aside class="margin-note">
+    <strong>SIOM</strong> es la plataforma técnica de OMIE para enviar y consultar ofertas, casaciones y liquidaciones. Necesitarás certificados digitales y conectividad robusta. Es información de mercado: cualquier corte tiene consecuencias económicas inmediatas.
+  </aside>
+</div>
+
+<div class="row">
+  <div class="col-main">
+    <h2>Llave 2 — REE: ser Sujeto de Liquidación</h2>
+    <p>REE te da de alta como <strong>Sujeto del Mercado</strong> a efectos de liquidación. Es el otro lado de OMIE: aquí se cuadran los kWh que tus clientes consumieron con los kWh que compraste, hora a hora. Si compraste de menos, pagas el desvío al precio que toque (servicios de ajuste). Si compraste de más, te cobran o te abonan según corresponda.</p>
+    <p>El proceso también incluye:</p>
+    <ul>
+      <li>Inscripción en el registro de Sujetos del Sistema.</li>
+      <li>Constitución de garantía financiera específica para liquidación de desvíos y servicios de ajuste.</li>
+      <li>Asociación a una <strong>Unidad de Programación</strong> (UP) que agrupa tus puntos de consumo.</li>
+      <li>Interconexión técnica con el sistema e-sios (datos de liquidación y precios).</li>
+    </ul>
+  </div>
+  <aside class="margin-note">
+    <strong>e-sios</strong> es el portal abierto de información del sistema eléctrico que opera REE: precios horarios, demanda, generación por tecnología, casaciones, ajustes. Conviene conocerlo aunque no operes: es donde ves en tiempo real lo que pasa en el sistema.
+  </aside>
+</div>
+
+<div class="row">
+  <div class="col-main">
+    <h2>Llave 3 — ATR y SIPS: contratos con las distribuidoras</h2>
+    <p>Para que la electricidad llegue físicamente a cada cliente tuyo, hace falta que la distribuidora de su zona te trate como interlocutor. Eso se firma con un <strong>contrato ATR</strong> (Acceso de Terceros a la Red). Hay un modelo de contrato aprobado por la CNMC; cada distribuidora lo personaliza ligeramente, pero lo esencial es común.</p>
+    <p>Una vez firmado, te dan acceso a sus sistemas electrónicos para todo el ciclo de gestión del cliente:</p>
+    <ul>
+      <li>Altas de nuevos clientes (cambio de comercializadora o nuevo suministro).</li>
+      <li>Bajas.</li>
+      <li>Modificaciones de potencia, tarifa o titularidad.</li>
+      <li>Recepción de lecturas y curvas de carga para facturar.</li>
+      <li>Gestión de incidencias técnicas.</li>
+    </ul>
+    <p>El protocolo técnico se llama <strong>SCTD</strong> (Sistema Común de Trasiego de Datos) o sus evoluciones. Es un intercambio de mensajes en formato estándar entre tu CRM y los sistemas de la distribuidora.</p>
+  </div>
+  <aside class="margin-note">
+    <strong>SIPS</strong> es la base de datos de la CNMC que recoge todos los puntos de suministro de España, con su histórico de consumo y datos técnicos. Es lo que te permite captar a un cliente: le pides su CUPS, lo consultas en SIPS, ves su consumo y le haces una oferta a medida.
+  </aside>
+</div>
+
+<div class="row">
+  <div class="col-main">
+    <h2>Cuánto cuestan las garantías</h2>
+    <p>No hay una cifra única: depende del volumen, la posición y la calificación crediticia. Para hacerte una idea de orden de magnitud:</p>
+    <ul>
+      <li><strong>OMIE</strong>: garantía base mínima de varios cientos de miles de euros, escalable con el volumen contratado. Se ajusta de forma diaria.</li>
+      <li><strong>REE (liquidaciones y desvíos)</strong>: del mismo orden, también escalable.</li>
+      <li><strong>Distribuidoras (ATR)</strong>: cada una puede pedir garantías adicionales según el volumen de clientes que vayas a gestionar en su zona.</li>
+    </ul>
+    <p>Una comercializadora que arranca con cartera pequeña puede estar moviendo, entre todas las garantías, una cifra de medio millón a un millón de euros en avales, sin contar el capital circulante. Por eso la vía representada es tan popular: el representante usa <em>sus</em> garantías y te las "alquila" vía comisión.</p>
+  </div>
+  <aside class="margin-note">
+    Los <strong>avales bancarios</strong> son la forma más común: el banco te cobra una comisión anual (a menudo 0,5%-2% del valor avalado) y se compromete frente a OMIE/REE/distribuidora. El depósito en efectivo es caro porque inmoviliza tesorería; el aval libera caja a cambio de coste financiero.
+  </aside>
+</div>
+
+<div class="callout">
+<strong>Lo que llevarte:</strong> tres llaves después de la CNMC: OMIE (comprar), REE (liquidar) y ATR con cada distribuidora (entregar). Cada una con sus garantías, sistemas y procesos. La opción rápida y barata para empezar es ir vía representante; cuando creces, te independizas. Sin estas tres llaves operativas, la inscripción en CNMC no sirve de nada.
+</div>
+
+<hr>
+
+<div class="ejercicios">
+<h2>Ejercicios rápidos</h2>
+
+<details>
+<summary>1. ¿Qué diferencia hay entre ser "Agente del Mercado" (OMIE) y "Sujeto del Mercado" (REE)?</summary>
+<p>Agente del Mercado en OMIE = puedes participar en la subasta diaria e intradiaria, comprando y vendiendo energía. Es el ámbito económico. Sujeto del Mercado en REE = se te liquidan los consumos reales y los desvíos respecto a lo que programaste. Es el ámbito de la liquidación física y financiera. Necesitas las dos figuras para cerrar el círculo: una para comprar, otra para que cuadren las cuentas.</p>
+</details>
+
+<details>
+<summary>2. Una comercializadora arranca con muy poca caja. ¿Qué opción tiene para operar sin poner medio millón en avales?</summary>
+<p>Contratar a un representante autorizado que ya sea Agente OMIE y Sujeto REE. El representante usa sus garantías a cambio de una comisión por MWh gestionado. La comercializadora se concentra en captar clientes, facturar y atender. Es el modelo más común al arrancar; cuando se alcanza un volumen suficiente, se valora independizarse y montar la operativa propia.</p>
+</details>
+
+<details>
+<summary>3. ¿Para qué sirve SIPS?</summary>
+<p>SIPS es la base de datos centralizada de la CNMC con todos los puntos de suministro de España: CUPS, dirección, distribuidora, potencia contratada, tarifa, históricos de consumo. Como comercializadora, lo consultas para preparar ofertas a medida a un cliente potencial (sabiendo cuánto consume y a qué precio aproximado) y para gestionar las altas y bajas con datos exactos. Sin SIPS, vendes a ciegas.</p>
+</details>
+</div>
+
+</article>
+</main>
+
+<nav class="pildora-nav">
+  <a href="../pildora-06_constitucion-cnmc/index.html">← Anterior</a>
+  <a href="../indice.html">Índice del curso</a>
+  <a href="../pildora-08_operativa-compras-cobertura/index.html">Siguiente: Operativa diaria →</a>
+</nav>
+
+<script>
+  const bar = document.getElementById('progressBar');
+  function p(){const h=document.documentElement;bar.style.width=Math.min(100,Math.max(0,(h.scrollTop)/(h.scrollHeight-h.clientHeight)*100))+'%';}
+  document.addEventListener('scroll',p,{passive:true}); p();
+</script>
+</body>
+</html>

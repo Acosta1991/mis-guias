@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Píldora 2 — El mapa de actores: quién hace qué</title>
+<style>
+  :root { --bg:#FAF7F1; --text:#2C2A26; --muted:#6B655C; --accent:#E07A1F; --rule:#E5DFD3; --note-bg:#F3EEDF; --serif:Georgia,"Iowan Old Style","Palatino Linotype",serif; --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; }
+  *{box-sizing:border-box} html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--serif);font-size:18px;line-height:1.65}
+  #progressBar{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:100;transition:width .1s}
+  header,main,footer,nav.pildora-nav{max-width:1100px;margin:0 auto;padding:0 24px}
+  header{padding-top:60px;padding-bottom:28px}
+  .meta{font-family:var(--sans);font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
+  h1{font-family:var(--sans);font-weight:700;font-size:38px;line-height:1.15;margin:0 0 18px}
+  .lede{font-size:21px;color:var(--muted);margin:0 0 12px;max-width:700px;font-style:italic}
+  h2{font-family:var(--sans);font-weight:600;font-size:24px;margin:48px 0 14px}
+  h3{font-family:var(--sans);font-weight:600;font-size:18px;margin:28px 0 8px}
+  main article{padding:16px 0 40px}
+  .row{display:grid;grid-template-columns:minmax(0,680px) minmax(0,280px);gap:56px;margin:0 0 24px}
+  .row.single{grid-template-columns:minmax(0,680px)}
+  .col-main p,.col-main ul,.col-main ol{margin:0 0 16px}
+  aside.margin-note{font-family:var(--sans);font-size:14px;line-height:1.55;color:var(--muted);border-left:2px solid var(--accent);padding:4px 0 4px 14px;margin-top:6px}
+  aside.margin-note strong{color:var(--text);font-weight:600}
+  @media(max-width:900px){.row,.row.single{grid-template-columns:1fr;gap:16px}aside.margin-note{background:var(--note-bg);border-left:3px solid var(--accent);padding:10px 14px;border-radius:0 4px 4px 0}h1{font-size:30px}.lede{font-size:18px}}
+  .callout{background:var(--note-bg);border-radius:6px;padding:18px 22px;margin:24px 0;font-size:17px}
+  .callout strong{color:var(--accent)}
+  figure{margin:28px 0;text-align:center} figcaption{font-family:var(--sans);font-size:13px;color:var(--muted);margin-top:10px}
+  svg.diagram{max-width:100%;height:auto}
+  hr{border:0;border-top:1px solid var(--rule);margin:48px 0}
+  .ejercicios{background:#FFFDF8;border:1px solid var(--rule);border-radius:8px;padding:20px 24px;margin:32px 0}
+  .ejercicios h2{margin-top:0}
+  details{border-top:1px solid var(--rule);padding:12px 0} details:first-of-type{border-top:0}
+  summary{font-family:var(--sans);font-weight:600;cursor:pointer;padding:4px 0}
+  summary:hover,details[open] summary{color:var(--accent)}
+  details p{margin:10px 0 4px}
+  nav.pildora-nav{display:flex;justify-content:space-between;align-items:center;padding-top:24px;padding-bottom:60px;font-family:var(--sans);font-size:15px;border-top:1px solid var(--rule);margin-top:40px}
+  nav.pildora-nav a{color:var(--accent);text-decoration:none;font-weight:500}
+  nav.pildora-nav a:hover{text-decoration:underline}
+  .tabla-actores{width:100%;border-collapse:collapse;margin:24px 0;font-family:var(--sans);font-size:15px}
+  .tabla-actores th,.tabla-actores td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--rule);vertical-align:top}
+  .tabla-actores th{background:var(--note-bg);font-weight:600;color:var(--text)}
+  .tabla-actores tr:hover td{background:#FFFDF8}
+</style>
+</head>
+<body>
+<div id="progressBar"></div>
+
+<header>
+  <div class="meta">Píldora 2 · ⏱ 10 min · Mercado eléctrico español</div>
+  <h1>El mapa de actores: quién hace qué</h1>
+  <p class="lede">Cinco oficios técnicos y dos árbitros. En cuanto sepas quién es quién, todo el resto del curso se vuelve más fácil de seguir.</p>
+</header>
+
+<main>
+<article>
+
+<div class="row">
+  <div class="col-main">
+    <h2>La cadena, de la central a tu enchufe</h2>
+    <p>La electricidad recorre un camino físico claro: <strong>se genera</strong> en algún sitio (central nuclear, parque eólico, panel solar), <strong>se transporta</strong> en alta tensión a largas distancias, <strong>se distribuye</strong> en media y baja tensión por las calles, y al final <strong>te la vende</strong> alguien que se encarga de cobrarte y atenderte.</p>
+    <p>En cada eslabón hay un actor distinto. Y por una razón importante: la ley los obliga a estar separados. Si la misma empresa fuera dueña de las líneas y a la vez te vendiera la luz, podría perjudicar a los competidores. A esa separación se le llama <em>unbundling</em>.</p>
+  </div>
+  <aside class="margin-note">
+    <strong>Unbundling</strong> = desempaquetado. Viene de las directivas europeas de los años 90 y 2000. España las traspuso con la Ley 54/1997 y, ya completa, con la Ley 24/2013, todavía vigente.
+  </aside>
+</div>
+
+<figure>
+<svg class="diagram" viewBox="0 0 760 280" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#E07A1F"/></marker>
+  </defs>
+  <rect width="760" height="280" fill="#FAF7F1"/>
+  <g font-family="system-ui" font-size="13" fill="#2C2A26">
+    <!-- 4 cajas en fila -->
+    <rect x="20"  y="80" width="160" height="80" rx="8" fill="#fff" stroke="#E5DFD3"/>
+    <text x="100" y="108" text-anchor="middle" font-weight="600">Generación</text>
+    <text x="100" y="128" text-anchor="middle" fill="#6B655C">centrales, parques</text>
+    <text x="100" y="146" text-anchor="middle" fill="#E07A1F" font-size="11">COMPETENCIA</text>
+
+    <rect x="220" y="80" width="160" height="80" rx="8" fill="#fff" stroke="#E5DFD3"/>
+    <text x="300" y="108" text-anchor="middle" font-weight="600">Transporte</text>
+    <text x="300" y="128" text-anchor="middle" fill="#6B655C">alta tensión, REE</text>
+    <text x="300" y="146" text-anchor="middle" fill="#6B655C" font-size="11">MONOPOLIO</text>
+
+    <rect x="420" y="80" width="160" height="80" rx="8" fill="#fff" stroke="#E5DFD3"/>
+    <text x="500" y="108" text-anchor="middle" font-weight="600">Distribución</text>
+    <text x="500" y="128" text-anchor="middle" fill="#6B655C">media y baja</text>
+    <text x="500" y="146" text-anchor="middle" fill="#6B655C" font-size="11">MONOPOLIO ZONAL</text>
+
+    <rect x="620" y="80" width="120" height="80" rx="8" fill="#fff" stroke="#E5DFD3"/>
+    <text x="680" y="108" text-anchor="middle" font-weight="600">Comercialización</text>
+    <text x="680" y="128" text-anchor="middle" fill="#6B655C">te factura</text>
+    <text x="680" y="146" text-anchor="middle" fill="#E07A1F" font-size="11">COMPETENCIA</text>
+
+    <path d="M180,120 L218,120" stroke="#E07A1F" stroke-width="2" marker-end="url(#ar)"/>
+    <path d="M380,120 L418,120" stroke="#E07A1F" stroke-width="2" marker-end="url(#ar)"/>
+    <path d="M580,120 L618,120" stroke="#E07A1F" stroke-width="2" marker-end="url(#ar)"/>
+
+    <!-- consumidor -->
+    <text x="680" y="200" text-anchor="middle" font-size="22">🏠</text>
+    <text x="680" y="225" text-anchor="middle" fill="#6B655C" font-size="12">consumidor</text>
+  </g>
+  <text x="380" y="35" text-anchor="middle" font-family="system-ui" font-size="15" fill="#6B655C">La cadena de valor: cuatro actividades, cuatro oficios</text>
+  <text x="380" y="262" text-anchor="middle" font-family="system-ui" font-size="13" fill="#6B655C" font-style="italic">Las cajas naranjas pueden tener muchas empresas. Las grises, solo una por zona.</text>
+</svg>
+<figcaption>La cadena de valor del sistema eléctrico español.</figcaption>
+</figure>
+
+<div class="row">
+  <div class="col-main">
+    <h2>Los cinco oficios</h2>
+    <p>Una pasada rápida con la analogía de un restaurante para que se quede:</p>
+  </div>
+</div>
+
+<table class="tabla-actores">
+<thead>
+<tr><th>Quién</th><th>Qué hace</th><th>Analogía</th></tr>
+</thead>
+<tbody>
+<tr><td><strong>Generador</strong></td><td>Produce electricidad: centrales nucleares, ciclos combinados de gas, parques eólicos, plantas solares, hidráulica.</td><td>El productor de tomates. Hay muchos y compiten en calidad y precio.</td></tr>
+<tr><td><strong>Transportista</strong> (REE)</td><td>Mueve electricidad en muy alta tensión por toda España. Es una sola empresa: Red Eléctrica de España. Además, opera el sistema en tiempo real.</td><td>La autopista de mercancías. Solo hay una, y todos pagan peaje por usarla.</td></tr>
+<tr><td><strong>Distribuidor</strong></td><td>Lleva la electricidad a tu calle y a tu casa por media y baja tensión. Cada zona del país tiene una sola distribuidora.</td><td>La calle del barrio. Una sola por zona, no compite. La paga todo el mundo vía peaje.</td></tr>
+<tr><td><strong>Comercializador</strong></td><td>Compra electricidad al por mayor, te la vende al por menor, te factura y te atiende. Hay cientos en España.</td><td>El restaurante. Compra ingredientes, los sirve, cobra. Tú eliges en cuál cenas.</td></tr>
+<tr><td><strong>Consumidor</strong></td><td>Doméstico, pyme o gran industria. Contrata con un comercializador y paga la factura.</td><td>El cliente. Decide a quién comprarle.</td></tr>
+</tbody>
+</table>
+
+<div class="row">
+  <div class="col-main">
+    <h2>Y los dos árbitros</h2>
+    <p>Como el sector mezcla monopolios y competencia, hace falta alguien que vigile. Y como tiene una pieza técnica delicadísima (la red en tiempo real), hace falta también alguien que la coordine.</p>
+    <h3>Operador del sistema: Red Eléctrica (REE)</h3>
+    <p>Es el árbitro técnico. Casa oferta y demanda en tiempo real, evita apagones, gestiona las "subidas y bajadas" de última hora (servicios de ajuste). En España coincide con el transportista, pero su rol como operador del sistema es separado.</p>
+    <h3>Operador del mercado: OMIE</h3>
+    <p>Es el árbitro económico del mercado mayorista. Recoge las ofertas de compradores y vendedores y calcula el precio horario. Es la "bolsa" donde se compra y vende la electricidad para mañana.</p>
+  </div>
+  <aside class="margin-note">
+    REE y OMIE son <strong>los dos operadores</strong> oficiales reconocidos por ley. Uno se encarga de que el sistema físico funcione, el otro de que el mercado económico funcione. Son piezas distintas.
+  </aside>
+</div>
+
+<div class="row">
+  <div class="col-main">
+    <h3>Regulador: CNMC</h3>
+    <p>La Comisión Nacional de los Mercados y la Competencia es el regulador independiente del sector. Vigila que se cumplan las reglas, fija los peajes de las redes, lleva el registro de comercializadoras y supervisa precios y conductas.</p>
+    <h3>Ministerio: MITECO</h3>
+    <p>El Ministerio para la Transición Ecológica y el Reto Demográfico fija la política energética: objetivos de renovables, subastas de capacidad, tarifa regulada (PVPC), bono social, fiscalidad energética. Es quien dicta la dirección política; CNMC vigila que se cumpla.</p>
+  </div>
+  <aside class="margin-note">
+    Para montar una comercializadora vas a tratar con todos ellos en algún momento: <strong>CNMC</strong> para inscribirte, <strong>OMIE</strong> para comprar energía, <strong>REE</strong> para liquidar lo que se consume, <strong>distribuidoras</strong> para contratos ATR, y <strong>MITECO</strong> indirectamente vía bono social y otras obligaciones.
+  </aside>
+</div>
+
+<div class="callout">
+<strong>Lo que llevarte:</strong> generación y comercialización son <em>competencia</em> (hay muchos jugadores). Transporte y distribución son <em>monopolio</em> (una empresa por zona, regulada). Los árbitros son REE (técnico), OMIE (mercado mayorista) y CNMC (regulación). Esta foto se repite en casi todos los países europeos.
+</div>
+
+<hr>
+
+<div class="ejercicios">
+<h2>Ejercicios rápidos</h2>
+
+<details>
+<summary>1. ¿Por qué REE y OMIE no son la misma cosa?</summary>
+<p>Porque resuelven problemas distintos. REE garantiza que la red física no se caiga: ajusta oferta y demanda en tiempo real y opera las líneas de alta tensión. OMIE gestiona el mercado económico: organiza la subasta diaria donde compradores y vendedores cierran precio para las horas del día siguiente. Una es ingeniería en directo; la otra es una bolsa.</p>
+</details>
+
+<details>
+<summary>2. ¿La distribuidora elige a quién darle servicio?</summary>
+<p>No. La distribuidora tiene una zona asignada y está obligada a dar acceso a su red a cualquier consumidor de esa zona y a cualquier comercializadora que firme con ella el contrato ATR. Cobra por el uso de la red según una tarifa regulada por la CNMC. Es un monopolio zonal con obligación de servicio.</p>
+</details>
+
+<details>
+<summary>3. Si quieres montar una comercializadora, ¿con qué actores de esta píldora vas a interactuar?</summary>
+<p>Con casi todos. Te inscribes ante CNMC. Compras energía a generadores y otros agentes a través de OMIE (mercado diario), de plataformas OTC o de PPAs bilaterales. Liquidas lo consumido con REE. Firmas contratos ATR con cada distribuidora cuya zona quieras servir. Y emites factura al consumidor final.</p>
+</details>
+</div>
+
+</article>
+</main>
+
+<nav class="pildora-nav">
+  <a href="../pildora-01_electricidad-mercado-raro/index.html">← Anterior</a>
+  <a href="../indice.html">Índice del curso</a>
+  <a href="../pildora-03_mercado-mayorista/index.html">Siguiente: El mercado mayorista →</a>
+</nav>
+
+<script>
+  const bar = document.getElementById('progressBar');
+  function p(){const h=document.documentElement;bar.style.width=Math.min(100,Math.max(0,(h.scrollTop)/(h.scrollHeight-h.clientHeight)*100))+'%';}
+  document.addEventListener('scroll',p,{passive:true}); p();
+</script>
+</body>
+</html>

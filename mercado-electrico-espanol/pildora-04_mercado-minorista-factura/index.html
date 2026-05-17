@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Píldora 4 — El mercado minorista: PVPC, mercado libre y factura</title>
+<style>
+  :root { --bg:#FAF7F1; --text:#2C2A26; --muted:#6B655C; --accent:#E07A1F; --rule:#E5DFD3; --note-bg:#F3EEDF; --serif:Georgia,"Iowan Old Style","Palatino Linotype",serif; --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; }
+  *{box-sizing:border-box} html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--serif);font-size:18px;line-height:1.65}
+  #progressBar{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:100;transition:width .1s}
+  header,main,footer,nav.pildora-nav{max-width:1100px;margin:0 auto;padding:0 24px}
+  header{padding-top:60px;padding-bottom:28px}
+  .meta{font-family:var(--sans);font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
+  h1{font-family:var(--sans);font-weight:700;font-size:38px;line-height:1.15;margin:0 0 18px}
+  .lede{font-size:21px;color:var(--muted);margin:0 0 12px;max-width:700px;font-style:italic}
+  h2{font-family:var(--sans);font-weight:600;font-size:24px;margin:48px 0 14px}
+  h3{font-family:var(--sans);font-weight:600;font-size:18px;margin:28px 0 8px}
+  main article{padding:16px 0 40px}
+  .row{display:grid;grid-template-columns:minmax(0,680px) minmax(0,280px);gap:56px;margin:0 0 24px}
+  .row.single{grid-template-columns:minmax(0,680px)}
+  .col-main p,.col-main ul,.col-main ol{margin:0 0 16px}
+  aside.margin-note{font-family:var(--sans);font-size:14px;line-height:1.55;color:var(--muted);border-left:2px solid var(--accent);padding:4px 0 4px 14px;margin-top:6px}
+  aside.margin-note strong{color:var(--text);font-weight:600}
+  @media(max-width:900px){.row,.row.single{grid-template-columns:1fr;gap:16px}aside.margin-note{background:var(--note-bg);border-left:3px solid var(--accent);padding:10px 14px;border-radius:0 4px 4px 0}h1{font-size:30px}.lede{font-size:18px}}
+  .callout{background:var(--note-bg);border-radius:6px;padding:18px 22px;margin:24px 0;font-size:17px}
+  .callout strong{color:var(--accent)}
+  figure{margin:28px 0;text-align:center} figcaption{font-family:var(--sans);font-size:13px;color:var(--muted);margin-top:10px}
+  svg.diagram{max-width:100%;height:auto}
+  hr{border:0;border-top:1px solid var(--rule);margin:48px 0}
+  .ejercicios{background:#FFFDF8;border:1px solid var(--rule);border-radius:8px;padding:20px 24px;margin:32px 0}
+  .ejercicios h2{margin-top:0}
+  details{border-top:1px solid var(--rule);padding:12px 0} details:first-of-type{border-top:0}
+  summary{font-family:var(--sans);font-weight:600;cursor:pointer;padding:4px 0}
+  summary:hover,details[open] summary{color:var(--accent)}
+  details p{margin:10px 0 4px}
+  nav.pildora-nav{display:flex;justify-content:space-between;align-items:center;padding-top:24px;padding-bottom:60px;font-family:var(--sans);font-size:15px;border-top:1px solid var(--rule);margin-top:40px}
+  nav.pildora-nav a{color:var(--accent);text-decoration:none;font-weight:500}
+  nav.pildora-nav a:hover{text-decoration:underline}
+  .comparacion{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:24px 0}
+  .comparacion .card{background:#fff;border:1px solid var(--rule);border-radius:8px;padding:20px 22px}
+  .comparacion h3{margin-top:0;color:var(--accent);font-size:18px}
+  .comparacion ul{font-family:var(--sans);font-size:15px;line-height:1.55;padding-left:18px}
+  @media(max-width:700px){.comparacion{grid-template-columns:1fr}}
+  .factura-svg{display:block;margin:18px auto}
+</style>
+</head>
+<body>
+<div id="progressBar"></div>
+
+<header>
+  <div class="meta">Píldora 4 · ⏱ 10 min · Mercado eléctrico español</div>
+  <h1>El mercado minorista: PVPC, mercado libre y factura</h1>
+  <p class="lede">El precio del pool no es lo que pagas tú. Entre el mayorista y tu factura hay peajes, cargos, impuestos y un montón de letra pequeña. Aquí está el desglose.</p>
+</header>
+
+<main>
+<article>
+
+<div class="row">
+  <div class="col-main">
+    <h2>Dos puertas para contratar la luz</h2>
+    <p>En España, un consumidor pequeño puede contratar la electricidad de dos formas:</p>
+    <ul>
+      <li><strong>PVPC</strong> (Precio Voluntario para el Pequeño Consumidor): tarifa regulada por el Gobierno. Solo la pueden ofrecer ciertas "comercializadoras de referencia" autorizadas. El precio de la energía sigue el del pool, con una fórmula publicada cada hora.</li>
+      <li><strong>Mercado libre</strong>: contratas con cualquiera de las cientos de comercializadoras libres del país. El precio y las condiciones los pone cada empresa. Puede ser fijo, indexado, con descuentos, con servicios añadidos...</li>
+    </ul>
+    <p>Las grandes industrias ni eligen: están siempre en mercado libre (o compran directamente al pool si tienen volumen para ser sujetos de mercado). El PVPC es solo para potencias contratadas iguales o inferiores a 10 kW.</p>
+  </div>
+  <aside class="margin-note">
+    Las <strong>comercializadoras de referencia</strong> (COR) son una lista cerrada: las grandes (Endesa Energía XXI, Iberdrola Clientes, Naturgy Iberia, EDP Comercializadora, etc.). Solo ellas pueden ofrecer PVPC y bono social. El resto, mercado libre.
+  </aside>
+</div>
+
+<div class="comparacion">
+  <div class="card">
+    <h3>PVPC</h3>
+    <ul>
+      <li>Solo para ≤ 10 kW.</li>
+      <li>Solo lo ofrecen las comercializadoras de referencia.</li>
+      <li>Precio horario que sigue al pool.</li>
+      <li>Volatilidad alta: si sube el pool, sube tu factura.</li>
+      <li>Sin permanencia, sin productos añadidos.</li>
+      <li>Da acceso al bono social si cumples requisitos.</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>Mercado libre</h3>
+    <ul>
+      <li>Para cualquier potencia, cualquier consumidor.</li>
+      <li>Cientos de comercializadoras compitiendo.</li>
+      <li>Precio fijo, indexado o mixto, según oferta.</li>
+      <li>Volatilidad la asume la comercializadora.</li>
+      <li>Puede tener permanencias y servicios añadidos.</li>
+      <li>No da acceso al bono social.</li>
+    </ul>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-main">
+    <h2>De qué está hecha tu factura</h2>
+    <p>Lo que pagas tiene cuatro grandes ingredientes. Aunque tú veas un solo total, conviene verlos por separado porque cada uno depende de cosas distintas.</p>
+  </div>
+</div>
+
+<figure>
+<svg class="factura-svg" viewBox="0 0 720 350" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:680px;height:auto">
+  <rect width="720" height="350" fill="#FAF7F1"/>
+  <text x="360" y="28" text-anchor="middle" font-family="system-ui" font-size="15" fill="#6B655C">Desglose típico de una factura doméstica</text>
+
+  <g font-family="system-ui" font-size="13">
+    <!-- Barra 1: Energía -->
+    <rect x="100" y="60" width="240" height="38" fill="#E07A1F"/>
+    <text x="220" y="84" text-anchor="middle" fill="#fff" font-weight="600">Energía (35%)</text>
+    <text x="350" y="84" fill="#2C2A26">€/kWh consumido</text>
+
+    <!-- Barra 2: Peajes -->
+    <rect x="100" y="110" width="170" height="38" fill="#C36213"/>
+    <text x="185" y="134" text-anchor="middle" fill="#fff" font-weight="600">Peajes (25%)</text>
+    <text x="350" y="134" fill="#2C2A26">retribución a las redes</text>
+
+    <!-- Barra 3: Cargos -->
+    <rect x="100" y="160" width="120" height="38" fill="#9E4F0F"/>
+    <text x="160" y="184" text-anchor="middle" fill="#fff" font-weight="600">Cargos (15%)</text>
+    <text x="350" y="184" fill="#2C2A26">renovables, sobrecostes</text>
+
+    <!-- Barra 4: Impuestos -->
+    <rect x="100" y="210" width="170" height="38" fill="#6B655C"/>
+    <text x="185" y="234" text-anchor="middle" fill="#fff" font-weight="600">Impuestos (25%)</text>
+    <text x="350" y="234" fill="#2C2A26">IE + IVA + alquiler equipos</text>
+
+    <!-- Total -->
+    <line x1="100" y1="270" x2="620" y2="270" stroke="#C7C0B3"/>
+    <text x="100" y="295" font-weight="600" font-size="15" fill="#2C2A26">Total factura</text>
+    <text x="620" y="295" text-anchor="end" font-weight="600" font-size="15" fill="#E07A1F">= lo que pagas</text>
+
+    <text x="100" y="325" fill="#6B655C" font-size="12" font-style="italic">Porcentajes aproximados de un hogar tipo. Varían mucho según tarifa, consumo y momento.</text>
+  </g>
+</svg>
+<figcaption>Solo un tercio aproximado de tu factura es la electricidad en sí.</figcaption>
+</figure>
+
+<div class="row">
+  <div class="col-main">
+    <h3>1. Energía</h3>
+    <p>Es lo que cuesta la electricidad que consumes. Lo fija tu contrato (precio fijo, indexado al pool, etc.). Es donde compite tu comercializadora: el resto de los conceptos los cobra el sistema, no ella.</p>
+
+    <h3>2. Peajes de transporte y distribución</h3>
+    <p>Es lo que pagan todos los consumidores por mantener las redes. Es un precio regulado por la CNMC, igual para todos los consumidores del mismo tipo. Tiene dos partes: <strong>término de potencia</strong> (€ por kW contratado al mes, lo pagas siempre, consumas o no) y <strong>término de energía</strong> (€ por kWh, según consumas).</p>
+
+    <h3>3. Cargos</h3>
+    <p>Los fija el Gobierno. Sirven para financiar políticas: primas a renovables antiguas, sobrecostes de los sistemas no peninsulares (Baleares, Canarias, Ceuta, Melilla), déficit tarifario histórico, bono social, etc. Misma estructura que los peajes (potencia + energía) pero distinto destinatario.</p>
+
+    <h3>4. Impuestos y otros</h3>
+    <p>Impuesto eléctrico (un porcentaje sobre los conceptos anteriores) e IVA sobre todo el resultado. Además puede aparecer el alquiler del contador si no es propiedad del consumidor.</p>
+  </div>
+  <aside class="margin-note">
+    <strong>Tres tramos horarios</strong> (P1 punta, P2 llano, P3 valle) para potencia y energía: desde junio de 2021, los peajes y cargos cambian según la hora del día. Por eso conviene saber cuándo poner la lavadora.
+  </aside>
+</div>
+
+<div class="row">
+  <div class="col-main">
+    <h2>El bono social, la red de seguridad</h2>
+    <p>El bono social es un descuento (25% o 40% según el caso, con extensiones temporales) sobre el PVPC para consumidores vulnerables. Lo financian <strong>todas las comercializadoras</strong> en proporción a sus clientes. Eso significa que, aunque seas una comercializadora libre y no des bono social directamente, tu empresa pagará una cuota anual a un fondo común que cubre ese descuento. Es una obligación legal, no opcional.</p>
+  </div>
+  <aside class="margin-note">
+    Esta cuota es uno de esos "costes invisibles" del negocio. Pequeño en términos unitarios, pero hay que conocerlo y provisionarlo. La CNMC publica cada año el reparto.
+  </aside>
+</div>
+
+<div class="callout">
+<strong>Lo que llevarte:</strong> hay dos contratos posibles para pequeños consumidores (PVPC regulado o mercado libre). La factura es energía + peajes + cargos + impuestos, y solo la primera parte la decide tu comercializadora. El bono social lo financian todas las comercializadoras, también las libres.
+</div>
+
+<hr>
+
+<div class="ejercicios">
+<h2>Ejercicios rápidos</h2>
+
+<details>
+<summary>1. Una persona con potencia 5 kW está en PVPC. Su vecino con la misma potencia está en mercado libre con una tarifa fija. ¿En qué se diferencia su factura cuando el pool sube 200 €/MWh durante una semana?</summary>
+<p>La del PVPC sube esa semana en la parte de energía, hora a hora, según el precio del pool. La del mercado libre con precio fijo no se mueve: paga el €/kWh que firmó en su contrato. El riesgo de la subida lo asume la comercializadora libre, que esa semana puede estar perdiendo dinero (compra caro en el pool y vende barato según su contrato), salvo que se haya cubierto en el mercado a plazo.</p>
+</details>
+
+<details>
+<summary>2. ¿Por qué pagas potencia aunque no consumas nada?</summary>
+<p>Porque la red está dimensionada para servirte cuando lo necesites. Esa capacidad reservada cuesta dinero igual que un cable, un transformador y una subestación. El término de potencia (€ por kW contratado al mes) cubre ese coste fijo. Si bajaras tu potencia contratada, pagarías menos potencia, pero quizá te saltaran los plomos.</p>
+</details>
+
+<details>
+<summary>3. ¿Una comercializadora libre puede hacer bono social a sus clientes?</summary>
+<p>No directamente: el bono social solo se aplica sobre el PVPC y solo lo ofrecen las comercializadoras de referencia. Lo que sí hace (obligada por ley) es <strong>contribuir al fondo</strong> que financia ese descuento, con una cuota proporcional a su número de clientes. La obligación no se evita siendo libre.</p>
+</details>
+</div>
+
+</article>
+</main>
+
+<nav class="pildora-nav">
+  <a href="../pildora-03_mercado-mayorista/index.html">← Anterior</a>
+  <a href="../indice.html">Índice del curso</a>
+  <a href="../pildora-05_distribuidoras-mix-mapa/index.html">Siguiente: Mapa de distribuidoras →</a>
+</nav>
+
+<script>
+  const bar = document.getElementById('progressBar');
+  function p(){const h=document.documentElement;bar.style.width=Math.min(100,Math.max(0,(h.scrollTop)/(h.scrollHeight-h.clientHeight)*100))+'%';}
+  document.addEventListener('scroll',p,{passive:true}); p();
+</script>
+</body>
+</html>

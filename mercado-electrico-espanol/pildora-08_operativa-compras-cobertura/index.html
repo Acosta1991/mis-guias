@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Píldora 8 — Operativa: compras, cobertura y sistemas</title>
+<style>
+  :root { --bg:#FAF7F1; --text:#2C2A26; --muted:#6B655C; --accent:#E07A1F; --rule:#E5DFD3; --note-bg:#F3EEDF; --serif:Georgia,"Iowan Old Style","Palatino Linotype",serif; --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif; }
+  *{box-sizing:border-box} html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:var(--serif);font-size:18px;line-height:1.65}
+  #progressBar{position:fixed;top:0;left:0;height:3px;width:0;background:var(--accent);z-index:100;transition:width .1s}
+  header,main,footer,nav.pildora-nav{max-width:1100px;margin:0 auto;padding:0 24px}
+  header{padding-top:60px;padding-bottom:28px}
+  .meta{font-family:var(--sans);font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
+  h1{font-family:var(--sans);font-weight:700;font-size:38px;line-height:1.15;margin:0 0 18px}
+  .lede{font-size:21px;color:var(--muted);margin:0 0 12px;max-width:700px;font-style:italic}
+  h2{font-family:var(--sans);font-weight:600;font-size:24px;margin:48px 0 14px}
+  h3{font-family:var(--sans);font-weight:600;font-size:18px;margin:28px 0 8px}
+  main article{padding:16px 0 40px}
+  .row{display:grid;grid-template-columns:minmax(0,680px) minmax(0,280px);gap:56px;margin:0 0 24px}
+  .row.single{grid-template-columns:minmax(0,680px)}
+  .col-main p,.col-main ul,.col-main ol{margin:0 0 16px}
+  aside.margin-note{font-family:var(--sans);font-size:14px;line-height:1.55;color:var(--muted);border-left:2px solid var(--accent);padding:4px 0 4px 14px;margin-top:6px}
+  aside.margin-note strong{color:var(--text);font-weight:600}
+  @media(max-width:900px){.row,.row.single{grid-template-columns:1fr;gap:16px}aside.margin-note{background:var(--note-bg);border-left:3px solid var(--accent);padding:10px 14px;border-radius:0 4px 4px 0}h1{font-size:30px}.lede{font-size:18px}}
+  .callout{background:var(--note-bg);border-radius:6px;padding:18px 22px;margin:24px 0;font-size:17px}
+  .callout strong{color:var(--accent)}
+  figure{margin:28px 0;text-align:center} figcaption{font-family:var(--sans);font-size:13px;color:var(--muted);margin-top:10px}
+  svg.diagram{max-width:100%;height:auto}
+  hr{border:0;border-top:1px solid var(--rule);margin:48px 0}
+  .ejercicios{background:#FFFDF8;border:1px solid var(--rule);border-radius:8px;padding:20px 24px;margin:32px 0}
+  .ejercicios h2{margin-top:0}
+  details{border-top:1px solid var(--rule);padding:12px 0} details:first-of-type{border-top:0}
+  summary{font-family:var(--sans);font-weight:600;cursor:pointer;padding:4px 0}
+  summary:hover,details[open] summary{color:var(--accent)}
+  details p{margin:10px 0 4px}
+  nav.pildora-nav{display:flex;justify-content:space-between;align-items:center;padding-top:24px;padding-bottom:60px;font-family:var(--sans);font-size:15px;border-top:1px solid var(--rule);margin-top:40px}
+  nav.pildora-nav a{color:var(--accent);text-decoration:none;font-weight:500}
+  nav.pildora-nav a:hover{text-decoration:underline}
+  .tabla{width:100%;border-collapse:collapse;margin:24px 0;font-family:var(--sans);font-size:15px}
+  .tabla th,.tabla td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--rule);vertical-align:top}
+  .tabla th{background:var(--note-bg);font-weight:600}
+</style>
+</head>
+<body>
+<div id="progressBar"></div>
+
+<header>
+  <div class="meta">Píldora 8 · ⏱ 10 min · Mercado eléctrico español</div>
+  <h1>Operativa: compras, cobertura y sistemas</h1>
+  <p class="lede">Una comercializadora no es una tienda: es una mesa de trading conectada a un back-office. Vender precio fijo sin cubrirse es la forma más rápida de hundir el negocio.</p>
+</header>
+
+<main>
+<article>
+
+<div class="row">
+  <div class="col-main">
+    <h2>Cuatro sitios donde comprar energía</h2>
+    <p>Una comercializadora compra la energía que va a vender a sus clientes. La compra puede pasar por varios mercados distintos, y normalmente usarás más de uno. Cada uno cubre un trozo distinto del problema.</p>
+  </div>
+</div>
+
+<table class="tabla">
+<thead><tr><th>Dónde compras</th><th>Horizonte</th><th>Para qué sirve</th></tr></thead>
+<tbody>
+<tr><td><strong>Pool diario (OMIE)</strong></td><td>D-1 → D</td><td>Cubrir el consumo esperado de mañana al precio que salga.</td></tr>
+<tr><td><strong>Mercado intradiario</strong></td><td>Mismo día</td><td>Ajustar si tu demanda real difiere de la previsión.</td></tr>
+<tr><td><strong>Mercado a plazo (OMIP, OTC, futuros)</strong></td><td>Semanas a años</td><td>Fijar precio con antelación. Indispensable si vendes precio fijo.</td></tr>
+<tr><td><strong>PPA bilateral</strong></td><td>Años (5-15)</td><td>Comprar directamente a un generador (parque eólico o solar) a precio acordado a largo plazo.</td></tr>
+</tbody>
+</table>
+
+<div class="row">
+  <div class="col-main">
+    <h2>El problema central: el desajuste de calendarios</h2>
+    <p>Aquí está la dificultad estructural de la comercialización. Tus <strong>ventas a cliente</strong> suelen tener un precio fijo o semi-fijo durante meses. Tus <strong>compras al pool</strong> son variables hora a hora. Si no haces nada al respecto, estás especulando con el precio: una semana buena, ganas; una semana mala, palmas.</p>
+    <p>La cobertura (hedging) es lo que cierra ese hueco. Consiste en fijar de antemano un precio de compra para la energía que ya has vendido a precio fijo. Los instrumentos clásicos:</p>
+    <ul>
+      <li><strong>Futuros eléctricos en OMIP</strong>: contratos estandarizados (mes, trimestre, año) que liquidan contra el precio medio del pool. Compras a 70 €/MWh hoy un futuro Q3; cuando llegue el Q3, si el pool está a 90, ganas 20; si está a 50, pierdes 20. Combinado con tu compra real al pool a 90 ó 50, el resultado neto es 70.</li>
+      <li><strong>OTC bilateral</strong>: el mismo concepto pero negociado directamente con otra empresa (broker o trader), no en un mercado organizado. Más flexible, más caro en spread, asume riesgo de contraparte.</li>
+      <li><strong>PPA físico</strong>: te comprometes a comprar X MWh anuales durante años a un precio fijo a un parque concreto. Cuanto más estable sea tu cartera, más sentido tiene.</li>
+    </ul>
+  </div>
+  <aside class="margin-note">
+    <strong>OMIP</strong> es el mercado a plazo ibérico (gemelo de OMIE pero a futuros). Es donde casi todas las comercializadoras españolas hacen su cobertura organizada. Hay productos por baseload (24h) y peakload (horas de pico).
+  </aside>
+</div>
+
+<div class="row">
+  <div class="col-main">
+    <h2>Una regla simple: lo vendido tiene que estar comprado</h2>
+    <p>Cuando vendes un contrato a precio fijo a un cliente para los próximos 12 meses, en ese mismo instante deberías comprar una posición de cobertura por el mismo volumen y horizonte. El día que falte cobertura está el negocio expuesto al pool, y el pool puede ir donde quiera. La regla artesanal es:</p>
+    <p style="text-align:center;font-family:var(--sans);font-size:18px;color:var(--accent);font-weight:600;margin:16px 0">Vendes ⇒ cubres. En la misma jornada, mismo volumen.</p>
+    <p>Esto se llama trabajar "matched book": no llevar posiciones abiertas. Una comercializadora bien gestionada gana margen comercial (la diferencia entre lo que cobra al cliente y lo que paga en mercado), no gana especulando con el precio. Si lo segundo te tienta, ese es otro negocio y tiene otro nombre: trader energético.</p>
+  </div>
+  <aside class="margin-note">
+    Muchas comercializadoras que han quebrado en España y Europa en los últimos años lo hicieron por no respetar esta regla: vendieron barato a clientes confiando en que el pool seguiría bajo, no se cubrieron, y la crisis del gas de 2022 los pulverizó.
+  </aside>
+</div>
+
+<div class="row">
+  <div class="col-main">
+    <h2>El back-office: lo que pasa entre el contrato y el cobro</h2>
+    <p>La operación diaria de una comercializadora pequeña tiene un ciclo bastante repetitivo. Estos son los procesos vivos cada día:</p>
+    <ol>
+      <li><strong>Captación</strong>: comercial recibe un lead, pide el CUPS, consulta SIPS, prepara oferta personalizada.</li>
+      <li><strong>Contratación</strong>: cliente firma. Se notifica a la distribuidora vía SCTD el cambio de comercializadora. La distribuidora tiene plazos máximos para ejecutar la activación (normalmente unos pocos días).</li>
+      <li><strong>Programación</strong>: cada día se calcula la demanda esperada de toda la cartera y se envía a OMIE/REE como programa.</li>
+      <li><strong>Facturación</strong>: cuando llegan las lecturas vía SCTD (mensuales en domésticos, horarios en industriales), el sistema calcula la factura: energía consumida × precio del contrato + peajes + cargos + impuestos.</li>
+      <li><strong>Cobro</strong>: domiciliación o pago, con tratamiento de impagos (avisos, baja del cliente, paso a impagos).</li>
+      <li><strong>Liquidación de mercado</strong>: cuadre entre lo comprado en OMIE, lo consumido medido por REE/distribuidoras y los servicios de ajuste asignados a tu cartera.</li>
+      <li><strong>Atención y postventa</strong>: incidencias, reclamaciones, cambios de potencia, bajas.</li>
+    </ol>
+  </div>
+  <aside class="margin-note">
+    Todo esto se sostiene sobre un <strong>CRM/billing</strong> especializado en sector eléctrico. Hay varios proveedores en España; intentar montarlo desde cero es un proyecto de años. La decisión de qué software usar suele ser la más cara de los primeros meses.
+  </aside>
+</div>
+
+<div class="row">
+  <div class="col-main">
+    <h2>Pricing: cómo poner precio sin perder dinero</h2>
+    <p>El precio que ofreces al cliente final tiene que cubrir, como mínimo, esta pila de costes:</p>
+    <ol>
+      <li><strong>Coste de la energía cubierta</strong>: lo que te cuesta el MWh en el mercado a plazo o PPA para el periodo del contrato.</li>
+      <li><strong>Coste de desvíos esperados</strong>: una parte residual de la energía siempre se compra al spot, y los desvíos respecto al programa tienen coste. Se provisiona un margen.</li>
+      <li><strong>Coste del bono social</strong> (la cuota que pagas al fondo).</li>
+      <li><strong>Coste financiero</strong>: las garantías inmovilizadas y los plazos de cobro/pago consumen caja. Eso es un coste financiero real.</li>
+      <li><strong>Coste comercial y de back-office</strong>: comisiones de venta, sistema, personal, atención al cliente.</li>
+      <li><strong>Margen objetivo</strong>: lo que quieres ganar.</li>
+    </ol>
+    <p>Olvidar uno solo de estos seis es vender en pérdidas sin darse cuenta. El error más común al empezar es ignorar el coste financiero de las garantías y el de los desvíos.</p>
+  </div>
+  <aside class="margin-note">
+    Los márgenes netos típicos de una comercializadora libre en España rondan unos pocos euros por MWh. Pequeños. Por eso el volumen y la eficiencia operativa son tan importantes: el negocio es a escala.
+  </aside>
+</div>
+
+<div class="callout">
+<strong>Lo que llevarte:</strong> compras en cuatro sitios distintos según horizonte (pool, intradiario, plazo, PPA). Si vendes precio fijo, te cubres en plazo en el mismo momento, mismo volumen. El back-office gira sobre un ciclo: captar, contratar, programar, facturar, cobrar, liquidar. El precio al cliente cubre energía + desvíos + bono social + costes financieros + back-office + margen. Olvidar cualquiera es perder dinero.
+</div>
+
+<hr>
+
+<div class="ejercicios">
+<h2>Ejercicios rápidos</h2>
+
+<details>
+<summary>1. Una comercializadora firma un contrato anual a 80 €/MWh con un cliente. Ese mismo día compra en OMIP un futuro anual a 75 €/MWh por el mismo volumen. Si el pool durante el año termina en media a 120 €/MWh, ¿gana o pierde?</summary>
+<p>Gana. La compra real en pool sale a ~120 €/MWh, pero el futuro le devuelve 45 €/MWh (120-75) por la liquidación. Coste neto de la energía: 75. Vende a 80. Gana 5 €/MWh de margen, justo lo que esperaba. La cobertura ha funcionado: el negocio gana el margen comercial, sin importar adónde fuera el pool.</p>
+</details>
+
+<details>
+<summary>2. ¿Por qué el "matched book" (lo vendido = lo cubierto) es una regla casi sagrada?</summary>
+<p>Porque romperla convierte el negocio en especulación. Si vendes precio fijo y no cubres, estás apostando a que el pool no subirá. Si aciertas, ganas extra; si no, puedes quebrar. La quiebra de Holaluz en 2024 y de varias comercializadoras europeas en 2022 son ejemplos: vendieron barato confiando en que el pool seguiría bajo, no se cubrieron, y cuando el mercado se les vino encima no había forma de recuperarse.</p>
+</details>
+
+<details>
+<summary>3. Si una comercializadora pequeña no tiene equipo de mercado las 24 horas, ¿cómo gestiona las compras?</summary>
+<p>Normalmente delega esa operativa: o bien va vía representante (que opera por ella en OMIE y REE) o contrata un servicio de mesa de mercado externo. La planificación de compras se hace en horario de oficina, las ofertas al pool se envían automáticamente con reglas predefinidas, y la cobertura se renegocia periódicamente con el broker. Tener equipo propio 24/7 solo tiene sentido a partir de cierto volumen.</p>
+</details>
+</div>
+
+</article>
+</main>
+
+<nav class="pildora-nav">
+  <a href="../pildora-07_omie-ree-atr/index.html">← Anterior</a>
+  <a href="../indice.html">Índice del curso</a>
+  <a href="../pildora-09_riesgos-supervivencia/index.html">Siguiente: Riesgos y supervivencia →</a>
+</nav>
+
+<script>
+  const bar = document.getElementById('progressBar');
+  function p(){const h=document.documentElement;bar.style.width=Math.min(100,Math.max(0,(h.scrollTop)/(h.scrollHeight-h.clientHeight)*100))+'%';}
+  document.addEventListener('scroll',p,{passive:true}); p();
+</script>
+</body>
+</html>

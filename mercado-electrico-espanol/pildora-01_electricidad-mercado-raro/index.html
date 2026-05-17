@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Píldora 1 — ¿Por qué la electricidad es un mercado raro?</title>
+<style>
+  :root {
+    --bg: #FAF7F1;
+    --text: #2C2A26;
+    --muted: #6B655C;
+    --accent: #E07A1F;
+    --rule: #E5DFD3;
+    --note-bg: #F3EEDF;
+    --serif: Georgia, "Iowan Old Style", "Palatino Linotype", "Apple Garamond", serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--serif);
+    font-size: 18px;
+    line-height: 1.65;
+  }
+  #progressBar {
+    position: fixed; top: 0; left: 0; height: 3px; width: 0;
+    background: var(--accent); z-index: 100; transition: width 0.1s;
+  }
+  header, main, footer, nav.pildora-nav {
+    max-width: 1100px; margin: 0 auto; padding: 0 24px;
+  }
+  header { padding-top: 60px; padding-bottom: 28px; }
+  .meta {
+    font-family: var(--sans); font-size: 13px; color: var(--muted);
+    text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 12px;
+  }
+  h1 {
+    font-family: var(--sans); font-weight: 700; font-size: 38px;
+    line-height: 1.15; margin: 0 0 18px; color: var(--text);
+  }
+  .lede {
+    font-size: 21px; color: var(--muted); margin: 0 0 12px;
+    max-width: 700px; font-style: italic;
+  }
+  h2 {
+    font-family: var(--sans); font-weight: 600; font-size: 24px;
+    margin: 48px 0 14px; color: var(--text);
+  }
+  h3 {
+    font-family: var(--sans); font-weight: 600; font-size: 18px;
+    margin: 28px 0 8px; color: var(--text);
+  }
+  main article { padding: 16px 0 40px; }
+  .row {
+    display: grid; grid-template-columns: minmax(0, 680px) minmax(0, 280px);
+    gap: 56px; margin: 0 0 24px;
+  }
+  .row.single { grid-template-columns: minmax(0, 680px); }
+  .col-main p, .col-main ul, .col-main ol { margin: 0 0 16px; }
+  .col-main strong { color: var(--text); }
+  aside.margin-note {
+    font-family: var(--sans); font-size: 14px; line-height: 1.55;
+    color: var(--muted); border-left: 2px solid var(--accent);
+    padding: 4px 0 4px 14px; margin-top: 6px;
+  }
+  aside.margin-note strong { color: var(--text); font-weight: 600; }
+  @media (max-width: 900px) {
+    .row, .row.single { grid-template-columns: 1fr; gap: 16px; }
+    aside.margin-note {
+      background: var(--note-bg); border-left: 3px solid var(--accent);
+      padding: 10px 14px; border-radius: 0 4px 4px 0;
+    }
+    h1 { font-size: 30px; }
+    .lede { font-size: 18px; }
+  }
+  .callout {
+    background: var(--note-bg); border-radius: 6px; padding: 18px 22px;
+    margin: 24px 0; font-size: 17px;
+  }
+  .callout strong { color: var(--accent); }
+  figure { margin: 28px 0; text-align: center; }
+  figcaption {
+    font-family: var(--sans); font-size: 13px; color: var(--muted);
+    margin-top: 10px;
+  }
+  svg.diagram { max-width: 100%; height: auto; }
+  hr {
+    border: 0; border-top: 1px solid var(--rule); margin: 48px 0;
+  }
+  .ejercicios {
+    background: #FFFDF8; border: 1px solid var(--rule);
+    border-radius: 8px; padding: 20px 24px; margin: 32px 0;
+  }
+  .ejercicios h2 { margin-top: 0; }
+  details {
+    border-top: 1px solid var(--rule); padding: 12px 0;
+  }
+  details:first-of-type { border-top: 0; }
+  summary {
+    font-family: var(--sans); font-weight: 600; cursor: pointer;
+    padding: 4px 0; color: var(--text);
+  }
+  summary:hover { color: var(--accent); }
+  details[open] summary { color: var(--accent); }
+  details p { margin: 10px 0 4px; }
+  nav.pildora-nav {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-top: 24px; padding-bottom: 60px; font-family: var(--sans);
+    font-size: 15px; border-top: 1px solid var(--rule); margin-top: 40px;
+  }
+  nav.pildora-nav a {
+    color: var(--accent); text-decoration: none; font-weight: 500;
+  }
+  nav.pildora-nav a:hover { text-decoration: underline; }
+  nav.pildora-nav a.disabled { color: var(--muted); pointer-events: none; }
+</style>
+</head>
+<body>
+<div id="progressBar"></div>
+
+<header>
+  <div class="meta">Píldora 1 · ⏱ 10 min · Mercado eléctrico español</div>
+  <h1>¿Por qué la electricidad es un mercado raro?</h1>
+  <p class="lede">Antes de hablar de leyes, mercados o empresas, hay una pieza física que lo explica casi todo. Si no la entiendes, el resto parece burocracia caprichosa.</p>
+</header>
+
+<main>
+<article>
+
+<div class="row">
+  <div class="col-main">
+    <h2>La electricidad no se parece a nada</h2>
+    <p>Imagina que abres un restaurante. Compras tomates por la mañana, los guardas en la nevera y los sirves cuando el cliente entra. Si un día vienen más comensales, sacas más tomates. Si vienen menos, los guardas para mañana. Casi cualquier producto del mundo funciona así: lo produces, lo almacenas, lo vendes.</p>
+    <p>La electricidad <strong>no se puede almacenar</strong> a gran escala de forma barata. Lo que se produce a las 14:03 tiene que consumirse a las 14:03. Si no, se cae todo el sistema.</p>
+  </div>
+  <aside class="margin-note">
+    Las baterías existen, sí. Pero a escala de país su capacidad es pequeña comparada con el consumo total. La gran palanca de almacenamiento que sí funciona hoy es la <strong>hidráulica de bombeo</strong>: subir agua a un embalse cuando sobra y soltarla cuando falta.
+  </aside>
+</div>
+
+<div class="row">
+  <div class="col-main">
+    <p>Y hay un segundo problema: viaja por <strong>una red única</strong>. No puedes elegir que la electricidad del molino del pueblo vaya solo a tu casa. Una vez la metes en la red, se mezcla con toda la demás. Físicamente fluye por donde le permite la ley de Ohm, no por donde tú quieras.</p>
+  </div>
+  <aside class="margin-note">
+    Es como echar agua azul y agua roja en una piscina. Da igual quién la echó: la que sale del grifo es la mezcla. En electricidad, los electrones no llevan nombre.
+  </aside>
+</div>
+
+<figure>
+<svg class="diagram" viewBox="0 0 720 280" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="arr1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#E07A1F"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="720" height="280" fill="#FAF7F1"/>
+  <text x="360" y="28" text-anchor="middle" font-family="system-ui" font-size="15" fill="#6B655C">Generación y consumo deben coincidir en cada instante</text>
+
+  <g font-family="system-ui" font-size="13" fill="#2C2A26">
+    <rect x="40" y="80" width="140" height="60" rx="8" fill="#fff" stroke="#E5DFD3"/>
+    <text x="110" y="105" text-anchor="middle" font-weight="600">Generadores</text>
+    <text x="110" y="125" text-anchor="middle" fill="#6B655C">producen ahora</text>
+
+    <rect x="290" y="80" width="140" height="60" rx="8" fill="#fff" stroke="#E07A1F" stroke-width="2"/>
+    <text x="360" y="105" text-anchor="middle" font-weight="600">Red eléctrica</text>
+    <text x="360" y="125" text-anchor="middle" fill="#6B655C">no almacena</text>
+
+    <rect x="540" y="80" width="140" height="60" rx="8" fill="#fff" stroke="#E5DFD3"/>
+    <text x="610" y="105" text-anchor="middle" font-weight="600">Consumidores</text>
+    <text x="610" y="125" text-anchor="middle" fill="#6B655C">consumen ahora</text>
+
+    <path d="M180,110 L286,110" stroke="#E07A1F" stroke-width="2" marker-end="url(#arr1)"/>
+    <path d="M430,110 L536,110" stroke="#E07A1F" stroke-width="2" marker-end="url(#arr1)"/>
+  </g>
+
+  <g font-family="system-ui" font-size="13" fill="#6B655C">
+    <text x="360" y="190" text-anchor="middle" font-weight="600" fill="#E07A1F">Si esta ecuación se rompe...</text>
+    <text x="360" y="215" text-anchor="middle">Si se produce de más → suben la frecuencia y el voltaje, equipos se dañan.</text>
+    <text x="360" y="235" text-anchor="middle">Si se produce de menos → caen ambos, y el sistema dispara apagones.</text>
+    <text x="360" y="262" text-anchor="middle" font-style="italic">Hay que ajustar la oferta a la demanda cada segundo, en toda España a la vez.</text>
+  </g>
+</svg>
+<figcaption>El equilibrio físico: oferta = demanda, todo el rato.</figcaption>
+</figure>
+
+<div class="row">
+  <div class="col-main">
+    <h2>De ahí sale todo lo demás</h2>
+    <p>Estas dos rarezas — <strong>no se almacena</strong> y <strong>va por una red común</strong> — son la fuente de casi todas las particularidades del sector. Mira lo que provocan:</p>
+    <ol>
+      <li><strong>Hace falta alguien que coordine</strong> oferta y demanda en tiempo real, segundo a segundo. En España es Red Eléctrica como operador del sistema. Sin coordinador, apagón.</li>
+      <li><strong>Hace falta un mercado especial</strong> que case oferta y demanda con horas de antelación, no como cualquier tienda. Eso es el pool diario.</li>
+      <li><strong>La red es un monopolio natural</strong>. No tiene sentido tener dos redes paralelas. Por eso las redes son reguladas: si solo puede haber una, no puede cobrarte lo que le dé la gana.</li>
+      <li><strong>La generación y la venta sí compiten</strong>. Como hay muchos generadores y muchos comercializadores posibles, ahí sí hay mercado libre.</li>
+    </ol>
+  </div>
+  <aside class="margin-note">
+    De aquí viene la palabra <strong>"unbundling"</strong> o separación de actividades: la ley obliga a que quien tiene la red (monopolio) no sea la misma empresa que produce o vende (competencia). Si no, jugaría con ventaja.
+  </aside>
+</div>
+
+<div class="row single">
+  <div class="col-main">
+    <h2>El mapa mental que viene</h2>
+    <p>Toda la regulación del sector eléctrico — la separación de actividades, los reguladores, el pool, los peajes — son <strong>respuestas a esas dos rarezas físicas</strong>. No es burocracia caprichosa: es lo que pasa cuando intentas montar un mercado sobre algo que no se puede almacenar ni separar.</p>
+  </div>
+</div>
+
+<div class="callout">
+<strong>Lo que llevarte:</strong> la electricidad no se almacena y va por una red común. Eso obliga a coordinar oferta y demanda en tiempo real, a separar las actividades que son monopolio (red) de las que pueden competir (generación y venta), y a inventar mercados especiales para casar precios con horas de antelación.
+</div>
+
+<hr>
+
+<div class="ejercicios">
+<h2>Ejercicios rápidos</h2>
+
+<details>
+<summary>1. Si mañana inventáramos baterías baratísimas que almacenan toda la electricidad de España durante semanas, ¿qué pieza del sistema dejaría de tener sentido?</summary>
+<p>El operador del sistema en tiempo real (REE) perdería gran parte de su función crítica: ya no haría falta casar oferta y demanda cada segundo porque tendrías un colchón gigante. También se debilitaría la lógica del pool diario tal como existe hoy (precios horarios marcados por la última oferta necesaria), porque podrías mover energía entre horas casi libremente.</p>
+</details>
+
+<details>
+<summary>2. ¿Por qué la ley no deja que la misma empresa sea dueña de las líneas y a la vez te venda la luz?</summary>
+<p>Porque las líneas son un monopolio natural (no puede haber dos redes paralelas), y la venta es competencia. Si una sola empresa hiciera ambas cosas, podría usar su control de la red para perjudicar a los competidores que quieren vender a tus clientes. La separación (unbundling) es lo que permite que haya mercado.</p>
+</details>
+
+<details>
+<summary>3. La luz que sale de tu enchufe, ¿viene del generador concreto al que pagas?</summary>
+<p>No. Toda la electricidad se mezcla físicamente en la red. Tu factura es un contrato comercial y un balance contable (alguien produjo lo que tú consumiste, en términos agregados), pero los electrones concretos no llevan nombre. Por eso hablamos de "garantías de origen" como un certificado contable, no como una trazabilidad física.</p>
+</details>
+</div>
+
+</article>
+</main>
+
+<nav class="pildora-nav">
+  <a class="disabled" href="#">← Anterior</a>
+  <a href="../indice.html">Índice del curso</a>
+  <a href="../pildora-02_mapa-actores/index.html">Siguiente: El mapa de actores →</a>
+</nav>
+
+<script>
+  const bar = document.getElementById('progressBar');
+  function updateProgress() {
+    const h = document.documentElement;
+    const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight);
+    bar.style.width = Math.min(100, Math.max(0, scrolled * 100)) + '%';
+  }
+  document.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+</script>
+</body>
+</html>
